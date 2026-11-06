@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Differentiability.Challenge.Differentiability",
+  "solution_module": "Differentiability.Solution.Differentiability",
+  "theorem_names": [
+    "LPPAudit.Differentiability.shape_exists_unique_and_differentiable"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": true
+}

@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ProbabilityBasics.Challenge.Liggett",
+  "solution_module": "ProbabilityBasics.Solution.Liggett",
+  "theorem_names": [
+    "LPPAudit.Liggett.subadditive_ergodic_theorem"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": true
+}

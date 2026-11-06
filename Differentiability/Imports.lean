@@ -1,0 +1,425 @@
+/-
+Copyright (c) 2026 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
+-/
+module
+
+public import Differentiability.Imports.Infrastructure
+
+public import Differentiability.Probability.TopSiteEndpoints
+public import Differentiability.Probability.TopSiteShape
+public import Differentiability.Probability.TiltStripTopSites
+public import Differentiability.Model.Paths.FloorSegmentConcat
+public import Differentiability.Probability.TravelAssembly
+public import Differentiability.Probability.Travel
+public import Differentiability.Probability.SharpPathConcentration
+public import Differentiability.Probability.BoundedAttachmentProbability
+public import Differentiability.Model.Paths.ForwardNetAttachment
+public import Differentiability.Model.Paths.BackwardNetAttachment
+public import Differentiability.Analysis.AttachmentInteriority
+public import Differentiability.Analysis.AttachmentShapeComparison
+public import Differentiability.Model.Paths.AttachmentSegment
+public import Differentiability.Model.Paths.AttachmentTube
+public import Differentiability.Analysis.AttachmentScales
+public import Differentiability.Analysis.AttachmentNetCardinality
+
+public import LPP_Foundations.Model.LatticeBoxCardinality
+public import Differentiability.Model.SeparatedLatticeSubset
+public import Differentiability.Model.Paths.OrientedCompactness
+public import Differentiability.Model.FiniteOrientedCluster
+
+public import ProbabilityBasics.Analysis.BernsteinExpBound
+
+public import Differentiability.Model.LevelIntervalAttachments
+public import Differentiability.Probability.IntervalNetProbability
+public import Differentiability.Probability.BoundedIntervalAssembly
+public import Differentiability.Probability.BoundedIntervals
+public import Differentiability.Probability.FiniteBadMaskLaw
+public import LPP_Foundations.Model.ClosedLatticeWalkCounts
+public import Differentiability.Probability.FiniteSeparatedEvents
+
+public import Differentiability.Probability.ConditionalNegativeMoments
+public import Differentiability.Probability.ConditionalLightMoments
+public import Differentiability.Model.Paths.MiddleNetAttachment
+public import ProbabilityBasics.Probability.BernsteinMGF
+public import ProbabilityBasics.Probability.BernsteinSumMGF
+public import ProbabilityBasics.Probability.BernsteinConcentration
+public import Differentiability.Analysis.GreedyAttachmentDeviation
+public import Differentiability.Analysis.GreedyAttachmentMargin
+public import Differentiability.Analysis.HeavyAttachmentParameters
+public import Differentiability.Analysis.HeavyAttachmentDecay
+public import ProbabilityBasics.Probability.IndependentBadCount
+public import Differentiability.Probability.FiniteMaskConditionalLaw
+public import Differentiability.Probability.FiniteMaskConditionalCoordinates
+
+public import Differentiability.Model.FiniteDirectedClosedTrail
+public import Differentiability.Model.ClosedTrailRemoval
+public import Differentiability.Model.FiniteDirectedCircuitDecomposition
+public import Differentiability.Model.OrientedEndpointClosure
+public import Differentiability.Model.BoundaryBadSiteCount
+public import LPP_Foundations.Model.LatticeRayCrossingBalance
+public import LPP_Foundations.Model.LatticeRayCrossingBounds
+public import Differentiability.Model.FiniteLevelStripCardinality
+public import Differentiability.Model.HeavyAttachmentRegionCardinality
+public import Differentiability.Model.SquareBoundaryEdges
+public import Differentiability.Model.SquareBoundaryBalance
+public import LPP_Foundations.Model.LatticeNearNeighbours
+public import Differentiability.Model.FiniteCloseLatticePairs
+
+public import Differentiability.Model.Paths.GreedyAttachmentSequence
+public import Differentiability.Model.Paths.GreedyAttachmentForcedCount
+public import Differentiability.Model.Paths.GreedyAttachmentRectangle
+public import Differentiability.Model.Paths.GreedyAvoidingAttachment
+public import Differentiability.Probability.ConditionalFinitePathWeights
+public import Differentiability.Probability.FiniteMaskPathWeights
+public import Differentiability.Probability.FiniteMaskFamilyWeights
+public import Differentiability.Probability.EnvironmentFiniteMaskWeights
+
+public import Differentiability.Probability.FiniteBadAvoidance
+public import Differentiability.Probability.FiniteBadCountFamily
+public import Differentiability.Analysis.HeavyAttachmentCutoffs
+public import Differentiability.Analysis.HeavyBadEventDecay
+public import LPP_Foundations.Model.FiniteWordsForbiddenSuccessor
+public import Differentiability.Model.Paths.FiniteMaskGreedyFamily
+public import LPP_Foundations.Model.LatticeWalkWordEncoding
+public import Differentiability.Probability.FiniteBadPairs
+public import Differentiability.Probability.NegativeThresholdMass
+
+public import LPP_Foundations.Model.Paths.ReflectedReverse
+public import LPP_Foundations.Model.FiniteNonbacktrackingWalks
+public import LPP_Foundations.Model.FiniteBoxWalkCount
+public import Differentiability.Probability.CloseBadPairSourceBound
+public import Differentiability.Model.HeavyAttachmentNetGeometry
+public import Differentiability.Model.HeavyAttachmentTubeGeometry
+public import Differentiability.Model.HeavyAttachmentObservationRegion
+public import Differentiability.Model.SeparatedNaturalLatticeSubset
+public import Differentiability.Probability.FiniteContourBadLabels
+public import Differentiability.Analysis.PeierlsContourSeries
+
+public import Differentiability.Probability.OrientedPathEvent
+public import Differentiability.Analysis.HeavyAttachmentWeightSubstitution
+
+public import Differentiability.Model.Paths.ForwardHeavyAttachmentFamily
+public import Differentiability.Probability.ForwardHeavyAttachmentFamilyWeights
+public import Differentiability.Model.Paths.BackwardMaskGreedyFamily
+public import Differentiability.Model.BackwardHeavyAttachmentNetGeometry
+public import Differentiability.Model.BackwardHeavyAttachmentObservationGeometry
+public import Differentiability.Probability.HeavyAttachmentSourceEvents
+
+public import Differentiability.Model.SquareBoundaryCrossings
+public import Differentiability.Model.SquareBoundaryCircuit
+public import Differentiability.Model.OrientedBoundaryCircuit
+public import Differentiability.Analysis.HeavyAttachmentTotalDecay
+public import Differentiability.Probability.HeavyAttachmentScaleParameters
+
+public import Differentiability.Model.Paths.BackwardHeavyAttachmentFamily
+public import Differentiability.Probability.BackwardHeavyAttachmentFamilyWeights
+public import Differentiability.Probability.ForwardHeavyAttachmentMaskEvents
+public import Differentiability.Probability.ForwardHeavyAttachmentProbability
+public import Differentiability.Probability.ForwardBadBoxAvoidance
+public import Differentiability.Probability.BackwardHeavyAttachmentSourceEvents
+
+public import Differentiability.Model.ContourNaturalLabels
+public import Differentiability.Model.OrientedClusterContour
+
+public import Differentiability.Probability.ForwardHeavyAttachmentAsymptotics
+public import Differentiability.Probability.BackwardHeavyAttachmentMaskEvents
+public import Differentiability.Probability.BackwardHeavyAttachmentProbability
+
+public import Differentiability.Probability.FiniteContourFamilyBadEvent
+public import Differentiability.Model.ContourBadLabelCover
+public import Differentiability.Analysis.HeavyIntervalScales
+
+public import Differentiability.Probability.BackwardHeavyAttachmentAsymptotics
+public import Differentiability.Analysis.HeavyVertexDecay
+
+public import Differentiability.Probability.HighDensityOrientedPaths
+
+public import Differentiability.Probability.FiniteHeavyVertices
+public import Differentiability.Model.HeavyWorkingRegion
+public import Differentiability.Analysis.StaircaseWeightDecay
+public import Differentiability.Probability.HeavyIntervalAssembly
+public import Differentiability.Probability.GeneralIntervals
+public import Differentiability.Model.CoarseCrossingBlocks
+
+public import ProbabilityBasics.Probability.InverseCDF
+public import ProbabilityBasics.Probability.InverseCDFLaw
+public import Differentiability.Probability.NegativeMomentTranslation
+public import Differentiability.Analysis.SymmetricFlatInterval
+
+public import Differentiability.Model.CoarsePercolationRegions
+public import Differentiability.Model.Paths.StageCuts
+public import Differentiability.Model.Paths.StageGeometry
+public import Differentiability.Model.StageItinerarySteps
+public import Differentiability.Probability.NonnegativeFourthMoment
+public import Differentiability.Probability.ExcessFourthMoment
+public import Differentiability.Probability.UniformShapeTranslation
+public import Differentiability.Probability.FlatShapeNormalization
+
+
+public import Differentiability.Model.ExcessBlockGeometry
+public import Differentiability.Model.ExcessBlockResidues
+public import Differentiability.Probability.ExcessBlockLaw
+public import Differentiability.Model.WitnessAllocations
+public import Differentiability.Model.WitnessAllocationSelection
+public import Differentiability.Model.StageItineraryCount
+public import ProbabilityBasics.Probability.FourthMomentSqrtTail
+public import Differentiability.Probability.ExcessTailScaling
+public import Differentiability.Model.Animals.SupNormCover
+public import Differentiability.Model.Animals.ExcessCoarsening
+
+public import Martin2004.Probability.QuantileRealLaw
+public import Differentiability.Model.Animals.ExcessClassSum
+public import Differentiability.Model.Animals.ExcessSumCover
+public import Differentiability.Probability.ExcessResidueFieldLaw
+
+public import Differentiability.Model.WitnessSubselection
+
+
+public import Differentiability.Model.Animals.RadiusTwoFamily
+public import Differentiability.Probability.RootedAnimalTransfer
+public import Differentiability.Probability.ExcessAnimalClassBound
+public import Differentiability.Probability.ExcessAnimalBound
+
+public import Differentiability.Analysis.LongPathNumericDecay
+public import Differentiability.Analysis.LongPathDecaySummability
+
+public import Differentiability.Model.StageIndexSets
+public import Differentiability.Model.Paths.StageIndexSets
+
+public import Differentiability.Analysis.DyadicCharacteristicLength
+public import Differentiability.Analysis.RecordScales
+
+public import Differentiability.Model.Paths.TransverseStaircase
+public import Differentiability.Probability.ShortCrossingAbundance
+
+public import Differentiability.Probability.LowerTailExampleLaw
+public import Differentiability.Probability.LowerTailExample
+
+public import Differentiability.Probability.TiltWitnessSelection
+public import Differentiability.Probability.TiltWitnessBoost
+public import Differentiability.Probability.TiltChangeOfMeasure
+
+public import Differentiability.Analysis.GridScaleCounts
+public import Differentiability.Analysis.GridScaleSums
+public import Differentiability.Analysis.GridFineCount
+public import Differentiability.Probability.RarefastTranslation
+public import Differentiability.Probability.ArbitraryEndpoints
+public import Differentiability.Probability.BlockDefectRarity
+public import Differentiability.Probability.GridFineStaircaseFamily
+public import Differentiability.Probability.GridGoodEvent
+public import Differentiability.Probability.GridSimultaneous
+public import Differentiability.Probability.BoundedOffFlatDifferentiability
+public import Differentiability.Probability.HeavyCrossingTrials
+public import Differentiability.Model.NeighborClusterCount
+public import Differentiability.Probability.ClusterSizeTail
+public import Differentiability.Analysis.CornerDefectExcess
+public import Differentiability.Probability.CornerExclusionGeneral
+public import Differentiability.Probability.GlobalMaskFamilyWeights
+public import Differentiability.Model.Paths.TransverseMerge
+public import Differentiability.Model.Paths.GridEntranceExitPoints
+public import Differentiability.Model.StairTrappedComponents
+public import Differentiability.Model.StairTrim
+public import Differentiability.Model.ReachableSetContour
+public import Differentiability.Probability.ReachableSetTail
+public import Differentiability.Probability.BlockDefectRarityOfEndpoints
+public import Differentiability.Probability.StaircaseGeneral
+public import Differentiability.Probability.StairGeometryEvent
+public import Differentiability.Model.OrientedPercolation
+public import Differentiability.Probability.LevelSigma
+public import Differentiability.Probability.LevelIndependence
+public import Differentiability.Probability.FlatShapeAdapters
+public import Differentiability.Model.OrientedPercolationLaws
+public import Differentiability.Probability.FlatTopThinning
+public import Differentiability.Probability.TriangleProbability
+public import Differentiability.Model.Paths.StairGreedyForward
+public import Differentiability.Model.Paths.StairGreedyBackward
+public import Differentiability.Model.StaircaseFamilyIndex
+public import Differentiability.Probability.StaircaseFamilyEvent
+public import Differentiability.Probability.SparseCoarsePaths
+public import Differentiability.Model.PercolationTriangles
+public import Differentiability.Probability.StartSetDeviation
+public import Differentiability.Probability.BlackBlockIndependence
+public import Differentiability.Probability.FlatShiftAdapters
+public import Differentiability.Probability.HalfLineEdge
+public import Differentiability.Model.Paths.StairArrival
+public import Differentiability.Model.CoarseBlackBlocks
+public import Differentiability.Model.Paths.EndpointReductionGeneral
+public import Differentiability.Model.AugmentedPassage
+public import Differentiability.Probability.RightBlockGain
+public import Differentiability.Probability.WhiteBlockBound
+public import Differentiability.Probability.TopFlatBeyondEdge
+public import Differentiability.Probability.HalfLineEdgeDeviation
+public import Differentiability.Model.Paths.GridFineGeneral
+public import Differentiability.Probability.ArbitraryEndpointsGeneral
+public import Differentiability.Model.Paths.GridCoarseGeneralPieces
+public import Differentiability.Model.Paths.GridCoarseGeneralArrival
+public import Differentiability.Model.Paths.GridCoarseGeneralMerge
+public import Differentiability.Model.Paths.GridCoarseGeneralAssembly
+public import Differentiability.Model.Paths.GridCoarseGeneralCost
+public import LPP_Foundations.Frozen.Model.FirstPassage
+public import Differentiability.Model.AugmentedProcessLaws
+public import Differentiability.Probability.AugmentedMeasurability
+public import Differentiability.Probability.TopPassageDecay
+public import Differentiability.Model.Paths.GridConnectionsGeneral
+public import LPP_Foundations.Model.LastPassage.FirstPassage
+public import Martin2004.Probability.NegatedLaw
+public import Differentiability.Probability.AugmentedBlockLaws
+public import Differentiability.Probability.AugmentedExpectation
+public import Differentiability.Probability.TopShapeBeyondEdge
+public import Martin2004.Probability.ExponentialLaw
+public import Martin2004.Probability.BurkeDensity
+public import Martin2004.Probability.BurkeCell
+public import Martin2004.Probability.BurkeRow
+public import Martin2004.Probability.StationaryBoundaryLaw
+public import Martin2004.Probability.StationaryRowStep
+public import Martin2004.Probability.StationaryIncrements
+public import Martin2004.Probability.StationaryMean
+public import Martin2004.Probability.MeanVarianceTruncation
+public import Martin2004.Probability.MeanVarianceTruncationTail
+public import Martin2004.Analysis.GrowthSetInclusion
+public import Differentiability.Probability.GridCoarseGoodProbability
+public import Differentiability.Probability.GridSimultaneousGeneral
+public import Differentiability.Probability.GeneralOffFlatDifferentiability
+public import Martin2004.Shape.FirstPassageShape
+public import Martin2004.Shape.ExpectedRateShape
+public import LPP_Foundations.Analysis.ExponentialShapeFormula
+public import Martin2004.Shape.ExpectedRateUniform
+public import Martin2004.Shape.GrowthShape
+public import Martin2004.Probability.PassageUpperDeviation
+public import LPP_Foundations.Analysis.ExponentialShapeVariational
+public import ProbabilityBasics.Probability.SqrtTailMoments
+public import Martin2004.Probability.NormalExponentialTails
+public import LPP_Foundations.Model.LastPassage.Inclusive
+public import Martin2004.Model.LastPassage.ExitPoint
+public import Martin2004.Model.LastPassage.Stationary
+public import Martin2004.Model.LastPassage.ExitGrid
+public import Martin2004.Shape.ExponentialShapeUpper
+public import Martin2004.Probability.ExponentialExitGrid
+public import Martin2004.Shape.ExponentialShape
+public import ProbabilityBasics.Frozen.Foundations.Liggett.SeqShift
+public import ProbabilityBasics.Frozen.Foundations.Liggett.IsStationaryProcess
+public import ProbabilityBasics.Frozen.Foundations.Liggett.IsErgodicProcess
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettSubadditive
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettRowLaws
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettBlockProcess
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettBlockStationary
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettMomentCondition
+public import ProbabilityBasics.Frozen.Foundations.BK.AgreementCylinder
+public import ProbabilityBasics.Frozen.Foundations.BK.IsWitnessSet
+public import ProbabilityBasics.Frozen.Foundations.BK.BoxOccurrence
+public import ProbabilityBasics.Frozen.Foundations.BK.DisjointOccurrence
+public import ProbabilityBasics.Frozen.Foundations.BK.OnesOf
+public import ProbabilityBasics.Frozen.Foundations.BK.ConfigOfOnes
+public import ProbabilityBasics.Frozen.Foundations.BK.VdBKDisjointOccurrence
+public import ProbabilityBasics.Frozen.Foundations.BK.BernoulliProduct
+public import ProbabilityBasics.Foundations.BK.NBU
+public import ProbabilityBasics.Foundations.BK.Identification
+public import ProbabilityBasics.Foundations.BK.Witness
+public import ProbabilityBasics.Foundations.BK.LeadingOnes
+public import ProbabilityBasics.Foundations.BK.Lemma13
+public import ProbabilityBasics.Foundations.BK.MergeProduct
+public import ProbabilityBasics.Foundations.BK.Levels
+public import ProbabilityBasics.Foundations.BK.Theorem16
+public import ProbabilityBasics.Foundations.BK.WitnessMeasurable
+public import ProbabilityBasics.Foundations.BK.Theorem33
+public import ProbabilityBasics.Foundations.BK.Rounding
+public import ProbabilityBasics.Foundations.BK.FiniteChains
+public import ProbabilityBasics.Foundations.BK.RoundingLimit
+public import ProbabilityBasics.Foundations.BK.Finite
+public import ProbabilityBasics.Foundations.BK.Family
+public import ProbabilityBasics.Frozen.Foundations.BK.BKInequality
+public import ProbabilityBasics.Frozen.Foundations.BK.BKInequalityFamily
+public import ProbabilityBasics.Foundations.BK.Countable
+public import ProbabilityBasics.Frozen.Foundations.BK.BKInequalityInfinitePi
+public import ProbabilityBasics.Frozen.Foundations.BK.BKInequalityFamilyInfinitePi
+public import Differentiability.Probability.PathEventBK
+public import ProbabilityBasics.Frozen.Foundations.Liggett.Theorem110
+public import Martin2004.Probability.ERealFloorRate
+public import Martin2004.Probability.ERealFloorRateGeometry
+public import Martin2004.Probability.FloorPhaseSandwich
+public import Martin2004.Probability.RandomPhaseMeasure
+public import Martin2004.Model.ColumnPassage
+public import Martin2004.Probability.ColumnLaws
+public import ProbabilityBasics.Analysis.ColumnBoundOptimization
+public import ProbabilityBasics.Probability.SqrtDistanceCLT
+public import Martin2004.Model.StationaryColumns
+public import Martin2004.Model.LastPassage.ShearComparison
+public import Martin2004.Probability.ShearComparison
+public import Martin2004.Probability.RandomPhaseLiggett
+public import Martin2004.Probability.ColumnBurkeCell
+public import Martin2004.Probability.CellSweep
+public import Martin2004.Probability.StationaryColumns
+public import Martin2004.Probability.RealDirectionFiniteLimitTransfer
+public import Martin2004.Probability.RealDirectionFiniteLimit
+public import Martin2004.Probability.RealDirectionInfiniteLimit
+public import Martin2004.Probability.ColumnPassageBound
+public import Martin2004.Probability.BernoulliShapeBound
+public import Martin2004.Probability.ShapeComparisonBound
+public import Martin2004.Probability.ShapeComparison
+public import Martin2004.Probability.GaussianBlockComparisonBound
+public import Martin2004.Probability.GaussianBlockComparison
+public import Martin2004.Probability.BoundaryUniversality
+public import Differentiability.Probability.MeanVarianceTruncationForm
+public import ProbabilityBasics.Foundations.Concentration.Entropy
+public import ProbabilityBasics.Foundations.Concentration.Tensorization
+public import ProbabilityBasics.Foundations.Concentration.ModifiedLogSobolev
+public import ProbabilityBasics.Foundations.Concentration.Herbst
+public import ProbabilityBasics.Foundations.Concentration.MaxOfSums
+public import ProbabilityBasics.Foundations.Concentration.MaxOfSumsProduct
+public import ProbabilityBasics.Foundations.Concentration.MaxOfSums31
+public import Martin2004.Shape.MartinShapeExpectedRate
+public import Martin2004.Shape.BoundaryAsymptotics
+public import Martin2004.Shape.FirstPassageBoundaryAsymptotics
+public import ProbabilityBasics.Frozen.Foundations.BK.VdBKTheorem33
+public import Martin2004.Probability.QuantileFieldCoupling
+public import Martin2004.Probability.LayerCakePassage
+public import Martin2004.Probability.BernoulliSplitting
+public import Martin2004.Model.LastPassage.RowBlocks
+public import Martin2004.Model.LastPassage.RowBlocksFine
+public import Martin2004.Probability.RowBlockLaw
+public import Martin2004.Probability.BlockingComparison
+public import Differentiability.Probability.TopFlatSegment
+public import Differentiability.Analysis.FlatEdgeProfile
+public import Differentiability.Probability.FlatEdgeStartPoint
+public import Differentiability.Probability.FlatEdgeDifferentiability
+public import Differentiability.Probability.FlatTopRouteH
+public import Differentiability.Probability.FlatTopDifferentiability
+public import Martin2004.Probability.AffineShape
+public import Differentiability.Analysis.MixedRadixLevelDecomposition
+
+public import Differentiability.Model.Paths.RarefastLayerConcat
+public import Differentiability.Probability.RarefastGoodPathContradiction
+public import LPP_Foundations.Probability.DisjointSupportEvents
+public import Differentiability.Probability.RarefastConnectors
+public import Differentiability.Probability.RarefastSiteEvents
+public import Differentiability.Probability.RareFastCrossings
+
+public import Differentiability.Probability.HeavyVertexEvents
+public import Differentiability.Probability.StageExcessItinerary
+public import Differentiability.Probability.TiltLimit
+public import Differentiability.Probability.CharacteristicLengths
+
+public import Differentiability.Model.Paths.LevelTransverseStaircase
+public import Differentiability.Model.Paths.GridCoarseAttachment
+public import Differentiability.Model.Paths.GridScaleConnection
+public import Differentiability.Model.Paths.GridEntranceExit
+public import Differentiability.Probability.GridStaircaseBad
+
+public import Differentiability.Probability.StageWitnessPathEvents
+public import Differentiability.Probability.LongPathWitnessBound
+
+public import Differentiability.Model.Paths.StageSplitWitnesses
+public import Differentiability.Model.Paths.WitnessFreeStage
+public import Differentiability.Model.Paths.StageDefectTotal
+
+public import Martin2004.Probability.ShapeAboveMean
+public import Differentiability.Analysis.DirectionalAssembly
+public import Differentiability.Probability.GridCrossingTrials
+
+public import Differentiability.Analysis.CornerDefectContradiction
+public import Differentiability.Probability.CornerExclusion
+
+/-! Proved model, probability and calculus infrastructure.
+Unproved theorem goals and their quarantined providers are excluded. -/

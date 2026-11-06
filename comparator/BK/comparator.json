@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ProbabilityBasics.Challenge.BK",
+  "solution_module": "ProbabilityBasics.Solution.BK",
+  "theorem_names": [
+    "LPPAudit.BK.bk_inequality",
+    "LPPAudit.BK.bk_inequality_family",
+    "LPPAudit.BK.bk_inequality_countable",
+    "LPPAudit.BK.bk_inequality_family_countable",
+    "LPPAudit.BK.bk_inequality_bernoulli_cube"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": true
+}

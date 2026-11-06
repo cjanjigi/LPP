@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ProbabilityBasics.Challenge.Concentration",
+  "solution_module": "ProbabilityBasics.Solution.Concentration",
+  "theorem_names": [
+    "LPPAudit.Concentration.concentration_of_max_of_sums"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": true
+}

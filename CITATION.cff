@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this software and the mathematical sources described in README.md."
+type: software
+title: "LPP: Lean formalizations of planar directed percolation"
+authors:
+  - family-names: Janjigian
+    given-names: Christopher
+  - family-names: Rassoul-Agha
+    given-names: Firas
+  - family-names: Seppäläinen
+    given-names: Timo
+license: Apache-2.0
+abstract: >-
+  Lean formalizations of differentiability of the planar last-passage shape,
+  Martin's shape theorems, the BK inequality and Liggett's subadditive ergodic theorem.

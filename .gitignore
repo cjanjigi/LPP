@@ -1,0 +1,23 @@
+.lake/
+.DS_Store
+.nvimlog
+.env
+.env.*
+!.env.example
+*.log
+*.olean
+*.ilean
+*.trace
+__pycache__/
+*.pyc
+.claude/settings.local.json
+.codex/
+.vscode/
+.idea/
+
+# Paper and book files are not part of this code release.
+*.pdf
+*.PDF
+*.ps
+*.djvu
+*.epub

@@ -1,0 +1,21 @@
+{
+  "challenge_module": "Martin2004.Challenge.Martin2004",
+  "solution_module": "Martin2004.Solution.Martin2004",
+  "theorem_names": [
+    "LPPAudit.Martin2004.extendedShape_limits_of_finite_mean",
+    "LPPAudit.Martin2004.shape_continuous_of_finite_mean",
+    "LPPAudit.Martin2004.shape_function_exists_unique",
+    "LPPAudit.Martin2004.shape_boundary_asymptotics",
+    "LPPAudit.Martin2004.firstPassageShape_continuous",
+    "LPPAudit.Martin2004.firstPassageShape_boundary_asymptotics",
+    "LPPAudit.Martin2004.lastPassage_growthSets_converge",
+    "LPPAudit.Martin2004.firstPassage_growthSets_converge",
+    "LPPAudit.Martin2004.taxicab_lower_bound_of_subadditive"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "enable_nanoda": true
+}
