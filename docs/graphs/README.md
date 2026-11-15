@@ -9,7 +9,7 @@ Graph presentation based on Scott Armstrong’s visual paper design for [*Homoge
 - [Inequalities with applications to percolation and reliability](paper-results/bk-1985.md)
 - [An improved subadditive ergodic theorem](paper-results/liggett-1985.md)
 
-The GitHub version includes every result as a node in a Mermaid diagram, with an accompanying progress list. The [interactive viewer](../README.md#interactive-graphs) adds collapsible sections, search and a reading panel. Both use the same result records.
+The links above open GitHub-readable diagrams, progress lists and coverage notes. The interactive viewer remains a local preview while hosting is deferred. Both presentations use the same result records. See the [graph instructions](../README.md#interactive-graphs) for local preview.
 
 Dependencies come from the paper's proofs. Certificate links and their scope are assessed separately against release `5a3c7a6`. A certificate's inclusion of several conclusions does not create a dependency in the paper. Related formulations and proof adaptations are recorded separately from prerequisites. Results whose certificate correspondence has not been checked are marked **Not assessed**.
 

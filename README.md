@@ -19,7 +19,9 @@ Mathlib supplies the underlying analysis and measure theory; the listed results 
 
 ## Progress key
 
-**Certified** links to a released Lean proof. **Restricted** covers only the stated case or part. **Not assessed** means that this guide has not checked for a matching certificate. Supporting lemmas are included in each paper's progress list.
+**Certified** links to a released Lean proof. Each **Restricted** entry names its limitation and links to a comparison of the paper's claim, the certified part and the remaining gap. **Not assessed** means that the full certificate correspondence has not been checked. Supporting lemmas are included in each paper's progress list.
+
+“Restricted” compares mathematical scope with the paper. Each entry explains the proof's scope and its effect on the main results. For example, a **Planar case only** entry covers the full two-dimensional result, while the paper also treats higher dimensions.
 
 The maps follow results in the papers, rather than the organization of the code. Proof replacements chosen to simplify formalization are recorded separately from missing results and corrections to the text.
 
@@ -32,7 +34,7 @@ The certificate links describe formalization release [`5a3c7a6`](https://github.
 
 </details>
 
-The guides and full graphs render directly on GitHub. See the [interactive graph instructions](docs/README.md#interactive-graphs) and [documentation style](STYLE.md).
+The guides, dependency graphs and coverage notes are readable directly on GitHub. The interactive viewer remains a local preview while hosting is deferred. See the [graph instructions](docs/README.md#interactive-graphs) and [documentation style](STYLE.md).
 
 ## Guarantees and limits
 
@@ -91,7 +93,7 @@ The four folders are `ProbabilityBasics/` for general probability, `LPP_Foundati
 
 The mathematical source for differentiability is C. Janjigian, F. Rassoul-Agha and T. Seppäläinen, *Differentiability of the shape function in the planar corner growth model*, preprint. Other inputs include Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation), cited by statement name. Manuscript text and reading copies are not distributed here.
 
-The formalization makes several changes to proofs and conventions. Weights live on a canonical product probability space. Shape functions are characterized by uniform lattice limits. The expected-rate existence argument uses a random phase to handle real directions. The boundary asymptotics use the central limit theorem with domination instead of a nonuniform Berry–Esseen estimate. The column-model comparison uses a direct stationary construction and a one-cell Burke identity. The concentration bound uses entropy tensorization and the Herbst argument instead of Talagrand's theorem; it yields the stronger bound `2 exp(−u²/(16 R L²))`. First-passage results are transferred through negation of the weights. The BK theorem is extended from Bernoulli coordinates to ordered coordinate spaces. These changes are part of the Lean proofs, rather than additional hypotheses replacing proof steps.
+The [paper guides](docs/README.md) state the certified results and record coverage limits, formulation choices, source corrections and changes of proof. They distinguish changes of proof from restrictions on the certified results. The [common notation page](docs/notation.md) fixes the model and path conventions.
 
 ## How this was made
 

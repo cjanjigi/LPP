@@ -6,31 +6,33 @@
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.
 
-[Formalization guide](guides/differentiability.md) · [Full result graph](graphs/paper-results/differentiability.md)
+[Formalization guide](guides/differentiability.md) · [Dependency graph and coverage notes](graphs/paper-results/differentiability.md)
 
 ## Limiting shape for directed percolation models
 
 James B. Martin.
 
-[Formalization guide](guides/martin-2004.md) · [Full result graph](graphs/paper-results/martin-2004.md)
+[Formalization guide](guides/martin-2004.md) · [Dependency graph and coverage notes](graphs/paper-results/martin-2004.md)
 
 ## Inequalities with applications to percolation and reliability
 
 J. van den Berg, H. Kesten.
 
-[Formalization guide](guides/bk-1985.md) · [Full result graph](graphs/paper-results/bk-1985.md)
+[Formalization guide](guides/bk-1985.md) · [Dependency graph and coverage notes](graphs/paper-results/bk-1985.md)
 
 ## An improved subadditive ergodic theorem
 
 Thomas M. Liggett.
 
-[Formalization guide](guides/liggett-1985.md) · [Full result graph](graphs/paper-results/liggett-1985.md)
+[Formalization guide](guides/liggett-1985.md) · [Dependency graph and coverage notes](graphs/paper-results/liggett-1985.md)
 
 ## Interactive graphs
 
-The guides and full result graphs render directly on GitHub. The interactive viewer adds collapsible sections, search, result statements and certificate links.
+The guides, graphs and coverage notes above are available in the private repository. Interactive hosting is deferred; the viewer remains a local preview. Publishing a public website requires separate approval.
 
-From the repository root, run:
+### Local preview
+
+To preview the interactive maps from a local checkout, run from the repository root:
 
 ```sh
 node scripts/serve-docs.mjs
@@ -42,7 +44,7 @@ Graph presentation based on Scott Armstrong’s visual paper design for [*Homoge
 
 ## Updating the documentation
 
-Follow [STYLE.md](../STYLE.md). Update result statements, source dependencies and certificate coverage in `docs/graphs/paper-results/*.json`, keeping those roles separate. Regenerate the graph sections and full maps from the repository root:
+Follow [STYLE.md](../STYLE.md). Update short descriptions, source dependencies and certificate coverage in `docs/graphs/paper-results/*.json`, keeping those roles separate. Every restricted entry must compare the paper's scope, the certified scope and the remaining gap. Keep precise main theorem statements in the guides. Regenerate the graph sections and full maps from the repository root:
 
 ```sh
 node scripts/render-doc-graphs.mjs

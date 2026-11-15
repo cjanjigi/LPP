@@ -16,66 +16,69 @@ For LPP, one applies a subadditive theorem to the negatives of superadditive pas
 
 *Convergence of a subadditive array.*
 
-Let $(\Omega,\mathcal F,\mathbb P)$ be a probability space and let $X_{m,n}:\Omega\to\mathbb R$ be functions for integers $0\le m<n$. The sequence laws below are laws on $\mathbb R^{\mathbb N_{\ge1}}$ with its product Borel sigma-algebra. A map described as having a law is assumed to admit a measurable representative agreeing with it almost surely. Literal measurability of every array entry is not an additional hypothesis. Assume the following four conditions.
+Let $`(\Omega,\mathcal F,\mathbb P)`$ be a probability space and let $`X_{m,n}:\Omega\to\mathbb R`$ be functions for integers $`0\le m<n`$. The sequence laws below are laws on $`\mathbb R^{\mathbb N_{\ge1}}`$ with its product Borel sigma-algebra. A map described as having a law is assumed to admit a measurable representative agreeing with it almost surely. Literal measurability of every array entry is not an additional hypothesis. Assume the following four conditions.
 
-1. **Subadditivity from the origin.** Condition (1.7) requires, for every $0<m<n$,
+1. **Subadditivity from the origin.** Condition (1.7) requires, for every $`0<m<n`$,
 
-   $$
+   ```math
    X_{0,n}\le X_{0,m}+X_{m,n}\qquad\mathbb P\text{-almost surely}.
-   $$
+   ```
 
-2. **Stationarity of row laws.** In condition (1.8), for each $m\ge0$, the two sequence-valued maps
+2. **Stationarity of row laws.** In condition (1.8), for each $`m\ge0`$, the two sequence-valued maps
 
-   $$
+   ```math
    (X_{m+1,m+k+1})_{k\ge1}
    \quad\text{and}\quad
    (X_{m,m+k})_{k\ge1}
-   $$
+   ```
 
    have the same joint distribution.
 
-3. **Stationarity of block processes.** In condition (1.9), for every integer $k\ge1$, the sequence-valued map
+3. **Stationarity of block processes.** In condition (1.9), for every integer $`k\ge1`$, the sequence-valued map
 
-   $$
+   ```math
    (X_{nk,(n+1)k})_{n\ge1}
-   $$
+   ```
 
-   admits a measurable representative and has a law $\nu_k$ invariant under the left shift $\theta((y_n)_{n\ge1})=(y_{n+1})_{n\ge1}$. Equivalently, every shifted block sequence has the same joint law. The sequence begins at $n=1$.
+   admits a measurable representative and has a law $`\nu_k`$ invariant under the left shift $`\theta((y_n)_{n\ge1})=(y_{n+1})_{n\ge1}`$. Equivalently, every shifted block sequence has the same joint law. The sequence begins at $`n=1`$.
 
-4. **Moment bound.** Condition (1.3) requires $X_{0,n}\in L^1(\mathbb P)$ for every $n\ge1$, and one constant $c\in\mathbb R$ such that
+4. **Moment bound.** Condition (1.3) requires $`X_{0,n}\in L^1(\mathbb P)`$ for every $`n\ge1`$, and one constant $`c\in\mathbb R`$ such that
 
-   $$
+   ```math
    \mathbb E X_{0,n}\ge-cn\qquad(n\ge1).
-   $$
+   ```
 
 Then there is a finite constant
 
-$$
+```math
 \gamma=\lim_{n\to\infty}\frac{\mathbb E X_{0,n}}n
        =\inf_{n\ge1}\frac{\mathbb E X_{0,n}}n
-$$
+```
 
-and a measurable integrable random variable $X_\infty$ such that
+and a measurable integrable random variable $`X_\infty`$ such that
 
-$$
+```math
 \frac{X_{0,n}}n\longrightarrow X_\infty
 \quad\text{almost surely and in }L^1,
 \qquad
 \mathbb E X_\infty=\gamma.
-$$
+```
 
-Here $L^1$ convergence means $\mathbb E|X_{0,n}/n-X_\infty|\to0$. If the left shift $\theta$ is ergodic under $\nu_k$ for every $k\ge1$, then $X_\infty=\gamma$ almost surely. Without this additional assumption the limit may be random.
+Here $`L^1`$ convergence means $`\mathbb E|X_{0,n}/n-X_\infty|\to0`$. If the left shift $`\theta`$ is ergodic under $`\nu_k`$ for every $`k\ge1`$, then $`X_\infty=\gamma`$ almost surely. Without this additional assumption the limit may be random.
 
 [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) · [Exact hypothesis definitions](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/ProbabilityDefinitions.lean#L120)
 
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-The map groups the paper's results. Open the full graph to see each named result and its formalization status.
+[Dependency graph and coverage notes](../graphs/paper-results/liggett-1985.md)
+
+The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 
 Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
 
-[Full result graph and progress list](../graphs/paper-results/liggett-1985.md)
+<details>
+<summary>Dependency overview</summary>
 
 ```mermaid
 flowchart TD
@@ -88,6 +91,8 @@ flowchart TD
   C2 --> C3
 ```
 
+</details>
+
 <details>
 <summary>Every result and its status</summary>
 
@@ -99,8 +104,8 @@ flowchart TD
     R1["✓ Proof Step 2.1<br/>The limit of the expected averages"]
   end
   subgraph S1["Upper and lower bounds"]
-    R2["◐ Proof Step 2.2<br/>An upper bound for limiting averages"]
-    R3["◐ Proof Step 2.3<br/>A lower bound for limiting averages"]
+    R2["✓ Proof Step 2.2<br/>An upper bound for limiting averages"]
+    R3["✓ Proof Step 2.3<br/>A lower bound for limiting averages"]
   end
   subgraph S2["The convergence theorem"]
     R4["✓ Proof Step 2.4<br/>Convergence in mean absolute error"]
@@ -126,8 +131,8 @@ flowchart TD
   classDef not_in_release fill:#fff,stroke:#8c959f,color:#59636e
   class R0 certified
   class R1 certified
-  class R2 restricted
-  class R3 restricted
+  class R2 certified
+  class R3 certified
   class R4 certified
   class R5 not_assessed
   class R6 not_assessed
@@ -135,71 +140,23 @@ flowchart TD
 
 | Paper result | Formalization |
 | --- | --- |
-| **Proof Step 2.1**<br/>The limit of the expected averages | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettExpectedRate.lean#L96) · [Complete original-row formulation](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
-| **Proof Step 2.2**<br/>An upper bound for limiting averages | **◐ Restricted**<br/>[Fixed-block upper comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettBlockUpper.lean#L133) · [Complete theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
-| **Proof Step 2.3**<br/>A lower bound for limiting averages | **◐ Restricted**<br/>[Auxiliary lower comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettLowerComparison.lean#L32) · [Complete theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
-| **Proof Step 2.4**<br/>Convergence in mean absolute error | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettConvergence.lean#L33) · [Original-row theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
-| **Theorem 1.10**<br/>Long-time averages of an array | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
-| **Unnumbered extension**<br/>A weaker assumption on the mean | **? Not assessed** |
-| **Section 3 example**<br/>An array made from open paths | **? Not assessed** |
+| **[Proof Step 2.1](../graphs/paper-results/liggett-1985.md#proof-step-21)**<br/>The limit of the expected averages | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#proof-step-21)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettExpectedRate.lean#L96) · [Complete original-row formulation](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
+| **[Proof Step 2.2](../graphs/paper-results/liggett-1985.md#proof-step-22)**<br/>An upper bound for limiting averages | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#proof-step-22)<br/>[Fixed-block upper comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettBlockUpper.lean#L133) · [Complete theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
+| **[Proof Step 2.3](../graphs/paper-results/liggett-1985.md#proof-step-23)**<br/>A lower bound for limiting averages | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#proof-step-23)<br/>[Auxiliary lower comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettLowerComparison.lean#L32) · [Complete theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
+| **[Proof Step 2.4](../graphs/paper-results/liggett-1985.md#proof-step-24)**<br/>Convergence in mean absolute error | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#proof-step-24)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettConvergence.lean#L33) · [Original-row theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
+| **[Theorem 1.10](../graphs/paper-results/liggett-1985.md#theorem-110)**<br/>Long-time averages of an array | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#theorem-110)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Liggett.lean#L104) |
+| **[Unnumbered extension](../graphs/paper-results/liggett-1985.md#unnumbered-extension)**<br/>A weaker assumption on the mean | **? Not assessed**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#unnumbered-extension) |
+| **[Section 3 example](../graphs/paper-results/liggett-1985.md#section-3-example)**<br/>An array made from open paths | **? Not assessed**<br/>[Coverage note](../graphs/paper-results/liggett-1985.md#section-3-example) |
 
 </details>
 
 <!-- PAPER_MAP_END -->
 
-## Supporting statements
+## Auxiliary coverage
 
-<details>
-<summary>Expected rate, block upper bound and lower comparison</summary>
+Proof Steps (2.1)–(2.4) are covered under the paper's theorem hypotheses. In particular, the released complete theorem proves convergence to an integrable limit with mean $`\gamma`$, so its upper- and lower-limit conclusions cover (2.2) and (2.3).
 
-These are the exact mathematical conclusions of the three linked supporting certificates. They are recorded separately because their hypotheses differ from those of the complete theorem.
-
-### Expected rate
-
-*Equation (2.1).*
-
-Assume conditions (1.7), (1.8) and (1.3) above, and assume in addition that $X_{0,n}$ itself is measurable for each $n\ge1$. Block stationarity is unnecessary. There is $\gamma\in\mathbb R$ such that
-
-$$
-\lim_{n\to\infty}\frac{\mathbb E X_{0,n}}n
-=\gamma
-=\inf_{n\ge1}\frac{\mathbb E X_{0,n}}n.
-$$
-
-This conclusion contains no almost-sure or $L^1$ convergence assertion. [Certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettExpectedRate.lean#L96)
-
-### Block upper estimate
-
-*The fixed-block comparison in (2.5)–(2.8).*
-
-Fix an integer $k\ge1$. Assume (1.7) and (1.8), that $X_{0,n}$ is measurable and integrable for every $n\ge1$, and that the $k$-block process in (1.9) is stationary. There exists an integrable function $V_k:\Omega\to\mathbb R$ such that
-
-$$
-\mathbb E V_k=\frac{\mathbb E X_{0,k}}k,
-\qquad
-\limsup_{n\to\infty}\frac{X_{0,n}}n\le V_k
-\quad\text{almost surely}.
-$$
-
-The limsup is taken in the extended reals. Neither the lower expectation bound in (1.3) nor stationarity for other block lengths is required by this supporting statement. [Certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettBlockUpper.lean#L133)
-
-### Lower comparison
-
-*The comparison following (2.14).*
-
-Assume the hypotheses of the expected-rate statement above. With the same finite expected rate $\gamma$, there exist a probability measure $\kappa$ on $\mathbb R^{\mathbb N}$ and a measurable, $\kappa$-integrable function $Y:\mathbb R^{\mathbb N}\to\mathbb R$ such that
-
-$$
-\gamma\le\int Y\,d\kappa,
-\qquad
-\kappa\{Y\ge a\}\le
-\mathbb P\left\{\liminf_{n\to\infty}\frac{X_{0,n}}n\ge a\right\}
-\quad(a\in\mathbb R).
-$$
-
-The liminf may be extended-real. No block-stationarity hypothesis or finiteness of that liminf is assumed. [Certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/LiggettLowerComparison.lean#L32)
-
-</details>
+The supporting declarations use different hypotheses and intermediate quantities. These are differences in how the proof is assembled, rather than restrictions on those two mathematical claims. The [full progress list](../graphs/paper-results/liggett-1985.md#coverage-notes) gives short descriptions and links to both the helpers and the complete theorem.
 
 ## Deviations from the printed text
 
@@ -207,15 +164,15 @@ The liminf may be extended-real. No block-stationarity hypothesis or finiteness 
 
 No deliberate replacement of a correct printed argument is recorded in this guide.
 
-### Formulation and measure-theoretic details
+### Formulation details
 
-**Measurable representatives.** The public statement assumes integrability of $X_{0,n}$. Some internal convergence lemmas take measurable functions as explicit inputs. The proof therefore replaces row zero by measurable representatives that agree almost surely, proves the result for this version, and transfers all conclusions back. This preserves the theorem's hypotheses and conclusions. The reason is to bridge the measurable-function interfaces used by the formal proof.
+| Location | Formalization change | Reason |
+| --- | --- | --- |
+| Measurability | Uses measurable representatives agreeing almost surely. | Connects existing measure-theory interfaces without strengthening the theorem's hypotheses. |
+| Stationarity | States the row and block conditions through sequence laws. | Expresses the paper's distributional assumptions directly. |
+| Indices | Retains the paper's mathematical indexing in the statement. | Keeps the source correspondence clear despite internal sequence conventions. |
 
-[Explanation and construction in the released proof](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Full/Foundations/LiggettSubadditiveErgodic.lean#L24)
-
-**Stationarity as a statement about laws.** The row and block conditions are expressed through equality of sequence laws and the left shift on sequence space. This makes the printed distributional conditions explicit without assuming a measure-preserving transformation on the original probability space. The source indices $k\ge1$ and $n\ge1$ are represented internally by zero-based sequences; the mathematical indexing above retains the paper's convention.
-
-[Row-law definition](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Frozen/Foundations/Liggett/LiggettRowLaws.lean#L14) · [Block-process definition](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Frozen/Foundations/Liggett/LiggettBlockProcess.lean#L13)
+[Measurable representatives](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Full/Foundations/LiggettSubadditiveErgodic.lean#L24) · [Row-law definition](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Frozen/Foundations/Liggett/LiggettRowLaws.lean#L14) · [Block-process definition](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Frozen/Foundations/Liggett/LiggettBlockProcess.lean#L13)
 
 ### Corrections or repairs to the source
 

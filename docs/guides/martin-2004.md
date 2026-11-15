@@ -10,39 +10,39 @@ The released shape results cover **dimension two**. Supporting concentration and
 
 ## Certified results
 
-Use the [common LPP model](../notation.md), with i.i.d. real weights of law $\mu$ and terminal-excluded passage times $L_{u,v}$. Write $|x|_1=x_1+x_2$ for $x\in \mathbb{R}_{\geq 0}^2$. For $u\le v$, define $S_{u,v}$ by taking the minimum of the same path weights used to define $L_{u,v}$. We write
+Use the [common LPP model](../notation.md), with i.i.d. real weights of law $`\mu`$ and terminal-excluded passage times $`L_{u,v}`$. Write $`|x|_1=x_1+x_2`$ for $`x\in \mathbb{R}_{\geq 0}^2`$. For $`u\le v`$, define $`S_{u,v}`$ by taking the minimum of the same path weights used to define $`L_{u,v}`$. We write
 
-$$
+```math
 I_+(\mu)=\int_0^\infty\mathbb P\{\omega_0>s\}^{1/2}\,ds,
 \qquad
 I_-(\mu)=\int_{-\infty}^0\mathbb P\{\omega_0\le s\}^{1/2}\,ds.
-$$
+```
 
-The paper writes $T$ for our $L$ and $\mu$ for the mean. Here $\mu$ denotes the weight law, $m=\mathbb E\omega_0$, and $\sigma^2=\mathbb E[(\omega_0-m)^2]$. The terminal-excluded path convention agrees with ours.
+The paper writes $`T`$ for our $`L`$ and $`\mu`$ for the mean. Here $`\mu`$ denotes the weight law, $`m=\mathbb E\omega_0`$, and $`\sigma^2=\mathbb E[(\omega_0-m)^2]`$. The terminal-excluded path convention agrees with ours.
 
-The [shape functions](../notation.md#shape-functions) $g$ and $h$ are defined by fixed-direction almost-sure limits. The results below prove their existence, finiteness and further properties under the indicated hypotheses. The [uniform shape approximation (U)](../notation.md#uniform-shape-approximation) is a separate conclusion, with one common probability-one event and a bound over all sufficiently distant lattice points.
+The [shape functions](../notation.md#shape-functions) $`g`$ and $`h`$ are defined by fixed-direction almost-sure limits. The results below prove their existence, finiteness and further properties under the indicated hypotheses. The [uniform shape approximation (U)](../notation.md#uniform-shape-approximation) is a separate conclusion, with one common probability-one event and a bound over all sufficiently distant lattice points.
 
 ### Theorem 2.3
 
 *Finiteness and continuity.*
 
-If $\mathbb E|\omega_0|<\infty$ and $I_+(\mu)<\infty$, the directional shape $g$ exists, is finite and continuous on the closed quadrant, and is symmetric, positively homogeneous and concave. For every fixed $x\in \mathbb{R}_{\geq 0}^2$,
+If $`\mathbb E|\omega_0|<\infty`$ and $`I_+(\mu)<\infty`$, the directional shape $`g`$ exists, is finite and continuous on the closed quadrant, and is symmetric, positively homogeneous and concave. For every fixed $`x\in \mathbb{R}_{\geq 0}^2`$,
 
-$$
+```math
 \frac{\mathbb E L_{0,\lfloor nx\rfloor}}n\longrightarrow g(x),
 \qquad
 \mathbb E\left|\frac{L_{0,\lfloor nx\rfloor}}n-g(x)\right|\longrightarrow0.
-$$
+```
 
 [Finite-continuity certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L135) · [Directional-limit certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73)
 
-The first certificate combines Propositions 2.1–2.2 with Theorem 2.3 and states almost-sure and $L^1$ convergence on lattice rays. Proposition 2.1 supplies convergence in every fixed real direction. The directional definition determines $g$ uniquely.
+The first certificate combines Propositions 2.1–2.2 with Theorem 2.3 and states almost-sure and $`L^1`$ convergence on lattice rays. Proposition 2.1 supplies convergence in every fixed real direction. The directional definition determines $`g`$ uniquely.
 
 ### Section 5.3
 
 *Uniform shape theorem in dimension two.*
 
-If $I_+(\mu)<\infty$ and $I_-(\mu)<\infty$, the shape $g$ satisfies [the uniform approximation (U)](../notation.md#uniform-shape-approximation). This strengthens fixed-direction convergence to a common almost-sure bound over all sufficiently distant lattice points.
+If $`I_+(\mu)<\infty`$ and $`I_-(\mu)<\infty`$, the shape $`g`$ satisfies [the uniform approximation (U)](../notation.md#uniform-shape-approximation). This strengthens fixed-direction convergence to a common almost-sure bound over all sufficiently distant lattice points.
 
 No positivity or nondegeneracy assumption is needed for this statement. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L187)
 
@@ -50,12 +50,12 @@ No positivity or nondegeneracy assumption is needed for this statement. [Lean ce
 
 *Square-root boundary expansion in dimension two.*
 
-If $I_+(\mu)<\infty$ and $I_-(\mu)<\infty$, then $\mathbb E\omega_0^2<\infty$ and
+If $`I_+(\mu)<\infty`$ and $`I_-(\mu)<\infty`$, then $`\mathbb E\omega_0^2<\infty`$ and
 
-$$
+```math
 g(1,\alpha)=m+2\sigma\sqrt\alpha+o(\sqrt\alpha)
 \qquad\text{as }\alpha\downarrow0.
-$$
+```
 
 The leading correction depends on the law only through its variance. The zero-variance case is included. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L82)
 
@@ -63,86 +63,89 @@ The leading correction depends on the law only through its variance. The zero-va
 
 *Finite continuous first-passage expected-rate limit in dimension two.*
 
-If $\mathbb E|\omega_0|<\infty$ and $I_-(\mu)<\infty$, there is exactly one function $h:\mathbb{R}_{\geq 0}^2\to\mathbb R$ such that, for every $x\in \mathbb{R}_{\geq 0}^2$,
+If $`\mathbb E|\omega_0|<\infty`$ and $`I_-(\mu)<\infty`$, there is exactly one function $`h:\mathbb{R}_{\geq 0}^2\to\mathbb R`$ such that, for every $`x\in \mathbb{R}_{\geq 0}^2`$,
 
-$$
+```math
 \frac{\mathbb E S_{0,\lfloor nx\rfloor}}n\longrightarrow h(x),
-$$
+```
 
-and for all $c\ge0$ and $x,y\in \mathbb{R}_{\geq 0}^2$,
+and for all $`c\ge0`$ and $`x,y\in \mathbb{R}_{\geq 0}^2`$,
 
-$$
+```math
 h(cx)=ch(x),\qquad h(x_2,x_1)=h(x_1,x_2),\qquad
 h(x+y)\le h(x)+h(y).
-$$
+```
 
-This function is continuous on all of $\mathbb{R}_{\geq 0}^2$. It is the first-passage directional shape because $S_\omega=-L_{-\omega}$ and [Proposition 2.1](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73), applied to the negated weight law, identifies its expected-rate limits with its almost-sure limits in every fixed direction. The [certificate for Corollary 2.5(i)](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L141) itself states only the displayed expected-rate and deterministic properties. No uniform approximation is asserted in this part.
+This function is continuous on all of $`\mathbb{R}_{\geq 0}^2`$. It is the first-passage directional shape because $`S_\omega=-L_{-\omega}`$ and [Proposition 2.1](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73), applied to the negated weight law, identifies its expected-rate limits with its almost-sure limits in every fixed direction. The [certificate for Corollary 2.5(i)](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L141) itself states only the displayed expected-rate and deterministic properties. No uniform approximation is asserted in this part.
 
 ### Corollary 2.5(ii)
 
 *First-passage boundary expansion in dimension two.*
 
-If $I_+(\mu)<\infty$ and $I_-(\mu)<\infty$, the finite continuous first-passage shape $h$ also satisfies the first-passage version of [the uniform approximation (U)](../notation.md#uniform-shape-approximation), and
+If $`I_+(\mu)<\infty`$ and $`I_-(\mu)<\infty`$, the finite continuous first-passage shape $`h`$ also satisfies the first-passage version of [the uniform approximation (U)](../notation.md#uniform-shape-approximation), and
 
-$$
+```math
 h(1,\alpha)=m-2\sigma\sqrt\alpha+o(\sqrt\alpha)
 \qquad\text{as }\alpha\downarrow0.
-$$
+```
 
 [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L211)
 
-For last-passage and first-passage shape functions $g,h$ and $t\ge0$, all four sets below are subsets of $\mathbb{R}_{\geq 0}^2$.
+For last-passage and first-passage shape functions $`g,h`$ and $`t\ge0`$, all four sets below are subsets of $`\mathbb{R}_{\geq 0}^2`$.
 
-$$
+```math
 \begin{aligned}
 B&=\{x\in \mathbb{R}_{\geq 0}^2:g(x)\le1\},&
 B(t)&=\{x\in \mathbb{R}_{\geq 0}^2:L_{0,\lfloor x\rfloor}\le t\},\\
 C&=\{x\in \mathbb{R}_{\geq 0}^2:h(x)\le1\},&
 C(t)&=\{x\in \mathbb{R}_{\geq 0}^2:S_{0,\lfloor x\rfloor}\le t\}.
 \end{aligned}
-$$
+```
 
 ### Theorem 5.1(i)
 
 *Last-passage growth sets in dimension two.*
 
-If $I_+(\mu)<\infty$, $I_-(\mu)<\infty$ and $m>0$, then on one event of probability one, for every $\varepsilon>0$ there is $t_0>0$ such that for every real $t\ge t_0$,
+If $`I_+(\mu)<\infty`$, $`I_-(\mu)<\infty`$ and $`m>0`$, then on one event of probability one, for every $`\varepsilon>0`$ there is $`t_0>0`$ such that for every real $`t\ge t_0`$,
 
-$$
+```math
 (1-\varepsilon)_+B\subseteq t^{-1}B(t)\subseteq(1+\varepsilon)B,
 \qquad (1-\varepsilon)_+=\max\{1-\varepsilon,0\}.
-$$
+```
 
 [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L86)
 
-For $0<\varepsilon<1$, the inner factor is the usual $1-\varepsilon$. The truncated factor records the release's nonnegative-scalar convention for larger $\varepsilon$.
+For $`0<\varepsilon<1`$, the inner factor is the usual $`1-\varepsilon`$. The truncated factor records the release's nonnegative-scalar convention for larger $`\varepsilon`$.
 
 ### Theorem 5.1(ii)
 
 *First-passage growth sets in dimension two.*
 
-Assume $I_+(\mu)<\infty$ and $I_-(\mu)<\infty$. If
+Assume $`I_+(\mu)<\infty`$ and $`I_-(\mu)<\infty`$. If
 
-$$
+```math
 \exists c>0\ \forall x\in \mathbb{R}_{\geq 0}^2,\qquad h(x)\ge c|x|_1,
-$$
+```
 
-then on one event of probability one, for every $\varepsilon>0$ there is $t_0>0$ such that for every real $t\ge t_0$,
+then on one event of probability one, for every $`\varepsilon>0`$ there is $`t_0>0`$ such that for every real $`t\ge t_0`$,
 
-$$
+```math
 (1-\varepsilon)_+C\subseteq t^{-1}C(t)\subseteq(1+\varepsilon)C.
-$$
+```
 
-The shape exists without the positive lower bound; the growth-set conclusion is conditional on it. The lower bound is equivalent to $\inf_{x\in \mathbb{R}_{\geq 0}^2\setminus\{0\}}h(x)/|x|_1>0$. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L157)
+The shape exists without the positive lower bound; the growth-set conclusion is conditional on it. The lower bound is equivalent to $`\inf_{x\in \mathbb{R}_{\geq 0}^2\setminus\{0\}}h(x)/|x|_1>0`$. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L157)
 
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-The map groups the paper's results. Open the full graph to see each named result and its formalization status.
+[Dependency graph and coverage notes](../graphs/paper-results/martin-2004.md)
+
+The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 
 Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
 
-[Full result graph and progress list](../graphs/paper-results/martin-2004.md)
+<details>
+<summary>Dependency overview</summary>
 
 ```mermaid
 flowchart TD
@@ -157,6 +160,8 @@ flowchart TD
   C1 --> C3
   C3 --> C4
 ```
+
+</details>
 
 <details>
 <summary>Every result and its status</summary>
@@ -271,128 +276,77 @@ flowchart TD
 
 | Paper result | Formalization |
 | --- | --- |
-| **Proposition 2.1**<br/>Directional passage-time limits | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73) |
-| **Proposition 2.2**<br/>Finite values of the shape | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L135) |
-| **Theorem 2.3**<br/>Continuity at boundary points | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L135) |
-| **Corollary 2.5(i)**<br/>A finite continuous first-passage shape | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L141) |
-| **Lemma 3.1**<br/>A probability bound for a maximum of sums | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Concentration.lean#L81) |
-| **Lemma 3.2**<br/>Changing a small coordinate | **◐ Restricted**<br/>[Bounded continuity and face estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinBoundedContinuity.lean#L131) |
-| **Lemma 3.3**<br/>Continuity for bounded weights | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinBoundedContinuity.lean#L131) |
-| **Proposition 3.4**<br/>Weight bounds for connected sets | **◐ Restricted**<br/>[Expected animal bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/AnimalPositiveMean.lean#L75) · [Almost-sure animal bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/GreedyAnimalAlmostSureBound.lean#L143) |
-| **Lemma 3.5**<br/>Upper and lower passage bounds | **◐ Restricted**<br/>[Mean and ray-shape upper bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinPassageMean.lean#L33) · [Uniform passage upper bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/UniformPassageUpper.lean#L57) · [Shape lower bound under a negative moment](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/ShapeAboveMean.lean#L32) |
-| **Lemma 3.6**<br/>Effect of capping large weights | **◐ Restricted**<br/>[Two-sided shape comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/RealExpectedTruncation.lean#L158) · [Compact uniform approximation](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinWeakContinuity.lean#L85) |
-| **Theorem 2.4**<br/>Shape near a coordinate axis | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L82) |
-| **Corollary 2.5(ii)**<br/>First-passage shape near an axis | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L211) |
-| **Lemma 4.1**<br/>A bound for Bernoulli weights | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BernoulliShapeBound.lean#L88) |
-| **Lemma 4.2**<br/>Changing the weight distribution | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/ShapeComparison.lean#L119) |
-| **Lemma 4.3**<br/>Bounded weights with the same mean and variance | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MeanVarianceTruncationTail.lean#L289) |
-| **Lemma 4.4**<br/>Grouping consecutive weights | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BlockingComparison.lean#L185) |
-| **Lemma 4.5**<br/>Comparing grouped weights with normal weights | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/GaussianBlockComparison.lean#L270) |
-| **Lemma 4.6**<br/>A normal comparison near the axis | **✓ Certified**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundaryUniversality.lean#L156) |
-| **Lemma 5.2**<br/>Capping weights changes passage times little | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/UniformTruncationApproximation.lean#L89) |
-| **Lemma 5.3**<br/>Capped passage times stay near their means | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundedPassageFluctuations.lean#L192) |
-| **Lemma 5.4**<br/>Mean passage times approach the shape | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundedExpectedUniform.lean#L53) |
-| **Lemma 5.5**<br/>Capping weights changes the shape little | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinWeakContinuity.lean#L32) |
-| **Theorem 5.1**<br/>Passage-time level sets at large times | **◐ Restricted**<br/>[Last-passage growth sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L86) · [First-passage growth sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L157) |
-| **Remark 5.1(i)**<br/>Checking a positive lower bound | **◐ Restricted**<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L200) |
-| **Remark 5.1(ii)**<br/>Weaker moment assumptions for growth | **◐ Restricted**<br/>[Weak-negative uniform shape theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/WeakNegativeShape.lean#L161) |
+| **[Proposition 2.1](../graphs/paper-results/martin-2004.md#proposition-21)**<br/>Directional passage-time limits | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#proposition-21)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73) |
+| **[Proposition 2.2](../graphs/paper-results/martin-2004.md#proposition-22)**<br/>Finite values of the shape | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#proposition-22)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L135) |
+| **[Theorem 2.3](../graphs/paper-results/martin-2004.md#theorem-23)**<br/>Continuity at boundary points | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#theorem-23)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L135) |
+| **[Corollary 2.5(i)](../graphs/paper-results/martin-2004.md#corollary-25i)**<br/>A finite continuous first-passage shape | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#corollary-25i)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L141) |
+| **[Lemma 3.1](../graphs/paper-results/martin-2004.md#lemma-31)**<br/>A probability bound for a maximum of sums | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-31)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Concentration.lean#L81) |
+| **[Lemma 3.2](../graphs/paper-results/martin-2004.md#lemma-32)**<br/>Changing a small coordinate | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-32)<br/>[Bounded continuity and face estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinBoundedContinuity.lean#L131) |
+| **[Lemma 3.3](../graphs/paper-results/martin-2004.md#lemma-33)**<br/>Continuity for bounded weights | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-33)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinBoundedContinuity.lean#L131) |
+| **[Proposition 3.4](../graphs/paper-results/martin-2004.md#proposition-34)**<br/>Weight bounds for connected sets | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#proposition-34)<br/>[Expected bound for connected sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/AnimalPositiveMean.lean#L75) · [Almost-sure bound for connected sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/GreedyAnimalAlmostSureBound.lean#L143) |
+| **[Lemma 3.5](../graphs/paper-results/martin-2004.md#lemma-35)**<br/>Upper and lower passage bounds | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-35)<br/>[Mean and directional-shape upper bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinPassageMean.lean#L33) · [Uniform passage upper bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/UniformPassageUpper.lean#L57) · [Mean lower bound under a first moment](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/ERealFloorRateGeometry.lean#L58) · [Directional expected-rate limits](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73) |
+| **[Lemma 3.6](../graphs/paper-results/martin-2004.md#lemma-36)**<br/>Effect of capping large weights | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-36)<br/>[Two-sided shape comparison](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/RealExpectedTruncation.lean#L158) · [Compact uniform approximation](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinWeakContinuity.lean#L85) |
+| **[Theorem 2.4](../graphs/paper-results/martin-2004.md#theorem-24)**<br/>Shape near a coordinate axis | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#theorem-24)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L82) |
+| **[Corollary 2.5(ii)](../graphs/paper-results/martin-2004.md#corollary-25ii)**<br/>First-passage shape near an axis | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#corollary-25ii)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/BoundaryAsymptotics.lean#L211) |
+| **[Lemma 4.1](../graphs/paper-results/martin-2004.md#lemma-41)**<br/>A bound for Bernoulli weights | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-41)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BernoulliShapeBound.lean#L88) |
+| **[Lemma 4.2](../graphs/paper-results/martin-2004.md#lemma-42)**<br/>Changing the weight distribution | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-42)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/ShapeComparison.lean#L119) |
+| **[Lemma 4.3](../graphs/paper-results/martin-2004.md#lemma-43)**<br/>Bounded weights with the same mean and variance | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-43)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MeanVarianceTruncationTail.lean#L289) |
+| **[Lemma 4.4](../graphs/paper-results/martin-2004.md#lemma-44)**<br/>Grouping consecutive weights | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-44)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BlockingComparison.lean#L185) |
+| **[Lemma 4.5](../graphs/paper-results/martin-2004.md#lemma-45)**<br/>Comparing grouped weights with normal weights | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-45)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/GaussianBlockComparison.lean#L270) |
+| **[Lemma 4.6](../graphs/paper-results/martin-2004.md#lemma-46)**<br/>A normal comparison near the axis | **✓ Certified**<br/>[Coverage note](../graphs/paper-results/martin-2004.md#lemma-46)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundaryUniversality.lean#L156) |
+| **[Lemma 5.2](../graphs/paper-results/martin-2004.md#lemma-52)**<br/>Capping weights changes passage times little | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-52)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/UniformTruncationApproximation.lean#L89) |
+| **[Lemma 5.3](../graphs/paper-results/martin-2004.md#lemma-53)**<br/>Capped passage times stay near their means | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-53)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundedPassageFluctuations.lean#L192) |
+| **[Lemma 5.4](../graphs/paper-results/martin-2004.md#lemma-54)**<br/>Mean passage times approach the shape | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-54)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/BoundedExpectedUniform.lean#L53) |
+| **[Lemma 5.5](../graphs/paper-results/martin-2004.md#lemma-55)**<br/>Capping weights changes the shape little | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#lemma-55)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/MartinWeakContinuity.lean#L32) |
+| **[Theorem 5.1](../graphs/paper-results/martin-2004.md#theorem-51)**<br/>Passage-time level sets at large times | **◐ Restricted**<br/>[Planar case only](../graphs/paper-results/martin-2004.md#theorem-51)<br/>[Last-passage growth sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L86) · [First-passage growth sets](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L157) |
+| **[Remark 5.1(i)](../graphs/paper-results/martin-2004.md#remark-51i)**<br/>Checking a positive lower bound | **◐ Restricted**<br/>[Planar inequality only](../graphs/paper-results/martin-2004.md#remark-51i)<br/>[Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L200) |
+| **[Remark 5.1(ii)](../graphs/paper-results/martin-2004.md#remark-51ii)**<br/>Weaker moment assumptions for growth | **◐ Restricted**<br/>[Planar forms with stronger moments](../graphs/paper-results/martin-2004.md#remark-51ii)<br/>[Weak-negative uniform shape theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/WeakNegativeShape.lean#L161) · [Shape lower bound under the same moments](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Probability/ShapeAboveMean.lean#L32) · [Growth sets from uniform approximation](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Analysis/GrowthSetInclusion.lean#L350) · [First-passage sign change](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Shape/FirstPassageShape.lean#L73) |
 
 </details>
 
 <!-- PAPER_MAP_END -->
 
-## Supporting results
+## Auxiliary coverage
 
-<details>
-<summary>Directional limits, deterministic lower bound and concentration</summary>
+Most restricted entries in this guide cover the full planar conclusion of a result that Martin proves for every dimension $`d\ge2`$. Those labels do not indicate gaps in the planar theorems stated above. Each entry in the [full progress list](../graphs/paper-results/martin-2004.md#coverage-notes) identifies its exact scope.
 
-### Proposition 2.1
+Two remarks have additional limitations. Remark 5.1(i) is certified for its planar deterministic diagonal inequality; the percolation criterion for positivity is outside the checked claim. Remark 5.1(ii) is covered in the plane when the less restrictive tail has a moment of some order $`p>1`$, rather than only a first moment. Both last- and first-passage growth conclusions follow from the linked released lemmas under those stronger moments. The grid-edge probability estimates explain where $`p>1`$ enters.
 
-*Directional limits in dimension two.*
+This restriction does not weaken the theorem in [*Differentiability of the shape function in the planar corner growth model*](differentiability.md). That theorem already assumes a negative moment above one, and its positive moment above four supplies the positive square-root-tail condition.
 
-If $\mathbb E|\omega_0|<\infty$, there is exactly one function $g:\mathbb{R}_{\geq 0}^2\to\mathbb R\cup\{+\infty\}$ with the following properties. For every fixed $x\in \mathbb{R}_{\geq 0}^2$,
-
-$$
-\frac{\mathbb E L_{0,\lfloor nx\rfloor}}n\longrightarrow g(x),
-\qquad
-\frac{L_{0,\lfloor nx\rfloor}}n\longrightarrow g(x)
-\quad\text{almost surely}.
-$$
-
-If $g(x)<\infty$, then also
-
-$$
-\mathbb E\left|\frac{L_{0,\lfloor nx\rfloor}}n-g(x)\right|\longrightarrow0.
-$$
-
-For all $c\ge0$ and $x,y\in \mathbb{R}_{\geq 0}^2$,
-
-$$
-g(cx)=cg(x),\qquad
-g(x_2,x_1)=g(x_1,x_2),\qquad
-g(x+y)\ge g(x)+g(y),
-$$
-
-with $0\cdot(+\infty)=0$. The finite-mean lower bound rules out $-\infty$; $+\infty$ is allowed. The almost-sure assertion is quantified separately for each fixed direction. It does not assert one exceptional null set valid for all real directions. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/LimitShape.lean#L73)
-
-### Remark 5.1(i)
-
-*The deterministic lower bound, first sentence only.*
-
-Let $h:\mathbb{R}_{\geq 0}^2\to\mathbb R$ satisfy $h(cx)=ch(x)$ for $c\ge0$, $h(x_2,x_1)=h(x_1,x_2)$, and $h(x+y)\le h(x)+h(y)$ for $x,y\in \mathbb{R}_{\geq 0}^2$. Then for every $x\in \mathbb{R}_{\geq 0}^2$,
-
-$$
-h(x)\ge\frac{|x|_1}{2}h(1,1).
-$$
-
-No continuity or probability assumption is required. This certificate concerns the first sentence and does not assert coverage of the whole remark. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Martin2004/Statements/GrowthSets.lean#L200)
-
-### Lemma 3.1
-
-*Concentration on a general probability space.*
-
-Let $I$ be finite and let $(Y_i)_{i\in I}$ be independent measurable real random variables on a probability space $(\Omega,\mathcal F,\mathbb P)$. Let $b\ge0$ satisfy $|Y_i|\le b$ almost surely for every $i$. Let $R\ge0$ be an integer and let $\mathcal C\ne\varnothing$ be a family of subsets of $I$ with $|C|\le R$ for each $C\in\mathcal C$. Define
-
-$$
-Z=\max_{C\in\mathcal C}\sum_{i\in C}Y_i.
-$$
-
-If $b>0$ and $R>0$, then for every $u>0$,
-
-$$
-\mathbb P\{|Z-\mathbb EZ|\ge u\}
-\le \exp\!\left(64-\frac{u^2}{64Rb^2}\right).
-$$
-
-If $R=0$ or $b=0$, then $Z=0$ almost surely and $\mathbb P\{|Z-\mathbb EZ|\ge u\}=0$ for $u>0$. This result belongs to this paper's guide even though its code is in the general probability library. [Lean certificate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Statements/Concentration.lean#L81)
-
-</details>
+Supporting concentration, continuity and truncation results have short descriptions and certificate links in the progress list. Their full statements and proofs should be read in the paper and the linked Lean files.
 
 ## Deviations from the printed text
 
 ### Alternative arguments for correct statements
 
-These replacements preserve the required conclusions of arguments treated as correct.
+These changes preserve the required conclusions of arguments treated as correct.
 
-| Source location | What the formalization does | Why this route was chosen |
+| Location | Formalization change | Reason |
 | --- | --- | --- |
-| Lemma 3.1 and its cited concentration input | Proves a mean-centered concentration bound by entropy tensorization and Herbst's argument, then deduces Martin's displayed bound. | Supplies a direct proof for signed bounded variables and arbitrary families, without building the cited convex-distance and median machinery. A stronger bound, $2\exp(-u^2/(16Rb^2))$, is proved first. |
-| Lemma 4.5, the cited nonuniform Berry–Esseen estimate | Uses the central limit theorem, a uniform fourth-moment bound for normalized sums of bounded variables, and dominated convergence. | The cited Petrov source was unavailable, and the subsequent argument needs only a qualitative weighted-distribution limit. No quantitative rate is used downstream. |
-| Lemma 4.1, the cited solvable column model | Constructs the stationary model and proves the particular bound needed by the comparison. | Avoids formalizing an entire external exact-solution theory when the paper uses only this bound. |
-| Proof of Theorem 2.4, the exponential shape formula | Derives the exponential shape through a stationary LPP model with the Burke property. | Reuses a direct stationary construction instead of the cited hydrodynamic argument. |
+| Lemma 3.1 | Proves concentration directly and obtains the paper's bound. | Covers signed bounded variables without formalizing the cited concentration theorem. |
+| Lemma 4.5 | Uses a qualitative normal approximation. | No convergence rate is needed downstream; the cited quantitative source was unavailable during formalization. |
+| Lemma 4.1 | Proves the required bound for the column model. | Limits the external model theory to the input used here. |
+| Theorem 2.4 | Uses a direct stationary-model proof of the exponential shape formula. | Reuses existing formalized constructions. |
 
-The stronger concentration theorem is an additional formalized result; the source-facing certificate above states Martin's bound. These two claims have different roles.
+The release also proves a stronger concentration bound; it is separate from the source-facing certificate for Lemma 3.1.
 
-### Formulation changes and expanded details
+### Formulation changes
 
-- **Common probability space.** The LPP statements use the canonical product environment. This gives one concrete representation of iid weights throughout the library. The concentration certificate itself is stated on a general probability space.
-- **Real directions in Proposition 2.1.** The formal proof supplies an explicit random-phase argument to handle rounding in nonlattice directions, followed by a comparison back to phase zero. This expands an omitted argument; it is not an unformalized part of the proposition.
-- **First-passage results.** Negating weights turns maxima into minima and concave shapes into convex shapes. This follows the relation described in the paper and makes the transfer explicit.
-- **Lemma 4.2.** The proof integrates the finite-size comparison before taking the scaling limit. This avoids requiring an unstated dominating function for the original order of operations.
+| Location | Formalization change | Reason |
+| --- | --- | --- |
+| LPP probability space | Uses a canonical product environment. | Gives the library a common representation of i.i.d. weights. |
+| Proposition 2.1 | Makes rounding for real directions explicit. | Fills a detail omitted in the paper. |
+| First-passage results | Transfers statements by negating weights. | Makes the relation described in the paper explicit. |
+| Lemma 4.2 | Reorders an integration and scaling-limit step. | Avoids an unstated domination assumption. |
 
 ### A formula-level correction for signed weights
 
-The all-real-direction supremum in printed equation (2.3) need not equal the shape limit when weights can be negative. For deterministic weights $\omega_z=-1$ and $x=(1/2,0)$, the $n=1$ term is zero, while the limiting rate is $-1/2$. The formalization therefore characterizes the shape by directional limits and, where available, uniform lattice asymptotics. It does not use the printed off-lattice supremum as its definition. This is a correction of a formula, separate from the optional proof replacements above.
+For signed weights, the off-lattice supremum in printed equation (2.3) can differ from the directional shape. For constant weights $`\omega_z=-1`$ and $`x=(1/2,0)`$, its first term is zero while the limiting rate is $`-1/2`$. The guide and certificates characterize the shape by directional limits.
+
+### The origin in Lemma 5.5
+
+The printed strict relative-error bound must exclude the origin, where both sides are zero. The certificate uses a non-strict bound valid there. A smaller positive tolerance recovers the printed strict bound at nonzero directions. This endpoint qualification is separate from the dimension restriction.
 
 ## Remaining coverage
 
