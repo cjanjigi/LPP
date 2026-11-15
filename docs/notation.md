@@ -2,7 +2,7 @@
 
 [Papers and formalization guides](../README.md)
 
-We use the same notation throughout the guides. This page fixes the model and conventions; each theorem supplies its own assumptions on the weight distribution.
+This page sets notation for the LPP models discussed in the guides. The current definitions describe the planar site-weight model; each theorem supplies its own assumptions on the weight distribution.
 
 ## Environment and geometry
 

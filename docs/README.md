@@ -2,6 +2,8 @@
 
 [Paper catalogue and build instructions](../README.md) · [Common LPP notation](notation.md) · [Documentation style](../STYLE.md)
 
+These guides document the collection's current paper coverage. Add a guide as results from another paper become available.
+
 ## Differentiability of the shape function in the planar corner growth model
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.

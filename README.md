@@ -1,6 +1,8 @@
 # LPP
 
-Lean formalizations of limit shapes, differentiability and their probability foundations in planar directed percolation.
+Lean formalizations of last-passage percolation and related probability.
+
+This repository collects formalizations from multiple papers and projects. The catalogue below records the current coverage and will grow as further results are completed.
 
 Choose a paper below to read its main theorems, follow formalization progress, and see any changes to the written proofs. All guides use [the same LPP notation](docs/notation.md).
 
@@ -75,7 +77,7 @@ lake env lean "${probe_flags[@]}" "$work/solution.lean" > "$work/solution.log" 2
 node scripts/compare-challenge-types.mjs compare "$config" "$work/challenge.log" "$work/solution.log"
 ```
 
-Check both Lean exit codes before accepting the comparison. This also audits the axioms of each configured Solution theorem. Repeat with the other four comparator configurations.
+Check both Lean exit codes before accepting the comparison. This also audits the axioms of each configured Solution theorem. Repeat with the other comparator configurations.
 
 To inspect a theorem's axioms, create a temporary Lean file importing its statement module and containing, for example:
 
@@ -87,11 +89,9 @@ import Differentiability.Statements
 
 Run it with `lake env lean "${probe_flags[@]}" /absolute/path/to/the/file.lean`. Repeat for all advertised results when auditing a release. A build alone is not an axiom audit.
 
-The four folders are `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. The statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Module placement does not change theorem namespaces. Comparator descriptions live in `comparator/`.
+The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Module placement does not change theorem namespaces. Comparator descriptions live in `comparator/`.
 
-## How the formalization relates to the manuscripts
-
-The mathematical source for differentiability is C. Janjigian, F. Rassoul-Agha and T. Seppäläinen, *Differentiability of the shape function in the planar corner growth model*, preprint. Other inputs include Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation), cited by statement name. Manuscript text and reading copies are not distributed here.
+## Sources and formalization guides
 
 The [paper guides](docs/README.md) state the certified results and record coverage limits, formulation choices, source corrections and changes of proof. They distinguish changes of proof from restrictions on the certified results. The [common notation page](docs/notation.md) fixes the model and path conventions.
 

@@ -4,6 +4,7 @@ This file records the documentation conventions for LPP. Use it for the paper ca
 
 ## Organize around papers
 
+- Describe LPP as a growing collection of formalizations in last-passage percolation and related probability. The current paper catalogue and package layout record released coverage, rather than defining the repository's permanent scope. Keep whole-repository descriptions distinct from the precise scope of individual papers and certificates.
 - Group results by their source paper, rather than by development project or Lean module.
 - Give every paper its full, proper title and author attribution, publication information or identified preprint version, and a link to its formalization guide. Use full paper titles in navigation and cross-paper references. Avoid vague labels such as “the differentiability project.”
 - Focus the catalogue on the main theorem formalizations and their mathematical significance. Mention that supporting results are also formalized and can be found in the guides; do not turn the entrance page into one long theorem inventory.
