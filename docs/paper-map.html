@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper dependence map · LPP</title>
+  <link rel="stylesheet" href="assets/paper-map.css">
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+  <script defer src="assets/paper-map.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#reading-panel">Skip to result details</a>
+  <header class="page-header">
+    <div class="header-line">
+      <a class="brand" href="https://github.com/cjanjigi/LPP">LPP</a>
+      <span class="preview-label">Documentation</span>
+      <a id="guide-link" href="https://github.com/cjanjigi/LPP#readme">Formalization guide</a>
+    </div>
+    <label class="paper-picker" for="paper-select">Paper
+      <select id="paper-select">
+        <option value="differentiability">Differentiability of the shape function in the planar corner growth model</option>
+        <option value="martin-2004">Limiting shape for directed percolation models</option>
+        <option value="bk-1985">Inequalities with applications to percolation and reliability</option>
+        <option value="liggett-1985">An improved subadditive ergodic theorem</option>
+      </select>
+    </label>
+    <h1 id="paper-title">Paper dependence map</h1>
+    <p id="paper-authors" class="authors"></p>
+  </header>
+
+  <main>
+    <div class="map-toolbar" aria-label="Map controls">
+      <div class="search-wrap">
+        <label class="sr-only" for="result-search">Find a result by number or title</label>
+        <input id="result-search" type="search" autocomplete="off" placeholder="Find a theorem, lemma or number" aria-controls="search-results" aria-expanded="false">
+        <div id="search-results" class="search-results" hidden></div>
+      </div>
+      <div class="button-group">
+        <button id="expand-all" type="button">Expand all</button>
+        <button id="collapse-all" type="button">Collapse all</button>
+        <button id="fit-map" type="button">Fit map</button>
+      </div>
+      <label class="external-toggle"><input id="show-external" type="checkbox">External inputs</label>
+    </div>
+
+    <div class="legend" aria-label="Formalization status">
+      <span class="status certified">✓ Certified</span>
+      <span class="status restricted">◐ Restricted</span>
+      <span class="status not-assessed">? Not assessed</span>
+      <span class="status not-in-release">○ Not in this release</span>
+      <span class="arrow-key">A → B means A is used to prove B. <span id="bounded-arrow-note" hidden>Dashed arrows belong to the proof for bounded weights.</span></span>
+    </div>
+
+    <p class="design-credit">Graph presentation based on Scott Armstrong’s visual paper design for <a href="https://scottnarmstrong.github.io/hcp-visual-paper/" target="_blank" rel="noopener noreferrer"><cite>Homogenization at a polynomial scale in high contrast</cite></a>.</p>
+
+    <div class="workspace">
+      <section class="graph-region" aria-labelledby="graph-heading">
+        <div class="graph-caption">
+          <h2 id="graph-heading">Dependence map</h2>
+          <p>Click a group to open it. Drag to move; use + and − to zoom. Select a result to trace its arrows.</p>
+        </div>
+        <div id="graph" role="img" aria-label="Interactive dependence graph. Results can also be selected through search or the all-results list."></div>
+        <p id="graph-error" class="notice" hidden></p>
+        <div class="graph-bottom">
+          <p id="graph-summary" role="status" aria-live="polite">Loading the paper map…</p>
+          <div class="zoom-controls" aria-label="Graph zoom">
+            <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+            <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+            <button id="focus-result" type="button" disabled>Focus result</button>
+          </div>
+        </div>
+      </section>
+
+      <aside id="reading-panel" class="reading-panel" aria-label="Result details" tabindex="-1">
+        <div id="result-detail" aria-live="polite"></div>
+        <details id="all-results" class="all-results">
+          <summary id="all-results-title">All results</summary>
+          <div id="result-list"></div>
+        </details>
+      </aside>
+    </div>
+    <p class="page-note">A group can contain results with different statuses. A restricted certificate covers only the case or part described in its result panel. “Not assessed” does not mean that no formalization exists.</p>
+  </main>
+</body>
+</html>

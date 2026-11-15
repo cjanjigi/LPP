@@ -2,33 +2,37 @@
 
 Lean formalizations of limit shapes, differentiability and their probability foundations in planar directed percolation.
 
-## What is proved
+Choose a paper below to read its main theorems, follow formalization progress, and see any changes to the written proofs. All guides use [the same LPP notation](docs/notation.md).
 
-For an iid real weight law that is not a point mass, with a negative-part moment of order greater than 1 and a positive-part moment of order greater than 4, the last-passage shape exists, is unique and is differentiable on the open quadrant. The exact hypotheses and conclusions are in the statement modules.
+## Paper catalogue
 
-The seventeen main results are listed below. Names in the second column have prefix `LPPStatements.`.
-
-| Source result | Lean theorem |
+| Paper and guide | Main certified theorems |
 | --- | --- |
-| Differentiability preprint, Theorem 2.1 | `Differentiability.shape_exists_unique_and_differentiable` |
-| Martin (2004), Proposition 2.1 | `Martin2004.extendedShape_limits_of_finite_mean` |
-| Martin (2004), Propositions 2.1–2.2 and Theorem 2.3 | `Martin2004.shape_continuous_of_finite_mean` |
-| Martin (2004), Section 5.3, uniform shape theorem | `Martin2004.shape_function_exists_unique` |
-| Martin (2004), Theorem 2.4 | `Martin2004.shape_boundary_asymptotics` |
-| Martin (2004), Corollary 2.5(i) | `Martin2004.firstPassageShape_continuous` |
-| Martin (2004), Corollary 2.5(ii) | `Martin2004.firstPassageShape_boundary_asymptotics` |
-| Martin (2004), Theorem 5.1(i) | `Martin2004.lastPassage_growthSets_converge` |
-| Martin (2004), Theorem 5.1(ii) | `Martin2004.firstPassage_growthSets_converge` |
-| Martin (2004), Remark 5.1(i), first sentence | `Martin2004.taxicab_lower_bound_of_subadditive` |
-| van den Berg and Kesten (1985), Theorem 3.3 | `BK.bk_inequality_bernoulli_cube` |
-| Extension to finitely many ordered coordinates | `BK.bk_inequality` |
-| Finite-family extension, finitely many coordinates | `BK.bk_inequality_family` |
-| Extension to countably many ordered coordinates | `BK.bk_inequality_countable` |
-| Finite-family extension, countably many coordinates | `BK.bk_inequality_family_countable` |
-| Liggett (1985), Theorem 1.10 | `Liggett.subadditive_ergodic_theorem` |
-| Martin (2004), Lemma 3.1 | `Concentration.concentration_of_max_of_sums` |
+| **Differentiability of the shape function in the planar corner growth model**<br>Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen.<br>Preprint.<br>[Formalization guide](docs/guides/differentiability.md) | **Theorem 2.1.** Differentiability of the planar limit shape under the stated moment hypotheses. |
+| **[Limiting shape for directed percolation models](https://doi.org/10.1214/009117904000000838)**<br>James B. Martin.<br>*The Annals of Probability* **32** (2004), 2908–2937.<br>[Formalization guide](docs/guides/martin-2004.md) | **Theorem 2.3.** Finite, continuous limit shape.<br>**Theorem 2.4.** Square-root boundary asymptotics.<br>**Corollary 2.5.** First-passage shape and boundary asymptotics.<br>**Theorem 5.1.** Last- and first-passage growth sets.<br>These certificates cover the planar case, under the hypotheses stated in the guide. |
+| **[Inequalities with applications to percolation and reliability](https://doi.org/10.2307/3213860)**<br>J. van den Berg and H. Kesten.<br>*Journal of Applied Probability* **22** (1985), 556–569.<br>[Formalization guide](docs/guides/bk-1985.md) | **Theorem 3.3.** The BK inequality for increasing events under independent Bernoulli coordinates.<br>**Extensions.** Completed ordered-coordinate, finite-family and countable-coordinate versions are stated in the guide. |
+| **[An improved subadditive ergodic theorem](https://doi.org/10.1214/aop/1176992811)**<br>Thomas M. Liggett.<br>*The Annals of Probability* **13** (1985), 1279–1285.<br>[Formalization guide](docs/guides/liggett-1985.md) | **Theorem 1.10.** The subadditive ergodic theorem, including its nonergodic conclusion, under Liggett's hypotheses. |
 
-The Martin shape results concern dimension two. The BK extensions concern increasing events with the precise measurability and order hypotheses in the statements. Mathlib supplies the underlying analysis and measure theory; the results above are proved in this project.
+The guides also document certified auxiliary results, exact hypotheses, proof choices and coverage limits. The catalogue highlights the main theorems; it does not inventory every supporting lemma.
+
+Mathlib supplies the underlying analysis and measure theory; the listed results are proved in this project.
+
+## Progress key
+
+**Certified** links to a released Lean proof. **Restricted** covers only the stated case or part. **Not assessed** means that this guide has not checked for a matching certificate. Supporting lemmas are included in each paper's progress list.
+
+The maps follow results in the papers, rather than the organization of the code. Proof replacements chosen to simplify formalization are recorded separately from missing results and corrections to the text.
+
+[LPP notation and conventions](docs/notation.md) · [Building the library](#build-and-checks)
+
+<details>
+<summary>About this documentation and its coverage</summary>
+
+The certificate links describe formalization release [`5a3c7a6`](https://github.com/cjanjigi/LPP/tree/5a3c7a612144b68468559ea1800bf7f39a5d3ef1). Later development results are not counted. The guides distinguish paper statements from formalization extensions and assess only the certificate coverage explicitly listed. This documentation update adds no new Lean results.
+
+</details>
+
+The guides and full graphs render directly on GitHub. See the [interactive graph instructions](docs/README.md#interactive-graphs) and [documentation style](STYLE.md).
 
 ## Guarantees and limits
 
