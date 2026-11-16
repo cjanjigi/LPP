@@ -99,8 +99,6 @@ node scripts/run-audits.mjs
 
 It discovers every `comparator/*/comparator.json`, checks both probe exit codes before comparing their output, and runs `lake comparator` with Nanoda enabled for each configuration. Kernel replay checks all tracked project modules: proof modules are imported together and replayed in a fresh environment; the deliberate Challenge modules are replayed separately. The build rejects warnings other than the configured Challenges' deliberate `sorry` warnings. Logs and command exit codes are retained as private CI artifacts. `node --test scripts/run-audits.test.mjs` tests the audit runner without compiling Lean.
 
-This follows Scott Armstrong's [build](https://github.com/scottnarmstrong/MarkovProcess/blob/main/.github/workflows/build.yml) and [comparator](https://github.com/scottnarmstrong/MarkovProcess/blob/main/.github/workflows/comparator.yml) checks for *MarkovProcess* and the [kernel-replay design](https://github.com/scottnarmstrong/KAM-dev/blob/main/scripts/kernel_replay.sh) in *KAM-dev*. The checker and exporter here come from the pinned Lean toolchain.
-
 The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Module placement does not change theorem namespaces. Comparator descriptions live in `comparator/`.
 
 ## Sources and formalization guides
