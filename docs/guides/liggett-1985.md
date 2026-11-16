@@ -75,8 +75,6 @@ Here $`L^1`$ convergence means $`\mathbb E|X_{0,n}/n-X_\infty|\to0`$. If the lef
 
 The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 
-Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
-
 <details>
 <summary>Dependency overview</summary>
 

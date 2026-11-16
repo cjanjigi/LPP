@@ -142,8 +142,6 @@ The shape exists without the positive lower bound; the growth-set conclusion is 
 
 The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 
-Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
-
 <details>
 <summary>Dependency overview</summary>
 

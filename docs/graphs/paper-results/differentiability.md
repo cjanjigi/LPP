@@ -8,8 +8,6 @@
 
 A status applies to the scope stated below. Arrows point from a result to a result whose proof uses it.
 
-Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
-
 ```mermaid
 flowchart TD
   subgraph S0["Where the shape reaches the top weight"]

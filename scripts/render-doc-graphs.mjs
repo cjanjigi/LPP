@@ -10,7 +10,6 @@ const names = { certified: 'Certified', restricted: 'Restricted', not_assessed: 
 const clean = value => String(value || '').replaceAll('|', '\\|').replaceAll('\n', ' ');
 const quote = value => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const key = '**✓ Certified** · **◐ Restricted** · **○ Not in this release** · **? Not assessed**';
-const designCredit = "Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).";
 
 function validate(p) {
   const ids = new Set(p.results.map(r => r.id));
@@ -121,7 +120,7 @@ for (const slug of slugs) {
   validate(p);
   const graph = fullGraph(p), table = progress(p);
   const guideTable = progress(p, `../graphs/paper-results/${slug}.md`);
-  const main = `## Progress and dependencies\n\n[Dependency graph and coverage notes](../graphs/paper-results/${p.slug}.md)\n\nThe graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.\n\n${designCredit}\n\n<details>\n<summary>Dependency overview</summary>\n\n\`\`\`mermaid\n${overview(p)}\n\`\`\`\n\n</details>\n\n${p.notes.map(n => n + '\n\n').join('')}<details>\n<summary>Every result and its status</summary>\n\n${key}\n\n\`\`\`mermaid\n${graph}\n\`\`\`\n\n${guideTable}\n\n</details>\n\n`;
+  const main = `## Progress and dependencies\n\n[Dependency graph and coverage notes](../graphs/paper-results/${p.slug}.md)\n\nThe graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.\n\n<details>\n<summary>Dependency overview</summary>\n\n\`\`\`mermaid\n${overview(p)}\n\`\`\`\n\n</details>\n\n${p.notes.map(n => n + '\n\n').join('')}<details>\n<summary>Every result and its status</summary>\n\n${key}\n\n\`\`\`mermaid\n${graph}\n\`\`\`\n\n${guideTable}\n\n</details>\n\n`;
   const guidePath = path.join(root, 'guides', slug + '.md');
   let guide = await fs.readFile(guidePath, 'utf8');
   if (guide.includes('<!-- PAPER_MAP -->')) guide = guide.replace('<!-- PAPER_MAP -->', '<!-- PAPER_MAP_START -->\n' + main + '<!-- PAPER_MAP_END -->');
@@ -133,7 +132,7 @@ for (const slug of slugs) {
     const to = p.results.find(r => r.id === e.to);
     return `| ${clean(from.label || from.title)} → ${clean(to.label)} | ${clean(typeof e.evidence === 'string' ? e.evidence : [e.evidence.page ? 'p. ' + e.evidence.page : '', e.evidence.locator].filter(Boolean).join(' · '))} |`;
   }).join('\n');
-  const out = `# ${p.title}\n\n**${p.authors.join(', ')}**\n\n[Formalization guide](../../guides/${slug}.md) · [Paper catalogue](../../../README.md)\n\n${key}\n\nA status applies to the scope stated below. Arrows point from a result to a result whose proof uses it.\n\n${designCredit}\n\n\`\`\`mermaid\n${graph}\n\`\`\`\n\n${p.notes.map(n => n + '\n\n').join('')}## Progress\n\n${table}\n\n## Coverage notes\n\nThese short descriptions locate the results and explain certificate coverage. Consult the paper for the full statements and proofs; the formalization guide states the main certified theorems.\n\n${coverageNotes(p)}\n\n<details>\n<summary>Source locations for dependency arrows</summary>\n\n| Use | Source location |\n| --- | --- |\n${uses}\n\n</details>\n`;
+  const out = `# ${p.title}\n\n**${p.authors.join(', ')}**\n\n[Formalization guide](../../guides/${slug}.md) · [Paper catalogue](../../../README.md)\n\n${key}\n\nA status applies to the scope stated below. Arrows point from a result to a result whose proof uses it.\n\n\`\`\`mermaid\n${graph}\n\`\`\`\n\n${p.notes.map(n => n + '\n\n').join('')}## Progress\n\n${table}\n\n## Coverage notes\n\nThese short descriptions locate the results and explain certificate coverage. Consult the paper for the full statements and proofs; the formalization guide states the main certified theorems.\n\n${coverageNotes(p)}\n\n<details>\n<summary>Source locations for dependency arrows</summary>\n\n| Use | Source location |\n| --- | --- |\n${uses}\n\n</details>\n`;
   await fs.writeFile(path.join(root, 'graphs/paper-results', slug + '.md'), githubMath(out));
   reports.push({ paper: p.title, results: p.results.length, source_edges: p.edges.length, clusters: p.clusters.length });
 }

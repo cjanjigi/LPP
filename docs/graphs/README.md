@@ -2,8 +2,6 @@
 
 The maps organize each paper's named results into sections. Expanding a section reveals the individual results and their formalization status. Selecting a result in the interactive viewer shows what it uses, what uses it, and links to the relevant Lean certificates.
 
-Graph presentation based on Scott Armstrong’s visual paper design for [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/).
-
 The available maps cover the papers currently documented in the collection.
 
 - [Differentiability of the shape function in the planar corner growth model](paper-results/differentiability.md)

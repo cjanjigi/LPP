@@ -56,9 +56,9 @@ When a Lean certificate packages several properties of the shape into one conclu
 - Cluster results into sections or related blocks to reduce visual clutter. Blocks may collapse, but expanding them must reveal their individual results and statuses. Preserve independent branches and the distinction between proofs under different hypotheses.
 - An arrow $`A\to B`$ means that $`A`$ is used to prove $`B`$. Retain source evidence for the use. Keep equivalent formulations and reuse of proof ideas distinct from prerequisite arrows.
 - Let readers select a result to see a short description, necessary notation, prerequisites, later uses and certificate links. Keep precise main theorem statements in the guide. Show coverage for individual results; a mixed block must not appear wholly formalized.
-- Credit Scott Armstrong's visual paper design wherever these graphs are presented, with a link to [*Homogenization at a polynomial scale in high contrast*](https://scottnarmstrong.github.io/hcp-visual-paper/). This credits the presentation design; the mathematical dependencies come from each source paper.
+- Credit Scott Armstrong's visual-paper design only in a short footnote below each interactive dependency viewer. Put the link to his visual paper in that footnote. Static diagrams, Markdown guides and graph indexes are ordinary dependency graphs and must not carry this design credit. Mathematical dependencies retain their source-paper references.
 
-The progress-list idea from [KAM-dev](https://github.com/scottnarmstrong/KAM-dev) is useful. Its overall documentation is not the style template for this project.
+Use progress listings to help readers assess coverage. Keep the overall documentation tailored to this project.
 
 ## Describe coverage and deviations separately
 
