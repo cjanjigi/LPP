@@ -99,7 +99,7 @@ node scripts/run-audits.mjs
 
 It discovers every `comparator/*/comparator.json`, checks both probe exit codes before comparing their output, and runs `lake comparator` with Nanoda enabled for each configuration. Kernel replay checks all tracked project modules: proof modules are imported together and replayed in a fresh environment; the deliberate Challenge modules are replayed separately. The build rejects warnings other than the configured Challenges' deliberate `sorry` warnings. Logs and command exit codes are retained as private CI artifacts. `node --test scripts/run-audits.test.mjs` tests the audit runner without compiling Lean.
 
-The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Module placement does not change theorem namespaces. Comparator descriptions live in `comparator/`.
+The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Comparator descriptions live in `comparator/`.
 
 ## Sources and formalization guides
 
