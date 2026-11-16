@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
 public import Mathlib.MeasureTheory.Measure.Real
 public import Mathlib.Analysis.SpecialFunctions.Exp
 public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
