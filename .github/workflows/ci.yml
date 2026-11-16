@@ -94,7 +94,7 @@ jobs:
             --output "$archive"
           printf '%s  %s\n' "$ELAN_SHA256" "$archive" | sha256sum --check
           tar -xzf "$archive" -C "$install_dir"
-          "$install_dir/elan-init" --yes --no-modify-path --default-toolchain none
+          "$install_dir/elan-init" -y --no-modify-path --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
           echo "$(dirname "$("$HOME/.elan/bin/elan" which lean)")" >> "$GITHUB_PATH"
