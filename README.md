@@ -44,7 +44,7 @@ The main results have Lean proofs whose axiom dependencies are `propext`, `Class
 
 Challenge modules contain deliberate `sorry` proof holes. Solution modules supply proofs of the corresponding statements and must not depend on the Challenge modules. The holes are exercises for comparison, and are excluded from claims about completed proofs. No other proof holes are authorized.
 
-Work on names, repeated definitions and proof presentation continues. The [CI workflow](.github/workflows/ci.yml) runs the build, source guards, statement and axiom comparisons, kernel replay and Nanoda-backed comparator audits. See [GitHub Actions](https://github.com/cjanjigi/LPP/actions/workflows/ci.yml) for the results for each revision. Structural checks and printed type comparisons are separate from kernel replay and independent checking by Nanoda.
+Work to improve the code quality continues. The [CI workflow](.github/workflows/ci.yml) runs the build, source guards, statement and axiom comparisons, kernel replay and Nanoda-backed comparator audits. See [GitHub Actions](https://github.com/cjanjigi/LPP/actions/workflows/ci.yml) for the results for each revision. Structural checks and printed type comparisons are separate from kernel replay and independent checking by Nanoda.
 
 ## Build and checks
 
