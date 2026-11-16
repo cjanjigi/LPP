@@ -48,6 +48,8 @@ Work on names, repeated definitions and proof presentation continues. External c
 
 ## Build and checks
 
+The Lake package is named `LastPassagePercolation`. Its library entry points are listed below.
+
 Install Elan and Node.js, then run from this directory:
 
 ```sh

@@ -111,7 +111,7 @@
       "configFile": "lakefile.toml"
     }
   ],
-  "name": "lppdifferentiability",
+  "name": "LastPassagePercolation",
   "lakeDir": ".lake",
   "fixedToolchain": false
 }
