@@ -44,7 +44,7 @@ The main results have Lean proofs whose axiom dependencies are `propext`, `Class
 
 Challenge modules contain deliberate `sorry` proof holes. Solution modules supply proofs of the corresponding statements and must not depend on the Challenge modules. The holes are exercises for comparison, and are excluded from claims about completed proofs. No other proof holes are authorized.
 
-Work on names, repeated definitions and proof presentation continues. External comparator verification, including an independent kernel replay, has not yet been run. The supplied structural checker and Lean type comparison do not constitute that external verification.
+Work on names, repeated definitions and proof presentation continues. The [CI workflow](.github/workflows/ci.yml) runs the build, source guards, statement and axiom comparisons, kernel replay and Nanoda-backed comparator audits. See [GitHub Actions](https://github.com/cjanjigi/LPP/actions/workflows/ci.yml) for the results for each revision. Structural checks and printed type comparisons are separate from kernel replay and independent checking by Nanoda.
 
 ## Build and checks
 
@@ -90,6 +90,16 @@ import Differentiability.Statements
 ```
 
 Run it with `lake env lean "${probe_flags[@]}" /absolute/path/to/the/file.lean`. Repeat for all advertised results when auditing a release. A build alone is not an axiom audit.
+
+The full automated suite runs on Linux with `bubblewrap` and the pinned toolchain's bundled checkers available on `PATH`:
+
+```sh
+node scripts/run-audits.mjs
+```
+
+It discovers every `comparator/*/comparator.json`, checks both probe exit codes before comparing their output, and runs `lake comparator` with Nanoda enabled for each configuration. Kernel replay checks all tracked project modules: proof modules are imported together and replayed in a fresh environment; the deliberate Challenge modules are replayed separately. The build rejects warnings other than the configured Challenges' deliberate `sorry` warnings. Logs and command exit codes are retained as private CI artifacts. `node --test scripts/run-audits.test.mjs` tests the audit runner without compiling Lean.
+
+This follows Scott Armstrong's [build](https://github.com/scottnarmstrong/MarkovProcess/blob/main/.github/workflows/build.yml) and [comparator](https://github.com/scottnarmstrong/MarkovProcess/blob/main/.github/workflows/comparator.yml) checks for *MarkovProcess* and the [kernel-replay design](https://github.com/scottnarmstrong/KAM-dev/blob/main/scripts/kernel_replay.sh) in *KAM-dev*. The checker and exporter here come from the pinned Lean toolchain.
 
 The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Module placement does not change theorem namespaces. Comparator descriptions live in `comparator/`.
 

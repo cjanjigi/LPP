@@ -1,0 +1,131 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - '**/*.lean'
+      - 'lakefile.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
+      - 'comparator/**'
+      - 'scripts/**'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hygiene:
+    name: Hygiene and guard checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 26.8.1
+
+      - name: Test audit runner
+        run: node --test scripts/run-audits.test.mjs
+
+      - name: Run source guards
+        run: node scripts/run-audits.mjs --stage guards --output "$RUNNER_TEMP/lpp-audits"
+
+      - name: Upload hygiene logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lpp-audits-hygiene
+          path: ${{ runner.temp }}/lpp-audits
+          if-no-files-found: warn
+
+  linux:
+    name: Linux build and proof audits
+    needs: hygiene
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    env:
+      LEAN_NUM_THREADS: 2
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 26.8.1
+
+      - name: Free runner disk space
+        run: sudo rm -rf /usr/local/lib/android /usr/share/dotnet
+
+      - name: Install bubblewrap and enable user namespaces
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap
+          if [ -e /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          fi
+          test "$(cat /proc/sys/user/max_user_namespaces)" -gt 0
+
+      - name: Install checksum-verified Elan
+        env:
+          ELAN_VERSION: v4.2.4
+          ELAN_SHA256: 42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63
+        run: |
+          archive="$RUNNER_TEMP/elan-${ELAN_VERSION}.tar.gz"
+          install_dir="$RUNNER_TEMP/elan-${ELAN_VERSION}"
+          mkdir -p "$install_dir"
+          curl --fail --location --retry 3 \
+            "https://github.com/leanprover/elan/releases/download/${ELAN_VERSION}/elan-x86_64-unknown-linux-gnu.tar.gz" \
+            --output "$archive"
+          printf '%s  %s\n' "$ELAN_SHA256" "$archive" | sha256sum --check
+          tar -xzf "$archive" -C "$install_dir"
+          "$install_dir/elan-init" --yes --no-modify-path --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+          echo "$(dirname "$("$HOME/.elan/bin/elan" which lean)")" >> "$GITHUB_PATH"
+
+      - name: Restore pinned Lean build cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .lake/build
+          key: ${{ runner.os }}-lean-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-lean-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Build all targets
+        run: node scripts/run-audits.mjs --stage build --output "$RUNNER_TEMP/lpp-audits"
+
+      - name: Compare challenge and solution statements
+        run: node scripts/run-audits.mjs --stage types --output "$RUNNER_TEMP/lpp-audits"
+
+      - name: Replay proof certificates
+        run: node scripts/run-audits.mjs --stage replay --output "$RUNNER_TEMP/lpp-audits"
+
+      - name: Compare configured theorems and axioms
+        run: node scripts/run-audits.mjs --stage comparator --output "$RUNNER_TEMP/lpp-audits"
+
+      - name: Upload Linux audit logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lpp-audits-linux
+          path: ${{ runner.temp }}/lpp-audits
+          if-no-files-found: warn
