@@ -1,4 +1,4 @@
-name: CI
+name: CI and Nanoda
 
 on:
   push:
@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: CI-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -1,5 +1,7 @@
 # LPP
 
+[![CI and Nanoda](https://github.com/cjanjigi/LPP/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/cjanjigi/LPP/actions/workflows/ci.yml)
+
 Lean formalizations of last-passage percolation and related probability.
 
 This repository collects formalizations from multiple papers and projects. The catalogue below records the current coverage and will grow as further results are completed.
