@@ -109,6 +109,10 @@ The [paper guides](docs/README.md) state the certified results and record covera
 
 Christopher Janjigian directed the formalization with coding assistants. Human decisions determined the intended mathematical statements and changes of proof; separate reviews compared statements and proof structure with their sources. The Lean kernel checks the resulting proof terms. Those roles give different kinds of evidence and should be assessed separately.
 
+## Acknowledgments
+
+This work was supported in part by a grant of access to OpenAI models through the ChatGPT for Academic Researchers program and by Anthropic through the Claude for Scientists program.
+
 ## License and citation
 
 Project code is released under Apache 2.0; see `LICENSE`. Dependencies retain their own licenses. The code license does not grant rights to the cited manuscripts, papers or books. Cite the mathematical sources as well as this software; machine-readable software authorship is in `CITATION.cff`.
