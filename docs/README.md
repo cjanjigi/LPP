@@ -4,6 +4,12 @@
 
 These guides document the collection's current paper coverage. Add a guide as results from another paper become available.
 
+## Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model
+
+Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.
+
+[Formalization guide](guides/strong-existence.md) · [Dependency graph and coverage notes](graphs/paper-results/strong-existence.md)
+
 ## Differentiability of the shape function in the planar corner growth model
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.

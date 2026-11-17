@@ -12,6 +12,7 @@ Choose a paper below to read its main theorems, follow formalization progress, a
 
 | Paper and guide | Main certified theorems |
 | --- | --- |
+| **Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model**<br>Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen.<br>Accepted manuscript, 31 October 2026. [Earlier arXiv v2](https://arxiv.org/abs/2507.08757v2).<br>[Formalization guide](docs/guides/strong-existence.md) | **Theorem 3.11.** Strong existence and uniqueness of the full process indexed by attainable tilts.<br>**Proposition 3.6.** Both one-sided gradient tilts occur at every interior direction, and every attainable tilt supports the limit shape. |
 | **Differentiability of the shape function in the planar corner growth model**<br>Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen.<br>Preprint.<br>[Formalization guide](docs/guides/differentiability.md) | **Theorem 2.1.** Differentiability of the planar limit shape under the stated moment hypotheses. |
 | **[Limiting shape for directed percolation models](https://doi.org/10.1214/009117904000000838)**<br>James B. Martin.<br>*The Annals of Probability* **32** (2004), 2908–2937.<br>[Formalization guide](docs/guides/martin-2004.md) | **Theorem 2.3.** Finite, continuous limit shape.<br>**Theorem 2.4.** Square-root boundary asymptotics.<br>**Corollary 2.5.** First-passage shape and boundary asymptotics.<br>**Theorem 5.1.** Last- and first-passage growth sets.<br>These certificates cover the planar case, under the hypotheses stated in the guide. |
 | **[Inequalities with applications to percolation and reliability](https://doi.org/10.2307/3213860)**<br>J. van den Berg and H. Kesten.<br>*Journal of Applied Probability* **22** (1985), 556–569.<br>[Formalization guide](docs/guides/bk-1985.md) | **Theorem 3.3.** The BK inequality for increasing events under independent Bernoulli coordinates.<br>**Extensions.** Completed ordered-coordinate, finite-family and countable-coordinate versions are stated in the guide. |
@@ -34,7 +35,7 @@ The maps follow results in the papers, rather than the organization of the code.
 <details>
 <summary>About this documentation and its coverage</summary>
 
-The certificate links describe formalization release [`5a3c7a6`](https://github.com/cjanjigi/LPP/tree/5a3c7a612144b68468559ea1800bf7f39a5d3ef1). Later development results are not counted. The guides distinguish paper statements from formalization extensions and assess only the certificate coverage explicitly listed. This documentation update adds no new Lean results.
+Certificate links in each guide identify the checked Lean revision. The guides distinguish paper statements from formalization extensions and give the scope of each certificate.
 
 </details>
 
@@ -42,7 +43,7 @@ The guides, dependency graphs and coverage notes are readable directly on GitHub
 
 ## Guarantees and limits
 
-The main results have Lean proofs whose axiom dependencies are `propext`, `Classical.choice` and `Quot.sound`. Each theorem has a version using the paper's definitions and a proved equivalence to its more literal formulation. This does not replace mathematical review of those definitions or the correspondence with the papers.
+The main results have Lean proofs whose axiom dependencies are `propext`, `Classical.choice` and `Quot.sound`. The five Challenge/Solution audits compare the selected statements and their permitted axioms. The Busemann guide links the proved declarations and explains how their statements correspond to the paper. This does not replace mathematical review of those definitions or the correspondence with the papers.
 
 Challenge modules contain deliberate `sorry` proof holes. Solution modules supply proofs of the corresponding statements and must not depend on the Challenge modules. The holes are exercises for comparison, and are excluded from claims about completed proofs. No other proof holes are authorized.
 
@@ -101,7 +102,7 @@ node scripts/run-audits.mjs
 
 It discovers every `comparator/*/comparator.json`, checks both probe exit codes before comparing their output, and runs `lake comparator` with Nanoda enabled for each configuration. Kernel replay checks all tracked project modules: proof modules are imported together and replayed in a fresh environment; the deliberate Challenge modules are replayed separately. The build rejects warnings other than the configured Challenges' deliberate `sorry` warnings. Logs and command exit codes are retained as private CI artifacts. `node --test scripts/run-audits.test.mjs` tests the audit runner without compiling Lean.
 
-The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. Comparator descriptions live in `comparator/`.
+The current release is organized into `ProbabilityBasics/` for general probability, `LPP_Foundations/` for directed percolation models, `Martin2004/` for shape results and `Differentiability/` for the differentiability theorem. Its statement entry points are `ProbabilityBasics.Statements`, `LPP_Foundations.Statements`, `Martin2004.Statements` and `Differentiability.Statements`. The tilt-indexed process and supporting results are available through `import Busemann`. Comparator descriptions live in `comparator/`.
 
 ## Sources and formalization guides
 

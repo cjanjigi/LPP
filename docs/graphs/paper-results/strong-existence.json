@@ -1,0 +1,2083 @@
+{
+  "schema_version": 1,
+  "slug": "strong-existence",
+  "title": "Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model",
+  "authors": [
+    "Christopher Janjigian",
+    "Firas Rassoul-Agha",
+    "Timo Seppäläinen"
+  ],
+  "guide": "https://github.com/cjanjigi/LPP/blob/main/docs/guides/strong-existence.md",
+  "source": {
+    "title": "Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model",
+    "version": "Accepted manuscript for Electronic Journal of Probability, dated October 31, 2026"
+  },
+  "notes": [
+    "The numbering follows the accepted manuscript for *Electronic Journal of Probability*, dated October 31, 2026. [The public arXiv v2](https://arxiv.org/abs/2507.08757v2) is an earlier version with different numbering in Section 3.",
+    "Remarks and examples appear as individual entries. Arrows identify mathematical prerequisites in the accepted manuscript; the guide records differences in the Lean proofs."
+  ],
+  "clusters": [
+    {
+      "id": "context",
+      "title": "Shape, cocycles and earlier constructions",
+      "members": [
+        "remark-2.1",
+        "lemma-2.6",
+        "theorem-2.7",
+        "remark-2.8",
+        "remark-2.9",
+        "theorem-2.11",
+        "remark-2.13",
+        "remark-2.16",
+        "lemma-3.3",
+        "remark-3.4"
+      ]
+    },
+    {
+      "id": "measurability",
+      "title": "Conditional distributions and path order",
+      "members": [
+        "lemma-a.1",
+        "corollary-a.2",
+        "lemma-a.3",
+        "lemma-4.1",
+        "example-4.2",
+        "lemma-4.3",
+        "lemma-4.4",
+        "lemma-4.5",
+        "lemma-4.6"
+      ]
+    },
+    {
+      "id": "passage",
+      "title": "Cocycles from passage-time differences",
+      "members": [
+        "lemma-a.4",
+        "theorem-b.1",
+        "lemma-b.2",
+        "lemma-b.3",
+        "lemma-b.4",
+        "lemma-b.5",
+        "lemma-2.17"
+      ]
+    },
+    {
+      "id": "representation",
+      "title": "Putting a cocycle on the weight space",
+      "members": [
+        "theorem-3.1",
+        "remark-3.2",
+        "lemma-4.7",
+        "lemma-4.8",
+        "lemma-4.9",
+        "lemma-4.10"
+      ]
+    },
+    {
+      "id": "comparison",
+      "title": "Comparing cocycles and finding their tilts",
+      "members": [
+        "theorem-3.5",
+        "proposition-3.6",
+        "remark-3.7",
+        "example-3.8",
+        "remark-3.9",
+        "remark-3.10",
+        "lemma-4.11",
+        "corollary-4.12"
+      ]
+    },
+    {
+      "id": "process",
+      "title": "The canonical tilt-indexed process",
+      "members": [
+        "theorem-3.11",
+        "remark-3.12",
+        "remark-3.13",
+        "corollary-3.14",
+        "lemma-4.13",
+        "lemma-4.14"
+      ]
+    },
+    {
+      "id": "decomposition",
+      "title": "Decomposition by a random tilt",
+      "members": [
+        "theorem-3.15",
+        "remark-3.16"
+      ]
+    },
+    {
+      "id": "families",
+      "title": "Cocycles and families of geodesics",
+      "members": [
+        "lemma-3.17",
+        "theorem-3.18",
+        "remark-3.19",
+        "lemma-5.1",
+        "lemma-5.2",
+        "lemma-5.3"
+      ]
+    }
+  ],
+  "overview_edges": [
+    [
+      "context",
+      "representation"
+    ],
+    [
+      "measurability",
+      "representation"
+    ],
+    [
+      "passage",
+      "representation"
+    ],
+    [
+      "representation",
+      "comparison"
+    ],
+    [
+      "comparison",
+      "process"
+    ],
+    [
+      "process",
+      "decomposition"
+    ],
+    [
+      "process",
+      "families"
+    ]
+  ],
+  "results": [
+    {
+      "id": "remark-2.1",
+      "label": "Remark 2.1",
+      "kind": "Remark",
+      "title": "Moment assumptions for cited limit-shape results",
+      "summary": "Explains how the moment hypotheses used here compare with the hypotheses of the cited limit-shape results.",
+      "source": {
+        "locator": "Remark 2.1"
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-2.6",
+      "label": "Lemma 2.6",
+      "kind": "Lemma",
+      "title": "Tilt lies in the shape superdifferential",
+      "summary": "Places the random tilt in the total negative superdifferential, localizes it under a fixed mean supergradient, and forces it to be deterministic at extreme supergradients.",
+      "notes": "This result is quoted from Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$, Lemma 4.5, in the zero-temperature setting.",
+      "source": {
+        "locator": "Lemma 2.6",
+        "page": 8
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "certified",
+        "scope": "All three conclusions hold for the planar model. The random tilt has an interior support contact, support at a fixed direction passes from the mean tilt to the random tilt, and an extreme mean forces an almost surely constant tilt.",
+        "links": [
+          {
+            "label": "Support and invariant tilt",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Frozen/Process/RecoveringCocycleSupport.lean#L33"
+          }
+        ]
+      }
+    },
+    {
+      "id": "theorem-2.7",
+      "label": "Theorem 2.7",
+      "kind": "Theorem",
+      "title": "A Busemann process on an extended space",
+      "summary": "Constructs both Busemann fields for every negative supporting slope of the limit shape on a probability space that carries the weights and extra variables.",
+      "notes": "The paper quotes Theorem 4.7 of Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$ and cites its extended version for backward independence.",
+      "source": {
+        "locator": "Theorem 2.7",
+        "page": 8
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "certified",
+        "scope": "Lean constructs the two fields on one extended space. The fields are measurable, have the prescribed means, satisfy the cocycle, recovery and order identities, and have the stated one-sided limits and independence. Equal first coordinates specify the same tilt, and fixed-tilt agreement supplies the equal-index case of the order clause. The supporting declarations give the continuous lattice shifts and identify the tilt index set using the expected-rate shape and the absence of finite supporting slopes on the axes.",
+        "links": [
+          {
+            "label": "Extended-space process",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/NativeFullFamily.lean#L30"
+          },
+          {
+            "label": "Equal first coordinates give equal tilts",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Geometry/SupportOrder.lean#L29"
+          },
+          {
+            "label": "Continuous lattice shifts",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/ShiftTopology.lean#L26"
+          },
+          {
+            "label": "Expected-rate limit",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Martin2004/Shape/MartinShapeExpectedRate.lean#L122"
+          },
+          {
+            "label": "No finite supporting slope on the axes",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/LPP_Foundations/Analysis/ShapeBoundarySuperdifferential.lean#L26"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remark-2.8",
+      "label": "Remark 2.8",
+      "kind": "Remark",
+      "title": "Backward independence convention",
+      "summary": "Records the backward-independence convention for the process on an extended probability space.",
+      "source": {
+        "locator": "Remark 2.8",
+        "page": 9
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-2.9",
+      "label": "Remark 2.9",
+      "kind": "Remark",
+      "title": "Direction versus tilt indexing",
+      "summary": "Explains how the two one-sided gradients at each interior direction select a subset of the tilt index set.",
+      "source": {
+        "locator": "Remark 2.9",
+        "page": 9
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-2.11",
+      "label": "Theorem 2.11",
+      "kind": "Theorem",
+      "title": "Coalescence for the extended-space process",
+      "summary": "For a fixed tilt in the extended-space family, paths from any two starting sites agree from a finite level onward almost surely.",
+      "notes": "The proof is cited from Geodesics and the competition interface for the corner growth model, Theorem A.1 of arXiv:1510.00860v1.",
+      "source": {
+        "locator": "Theorem 2.11",
+        "page": 10
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "certified",
+        "scope": "For each fixed supporting tilt, the rightmost geodesics from all lattice sites in the corresponding member of the constructed extended-space family coalesce almost surely. Lean checks coalescence for both signed fields and their agreement at the fixed tilt.",
+        "links": [
+          {
+            "label": "Coalescing extended-space family",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/NativeCoalescingFullFamily.lean#L21"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remark-2.13",
+      "label": "Remark 2.13",
+      "kind": "Remark",
+      "title": "Forward measurability as adaptedness",
+      "summary": "Interprets measurability from weights northeast of a site as measurability with respect to a forward filtration.",
+      "source": {
+        "locator": "Remark 2.13"
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-2.16",
+      "label": "Remark 2.16",
+      "kind": "Remark",
+      "title": "Geodesic-system terminology",
+      "summary": "Compares the name for a covariant coalescing family of random geodesics with terminology in first-passage percolation.",
+      "source": {
+        "locator": "Remark 2.16"
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-2.17",
+      "label": "Lemma 2.17",
+      "kind": "Lemma",
+      "title": "Covariance of the generated cocycle",
+      "summary": "A shift-covariant coalescing geodesic system generates a shift-covariant Busemann cocycle.",
+      "source": {
+        "locator": "Lemma 2.17",
+        "page": 11
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-3.1",
+      "label": "Theorem 3.1",
+      "kind": "Theorem",
+      "title": "Strong existence on the canonical space",
+      "summary": "A coalescing generalized Busemann function with deterministic tilt has a version measurable from the weights alone, represented by a forward-measurable canonical cocycle.",
+      "definitions": [
+        "A recovering cocycle satisfies $B(x,y)+B(y,z)=B(x,z)$ and $\\min\\{B(x,x+e_1),B(x,x+e_2)\\}=\\omega_x$. Its rightmost geodesic follows the smaller outgoing increment, choosing $e_1$ in a tie.",
+        "Two paths coalesce if they eventually take the same sequence of sites after meeting.",
+        "Forward measurability means that $B(x,y)$ for $x,y\\in u+\\mathbb Z_{\\geq0}^2$ depends measurably on $\\{\\omega_z:z\\in u+\\mathbb Z_{\\geq0}^2\\}$."
+      ],
+      "source": {
+        "locator": "Theorem 3.1",
+        "page": 11
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "restricted",
+        "scope": "The theorem applies to every such cocycle on the specified space of environments and processes, under a shift-invariant probability law with the prescribed independent weight marginal. The pullback equality holds on one event of full probability for all pairs of sites.",
+        "restriction": {
+          "label": "Specified space carrying the weights and cocycle",
+          "paper_scope": "On any extension satisfying the paper’s hypotheses, an integrable recovering cocycle with stationary increments, coalescing rightmost geodesics and an almost surely deterministic tilt is the pullback of a forward-measurable cocycle on the canonical weight space.",
+          "certified_scope": "The theorem applies to every such cocycle on the specified space of environments and processes, under a shift-invariant probability law with the prescribed independent weight marginal. The pullback equality holds on one event of full probability for all pairs of sites.",
+          "gap": "A statement quantified over arbitrary probability spaces carrying the weights and cocycle is outside this certificate.",
+          "reason": "The Lean proof uses a conditional path law and the measurable graph of the joint environment and field on the specified space to identify the actual pullback. Its probability-space input is expressed through that space and its shifts.",
+          "impact": "The specified space suffices for the construction used to put the one-sided gradient tilts in the canonical tilt set. The representation of every extension is a separate claim."
+        },
+        "links": [
+          {
+            "label": "Original-space representation",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/PinnedOriginalSpaceCocycle.lean#L34"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remark-3.2",
+      "label": "Remark 3.2",
+      "kind": "Remark",
+      "title": "Criterion for strong existence",
+      "summary": "Explains why deterministic tilt is necessary and sufficient for a weight-measurable version, and notes extreme mean tilts satisfy it.",
+      "source": {
+        "locator": "Remark 3.2"
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-3.3",
+      "label": "Lemma 3.3",
+      "kind": "Lemma",
+      "title": "A deterministic projection fixes the tilt",
+      "summary": "If the projection of the random tilt along a nonzero vector with opposite weak coordinate signs is almost surely constant, the entire tilt is almost surely constant.",
+      "source": {
+        "locator": "Lemma 3.3",
+        "page": 11
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.4",
+      "label": "Remark 3.4",
+      "kind": "Remark",
+      "title": "Queueing examples for the projection criterion",
+      "summary": "Points to queueing fixed points that give cocycles with a deterministic expected-increment coordinate.",
+      "source": {
+        "locator": "Remark 3.4"
+      },
+      "cluster": "context",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-3.5",
+      "label": "Theorem 3.5",
+      "kind": "Theorem",
+      "title": "Strong uniqueness and ordering",
+      "summary": "Orders any two canonical coalescing cocycles consistently with their tilts, with equality almost surely exactly when their tilts agree.",
+      "definitions": [
+        "The order $B_1\\preceq B_2$ means $B_1(x,x+e_1)\\geq B_2(x,x+e_1)$ and $B_1(x,x+e_2)\\leq B_2(x,x+e_2)$ for all $x\\in\\mathbb Z^2$. Strict order additionally requires $B_1\\ne B_2$."
+      ],
+      "source": {
+        "locator": "Theorem 3.5",
+        "page": 12
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "Lean proves almost-sure equality at a fixed common tilt and weak edge order for the general class of canonical coalescing cocycles. Comparing the expected increments fixes the orientation by the tilts. The complete strict trichotomy, including almost-sure nonidentity at distinct tilts, remains to be matched to the Lean declarations.",
+        "links": [
+          {
+            "label": "Equality at the same tilt",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CanonicalCocycleUniqueness.lean#L29"
+          },
+          {
+            "label": "Order of the rightmost paths",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingRayGlobalOrder.lean#L116"
+          },
+          {
+            "label": "Order of the cocycles along those paths",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingRayCocycleOrder.lean#L87"
+          }
+        ]
+      }
+    },
+    {
+      "id": "proposition-3.6",
+      "label": "Proposition 3.6",
+      "kind": "Proposition",
+      "title": "Which tilts occur on the weight space",
+      "summary": "Every negative one-sided shape gradient at an interior direction occurs as a tilt. Every attainable tilt is the negative of a supporting slope at some interior direction.",
+      "definitions": [
+        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for integrable cocycles $B$ on the weight space. Each cocycle translates with the weights, its smaller outgoing increment equals the site weight, and the paths following those increments with eastward tie-breaking eventually merge almost surely."
+      ],
+      "source": {
+        "locator": "Proposition 3.6"
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "certified",
+        "scope": "Both one-sided negative gradient tilts belong to the canonical tilt set at each interior direction, for the same weight law and shape. Every tilt in the canonical tilt set supports the shape at some interior direction.",
+        "links": [
+          {
+            "label": "Both one-sided gradient tilts",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/GradientCoalescingTilts.lean#L24"
+          },
+          {
+            "label": "Support of every canonical tilt",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingTiltSupport.lean#L29"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remark-3.7",
+      "label": "Remark 3.7",
+      "kind": "Remark",
+      "title": "Possible gaps in H",
+      "summary": "Asks whether either inclusion in Proposition 3.6 can be strict.",
+      "notes": "This is a question about the geometry of the tilt set.",
+      "source": {
+        "locator": "Remark 3.7"
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "example-3.8",
+      "label": "Example 3.8",
+      "kind": "Example",
+      "title": "Mixture with random tilt",
+      "summary": "Constructs an extended-space cocycle by mixing two canonical cocycles with a Bernoulli selector, yielding a nonconstant tilt.",
+      "source": {
+        "locator": "Example 3.8",
+        "page": 12
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.9",
+      "label": "Remark 3.9",
+      "kind": "Remark",
+      "title": "Mean tilt outside H",
+      "summary": "Uses the mixture example to show that a nonattainable average tilt prevents a weight-measurable version.",
+      "source": {
+        "locator": "Remark 3.9"
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.10",
+      "label": "Remark 3.10",
+      "kind": "Remark",
+      "title": "Attainable interior tilt with random tilt",
+      "summary": "Shows that an attainable interior point of a supergradient segment can still arise as the mean of a nonconstant random tilt.",
+      "source": {
+        "locator": "Remark 3.10"
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-3.11",
+      "label": "Theorem 3.11",
+      "kind": "Theorem",
+      "title": "Strong existence of the tilt-indexed process",
+      "summary": "Constructs the left and right Busemann fields for all attainable tilts on the weight space. Any two pairs satisfying the stated properties agree on one event of probability one for all tilts and pairs of sites.",
+      "definitions": [
+        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for shift-covariant, integrable, recovering cocycles $B$ measurable from the weights whose rightmost geodesics coalesce.",
+        "Forward measurability means that $B(x,y)$ for $x,y\\in u+\\mathbb Z_{\\geq0}^2$ depends measurably on $\\{\\omega_z:z\\in u+\\mathbb Z_{\\geq0}^2\\}$."
+      ],
+      "source": {
+        "locator": "Theorem 3.11",
+        "page": 13
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "certified",
+        "scope": "The canonical process satisfies the five printed properties and the almost-sure uniqueness conclusion, with the first tilt coordinate ordering the index set. Lean also provides a measurable Skorokhod realization of these same left and right fields, as described in the guide.",
+        "links": [
+          {
+            "label": "Strong existence and uniqueness of the process",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Frozen/StrongExistence/Process.lean#L12"
+          }
+        ]
+      }
+    },
+    {
+      "id": "remark-3.12",
+      "label": "Remark 3.12",
+      "kind": "Remark",
+      "title": "Restrictions of process uniqueness",
+      "summary": "States uniqueness for the restriction to one-sided gradient tilts and for finite collections of tilts.",
+      "source": {
+        "locator": "Remark 3.12"
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.13",
+      "label": "Remark 3.13",
+      "kind": "Remark",
+      "title": "Covariance of the full process",
+      "summary": "States that translating the environment translates the full indexed family on a common event of probability one.",
+      "source": {
+        "locator": "Remark 3.13"
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "corollary-3.14",
+      "label": "Corollary 3.14",
+      "kind": "Corollary",
+      "title": "Strong mixing of the process",
+      "summary": "For a fixed event of the weights and an event of the full process, the joint probability tends to the product of their probabilities as the latter event is shifted repeatedly by any nonzero lattice vector.",
+      "source": {
+        "locator": "Corollary 3.14"
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-3.15",
+      "label": "Theorem 3.15",
+      "kind": "Theorem",
+      "title": "Ergodic decomposition of extended cocycles",
+      "summary": "Represents almost every extended-space coalescing cocycle as the canonical process coordinate selected by its random tilt.",
+      "definitions": [
+        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for shift-covariant, integrable, recovering cocycles $B$ measurable from the weights whose rightmost geodesics coalesce.",
+        "On an extended probability space, the tilt is the negative of the two conditional expected unit increments given the events invariant under shifts."
+      ],
+      "source": {
+        "locator": "Theorem 3.15",
+        "page": 14
+      },
+      "cluster": "decomposition",
+      "coverage": {
+        "status": "not_in_release",
+        "scope": "The released process has the full canonical tilt index set. The theorem identifying a general coalescing cocycle with a member of that process at its possibly random tilt is outside this release.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.16",
+      "label": "Remark 3.16",
+      "kind": "Remark",
+      "title": "Interpretation of the decomposition",
+      "summary": "Interprets the decomposition as an identification of every coalescing cocycle at its random tilt.",
+      "source": {
+        "locator": "Remark 3.16"
+      },
+      "cluster": "decomposition",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "This item gives context for the results in the paper.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-3.17",
+      "label": "Lemma 3.17",
+      "kind": "Lemma",
+      "title": "Uniqueness of cocycle geodesics",
+      "summary": "For a coalescing generalized Busemann function, its rightmost path from each site is the only locally rightmost geodesic satisfying its cocycle rule.",
+      "definitions": [
+        "A recovering cocycle satisfies $B(x,y)+B(y,z)=B(x,z)$ and $\\min\\{B(x,x+e_1),B(x,x+e_2)\\}=\\omega_x$. Its rightmost geodesic follows the smaller outgoing increment, choosing $e_1$ in a tie."
+      ],
+      "source": {
+        "locator": "Lemma 3.17",
+        "page": 14
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-3.18",
+      "label": "Theorem 3.18",
+      "kind": "Theorem",
+      "title": "Equivalence of geodesic and cocycle approaches",
+      "summary": "The cocycle generated by a shift-covariant coalescing family recovers the original family. Under ergodicity the cocycle is shift-covariant, recovering and integrable, and its rightmost geodesics coalesce.",
+      "source": {
+        "locator": "Theorem 3.18",
+        "page": 14
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "remark-3.19",
+      "label": "Remark 3.19",
+      "kind": "Remark",
+      "title": "Integrability can fail without ergodicity",
+      "summary": "An extended-space mixture of canonical fields with tilts approaching the axes can have an infinite first moment.",
+      "source": {
+        "locator": "Remark 3.19",
+        "page": 15
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.1",
+      "label": "Lemma 4.1",
+      "kind": "Lemma",
+      "title": "Quantile-process properties",
+      "summary": "Constructs a measurable path-valued quantile function from the conditional law of a cocycle geodesic and identifies its order with that conditional distribution.",
+      "definitions": [
+        "For $s\\in[0,1]$, a path quantile is the infimum of paths $\\gamma$ for which the conditional probability that the original path lies weakly to the left of $\\gamma$ is at least $s$."
+      ],
+      "source": {
+        "locator": "Lemma 4.1",
+        "page": 17
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "example-4.2",
+      "label": "Example 4.2",
+      "kind": "Example",
+      "title": "Finite-support quantile example",
+      "summary": "Computes the quantile path when the conditional geodesic law has finite ordered support; the text says this example is not used later.",
+      "notes": "The paper includes this as an illustration of the quantile definition.",
+      "source": {
+        "locator": "Example 4.2"
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.3",
+      "label": "Lemma 4.3",
+      "kind": "Lemma",
+      "title": "Conditional-law and quantile-law equality",
+      "summary": "Shows that sampling a conditional Busemann geodesic has the same joint law with the environment as sampling the quantile process with an independent uniform level.",
+      "source": {
+        "locator": "Lemma 4.3",
+        "page": 19
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.4",
+      "label": "Lemma 4.4",
+      "kind": "Lemma",
+      "title": "Quantile sublevel equivalence for coalescing paths",
+      "summary": "For coalescing reference paths, proves equality of the two quantile-process sublevel sets under a coalescing-geodesic hypothesis.",
+      "source": {
+        "locator": "Lemma 4.4",
+        "page": 19
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.5",
+      "label": "Lemma 4.5",
+      "kind": "Lemma",
+      "title": "Coalescence at almost every sampling level",
+      "summary": "For almost every sampling level, the two corresponding paths from different roots eventually agree, with probability one.",
+      "source": {
+        "locator": "Lemma 4.5",
+        "page": 20
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.6",
+      "label": "Lemma 4.6",
+      "kind": "Lemma",
+      "title": "Paths determined by forward weights",
+      "summary": "In a shift-covariant coalescing family of locally rightmost geodesics, each path can be read from the weights northeast of its starting point.",
+      "definitions": [
+        "Two paths coalesce if they eventually take the same sequence of sites after meeting.",
+        "A locally rightmost geodesic is rightmost between its own pairs of sites."
+      ],
+      "source": {
+        "locator": "Lemma 4.6",
+        "page": 20
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.7",
+      "label": "Lemma 4.7",
+      "kind": "Lemma",
+      "title": "A cocycle from sampled paths",
+      "summary": "At a positive sampling level for which paths from all roots coalesce almost surely, the paths give a stationary recovering cocycle. Its increments above a site depend only on weights northeast of that site.",
+      "source": {
+        "locator": "Lemma 4.7",
+        "page": 21
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.8",
+      "label": "Lemma 4.8",
+      "kind": "Lemma",
+      "title": "Geodesic-generated cocycle recovers the lifted cocycle",
+      "summary": "Passage-time differences along any rightmost geodesic of a coalescing cocycle recover its values between every pair of lattice sites.",
+      "source": {
+        "locator": "Lemma 4.8",
+        "page": 21
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "certified",
+        "scope": "For a recovering cocycle with coalescing rightmost geodesics, the passage-time difference along the path from any root eventually equals the cocycle increment. This applies for all lattice pairs on the same full-probability event as coalescence.",
+        "links": [
+          {
+            "label": "Eventual equality of passage-time differences",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingCocycleRepresentation.lean#L107"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lemma-4.9",
+      "label": "Lemma 4.9",
+      "kind": "Lemma",
+      "title": "Equality of weight and cocycle laws",
+      "summary": "The original cocycle paired with the weight field has the same distribution as the cocycle from uniformly sampled quantile paths paired with the weight field.",
+      "definitions": [
+        "The sampling level is drawn uniformly from $[0,1]$, independently of the weights."
+      ],
+      "source": {
+        "locator": "Lemma 4.9",
+        "page": 21
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.10",
+      "label": "Lemma 4.10",
+      "kind": "Lemma",
+      "title": "One cocycle for all positive sampling levels",
+      "summary": "If the original tilt is deterministic, almost surely all sampling levels $s\\in(0,1]$ give the same cocycle, with that tilt.",
+      "source": {
+        "locator": "Lemma 4.10",
+        "page": 21
+      },
+      "cluster": "representation",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.11",
+      "label": "Lemma 4.11",
+      "kind": "Lemma",
+      "title": "Three-way comparison of cocycles",
+      "summary": "Two canonical cocycles with coalescing rightmost geodesics are ordered in one direction, ordered in the other, or equal, almost surely.",
+      "source": {
+        "locator": "Lemma 4.11",
+        "page": 22
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "corollary-4.12",
+      "label": "Corollary 4.12",
+      "kind": "Corollary",
+      "title": "Coalescence and forward measurability",
+      "summary": "A canonical recovering integrable cocycle has coalescing rightmost geodesics exactly when its increments are measurable from the forward weights.",
+      "source": {
+        "locator": "Corollary 4.12",
+        "page": 23
+      },
+      "cluster": "comparison",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.13",
+      "label": "Lemma 4.13",
+      "kind": "Lemma",
+      "title": "Ordering by tilt",
+      "summary": "The canonical cocycles at two tilts are ordered almost surely in the same direction as the tilts.",
+      "source": {
+        "locator": "Lemma 4.13",
+        "page": 23
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-4.14",
+      "label": "Lemma 4.14",
+      "kind": "Lemma",
+      "title": "Identifying fixed-tilt limits",
+      "summary": "At each fixed tilt, the extensions from the left and the right agree almost surely with the selected canonical cocycle.",
+      "source": {
+        "locator": "Lemma 4.14",
+        "page": 23
+      },
+      "cluster": "process",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-5.1",
+      "label": "Lemma 5.1",
+      "kind": "Lemma",
+      "title": "Uniqueness of covariant geodesic systems",
+      "summary": "Two ordered noncrossing families of geodesics following the minimum increments of one cocycle agree almost surely under the stated coalescence and rightmost-path hypotheses.",
+      "source": {
+        "locator": "Lemma 5.1",
+        "page": 24
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-5.2",
+      "label": "Lemma 5.2",
+      "kind": "Lemma",
+      "title": "The cocycle-generated system recovers the given system",
+      "summary": "For a shift-covariant coalescing geodesic system, its generated cocycle's right-tiebreaking geodesics agree with that system.",
+      "source": {
+        "locator": "Lemma 5.2",
+        "page": 26
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-5.3",
+      "label": "Lemma 5.3",
+      "kind": "Lemma",
+      "title": "Generated cocycle belongs to the coalescing class",
+      "summary": "Under ergodicity the cocycle generated by a shift-covariant coalescing geodesic family is integrable and its rightmost geodesics coalesce.",
+      "source": {
+        "locator": "Lemma 5.3",
+        "page": 26
+      },
+      "cluster": "families",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-a.1",
+      "label": "Lemma A.1",
+      "kind": "Lemma",
+      "title": "Measurability of the conditional distribution",
+      "summary": "The conditional probability that the B-geodesic lies below a path is jointly measurable in the environment and path.",
+      "source": {
+        "locator": "Lemma A.1",
+        "page": 27
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "corollary-a.2",
+      "label": "Corollary A.2",
+      "kind": "Corollary",
+      "title": "Measurability of the quantile geodesic",
+      "summary": "The path-valued quantile geodesic defined by the conditional path-order probability is measurable with respect to the weight sigma-field.",
+      "source": {
+        "locator": "Corollary A.2",
+        "page": 27
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-a.3",
+      "label": "Lemma A.3",
+      "kind": "Lemma",
+      "title": "A generating collection of path events",
+      "summary": "The events that a path lies below a fixed path generate the Borel sigma-field on the rooted path space.",
+      "source": {
+        "locator": "Lemma A.3",
+        "page": 27
+      },
+      "cluster": "measurability",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-a.4",
+      "label": "Lemma A.4",
+      "kind": "Lemma",
+      "title": "Exclusion of a trivial B-geodesic",
+      "summary": "With independent identically distributed weights of positive finite variance, the rightmost cocycle geodesic from a fixed site almost surely differs from both coordinate rays.",
+      "source": {
+        "locator": "Lemma A.4",
+        "page": 28
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "theorem-b.1",
+      "label": "Theorem B.1",
+      "kind": "Theorem",
+      "title": "A cocycle from an infinite geodesic",
+      "summary": "On one full-probability event, every semi-infinite geodesic escaping in both coordinates has finite Busemann limits to all lattice points, and these limits recover the weights.",
+      "definitions": [
+        "For a semi-infinite geodesic $\\pi$, the Busemann limit between $x$ and $y$ is $\\lim_{n\\to\\infty}(L_{x,\\pi_n}-L_{y,\\pi_n})$ when the limit is finite."
+      ],
+      "source": {
+        "locator": "Theorem B.1",
+        "page": 28
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "restricted",
+        "scope": "Lean gives that event and the finite recovering cocycle for every such geodesic when the weight law is nonconstant.",
+        "restriction": {
+          "label": "Weights with a nonconstant law",
+          "paper_scope": "The appendix theorem assumes independent identically distributed weights with a finite moment of order greater than two. It gives one event of probability one on which all geodesics escaping in both coordinates generate finite recovering cocycles at every pair of lattice sites.",
+          "certified_scope": "Lean gives that event and the finite recovering cocycle for every such geodesic when the weight law is nonconstant.",
+          "gap": "The stated Lean theorem retains a nonconstant-law hypothesis. The point-mass case of this appendix statement is outside that declaration.",
+          "reason": "The uniform finite-limit theorem takes the nonconstant-law hypothesis used by its geodesic comparison bounds.",
+          "impact": "The model for the main Busemann process already assumes a nonconstant weight law, so this scope supplies its required finite-limit result."
+        },
+        "links": [
+          {
+            "label": "Finite Busemann limits on a common event",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/RealGeodesicCocycles.lean#L45"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lemma-b.2",
+      "label": "Lemma B.2",
+      "kind": "Lemma",
+      "title": "Passage differences along a fixed geodesic",
+      "summary": "For a fixed environment and a geodesic $\\pi$ escaping in both coordinates, the difference $L_{x,\\pi_n}-L_{\\pi_k,\\pi_n}$ has a nondecreasing limit for each $x$. Passage differences between points northeast of $\\pi_k$ have finite limits.",
+      "source": {
+        "locator": "Lemma B.2",
+        "page": 29
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "certified",
+        "scope": "For fixed weights and any maximizing up-right geodesic tending to infinity in both coordinates, Lean proves the nondecreasing limit in $(-\\infty,\\infty]$ at every site and its finiteness in the northeast quadrant of the starting site. Subtracting the two finite limits gives the passage-time difference between any two sites in that quadrant.",
+        "links": [
+          {
+            "label": "Extended-real limit",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Geometry/GeodesicPassageDifferenceERealLimit.lean#L64"
+          },
+          {
+            "label": "Finite limit above the start",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Geometry/GeodesicPassageDifferenceLimit.lean#L62"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lemma-b.3",
+      "label": "Lemma B.3",
+      "kind": "Lemma",
+      "title": "Order of geodesic-generated cocycles",
+      "summary": "Ordered nontrivial geodesics generate ordered cocycles; coalescing geodesics generate the same cocycle.",
+      "source": {
+        "locator": "Lemma B.3",
+        "page": 30
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    },
+    {
+      "id": "lemma-b.4",
+      "label": "Lemma B.4",
+      "kind": "Lemma",
+      "title": "A coalescing cocycle is recovered by its paths",
+      "summary": "If a recovering cocycle has a coalescing family of semi-infinite geodesics from every vertex, each path generates that same cocycle.",
+      "source": {
+        "locator": "Lemma B.4",
+        "page": 31
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "certified",
+        "scope": "For a recovering cocycle followed by a coalescing family from every site, the passage differences along each path eventually equal the corresponding cocycle increment. This stronger eventual equality directly gives the limiting claim.",
+        "links": [
+          {
+            "label": "Eventual equality of passage-time differences",
+            "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingCocycleRepresentation.lean#L107"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lemma-b.5",
+      "label": "Lemma B.5",
+      "kind": "Lemma",
+      "title": "A path between the two tie-breaking choices",
+      "summary": "A nontrivial geodesic is a geodesic for its generated cocycle and lies between the e2- and e1-tiebreaking paths of that cocycle.",
+      "source": {
+        "locator": "Lemma B.5",
+        "page": 31
+      },
+      "cluster": "passage",
+      "coverage": {
+        "status": "not_assessed",
+        "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
+        "links": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "theorem-2.7",
+      "to": "theorem-2.11",
+      "reason": "Its statement is made in the setting of the weak-existence process; the accompanying explanation invokes that process's backward independence.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 2.11, accepted manuscript lines 459"
+      }
+    },
+    {
+      "from": "lemma-b.3",
+      "to": "lemma-2.17",
+      "reason": "The deferred proof transfers the Busemann cocycle across coalescing paths using their order comparison.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 2.17, accepted manuscript lines 1241"
+      }
+    },
+    {
+      "from": "lemma-4.10",
+      "to": "theorem-3.1",
+      "reason": "The proof uses the common-version result for the constructed cocycles.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.1, accepted manuscript lines 1144"
+      }
+    },
+    {
+      "from": "lemma-4.9",
+      "to": "theorem-3.1",
+      "reason": "The proof uses equality of joint distributions to transfer the constructed canonical field to the original variables.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.1, accepted manuscript lines 1144"
+      }
+    },
+    {
+      "from": "lemma-2.6",
+      "to": "remark-3.2",
+      "reason": "The extreme-supergradient clause gives deterministic tilt for cocycles at one-sided gradient tilts.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.2, accepted manuscript lines 550"
+      }
+    },
+    {
+      "from": "lemma-2.6",
+      "to": "lemma-3.3",
+      "reason": "The deferred proof confines the tilt to the shape superdifferential before using the projection condition.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.3, accepted manuscript lines 1549"
+      }
+    },
+    {
+      "from": "lemma-3.3",
+      "to": "remark-3.4",
+      "reason": "A deterministic projection suffices to make these tilts deterministic.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.4, accepted manuscript lines 561"
+      }
+    },
+    {
+      "from": "lemma-4.11",
+      "to": "theorem-3.5",
+      "reason": "The proof reduces the alternatives to the trichotomy for ordered coalescing cocycles.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.5, accepted manuscript lines 1166"
+      }
+    },
+    {
+      "from": "lemma-2.6",
+      "to": "proposition-3.6",
+      "reason": "Constrains all canonical tilts and fixes the random tilt at each extreme mean.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Proposition 3.6, accepted manuscript lines 590–591"
+      }
+    },
+    {
+      "from": "theorem-2.7",
+      "to": "proposition-3.6",
+      "reason": "Supplies an extended-space cocycle with the required mean tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Proposition 3.6, accepted manuscript lines 591"
+      }
+    },
+    {
+      "from": "theorem-2.11",
+      "to": "proposition-3.6",
+      "reason": "Gives coalescence for the extended-space cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Proposition 3.6, accepted manuscript lines 591"
+      }
+    },
+    {
+      "from": "theorem-3.1",
+      "to": "proposition-3.6",
+      "reason": "Represents that cocycle on the canonical space with the same tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Proposition 3.6, accepted manuscript lines 592"
+      }
+    },
+    {
+      "from": "proposition-3.6",
+      "to": "example-3.8",
+      "reason": "Uses attainable distinct tilts and their corresponding canonical cocycles.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Example 3.8, accepted manuscript lines 608"
+      }
+    },
+    {
+      "from": "remark-3.2",
+      "to": "remark-3.9",
+      "reason": "The necessary deterministic-tilt criterion excludes a canonical version.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.9, accepted manuscript lines 613"
+      }
+    },
+    {
+      "from": "example-3.8",
+      "to": "remark-3.9",
+      "reason": "Uses the example with two tilt choices.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.9, accepted manuscript lines 613"
+      }
+    },
+    {
+      "from": "example-3.8",
+      "to": "remark-3.10",
+      "reason": "Uses a mixture with two extreme tilts and the given mean tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.10, accepted manuscript lines 619"
+      }
+    },
+    {
+      "from": "corollary-4.12",
+      "to": "theorem-3.11",
+      "reason": "Canonical coalescing cocycles are forward measurable.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.11, accepted manuscript lines 622"
+      }
+    },
+    {
+      "from": "theorem-3.5",
+      "to": "theorem-3.11",
+      "reason": "Identifies competing cocycles at each fixed tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.11, accepted manuscript lines 1221"
+      }
+    },
+    {
+      "from": "lemma-4.13",
+      "to": "theorem-3.11",
+      "reason": "Gives monotonicity of the process on the tilt set.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.11, accepted manuscript lines 1221"
+      }
+    },
+    {
+      "from": "lemma-4.14",
+      "to": "theorem-3.11",
+      "reason": "Identifies the one-sided extensions with the process at each fixed tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.11, accepted manuscript lines 1220"
+      }
+    },
+    {
+      "from": "theorem-3.11",
+      "to": "remark-3.13",
+      "reason": "Uses the forward-measurable cocycle property asserted by the process theorem.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.13, accepted manuscript lines 662"
+      }
+    },
+    {
+      "from": "remark-3.13",
+      "to": "corollary-3.14",
+      "reason": "The process is a measurable factor of the independent weight shifts.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Corollary 3.14, accepted manuscript lines 671–678"
+      }
+    },
+    {
+      "from": "theorem-3.1",
+      "to": "theorem-3.15",
+      "reason": "For ergodic components, represents the cocycle on the canonical environment.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.15, accepted manuscript lines 1170"
+      }
+    },
+    {
+      "from": "theorem-3.5",
+      "to": "theorem-3.15",
+      "reason": "Identifies that representation with the unique canonical cocycle at the component tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.15, accepted manuscript lines 1170"
+      }
+    },
+    {
+      "from": "theorem-3.11",
+      "to": "theorem-3.15",
+      "reason": "Identifies the two one-sided process coordinates at that tilt.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.15, accepted manuscript lines 1172"
+      }
+    },
+    {
+      "from": "theorem-3.1",
+      "to": "lemma-3.17",
+      "reason": "On ergodic components the cocycle has a forward-measurable version.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.17, accepted manuscript lines 1262"
+      }
+    },
+    {
+      "from": "corollary-4.12",
+      "to": "lemma-3.17",
+      "reason": "Forward measurability of the reflected cocycle gives coalescence.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.17, accepted manuscript lines 1265"
+      }
+    },
+    {
+      "from": "lemma-5.2",
+      "to": "theorem-3.18",
+      "reason": "Gives recovery of the original family from its cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.18, accepted manuscript lines 1430"
+      }
+    },
+    {
+      "from": "lemma-5.3",
+      "to": "theorem-3.18",
+      "reason": "Gives the cocycle’s integrable, coalescing class under ergodicity.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.18, accepted manuscript lines 1430"
+      }
+    },
+    {
+      "from": "theorem-3.18",
+      "to": "remark-3.19",
+      "reason": "Qualifies the integrability clause of the theorem.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Remark 3.19, accepted manuscript lines 712"
+      }
+    },
+    {
+      "from": "corollary-a.2",
+      "to": "lemma-4.1",
+      "reason": "Measurability of the quantile selected at a rational level gives measurability of the process.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.1, accepted manuscript lines 760, 831"
+      }
+    },
+    {
+      "from": "lemma-4.1",
+      "to": "lemma-4.3",
+      "reason": "Uses the quantile sublevel identity to integrate conditional probabilities over levels.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.3, accepted manuscript lines 892–895"
+      }
+    },
+    {
+      "from": "lemma-a.3",
+      "to": "lemma-4.3",
+      "reason": "Uses the generating-class result to reduce path-law equality to ordered lower sets.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.3, accepted manuscript lines 879"
+      }
+    },
+    {
+      "from": "lemma-4.1",
+      "to": "lemma-4.4",
+      "reason": "Combines the almost-sure quantile sublevel identity with equality of conditional probabilities.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.4, accepted manuscript lines 915, 927"
+      }
+    },
+    {
+      "from": "lemma-4.3",
+      "to": "lemma-4.5",
+      "reason": "Transfers coalescence under the conditional lift to almost every quantile level.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.5, accepted manuscript lines 939–944"
+      }
+    },
+    {
+      "from": "lemma-4.4",
+      "to": "lemma-4.5",
+      "reason": "Uses the equal sublevel sets to compare each quantile path to coalescing witnesses.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.5, accepted manuscript lines 964–967"
+      }
+    },
+    {
+      "from": "theorem-b.1",
+      "to": "lemma-4.7",
+      "reason": "Supplies that the geodesic Busemann field is a recovering cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.7, accepted manuscript lines 1022"
+      }
+    },
+    {
+      "from": "lemma-4.6",
+      "to": "lemma-4.7",
+      "reason": "Turns shift covariance and coalescence into forward measurability of the paths.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.7, accepted manuscript lines 1022–1023"
+      }
+    },
+    {
+      "from": "lemma-b.3",
+      "to": "lemma-4.7",
+      "reason": "Identifies B^s with the same geodesic Busemann field when the paths coalesce.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.7, accepted manuscript lines 1024–1028"
+      }
+    },
+    {
+      "from": "lemma-4.1",
+      "to": "lemma-4.7",
+      "reason": "The sampled family shifts when the environment shifts.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.7, accepted manuscript lines 1022, 1037"
+      }
+    },
+    {
+      "from": "lemma-b.4",
+      "to": "lemma-4.8",
+      "reason": "The text explicitly says the result follows from this earlier lemma.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.8, accepted manuscript lines 1042"
+      }
+    },
+    {
+      "from": "lemma-4.3",
+      "to": "lemma-4.9",
+      "reason": "Transfers the joint law of weight and path to their measurable cocycle values.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.9, accepted manuscript lines 1061"
+      }
+    },
+    {
+      "from": "lemma-4.8",
+      "to": "lemma-4.9",
+      "reason": "Identifies the cocycle from the original path with the original cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.9, accepted manuscript lines 1061"
+      }
+    },
+    {
+      "from": "lemma-4.7",
+      "to": "lemma-4.9",
+      "reason": "Uses the expression for the sampled cocycle from an arbitrary root.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.9, accepted manuscript lines 1025–1032, 1061"
+      }
+    },
+    {
+      "from": "lemma-4.5",
+      "to": "lemma-4.9",
+      "reason": "Gives the almost-every-level coalescence needed for the arbitrary-root expression.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.9, accepted manuscript lines 938–968, 1061"
+      }
+    },
+    {
+      "from": "lemma-4.5",
+      "to": "lemma-4.10",
+      "reason": "Provides coalescence for almost every level.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1080–1082"
+      }
+    },
+    {
+      "from": "lemma-4.7",
+      "to": "lemma-4.10",
+      "reason": "Provides cocycle structure and forward measurability at coalescing levels.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1080–1082"
+      }
+    },
+    {
+      "from": "lemma-4.9",
+      "to": "lemma-4.10",
+      "reason": "Transfers needed distributional properties from the lifted cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1080–1082"
+      }
+    },
+    {
+      "from": "lemma-4.8",
+      "to": "lemma-4.10",
+      "reason": "Substitutes the lifted cocycle by its geodesic Busemann field in the shape estimate.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1085–1087"
+      }
+    },
+    {
+      "from": "lemma-4.3",
+      "to": "lemma-4.10",
+      "reason": "Transfers the shape estimate to almost every quantile level.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1088–1089"
+      }
+    },
+    {
+      "from": "lemma-b.3",
+      "to": "lemma-4.10",
+      "reason": "Converts ordered quantile paths into ordered cocycles, then equal means force equality.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1097–1099"
+      }
+    },
+    {
+      "from": "lemma-4.1",
+      "to": "lemma-4.10",
+      "reason": "Orders the sampled paths by their sampling levels.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.10, accepted manuscript lines 1097–1099"
+      }
+    },
+    {
+      "from": "lemma-4.8",
+      "to": "lemma-4.11",
+      "reason": "Relates ordering of the selected geodesics to ordering of the cocycles.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.11, accepted manuscript lines 1158"
+      }
+    },
+    {
+      "from": "lemma-b.3",
+      "to": "lemma-4.11",
+      "reason": "Transfers path order to cocycle order.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.11, accepted manuscript lines 1158"
+      }
+    },
+    {
+      "from": "theorem-3.1",
+      "to": "corollary-4.12",
+      "reason": "Supplies the coalescing-to-forward inclusion.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Corollary 4.12, accepted manuscript lines 1187–1188"
+      }
+    },
+    {
+      "from": "theorem-3.5",
+      "to": "lemma-4.13",
+      "reason": "The text identifies the result as a direct consequence of uniqueness.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.13, accepted manuscript lines 1197"
+      }
+    },
+    {
+      "from": "corollary-4.12",
+      "to": "lemma-4.13",
+      "reason": "Makes the canonical cocycles forward measurable.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.13, accepted manuscript lines 1194–1202"
+      }
+    },
+    {
+      "from": "lemma-4.13",
+      "to": "lemma-4.14",
+      "reason": "The ordered family supplies monotone limits at the fixed tilt and their order against the selected cocycle.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 4.14, accepted manuscript lines 1203–1217"
+      }
+    },
+    {
+      "from": "lemma-b.5",
+      "to": "lemma-5.2",
+      "reason": "places the given path below the cocycle's e1-tiebreaking path",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.2, accepted manuscript lines 1380"
+      }
+    },
+    {
+      "from": "lemma-5.1",
+      "to": "lemma-5.2",
+      "reason": "applies the uniqueness lemma to identify the systems",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.2, accepted manuscript lines 1380"
+      }
+    },
+    {
+      "from": "lemma-2.17",
+      "to": "lemma-5.2",
+      "reason": "The generated cocycle shifts with the environment in the comparison of the two families.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.2, accepted manuscript lines 1380"
+      }
+    },
+    {
+      "from": "theorem-b.1",
+      "to": "lemma-5.3",
+      "reason": "provides the recovering cocycle generated by the path",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1387"
+      }
+    },
+    {
+      "from": "lemma-2.17",
+      "to": "lemma-5.3",
+      "reason": "supplies shift covariance",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1387"
+      }
+    },
+    {
+      "from": "theorem-3.11",
+      "to": "lemma-5.3",
+      "reason": "provides the tilt-indexed Busemann process used for integrable bounds",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1399"
+      }
+    },
+    {
+      "from": "lemma-4.8",
+      "to": "lemma-5.3",
+      "reason": "identifies the endpoint Busemann cocycles with those generated by their geodesics",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1408"
+      }
+    },
+    {
+      "from": "lemma-b.3",
+      "to": "lemma-5.3",
+      "reason": "orders the generated cocycle between the two endpoint cocycles",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1408"
+      }
+    },
+    {
+      "from": "theorem-2.7",
+      "to": "lemma-5.3",
+      "reason": "supplies integrability of the endpoint cocycles",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1419"
+      }
+    },
+    {
+      "from": "proposition-3.6",
+      "to": "lemma-5.3",
+      "reason": "The two comparison tilts from one-sided gradients belong to the canonical tilt set.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1399"
+      }
+    },
+    {
+      "from": "lemma-5.2",
+      "to": "lemma-5.3",
+      "reason": "Identification with the given family gives coalescence for the generated rightmost paths.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1385–1430"
+      }
+    },
+    {
+      "from": "lemma-a.1",
+      "to": "corollary-a.2",
+      "reason": "uses the joint measurability result for conditional probabilities",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Corollary A.2, accepted manuscript lines 1483–1487"
+      }
+    },
+    {
+      "from": "lemma-b.2",
+      "to": "theorem-b.1",
+      "reason": "provides monotone limits and finite values on the northeast quadrant, the starting point for extending finiteness",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem B.1, accepted manuscript lines 1613; 1669"
+      }
+    },
+    {
+      "from": "theorem-b.1",
+      "to": "lemma-b.3",
+      "reason": "Provides finite passage-difference limits for both paths.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma B.3, accepted manuscript lines 1699–1712"
+      }
+    },
+    {
+      "from": "theorem-b.1",
+      "to": "lemma-b.4",
+      "reason": "uses the geodesic-generated Busemann limit and its cocycle property",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma B.4, accepted manuscript lines 1725; 1734–1735"
+      }
+    },
+    {
+      "from": "theorem-b.1",
+      "to": "lemma-b.5",
+      "reason": "defines the generated recovering cocycle and supplies its recovery identity",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma B.5, accepted manuscript lines 1741; 1748–1755"
+      }
+    },
+    {
+      "from": "external:jr-tilt",
+      "to": "lemma-2.6",
+      "reason": "Source of the tilt and shape assertions.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 2.6, accepted manuscript lines 365"
+      }
+    },
+    {
+      "from": "external:jr-construction",
+      "to": "theorem-2.7",
+      "reason": "Source of the extended-space process.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 2.7, accepted manuscript lines 384"
+      }
+    },
+    {
+      "from": "external:grs-coalescence",
+      "to": "theorem-2.11",
+      "reason": "Backward independence supplies the finite-energy premise for coalescence.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 2.11, accepted manuscript lines 458–464"
+      }
+    },
+    {
+      "from": "external:grs-coalescence",
+      "to": "corollary-4.12",
+      "reason": "Forward measurability supplies the finite-energy premise for coalescence.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Corollary 4.12, accepted manuscript lines 1186–1187"
+      }
+    },
+    {
+      "from": "external:grs-paths",
+      "to": "lemma-3.17",
+      "reason": "Identifies the local extremality of the left tie-breaking path.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.17, accepted manuscript lines 1257"
+      }
+    },
+    {
+      "from": "external:ergodic-decomposition",
+      "to": "lemma-3.17",
+      "reason": "Reduces the coalescence comparison to ergodic components.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.17, accepted manuscript lines 1260"
+      }
+    },
+    {
+      "from": "external:ergodic-decomposition",
+      "to": "theorem-3.15",
+      "reason": "Transfers the full-probability identity from ergodic components to the full law.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem 3.15, accepted manuscript lines 1176"
+      }
+    },
+    {
+      "from": "external:jr-shape-geometry",
+      "to": "lemma-3.3",
+      "reason": "Distinct supergradients with ordered first coordinates have oppositely ordered second coordinates.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.3, accepted manuscript lines 1558"
+      }
+    },
+    {
+      "from": "external:martin",
+      "to": "lemma-3.3",
+      "reason": "The axis behavior confines the relevant shape supports to interior directions.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 3.3, accepted manuscript lines 1547–1559"
+      }
+    },
+    {
+      "from": "external:recurrence",
+      "to": "lemma-5.1",
+      "reason": "The recurrence argument revisits the path-separation event arbitrarily far away.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.1, accepted manuscript lines 1327"
+      }
+    },
+    {
+      "from": "external:axis-geodesics",
+      "to": "lemma-5.3",
+      "reason": "Rules out nontrivial geodesics with an axis direction.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1393"
+      }
+    },
+    {
+      "from": "external:martin",
+      "to": "lemma-5.3",
+      "reason": "Provides comparison directions with supporting intervals confined away from the axes.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1393–1397"
+      }
+    },
+    {
+      "from": "external:grs-paths",
+      "to": "lemma-5.3",
+      "reason": "Confinement of the bounding Busemann geodesics orders them around the given family.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1400"
+      }
+    },
+    {
+      "from": "external:grs-paths",
+      "to": "theorem-b.1",
+      "reason": "Uses geodesic directedness and comparison directions to bound passage differences.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem B.1, accepted manuscript lines 1661, 1681"
+      }
+    },
+    {
+      "from": "external:axis-geodesics",
+      "to": "theorem-b.1",
+      "reason": "Excludes axis directions for a nontrivial geodesic.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem B.1, accepted manuscript lines 1662"
+      }
+    },
+    {
+      "from": "external:martin",
+      "to": "theorem-b.1",
+      "reason": "Selects a comparison direction with a disjoint supporting interval.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem B.1, accepted manuscript lines 1675"
+      }
+    },
+    {
+      "from": "external:prior-difference-bounds",
+      "to": "theorem-b.1",
+      "reason": "Bounds passage differences along the selected comparison directions.",
+      "route": "printed proof",
+      "evidence": {
+        "locator": "Proof or discussion of Theorem B.1, accepted manuscript lines 1666"
+      }
+    }
+  ],
+  "external_inputs": [
+    {
+      "id": "external:jr-tilt",
+      "title": "Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$",
+      "locator": "Lemma 4.5",
+      "url": "https://arxiv.org/abs/1810.03580v3"
+    },
+    {
+      "id": "external:jr-construction",
+      "title": "Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$",
+      "locator": "Theorem 4.7 in the journal version and the extended construction",
+      "url": "https://arxiv.org/abs/1810.03580v3"
+    },
+    {
+      "id": "external:grs-coalescence",
+      "title": "Geodesics and the competition interface for the corner growth model",
+      "locator": "Appendix A, Theorem A.1",
+      "url": "https://arxiv.org/abs/1510.00860v1"
+    },
+    {
+      "id": "external:grs-paths",
+      "title": "Geodesics and the competition interface for the corner growth model",
+      "locator": "Theorem 2.1(i), Lemma 4.1 and Theorem 4.3",
+      "url": "https://arxiv.org/abs/1510.00860v2"
+    },
+    {
+      "id": "external:ergodic-decomposition",
+      "title": "A course on large deviations with an introduction to Gibbs measures",
+      "locator": "Appendix B, ergodic decomposition"
+    },
+    {
+      "id": "external:martin",
+      "title": "Limiting shape for directed percolation models",
+      "locator": "Theorem 2.4, shape near the axes",
+      "url": "https://arxiv.org/abs/math/0301055v4"
+    },
+    {
+      "id": "external:axis-geodesics",
+      "title": "Non-existence of non-trivial bi-infinite geodesics in Geometric Last Passage Percolation",
+      "locator": "Lemma 5.1"
+    },
+    {
+      "id": "external:prior-difference-bounds",
+      "title": "Passage-time difference bounds along prescribed directions",
+      "locator": "Theorem 4.14 of Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$, or Theorem 6.1 of Stationary cocycles and Busemann functions for the corner growth model"
+    },
+    {
+      "id": "external:recurrence",
+      "title": "Poincaré recurrence theorem",
+      "locator": "Section 1.3 of Ergodic theorems"
+    },
+    {
+      "id": "external:jr-shape-geometry",
+      "title": "Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$",
+      "locator": "Lemma 4.6(a)",
+      "url": "https://arxiv.org/abs/1810.03580v3"
+    }
+  ],
+  "relationships": [],
+  "routes": []
+}

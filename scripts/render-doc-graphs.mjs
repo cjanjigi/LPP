@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { githubMath } from './github-math.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../docs');
-const slugs = ['differentiability', 'martin-2004', 'bk-1985', 'liggett-1985'];
+const slugs = ['strong-existence', 'differentiability', 'martin-2004', 'bk-1985', 'liggett-1985'];
 const symbols = { certified: '✓', restricted: '◐', not_assessed: '?', not_in_release: '○' };
 const names = { certified: 'Certified', restricted: 'Restricted', not_assessed: 'Not assessed', not_in_release: 'Not in this release' };
 const clean = value => String(value || '').replaceAll('|', '\\|').replaceAll('\n', ' ');
