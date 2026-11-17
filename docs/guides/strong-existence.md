@@ -21,7 +21,9 @@ B(x+z,y+z;\omega)&=B(x,y;T_z\omega),\\
 
 The cocycle geodesic from each site follows the smaller outgoing increment, choosing $`e_1`$ at a tie. These geodesics **coalesce** if every pair eventually agrees. A cocycle is **forward measurable** if $`B(x,y)`$ is measurable with respect to $`\sigma(\omega_v:v\ge u)`$ for each $`u\le x,y`$ in the coordinatewise order.
 
-On an extended space carrying these weights, the tilt of a cocycle $`\widehat B`$ has coordinates $`h_i(\widehat B)=-\widehat{\mathbb E}[\widehat B(0,e_i)\mid\widehat{\mathcal I}]`$, where $`\widehat{\mathcal I}`$ is the shift-invariant sigma algebra. Ergodicity on $`\Omega`$ gives $`h_i(B)=-\mathbb E B(0,e_i)`$. Theorems 2.7 and 2.11 give the extended-space process and coalescence at each fixed tilt. [Coverage](../graphs/paper-results/strong-existence.md#theorem-27)
+On an extended space carrying these weights, the tilt of a cocycle $`\widehat B`$ has coordinates $`h_i(\widehat B)=-\widehat{\mathbb E}[\widehat B(0,e_i)\mid\widehat{\mathcal I}]`$, where $`\widehat{\mathcal I}`$ is the shift-invariant sigma algebra. Ergodicity on $`\Omega`$ gives $`h_i(B)=-\mathbb E B(0,e_i)`$.
+
+Theorem 2.7 uses the zero-temperature Busemann process of Janjigian and Rassoul-Agha, Theorem 4.7 of [*Busemann functions and Gibbs measures in directed polymer models on ℤ²*](busemann-functions-and-gibbs-measures.md). Theorem 2.11 gives coalescence at each fixed tilt. [Coverage](../graphs/paper-results/strong-existence.md#theorem-211)
 
 ## Strong existence and uniqueness
 

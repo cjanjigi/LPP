@@ -2,8 +2,6 @@
 
 The maps organize each paper's named results into sections. Expanding a section reveals the individual results and their formalization status. Selecting a result in the interactive viewer shows what it uses, what uses it, and links to the relevant Lean certificates.
 
-The available maps cover the papers currently documented in the collection.
-
 - [Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model](paper-results/strong-existence.md)
 - [Differentiability of the shape function in the planar corner growth model](paper-results/differentiability.md)
 - [Limiting shape for directed percolation models](paper-results/martin-2004.md)

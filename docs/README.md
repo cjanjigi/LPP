@@ -10,6 +10,12 @@ Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.
 
 [Formalization guide](guides/strong-existence.md) · [Dependency graph and coverage notes](graphs/paper-results/strong-existence.md)
 
+## Busemann functions and Gibbs measures in directed polymer models on ℤ²
+
+Christopher Janjigian and Firas Rassoul-Agha.
+
+[Formalization guide](guides/busemann-functions-and-gibbs-measures.md)
+
 ## Differentiability of the shape function in the planar corner growth model
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.

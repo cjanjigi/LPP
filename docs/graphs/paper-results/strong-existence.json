@@ -196,7 +196,7 @@
       "kind": "Theorem",
       "title": "A Busemann process on an extended space",
       "summary": "Constructs both Busemann fields for every negative supporting slope of the limit shape on a probability space that carries the weights and extra variables.",
-      "notes": "The paper quotes Theorem 4.7 of Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$ and cites its extended version for backward independence.",
+      "notes": "The construction is the zero-temperature case of Janjigian and Rassoul-Agha, Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$, Theorem 4.7 in the journal and Theorem 4.8 in arXiv v3.",
       "source": {
         "locator": "Theorem 2.7",
         "page": 8
@@ -2027,7 +2027,7 @@
     {
       "id": "external:jr-construction",
       "title": "Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$",
-      "locator": "Theorem 4.7 in the journal version and the extended construction",
+      "locator": "Zero-temperature case of Theorem 4.7 in the journal (Theorem 4.8 in arXiv v3)",
       "url": "https://arxiv.org/abs/1810.03580v3"
     },
     {
