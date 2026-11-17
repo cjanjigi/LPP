@@ -14,7 +14,7 @@
   },
   "notes": [
     "The numbering follows the accepted manuscript for *Electronic Journal of Probability*, dated October 31, 2026. [The public arXiv v2](https://arxiv.org/abs/2507.08757v2) is an earlier version with different numbering in Section 3.",
-    "Remarks and examples appear as individual entries. Arrows identify mathematical prerequisites in the accepted manuscript; the guide records differences in the Lean proofs."
+    "Read the guide for the main results in the paper’s order and for differences in the Lean proofs."
   ],
   "clusters": [
     {
@@ -28,45 +28,17 @@
         "remark-2.9",
         "theorem-2.11",
         "remark-2.13",
-        "remark-2.16",
-        "lemma-3.3",
-        "remark-3.4"
-      ]
-    },
-    {
-      "id": "measurability",
-      "title": "Conditional distributions and path order",
-      "members": [
-        "lemma-a.1",
-        "corollary-a.2",
-        "lemma-a.3",
-        "lemma-4.1",
-        "example-4.2",
-        "lemma-4.3",
-        "lemma-4.4",
-        "lemma-4.5",
-        "lemma-4.6"
-      ]
-    },
-    {
-      "id": "passage",
-      "title": "Cocycles from passage-time differences",
-      "members": [
-        "lemma-a.4",
-        "theorem-b.1",
-        "lemma-b.2",
-        "lemma-b.3",
-        "lemma-b.4",
-        "lemma-b.5",
-        "lemma-2.17"
+        "remark-2.16"
       ]
     },
     {
       "id": "representation",
-      "title": "Putting a cocycle on the weight space",
+      "title": "Strong existence at a deterministic tilt",
       "members": [
         "theorem-3.1",
         "remark-3.2",
+        "lemma-3.3",
+        "remark-3.4",
         "lemma-4.7",
         "lemma-4.8",
         "lemma-4.9",
@@ -75,7 +47,7 @@
     },
     {
       "id": "comparison",
-      "title": "Comparing cocycles and finding their tilts",
+      "title": "Strong uniqueness and the set of tilts",
       "members": [
         "theorem-3.5",
         "proposition-3.6",
@@ -117,6 +89,34 @@
         "lemma-5.1",
         "lemma-5.2",
         "lemma-5.3"
+      ]
+    },
+    {
+      "id": "measurability",
+      "title": "Conditional distributions and path order",
+      "members": [
+        "lemma-4.1",
+        "example-4.2",
+        "lemma-4.3",
+        "lemma-4.4",
+        "lemma-4.5",
+        "lemma-4.6",
+        "lemma-a.1",
+        "corollary-a.2",
+        "lemma-a.3"
+      ]
+    },
+    {
+      "id": "passage",
+      "title": "Cocycles from passage-time differences",
+      "members": [
+        "lemma-2.17",
+        "lemma-a.4",
+        "theorem-b.1",
+        "lemma-b.2",
+        "lemma-b.3",
+        "lemma-b.4",
+        "lemma-b.5"
       ]
     }
   ],
@@ -171,8 +171,8 @@
       "id": "lemma-2.6",
       "label": "Lemma 2.6",
       "kind": "Lemma",
-      "title": "Tilt lies in the shape superdifferential",
-      "summary": "Places the random tilt in the total negative superdifferential, localizes it under a fixed mean supergradient, and forces it to be deterministic at extreme supergradients.",
+      "title": "Negative tilt and the shape superdifferential",
+      "summary": "The negative tilt is almost surely a supergradient at some interior direction. If its mean is a supergradient at a fixed direction, so is the negative tilt almost surely. If the mean is an extreme point of that superdifferential, the tilt is almost surely constant.",
       "notes": "This result is quoted from Busemann functions and Gibbs measures in directed polymer models on $\\mathbb Z^2$, Lemma 4.5, in the zero-temperature setting.",
       "source": {
         "locator": "Lemma 2.6",
@@ -181,7 +181,7 @@
       "cluster": "context",
       "coverage": {
         "status": "certified",
-        "scope": "All three conclusions hold for the planar model. The random tilt has an interior support contact, support at a fixed direction passes from the mean tilt to the random tilt, and an extreme mean forces an almost surely constant tilt.",
+        "scope": "Lean proves all three conclusions for the planar model.",
         "links": [
           {
             "label": "Support and invariant tilt",
@@ -204,7 +204,7 @@
       "cluster": "context",
       "coverage": {
         "status": "certified",
-        "scope": "Lean constructs the two fields on one extended space. The fields are measurable, have the prescribed means, satisfy the cocycle, recovery and order identities, and have the stated one-sided limits and independence. Equal first coordinates specify the same tilt, and fixed-tilt agreement supplies the equal-index case of the order clause. The supporting declarations give the continuous lattice shifts and identify the tilt index set using the expected-rate shape and the absence of finite supporting slopes on the axes.",
+        "scope": "Lean proves all six clauses. Fixed-tilt agreement supplies the equality case of the order clause because the first coordinate determines the tilt. The linked results verify continuity of the shifts and identify the full tilt index set.",
         "links": [
           {
             "label": "Extended-space process",
@@ -251,7 +251,7 @@
       "label": "Remark 2.9",
       "kind": "Remark",
       "title": "Direction versus tilt indexing",
-      "summary": "Explains how the two one-sided gradients at each interior direction select a subset of the tilt index set.",
+      "summary": "Direction indexing uses only the negatives of the extreme points of each directional superdifferential. The two index sets agree if the shape is differentiable at every interior direction.",
       "source": {
         "locator": "Remark 2.9",
         "page": 9
@@ -268,7 +268,7 @@
       "label": "Theorem 2.11",
       "kind": "Theorem",
       "title": "Coalescence for the extended-space process",
-      "summary": "For a fixed tilt in the extended-space family, paths from any two starting sites agree from a finite level onward almost surely.",
+      "summary": "For each fixed tilt in the extended-space process, almost surely the rightmost cocycle geodesics from all starting sites coalesce.",
       "notes": "The proof is cited from Geodesics and the competition interface for the corner growth model, Theorem A.1 of arXiv:1510.00860v1.",
       "source": {
         "locator": "Theorem 2.11",
@@ -277,7 +277,7 @@
       "cluster": "context",
       "coverage": {
         "status": "certified",
-        "scope": "For each fixed supporting tilt, the rightmost geodesics from all lattice sites in the corresponding member of the constructed extended-space family coalesce almost surely. Lean checks coalescence for both signed fields and their agreement at the fixed tilt.",
+        "scope": "The certificate covers both branches at each fixed tilt in the extended-space process.",
         "links": [
           {
             "label": "Coalescing extended-space family",
@@ -339,11 +339,9 @@
       "id": "theorem-3.1",
       "label": "Theorem 3.1",
       "kind": "Theorem",
-      "title": "Strong existence on the canonical space",
-      "summary": "A coalescing generalized Busemann function with deterministic tilt has a version measurable from the weights alone, represented by a forward-measurable canonical cocycle.",
+      "title": "Strong existence at a deterministic tilt",
+      "summary": "A generalized Busemann cocycle with coalescing rightmost geodesics and almost surely constant tilt agrees almost surely with a forward-measurable cocycle on the weight space, evaluated at the same weights.",
       "definitions": [
-        "A recovering cocycle satisfies $B(x,y)+B(y,z)=B(x,z)$ and $\\min\\{B(x,x+e_1),B(x,x+e_2)\\}=\\omega_x$. Its rightmost geodesic follows the smaller outgoing increment, choosing $e_1$ in a tie.",
-        "Two paths coalesce if they eventually take the same sequence of sites after meeting.",
         "Forward measurability means that $B(x,y)$ for $x,y\\in u+\\mathbb Z_{\\geq0}^2$ depends measurably on $\\{\\omega_z:z\\in u+\\mathbb Z_{\\geq0}^2\\}$."
       ],
       "source": {
@@ -353,14 +351,14 @@
       "cluster": "representation",
       "coverage": {
         "status": "restricted",
-        "scope": "The theorem applies to every such cocycle on the specified space of environments and processes, under a shift-invariant probability law with the prescribed independent weight marginal. The pullback equality holds on one event of full probability for all pairs of sites.",
+        "scope": "The certificate proves the equality for all pairs of sites on one probability-one event on the specified space.",
         "restriction": {
-          "label": "Specified space carrying the weights and cocycle",
-          "paper_scope": "On any extension satisfying the paper’s hypotheses, an integrable recovering cocycle with stationary increments, coalescing rightmost geodesics and an almost surely deterministic tilt is the pullback of a forward-measurable cocycle on the canonical weight space.",
-          "certified_scope": "The theorem applies to every such cocycle on the specified space of environments and processes, under a shift-invariant probability law with the prescribed independent weight marginal. The pullback equality holds on one event of full probability for all pairs of sites.",
-          "gap": "A statement quantified over arbitrary probability spaces carrying the weights and cocycle is outside this certificate.",
-          "reason": "The Lean proof uses a conditional path law and the measurable graph of the joint environment and field on the specified space to identify the actual pullback. Its probability-space input is expressed through that space and its shifts.",
-          "impact": "The specified space suffices for the construction used to put the one-sided gradient tilts in the canonical tilt set. The representation of every extension is a separate claim."
+          "label": "Specified extended space",
+          "paper_scope": "Any Polish probability space carrying the weights and equipped with the paper’s shift action.",
+          "certified_scope": "The space $\\Omega\\times\\mathbb R^{\\mathbb N\\times\\mathbb Z^2\\times\\{1,2\\}}$ with the coordinate shifts and any invariant law with the prescribed weight marginal on $\\Omega$.",
+          "gap": "Representation on arbitrary extensions satisfying the paper’s hypotheses.",
+          "reason": "The certificate takes the space and its shifts as fixed inputs to the conditional path law construction.",
+          "impact": "This space carries the cocycles used to realize the negatives of the extreme points in Proposition 3.6."
         },
         "links": [
           {
@@ -375,7 +373,7 @@
       "label": "Remark 3.2",
       "kind": "Remark",
       "title": "Criterion for strong existence",
-      "summary": "Explains why deterministic tilt is necessary and sufficient for a weight-measurable version, and notes extreme mean tilts satisfy it.",
+      "summary": "A coalescing cocycle has a version measurable from the weights exactly when its tilt is almost surely constant. This holds when the negative mean tilt is an extreme point of a directional superdifferential.",
       "source": {
         "locator": "Remark 3.2"
       },
@@ -396,7 +394,7 @@
         "locator": "Lemma 3.3",
         "page": 11
       },
-      "cluster": "context",
+      "cluster": "representation",
       "coverage": {
         "status": "not_assessed",
         "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
@@ -412,7 +410,7 @@
       "source": {
         "locator": "Remark 3.4"
       },
-      "cluster": "context",
+      "cluster": "representation",
       "coverage": {
         "status": "not_assessed",
         "scope": "The correspondence of this item with the Lean declarations has not been assessed.",
@@ -424,7 +422,7 @@
       "label": "Theorem 3.5",
       "kind": "Theorem",
       "title": "Strong uniqueness and ordering",
-      "summary": "Orders any two canonical coalescing cocycles consistently with their tilts, with equality almost surely exactly when their tilts agree.",
+      "summary": "Two cocycles on the weight space with coalescing rightmost geodesics are almost surely equal if their tilts agree. Otherwise they are almost surely strictly ordered in the same direction as their tilts.",
       "definitions": [
         "The order $B_1\\preceq B_2$ means $B_1(x,x+e_1)\\geq B_2(x,x+e_1)$ and $B_1(x,x+e_2)\\leq B_2(x,x+e_2)$ for all $x\\in\\mathbb Z^2$. Strict order additionally requires $B_1\\ne B_2$."
       ],
@@ -435,7 +433,7 @@
       "cluster": "comparison",
       "coverage": {
         "status": "not_assessed",
-        "scope": "Lean proves almost-sure equality at a fixed common tilt and weak edge order for the general class of canonical coalescing cocycles. Comparing the expected increments fixes the orientation by the tilts. The complete strict trichotomy, including almost-sure nonidentity at distinct tilts, remains to be matched to the Lean declarations.",
+        "scope": "Lean proves almost-sure equality at equal tilts and weak order of the increments. The almost-sure strict order at distinct tilts remains to be checked against the certificates.",
         "links": [
           {
             "label": "Equality at the same tilt",
@@ -457,9 +455,10 @@
       "label": "Proposition 3.6",
       "kind": "Proposition",
       "title": "Which tilts occur on the weight space",
-      "summary": "Every negative one-sided shape gradient at an interior direction occurs as a tilt. Every attainable tilt is the negative of a supporting slope at some interior direction.",
+      "summary": "The negatives of all extreme points of the directional superdifferentials belong to the set of tilts $\\mathcal H$.",
       "definitions": [
-        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for integrable cocycles $B$ on the weight space. Each cocycle translates with the weights, its smaller outgoing increment equals the site weight, and the paths following those increments with eastward tie-breaking eventually merge almost surely."
+        "$\\mathcal H$ is the set of $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for generalized Busemann cocycles on the weight space whose rightmost geodesics coalesce.",
+        "$\\{-\\nabla g(\\xi\\pm):\\xi\\in\\textup{ri}\\,\\mathcal U\\}\\subseteq\\mathcal H\\subseteq-\\partial g(\\mathcal U)$. Here $g$ is the limit shape, $\\mathcal U=\\{(t,1-t):0\\leq t\\leq1\\}$, and $\\partial g(\\mathcal U)=\\bigcup_{\\xi\\in\\mathcal U}\\partial g(\\xi)$. The extreme points of $\\partial g(\\xi)$ at an interior direction are $\\nabla g(\\xi-)$ and $\\nabla g(\\xi+)$."
       ],
       "source": {
         "locator": "Proposition 3.6"
@@ -467,14 +466,14 @@
       "cluster": "comparison",
       "coverage": {
         "status": "certified",
-        "scope": "Both one-sided negative gradient tilts belong to the canonical tilt set at each interior direction, for the same weight law and shape. Every tilt in the canonical tilt set supports the shape at some interior direction.",
+        "scope": "The linked certificates prove both inclusions.",
         "links": [
           {
-            "label": "Both one-sided gradient tilts",
+            "label": "Negatives of the extreme points belong to the tilt set",
             "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/GradientCoalescingTilts.lean#L24"
           },
           {
-            "label": "Support of every canonical tilt",
+            "label": "Each negative tilt is a supergradient",
             "url": "https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Process/CoalescingTiltSupport.lean#L29"
           }
         ]
@@ -551,9 +550,8 @@
       "label": "Theorem 3.11",
       "kind": "Theorem",
       "title": "Strong existence of the tilt-indexed process",
-      "summary": "Constructs the left and right Busemann fields for all attainable tilts on the weight space. Any two pairs satisfying the stated properties agree on one event of probability one for all tilts and pairs of sites.",
+      "summary": "There are left and right Busemann fields on the weight space for every tilt in $\\mathcal H$. The two branches agree almost surely at each fixed tilt. Any two processes with the stated properties agree almost surely for every tilt, sign and pair of sites simultaneously.",
       "definitions": [
-        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for shift-covariant, integrable, recovering cocycles $B$ measurable from the weights whose rightmost geodesics coalesce.",
         "Forward measurability means that $B(x,y)$ for $x,y\\in u+\\mathbb Z_{\\geq0}^2$ depends measurably on $\\{\\omega_z:z\\in u+\\mathbb Z_{\\geq0}^2\\}$."
       ],
       "source": {
@@ -563,7 +561,7 @@
       "cluster": "process",
       "coverage": {
         "status": "certified",
-        "scope": "The canonical process satisfies the five printed properties and the almost-sure uniqueness conclusion, with the first tilt coordinate ordering the index set. Lean also provides a measurable Skorokhod realization of these same left and right fields, as described in the guide.",
+        "scope": "Lean proves the process theorem with the equal-index order clause handled by fixed-tilt agreement. It also proves that the same fields admit a measurable Skorokhod realization.",
         "links": [
           {
             "label": "Strong existence and uniqueness of the process",
@@ -577,7 +575,7 @@
       "label": "Remark 3.12",
       "kind": "Remark",
       "title": "Restrictions of process uniqueness",
-      "summary": "States uniqueness for the restriction to one-sided gradient tilts and for finite collections of tilts.",
+      "summary": "Uniqueness also holds for the process indexed by negatives of extreme points and for a finite set of tilts.",
       "source": {
         "locator": "Remark 3.12"
       },
@@ -625,10 +623,9 @@
       "label": "Theorem 3.15",
       "kind": "Theorem",
       "title": "Ergodic decomposition of extended cocycles",
-      "summary": "Represents almost every extended-space coalescing cocycle as the canonical process coordinate selected by its random tilt.",
+      "summary": "For an extended-space cocycle with coalescing rightmost geodesics, its tilt $h$ belongs to $\\mathcal H$ almost surely and the cocycle agrees with both canonical fields $B^{h-}$ and $B^{h+}$ at the same weights.",
       "definitions": [
-        "$\\mathcal H$ consists of the values $h=-\\bigl(\\mathbb E B(0,e_1),\\mathbb E B(0,e_2)\\bigr)$ for shift-covariant, integrable, recovering cocycles $B$ measurable from the weights whose rightmost geodesics coalesce.",
-        "On an extended probability space, the tilt is the negative of the two conditional expected unit increments given the events invariant under shifts."
+        "The tilt $h$ is the negative vector of conditional means of the origin increments $B(0,e_1),B(0,e_2)$ given the shift-invariant events. It can be random."
       ],
       "source": {
         "locator": "Theorem 3.15",
@@ -637,7 +634,7 @@
       "cluster": "decomposition",
       "coverage": {
         "status": "not_in_release",
-        "scope": "The released process has the full canonical tilt index set. The theorem identifying a general coalescing cocycle with a member of that process at its possibly random tilt is outside this release.",
+        "scope": "The release covers the canonical process in Theorem 3.11. The representation at a general random tilt is outside its scope.",
         "links": []
       }
     },
@@ -646,7 +643,7 @@
       "label": "Remark 3.16",
       "kind": "Remark",
       "title": "Interpretation of the decomposition",
-      "summary": "Interprets the decomposition as an identification of every coalescing cocycle at its random tilt.",
+      "summary": "The law of the tilt determines the mixture of canonical cocycles in the decomposition.",
       "source": {
         "locator": "Remark 3.16"
       },
@@ -1239,7 +1236,7 @@
     {
       "from": "lemma-2.6",
       "to": "remark-3.2",
-      "reason": "The extreme-supergradient clause gives deterministic tilt for cocycles at one-sided gradient tilts.",
+      "reason": "If the negative mean tilt is an extreme point of a directional superdifferential, the tilt is almost surely constant.",
       "route": "printed proof",
       "evidence": {
         "locator": "Remark 3.2, accepted manuscript lines 550"
@@ -1275,7 +1272,7 @@
     {
       "from": "lemma-2.6",
       "to": "proposition-3.6",
-      "reason": "Constrains all canonical tilts and fixes the random tilt at each extreme mean.",
+      "reason": "Gives an interior supporting direction for each negative tilt and proves that a negative mean tilt at an extreme point forces the tilt to be constant.",
       "route": "printed proof",
       "evidence": {
         "locator": "Proof or discussion of Proposition 3.6, accepted manuscript lines 590–591"
@@ -1779,7 +1776,7 @@
     {
       "from": "lemma-4.8",
       "to": "lemma-5.3",
-      "reason": "identifies the endpoint Busemann cocycles with those generated by their geodesics",
+      "reason": "Identifies the two comparison cocycles with those generated by their geodesics.",
       "route": "printed proof",
       "evidence": {
         "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1408"
@@ -1788,7 +1785,7 @@
     {
       "from": "lemma-b.3",
       "to": "lemma-5.3",
-      "reason": "orders the generated cocycle between the two endpoint cocycles",
+      "reason": "Orders the generated cocycle between the two comparison cocycles.",
       "route": "printed proof",
       "evidence": {
         "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1408"
@@ -1797,7 +1794,7 @@
     {
       "from": "theorem-2.7",
       "to": "lemma-5.3",
-      "reason": "supplies integrability of the endpoint cocycles",
+      "reason": "Gives integrability of the two comparison cocycles.",
       "route": "printed proof",
       "evidence": {
         "locator": "Proof or discussion of Lemma 5.3, accepted manuscript lines 1419"
