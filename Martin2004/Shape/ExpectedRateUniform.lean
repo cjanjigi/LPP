@@ -71,10 +71,7 @@ theorem exists_common_clipping_approximation
     (hneg : (∫⁻ t in Iio (0 : ℝ), (μ (Iic t)) ^ (1 / 2 : ℝ)) < ∞)
     (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞)
     (g : Quadrant → ℝ)
-    (hg : ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-      (∫ ω : Environment, lastPassage ω 0
-        (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-        ∂environmentLaw μ) / (n : ℝ)) atTop (𝓝 (g x)))
+    (hg : IsExpectedRateShape μ g)
     (δ : ℝ) (hδ : 0 < δ) :
     ∃ L : ℝ, 0 < L ∧ ∃ r : Quadrant → ℝ,
       (∀ x : Quadrant, |g x - r x| ≤ δ * ((x.1 : ℝ) + x.2)) ∧

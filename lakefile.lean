@@ -40,3 +40,9 @@ lean_lib «Martin2004» where
 lean_lib «Differentiability» where
   globs := #[.andSubmodules `Differentiability]
   leanOptions := projectLeanOptions
+
+/-- Busemann processes and their supporting results. -/
+@[default_target]
+lean_lib «Busemann» where
+  globs := #[.andSubmodules `Busemann]
+  leanOptions := projectLeanOptions
