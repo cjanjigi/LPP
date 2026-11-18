@@ -6,6 +6,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 module
 
 public import Busemann.Frozen.StrongExistence.Process
+public import Busemann.Process.CanonicalBusemannExistence
 public import Busemann.Process.GradientCoalescingTilts
 public import Busemann.Process.CoalescingTiltSupport
 public import Busemann.Process.PinnedOriginalSpaceCocycle
