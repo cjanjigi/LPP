@@ -8,6 +8,7 @@ public import LPP_Foundations.Model.LastPassage.Basic
 public import LPP_Foundations.Model.LastPassage.PassageDifferenceLimits
 public import LPP_Foundations.Model.LastPassage.GeodesicSegments
 public import LPP_Foundations.Model.Paths.Coalescence
+public import LPP_Foundations.Model.Paths.UpRightRay
 public import Mathlib.Topology.Instances.Real.Lemmas
 import LPP_Foundations.Model.LastPassage.GradientOrder
 import Mathlib.Topology.Order.OrderClosed
@@ -18,37 +19,6 @@ import Mathlib.Order.Filter.AtTopBot.Basic
 open Filter LPPDifferentiability
 open scoped Topology
 namespace LPP.Busemann
-
--- Unit east or north steps make both coordinates nondecreasing.
-private theorem ray_monotone (γ : ℕ → Lattice)
-    (hsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ))) :
-    Monotone γ := by
-  apply monotone_nat_of_le_succ
-  intro n
-  rcases hsteps n with he | hn
-  · rw [he]
-    constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
-  · rw [hn]
-    constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
-
--- Every step raises the sum of the coordinates by exactly one.
-private theorem ray_level (γ : ℕ → Lattice)
-    (hsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ))) (n : ℕ) :
-    (γ n).1 + (γ n).2 = (γ 0).1 + (γ 0).2 + (n : ℤ) := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-      rcases hsteps n with he | hn
-      · rw [he]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
-      · rw [hn]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
 
 -- Coordinate escape supplies an entry time for every signed lattice site.
 private theorem ray_entry (γ : ℕ → Lattice)
@@ -94,12 +64,8 @@ theorem geodesic_limit_fields_order_and_eq_of_coalescing
     (γ π : ℕ → Lattice)
     (Cγ Cπ : Lattice → Lattice → ℝ)
     (hγstart : γ 0 = u) (hπstart : π 0 = v)
-    (hγsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ)))
-    (hπsteps : ∀ n : ℕ,
-      π (n + 1) = π n + ((1 : ℤ), (0 : ℤ)) ∨
-        π (n + 1) = π n + ((0 : ℤ), (1 : ℤ)))
+    (hγsteps : IsUpRightRay γ)
+    (hπsteps : IsUpRightRay π)
     (_hγsegments : has_maximizing_segments ω γ)
     (_hπsegments : has_maximizing_segments ω π)
     (hγescape₁ : Tendsto (fun n : ℕ => (γ n).1) atTop atTop)
@@ -117,14 +83,14 @@ theorem geodesic_limit_fields_order_and_eq_of_coalescing
         Cγ x (x + ((0 : ℤ), (1 : ℤ))) ≤ Cπ x (x + ((0 : ℤ), (1 : ℤ)))) ∧
     (paths_coalesce u v γ π → Cγ = Cπ) := by
   -- Record monotonicity and the exact absolute level of each ray.
-  have hγmono : Monotone γ := ray_monotone γ hγsteps
-  have hπmono : Monotone π := ray_monotone π hπsteps
+  have hγmono : Monotone γ := hγsteps.monotone
+  have hπmono : Monotone π := hπsteps.monotone
   have hγlevel (n : ℕ) :
       (γ n).1 + (γ n).2 = u.1 + u.2 + (n : ℤ) := by
-    simpa only [hγstart] using ray_level γ hγsteps n
+    simpa only [hγstart] using hγsteps.level n
   have hπlevel (n : ℕ) :
       (π n).1 + (π n).2 = v.1 + v.2 + (n : ℤ) := by
-    simpa only [hπstart] using ray_level π hπsteps n
+    simpa only [hπstart] using hπsteps.level n
   constructor
   · -- For a fixed site, start both limit sequences after the site and both edge neighbors.
     intro horder

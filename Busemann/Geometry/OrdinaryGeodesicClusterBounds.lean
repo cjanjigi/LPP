@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import LPP_Foundations.Frozen.Model.Environment
+public import LPP_Foundations.Model.Paths.UpRightRay
 public import Busemann.Frozen.Definitions.ApproachesFaceInterval
 public import Mathlib.Topology.ClusterPt
 public import Mathlib.Order.LiminfLimsup
@@ -26,9 +27,7 @@ and limsup. GRS arXiv:1510.00860v1, Theorem 2.1(i), normalization step. -/
 theorem ordinary_ray_normalized_cluster_bounds
     (u : Lattice) (γ : ℕ → Lattice)
     (hstart : γ 0 = u)
-    (hsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ))) :
+    (hsteps : IsUpRightRay γ) :
     let a : ℕ → ℝ := fun n => (((γ n).1 - u.1 : ℤ) : ℝ) / (n : ℝ)
     (∀ n, 0 ≤ a n ∧ a n ≤ 1) ∧
     0 ≤ liminf a atTop ∧ limsup a atTop ≤ 1 ∧
@@ -42,16 +41,12 @@ theorem ordinary_ray_normalized_cluster_bounds
   have hDisplacement (n : ℕ) :
       0 ≤ (γ n).1 - u.1 ∧ (γ n).1 - u.1 ≤ (n : ℤ) ∧
       (γ n).1 + (γ n).2 = u.1 + u.2 + (n : ℤ) := by
-    induction n with
-    | zero => simp [hstart]
-    | succ n ih =>
-      rcases hsteps n with hEast | hNorth
-      · rw [hEast]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ] at *
-        omega
-      · rw [hNorth]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ] at *
-        omega
+    have hle : u ≤ γ n := by simpa only [hstart] using hsteps.monotone (Nat.zero_le n)
+    have hlevel : (γ n).1 + (γ n).2 = u.1 + u.2 + (n : ℤ) := by
+      simpa only [hstart] using hsteps.level n
+    have hfirst := hle.1
+    have hsecond := hle.2
+    exact ⟨by omega, by omega, hlevel⟩
   have hBounds (n : ℕ) : 0 ≤ a n ∧ a n ≤ 1 := by
     by_cases hn : n = 0
     · subst n

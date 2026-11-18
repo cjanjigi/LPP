@@ -7,6 +7,7 @@ module
 
 public import Busemann.Frozen.StrongExistence.Definitions.TimeIndex
 public import LPP_Foundations.Statements.ShapeDefinitions
+public import LPP_Foundations.Statements.WeightMoments
 public import Mathlib.Topology.Maps.Basic
 
 import Busemann.Frozen.Variational.OneSidedBound
@@ -31,8 +32,7 @@ coordinate, on the actual source H subtype. -/
 theorem timeIndex_lt_iff_first_coordinate_lt
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (h k : CoalescingTilt μ) :
     (timeIndex μ h).val < (timeIndex μ k).val ↔ h.val.1 < k.val.1 := by
   classical
@@ -84,8 +84,7 @@ whole time-set subtype by the definition of `timeSet`. -/
 theorem timeIndex_isEmbedding
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞) :
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2) :
     Topology.IsEmbedding (timeIndex μ) := by
   classical
   obtain ⟨g, hg, _⟩ := exists_expected_rate_shape_le_cocycle_essSup μ hmoment

@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Busemann.Frozen.Definitions.ForwardWeightSigma
+public import Busemann.Process.ShiftCovariantCoalescingGeodesicSystem
 public import Busemann.Geometry.GeodesicLowerCut
 public import LPP_Foundations.Frozen.Model.EnvironmentLaw
 public import LPP_Foundations.Probability.TranslationEquiv
@@ -29,25 +30,20 @@ open MeasureTheory LPPDifferentiability
 
 namespace LPP.Busemann
 
-/-- A measurable shift-covariant coalescing family of original-space
-geodesics has forward-weight-measurable versions at all signed roots.
-Strong Existence, `lm:pi-forward`, public source lines 975–1004. -/
-theorem exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
-    (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (π : Lattice → Environment → (ℕ → Lattice))
-    (hMeas : ∀ u : Lattice, Measurable (π u))
-    (hGeo : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      IsLocallyRightmostGeodesic ω u (π u ω))
-    (hShift : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      π u ω = (fun n : ℕ => π 0 (environmentTranslationEquiv u ω) n + u))
-    (hCoal : ∀ u v : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      paths_coalesce u v (π u ω) (π v ω)) :
+/-- A shift-covariant coalescing geodesic system has a forward-weight-measurable
+version at each root. Strong Existence, `lm:pi-forward`, public source lines 975–1004. -/
+theorem IsShiftCovariantCoalescingGeodesicSystem.exists_forward_measurable_versions
+    {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    {π : Lattice → Environment → (ℕ → Lattice)}
+    (hSystem : IsShiftCovariantCoalescingGeodesicSystem μ π) :
     ∀ u : Lattice, ∃ F : Environment → (ℕ → Lattice),
       @Measurable Environment (ℕ → Lattice) (forwardWeightSigma u)
         inferInstance F ∧
       ∀ᵐ ω ∂environmentLaw μ,
         π u ω = F ω := by
   classical
+  have hMeas := hSystem.1
+  have hShift := hSystem.2.2.1
   let P : Measure Environment := environmentLaw μ
   let ray : Environment → (ℕ → Lattice) :=
     fun ω => π 0 ω
@@ -70,8 +66,7 @@ theorem exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
     have hCoupled : ∀ᵐ p ∂(P.prod P).map resampleNorth,
         ray p.1 = ray p.2 := by
       simpa only [P, resampleNorth, ray] using
-        ae_geodesic_family_eq_horizontal_halfPlane_resample
-          μ π hMeas hGeo hShift hCoal
+        hSystem.ae_eq_horizontal_halfPlane_resample
     have hResampleMeas : Measurable resampleNorth := by
       exact measurable_fst.prodMk measurable_horizontal_halfPlane_resample
     have hPull : ∀ᵐ p ∂P.prod P,
@@ -97,8 +92,7 @@ theorem exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
     have hCoupled : ∀ᵐ p ∂(P.prod P).map resampleEast,
         ray p.1 = ray p.2 := by
       simpa only [P, resampleEast, ray] using
-        ae_geodesic_family_eq_vertical_halfPlane_resample
-          μ π hMeas hGeo hShift hCoal
+        hSystem.ae_eq_vertical_halfPlane_resample
     have hResampleMeas : Measurable resampleEast := by
       exact measurable_fst.prodMk measurable_vertical_halfPlane_resample
     have hPull : ∀ᵐ p ∂P.prod P,
@@ -177,5 +171,26 @@ theorem exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
   have hShiftAtN := congrArg (fun p : ℕ → Lattice => p n) hshift
   have hVersionAtN := congrArg (fun p : ℕ → Lattice => p n) hzero
   exact hShiftAtN.trans (congrArg (fun z : Lattice => z + u) hVersionAtN)
+
+/-- A measurable shift-covariant coalescing family of original-space
+geodesics has forward-weight-measurable versions at all signed roots.
+Strong Existence, `lm:pi-forward`, public source lines 975–1004. -/
+theorem exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
+    (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (π : Lattice → Environment → (ℕ → Lattice))
+    (hMeas : ∀ u : Lattice, Measurable (π u))
+    (hGeo : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      IsLocallyRightmostGeodesic ω u (π u ω))
+    (hShift : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      π u ω = (fun n : ℕ => π 0 (environmentTranslationEquiv u ω) n + u))
+    (hCoal : ∀ u v : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      paths_coalesce u v (π u ω) (π v ω)) :
+    ∀ u : Lattice, ∃ F : Environment → (ℕ → Lattice),
+      @Measurable Environment (ℕ → Lattice) (forwardWeightSigma u)
+        inferInstance F ∧
+      ∀ᵐ ω ∂environmentLaw μ,
+        π u ω = F ω :=
+  IsShiftCovariantCoalescingGeodesicSystem.exists_forward_measurable_versions (μ := μ) (π := π)
+    ⟨hMeas, hGeo, hShift, hCoal⟩
 
 end LPP.Busemann

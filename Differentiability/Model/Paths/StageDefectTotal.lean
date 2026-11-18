@@ -30,10 +30,10 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
     (hK : 3*η*s+|(dl+dr)/2| * (2*s+2) < K*s)
     (k l : Fin (d.1+d.2+1)) (hkl : k < l)
     (hcut : 2*m ≤ l.val-k.val ∨
-      s ≤ |((1-a)*(p.vertex l).1-a*(p.vertex l).2)-((1-a)*(p.vertex k).1-a*(p.vertex k).2)|)
+      s ≤ |latticeTransverseCoordinate a (p.vertex l) - latticeTransverseCoordinate a (p.vertex k)|)
     (hmin : ∀ t, k < t → t < l → t.val-k.val < 2*m ∧
-      |((1-a)*(p.vertex t).1-a*(p.vertex t).2)-((1-a)*(p.vertex k).1-a*(p.vertex k).2)| < s) :
-    let b : Lattice := (⌊(k.val : ℝ)/(m : ℝ)⌋, ⌊((1-a)*(p.vertex k).1-a*(p.vertex k).2)/s⌋)
+      |latticeTransverseCoordinate a (p.vertex t) - latticeTransverseCoordinate a (p.vertex k)| < s) :
+    let b : Lattice := (⌊(k.val : ℝ)/(m : ℝ)⌋, ⌊latticeTransverseCoordinate a (p.vertex k) / s⌋)
     let v : Lattice → Lattice := fun b =>
       let j : ℤ := ⌊(b.2:ℝ)*s+a*((b.1*m:ℤ):ℝ)⌋
       (j,b.1*m-j)
@@ -42,16 +42,15 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
         ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)), t.val = k0+i.val → q.vertex i = p.vertex t
     let block : Lattice → Lattice → Prop := fun b z =>
       (b.1 : ℝ)*(m : ℝ) ≤ (z.1 : ℝ)+(z.2 : ℝ) ∧ (z.1 : ℝ)+(z.2 : ℝ) ≤ (b.1 : ℝ)*(m : ℝ)+3*(m : ℝ) ∧
-        |(1-a)*(z.1 : ℝ)-a*(z.2 : ℝ)-(b.2 : ℝ)*s| ≤ 4*s
+        |latticeTransverseCoordinate a z - (b.2 : ℝ) * s| ≤ 4 * s
     let defectWitness : Lattice → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop := fun b _ e q =>
       (∀ i, block b (q.vertex i)) ∧
-        min (G0*((e.1 : ℝ)+(e.2 : ℝ))+dl*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q)
-          (G0*((e.1 : ℝ)+(e.2 : ℝ))+dr*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q) < -(η*s)
+        Path.minimumSupportDefect a G0 dl dr ω (d := e) q < -(η*s)
     let crossingWitness : Lattice → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop :=
       fun b u e q =>
         u.1+u.2 = (b.1+1)*m ∧ e.1+e.2 = m ∧
-          (∀ i, |((1-a)*((q.vertex i).1 : ℝ)-a*((q.vertex i).2 : ℝ))-
-            ((1-a)*((v (b.1+1,b.2)).1 : ℝ)-a*((v (b.1+1,b.2)).2 : ℝ))| ≤ 8*s) ∧
+          (∀ i, |latticeTransverseCoordinate a (q.vertex i) -
+            latticeTransverseCoordinate a (v (b.1 + 1, b.2))| ≤ 8 * s) ∧
           G0*(m : ℝ)-K*s < pathWeight ω q
     ∃ M : ℕ, ∃ time : Fin M → ℕ, ∃ start : Fin M → Lattice, ∃ displacement : Fin M → ℕ × ℕ,
       ∃ paths : (j : Fin M) → Path (start j) (displacement j),
@@ -62,7 +61,7 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
       (∀ j j', j ≠ j' → Disjoint (paths j).collectedSites (paths j').collectedSites) ∧
       ∀ (u : Lattice) (e : ℕ × ℕ) (y : Path u e), segment k.val u e y → k.val+(e.1+e.2) = l.val →
         η*s-4*η*s*(M : ℝ)-∑ z ∈ y.collectedSites, max (ω z-M0) 0 ≤
-          G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y := by
+          Path.averageSupportDefect a G0 dl dr ω y := by
   intro b v segment block defectWitness crossingWitness
   have hgap : dr ≤ dl := by linarith
   have hs0 : (0 : ℝ) ≤ s := by linarith
@@ -83,6 +82,8 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
         fun j j' h => absurd (Subsingleton.elim j j') h, fun u e y hy hyl => ?_⟩
       have h0 := hbound u e y hy hyl
       simp only [Nat.cast_one, Nat.cast_zero] at h0 ⊢
+      simp only [Path.averageSupportDefect, averageSupportingFunctional,
+        supportingFunctional, transverseCoordinate]
       linarith
     · -- Witness-free full stage: Lemma 6.3 and (2.15) of the differentiability preprint.
       have hfree := p.witness_free_stage_defect ω a ha ha1 m hm s hs η G0 dl dr K hK k l hkl
@@ -95,22 +96,24 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
       obtain ⟨hm1, hm2, hlong⟩ := hfree u e y hy hyl
       simp only [Nat.cast_zero]
       have hZy := hZ u e y
-      by_cases hlg : |((1-a)*(p.vertex l).1-a*(p.vertex l).2)-
-          ((1-a)*(p.vertex k).1-a*(p.vertex k).2)| < s
+      by_cases hlg : |latticeTransverseCoordinate a (p.vertex l) -
+          latticeTransverseCoordinate a (p.vertex k)| < s
       · have := hlong hlg
+        simp only [Path.averageSupportDefect, averageSupportingFunctional,
+          supportingFunctional, transverseCoordinate]
         linarith
       · have hid := Path.path_defect_min_identity a G0 dl dr hgap ω y
         obtain ⟨_, hx, hy2⟩ := p.segment_endpoints y k.val hy k l rfl hyl.symm
         have hxR : (e.1 : ℝ) = ((p.vertex l).1 : ℝ)-((p.vertex k).1 : ℝ) := by exact_mod_cast hx
         have hyR : (e.2 : ℝ) = ((p.vertex l).2 : ℝ)-((p.vertex k).2 : ℝ) := by exact_mod_cast hy2
-        have hr : (1-a)*(e.1 : ℝ)-a*(e.2 : ℝ) =
-            ((1-a)*(p.vertex l).1-a*(p.vertex l).2)-((1-a)*(p.vertex k).1-a*(p.vertex k).2) := by
-          rw [hxR, hyR]
+        have hr : transverseCoordinate a ((e.1 : ℝ), (e.2 : ℝ)) =
+            latticeTransverseCoordinate a (p.vertex l) - latticeTransverseCoordinate a (p.vertex k) := by
+          simp only [latticeTransverseCoordinate, transverseCoordinate, hxR, hyR]
           ring
-        have hge : s ≤ |(1-a)*(e.1 : ℝ)-a*(e.2 : ℝ)| := by
+        have hge : s ≤ |transverseCoordinate a ((e.1 : ℝ), (e.2 : ℝ))| := by
           rw [hr]
           exact not_lt.mp hlg
-        have hc' : (2*η)*s ≤ ((dl-dr)/2)*|(1-a)*(e.1 : ℝ)-a*(e.2 : ℝ)| :=
+        have hc' : (2*η)*s ≤ ((dl-dr)/2)*|transverseCoordinate a ((e.1 : ℝ), (e.2 : ℝ))| :=
           mul_le_mul hc hge hs0 (by linarith)
         have hmn := le_min hm1 hm2
         linarith
@@ -121,6 +124,8 @@ theorem Path.full_stage_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment
     have h1 := hbound u e y hy hyl
     have hM1 : (1 : ℝ) ≤ (M : ℝ) := by exact_mod_cast (show 1 ≤ M by omega)
     have h2 : η*s*1 ≤ η*s*(M : ℝ) := mul_le_mul_of_nonneg_left hM1 hηs
+    simp only [Path.averageSupportDefect, averageSupportingFunctional,
+      supportingFunctional, transverseCoordinate]
     linarith
 
 /-- The remainder clause of Lemma 6.8: every stage, the remainder included, has
@@ -131,18 +136,17 @@ theorem Path.stage_defect_four_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω : E
     (hstep : |G0| + |(dl+dr)/2| + M0 ≤ η*s/2)
     (k l : Fin (d.1+d.2+1)) (hkl : k ≤ l)
     (hmin : ∀ t, k < t → t < l → t.val-k.val < 2*m ∧
-      |((1-a)*(p.vertex t).1-a*(p.vertex t).2)-((1-a)*(p.vertex k).1-a*(p.vertex k).2)| < s) :
-    let b : Lattice := (⌊(k.val : ℝ)/(m : ℝ)⌋, ⌊((1-a)*(p.vertex k).1-a*(p.vertex k).2)/s⌋)
+      |latticeTransverseCoordinate a (p.vertex t) - latticeTransverseCoordinate a (p.vertex k)| < s) :
+    let b : Lattice := (⌊(k.val : ℝ)/(m : ℝ)⌋, ⌊latticeTransverseCoordinate a (p.vertex k) / s⌋)
     let segment : ℕ → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop := fun k0 _ e q =>
       k0+(e.1+e.2) ≤ d.1+d.2 ∧
         ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)), t.val = k0+i.val → q.vertex i = p.vertex t
     let block : Lattice → Lattice → Prop := fun b z =>
       (b.1 : ℝ)*(m : ℝ) ≤ (z.1 : ℝ)+(z.2 : ℝ) ∧ (z.1 : ℝ)+(z.2 : ℝ) ≤ (b.1 : ℝ)*(m : ℝ)+3*(m : ℝ) ∧
-        |(1-a)*(z.1 : ℝ)-a*(z.2 : ℝ)-(b.2 : ℝ)*s| ≤ 4*s
+        |latticeTransverseCoordinate a z - (b.2 : ℝ) * s| ≤ 4 * s
     let defectWitness : Lattice → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop := fun b _ e q =>
       (∀ i, block b (q.vertex i)) ∧
-        min (G0*((e.1 : ℝ)+(e.2 : ℝ))+dl*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q)
-          (G0*((e.1 : ℝ)+(e.2 : ℝ))+dr*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q) < -(η*s)
+        Path.minimumSupportDefect a G0 dl dr ω (d := e) q < -(η*s)
     ∃ M : ℕ, ∃ time : Fin M → ℕ, ∃ start : Fin M → Lattice, ∃ displacement : Fin M → ℕ × ℕ,
       ∃ paths : (j : Fin M) → Path (start j) (displacement j),
       (∀ j, k.val ≤ time j ∧ time j+((displacement j).1+(displacement j).2) ≤ l.val ∧
@@ -151,13 +155,15 @@ theorem Path.stage_defect_four_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω : E
       (∀ j j', j ≠ j' → Disjoint (paths j).collectedSites (paths j').collectedSites) ∧
       ∀ (u : Lattice) (e : ℕ × ℕ) (y : Path u e), segment k.val u e y → k.val+(e.1+e.2) = l.val →
         -(η*s)-4*η*s*(M : ℝ)-∑ z ∈ y.collectedSites, max (ω z-M0) 0 ≤
-          G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y := by
+          Path.averageSupportDefect a G0 dl dr ω y := by
   intro b segment block defectWitness
   obtain ⟨M, time, start, displacement, paths, hmem, hdisj, hbound⟩ :=
     p.stage_split_witnesses ω a ha ha1 m hm s hs η G0 dl dr M0 hη hstep k l hkl hmin
   refine ⟨M, time, start, displacement, paths, hmem, hdisj, fun u e y hy hyl => ?_⟩
   have h1 := hbound u e y hy hyl
   have h2 : 0 ≤ η*s*(M : ℝ) := mul_nonneg (mul_nonneg hη.le (by linarith)) (Nat.cast_nonneg M)
+  simp only [Path.averageSupportDefect, averageSupportingFunctional,
+    supportingFunctional, transverseCoordinate]
   linarith
 
 /-- Equation (B.18) of the differentiability preprint: for the actual first cuts of a path from the
@@ -168,7 +174,7 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
     (η G0 dl dr K M0 : ℝ) (hη : 0 < η) (hc : 2*η ≤ (dl-dr)/2)
     (hstep : |G0|+|(dl+dr)/2|+M0 ≤ η*s/2)
     (hK : 3*η*s+|(dl+dr)/2| * (2*s+2) < K*s) :
-    let rho (t : Fin (d.1+d.2+1)) : ℝ := (1-a)*(p.vertex t).1-a*(p.vertex t).2
+    let rho (t : Fin (d.1+d.2+1)) : ℝ := latticeTransverseCoordinate a (p.vertex t)
     let pi (t : Fin (d.1+d.2+1)) : ℤ := ⌊(t.val : ℝ)/(m : ℝ)⌋
     let eta (t : Fin (d.1+d.2+1)) : ℤ := ⌊rho t/s⌋
     let v : Lattice → Lattice := fun b =>
@@ -179,16 +185,15 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
         ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)), t.val = k0+i.val → q.vertex i = p.vertex t
     let block : Lattice → Lattice → Prop := fun b z =>
       (b.1 : ℝ)*(m : ℝ) ≤ (z.1 : ℝ)+(z.2 : ℝ) ∧ (z.1 : ℝ)+(z.2 : ℝ) ≤ (b.1 : ℝ)*(m : ℝ)+3*(m : ℝ) ∧
-        |(1-a)*(z.1 : ℝ)-a*(z.2 : ℝ)-(b.2 : ℝ)*s| ≤ 4*s
+        |latticeTransverseCoordinate a z - (b.2 : ℝ) * s| ≤ 4 * s
     let defectWitness : Lattice → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop := fun b _ e q =>
       (∀ i, block b (q.vertex i)) ∧
-        min (G0*((e.1 : ℝ)+(e.2 : ℝ))+dl*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q)
-          (G0*((e.1 : ℝ)+(e.2 : ℝ))+dr*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω q) < -(η*s)
+        Path.minimumSupportDefect a G0 dl dr ω (d := e) q < -(η*s)
     let crossingWitness : Lattice → (u : Lattice) → (e : ℕ × ℕ) → Path u e → Prop :=
       fun b u e q =>
         u.1+u.2 = (b.1+1)*m ∧ e.1+e.2 = m ∧
-          (∀ i, |((1-a)*((q.vertex i).1 : ℝ)-a*((q.vertex i).2 : ℝ))-
-            ((1-a)*((v (b.1+1,b.2)).1 : ℝ)-a*((v (b.1+1,b.2)).2 : ℝ))| ≤ 8*s) ∧
+          (∀ i, |latticeTransverseCoordinate a (q.vertex i) -
+            latticeTransverseCoordinate a (v (b.1 + 1, b.2))| ≤ 8 * s) ∧
           G0*(m : ℝ)-K*s < pathWeight ω q
     ∃ N : ℕ, ∃ cuts : Fin (N+2) → Fin (d.1+d.2+1),
       (cuts 0 = 0 ∧ cuts (Fin.last (N+1)) = Fin.last (d.1+d.2) ∧
@@ -236,7 +241,7 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
       (∀ j j', j ≠ j' → Disjoint (paths j).collectedSites (paths j').collectedSites) ∧
       ((N : ℝ)-1)*η*s-4*η*s*((∑ i, capacity i : ℕ) : ℝ)-
           ∑ z ∈ p.collectedSites, max (ω z-M0) 0 ≤
-        G0*((d.1 : ℝ)+(d.2 : ℝ))+((dl+dr)/2)*((1-a)*(d.1 : ℝ)-a*(d.2 : ℝ))-pathWeight ω p := by
+        Path.averageSupportDefect a G0 dl dr ω p := by
   intro rho pi eta v segment block defectWitness crossingWitness
   obtain ⟨N, cuts, hprod⟩ := p.exists_first_cuts_blocks_indices a ha ha1 m hm s hs
   have hprodK := hprod
@@ -255,9 +260,9 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
       ∀ (u : Lattice) (e : ℕ × ℕ) (y : Path u e), segment (cuts i.castSucc).val u e y →
         (cuts i.castSucc).val+(e.1+e.2) = (cuts i.succ).val →
         (i.val < N → η*s-4*η*s*(M : ℝ)-∑ z ∈ y.collectedSites, max (ω z-M0) 0 ≤
-          G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y) ∧
+          Path.averageSupportDefect a G0 dl dr ω y) ∧
         -(η*s)-4*η*s*(M : ℝ)-∑ z ∈ y.collectedSites, max (ω z-M0) 0 ≤
-          G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y := by
+          Path.averageSupportDefect a G0 dl dr ω y := by
     intro i
     have hi' := i.isLt
     by_cases hi : i.val < N
@@ -286,7 +291,7 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
       segment 0 u e y → 0+(e.1+e.2) = (cuts ⟨n, hn⟩).val →
       (n : ℝ)*η*s-4*η*s*((∑ i ∈ Finset.range n, capN i : ℕ) : ℝ)-
           ∑ z ∈ y.collectedSites, max (ω z-M0) 0 ≤
-        G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y := by
+        Path.averageSupportDefect a G0 dl dr ω y := by
     intro n
     induction n with
     | zero =>
@@ -301,6 +306,8 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
         Finset.card_eq_zero.mp (by rw [Path.collectedSites_card]; omega)
       have hW : pathWeight ω y = 0 := by
         rw [Path.pathWeight_eq_sum_collectedSites, hcs, Finset.sum_empty]
+      simp only [Path.averageSupportDefect, averageSupportingFunctional,
+        supportingFunctional, transverseCoordinate]
       rw [hW, hcs, Finset.sum_empty, he1, he2]
       simp
     | succ n ih =>
@@ -318,6 +325,8 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
       have hst := ((hfam ⟨n, hnN1⟩).2.2 _ eS yS hyS hlS).1 (show n < N by omega)
       rw [Finset.sum_range_succ, hcapN n hnN1]
       simp only [Nat.cast_add, Nat.cast_one]
+      simp only [Path.averageSupportDefect, averageSupportingFunctional,
+        supportingFunctional, transverseCoordinate] at hih hst ⊢
       linarith [hadd.1, hadd.2]
   have hN2 : N < N+2 := by omega
   have hN1 : N+1 < N+2 := by omega
@@ -365,6 +374,8 @@ theorem Path.total_defect_disjoint_witnesses {d : ℕ × ℕ} (p : Path 0 d) (ω
           (time i x) hs2 hs1 (by omega)).symm
   · rw [hsumM]
     simp only [Nat.cast_add]
+    simp only [Path.averageSupportDefect, averageSupportingFunctional,
+      supportingFunctional, transverseCoordinate] at hih hst ⊢
     linarith [hadd.1, hadd.2]
 
 end LPPDifferentiability

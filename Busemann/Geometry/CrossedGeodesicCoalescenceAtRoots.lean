@@ -5,6 +5,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Busemann.Geometry.CrossedGeodesicCoalescence
+public import LPP_Foundations.Model.Paths.Coalescence
+import LPP_Foundations.Model.Paths.UpRightRay
 import Lean.Elab.Tactic.Omega
 
 /-! Opposite strict orders prevent aligned outer coalescence of crossed rays at arbitrary signed roots. -/
@@ -19,18 +21,7 @@ private theorem root_ray_absolute_level
     (ω : Environment) (u : Lattice) (γ : ℕ → Lattice)
     (hγ : IsLocallyRightmostGeodesic ω u γ) (n : ℕ) :
     (γ n).1 + (γ n).2 = u.1 + u.2 + (n : ℤ) := by
-  -- Each step is either east or north, so it raises the coordinate sum by one.
-  induction n with
-  | zero =>
-      simp [hγ.1]
-  | succ n ih =>
-      rcases hγ.2.1 n with hEast | hNorth
-      · rw [hEast]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
-      · rw [hNorth]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
+  simpa only [hγ.1] using IsUpRightRay.level (γ := γ) hγ.2.1 n
 
 private theorem root_rays_same_absolute_level
     (ω : Environment) (u : Lattice) (γ δ : ℕ → Lattice)
@@ -106,12 +97,8 @@ theorem no_outer_coalescence_of_crossed_locallyRightmost_rays_at_roots
     (hγv : IsLocallyRightmostGeodesic ω v γv)
     (huOrder : pathSoutheastLE γu δu ∧ γu ≠ δu)
     (hvOrder : pathSoutheastLE δv γv ∧ δv ≠ γv)
-    (hMiddle : ∃ m n : ℕ,
-      u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-      ∀ q : ℕ, δu (m + q) = δv (n + q)) :
-    ¬ ∃ m n : ℕ,
-      u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-      ∀ q : ℕ, γu (m + q) = γv (n + q) := by
+    (hMiddle : paths_coalesce u v δu δv) :
+    ¬ paths_coalesce u v γu γv := by
   -- Assume the outer rays coalesce at an aligned level.
   rintro ⟨mOuter, nOuter, hOuterLevel, hOuterTail⟩
   obtain ⟨mMiddle, nMiddle, hMiddleLevel, hMiddleTail⟩ := hMiddle

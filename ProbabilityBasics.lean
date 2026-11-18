@@ -169,3 +169,4 @@ public import ProbabilityBasics.Statements.BK
 public import ProbabilityBasics.Statements.Concentration
 public import ProbabilityBasics.Statements.Liggett
 public import ProbabilityBasics.Statements.ProbabilityDefinitions
+public import ProbabilityBasics.Probability.SqrtCdfDistance

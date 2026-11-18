@@ -122,3 +122,6 @@ public import LPP_Foundations.Probability.TruncationLaw
 public import LPP_Foundations.Probability.TruncationTails
 public import LPP_Foundations.Shape.Uniqueness
 public import LPP_Foundations.Statements.ShapeDefinitions
+public import LPP_Foundations.Model.LatticeDisplacement
+public import LPP_Foundations.Model.Paths.UpRightRay
+public import LPP_Foundations.Statements.WeightMoments

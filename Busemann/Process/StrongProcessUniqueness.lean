@@ -7,34 +7,31 @@ module
 
 public import Busemann.Process.CanonicalCocycleUniqueness
 public import Busemann.Geometry.CanonicalHSidedSequences
-public import Busemann.Frozen.StrongExistence.Definitions.OneSidedLimits
+public import Busemann.Process.TiltIndexedBusemannProcess
+public import LPP_Foundations.Statements.WeightMoments
 
 import Busemann.Probability.CanonicalInvariantConditionalMean
+import Busemann.Probability.CocycleMeanTilt
 
 @[expose] public section
 open MeasureTheory Filter LPPDifferentiability
 open scoped ENNReal Topology
 namespace LPP.Busemann
 
-/-- Two canonical strong Busemann field pairs with the six source properties
-agree on one full-measure event at every tilt and signed lattice pair. -/
+/-- Two tilt-indexed Busemann processes agree on one full-measure event at
+every tilt and lattice pair in both branches. -/
 theorem ae_eq_strong_busemann_process_of_six_properties
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (Bm Bp Bm' Bp' : StrongField μ)
-    (hFirst : BranchAgreement μ Bm Bp ∧
-      ForwardCoalescingClass μ Bm Bp ∧ MeanTilt μ Bm ∧
-      WithinTiltOrder μ Bm Bp ∧ StrictCrossTiltOrder μ Bm Bp ∧
-      OneSidedLimits μ Bm Bp)
-    (hSecond : BranchAgreement μ Bm' Bp' ∧
-      ForwardCoalescingClass μ Bm' Bp' ∧ MeanTilt μ Bm' ∧
-      WithinTiltOrder μ Bm' Bp' ∧ StrictCrossTiltOrder μ Bm' Bp' ∧
-      OneSidedLimits μ Bm' Bp') :
+    (hFirst : IsTiltIndexedBusemannProcess μ Bm Bp)
+    (hSecond : IsTiltIndexedBusemannProcess μ Bm' Bp') :
     ∀ᵐ ω ∂environmentLaw μ, ∀ (h : CoalescingTilt μ) (x y : Lattice),
       Bm' h x y ω = Bm h x y ω ∧ Bp' h x y ω = Bp h x y ω := by
   classical
+  have hFirst := (is_tilt_indexed_busemann_process_iff μ Bm Bp).mp hFirst
+  have hSecond := (is_tilt_indexed_busemann_process_iff μ Bm' Bp').mp hSecond
   let P : Measure Environment := environmentLaw μ
   let T : Lattice → Environment → Environment :=
     fun z ω => environmentTranslationEquiv z ω
@@ -59,14 +56,16 @@ theorem ae_eq_strong_busemann_process_of_six_properties
     have hn := canonical_condExp_full_invariants_eq_mean μ
       (X h 0 ((0 : ℤ), (1 : ℤ)))
       ((hClass h).2.1.2.2 0 ((0 : ℤ), (1 : ℤ)))
+    have hTilt : meanCocycleTilt P (X h) = h.val :=
+      (meanCocycleTilt_eq_iff P (X h) h.val).mpr (hMean h)
     filter_upwards [he, hn] with ω heω hnω
-    apply Prod.ext
-    · change -(P[X h 0 ((1 : ℤ), (0 : ℤ)) | I] ω) = h.val.1
-      rw [heω, (hMean h).1]
-      ring
-    · change -(P[X h 0 ((0 : ℤ), (1 : ℤ)) | I] ω) = h.val.2
-      rw [hnω, (hMean h).2]
-      ring
+    calc
+      invariantCocycleTilt P T (fun ω => ω) (X h) (hClass h).2.1 ω =
+          meanCocycleTilt P (X h) := by
+        change (-(P[X h 0 (1, 0) | I] ω), -(P[X h 0 (0, 1) | I] ω)) =
+          meanCocycleTilt P (X h)
+        exact Prod.ext (congrArg (fun v : ℝ => -v) heω) (congrArg (fun v : ℝ => -v) hnω)
+      _ = h.val := hTilt
   have hAtD (d : CoalescingTilt μ) :
       ∀ᵐ ω ∂P, ∀ x y : Lattice,
         Bm' d x y ω = Bm d x y ω ∧

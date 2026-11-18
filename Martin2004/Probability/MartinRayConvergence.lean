@@ -83,6 +83,7 @@ theorem exists_lastPassage_ray_convergence_of_expected_bound
             negLastPassageRayArray a (((j + 1) + 1) * k) (((j + 1) + 2) * k) ω
           rw [show j + 1 + 1 = j + 2 by omega,
             show j + 1 + 2 = j + 3 by omega]
+        unfold ProbabilityBasics.IsStationaryProcess ProbabilityBasics.Liggett.liggettBlockProcess
         rw [hshift]
         exact negLastPassageRayArray_tailBlocks_identDistrib μ a k)
       (ergodic_negLastPassageRayArray_tailBlocks_shift μ a ha)

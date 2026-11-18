@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Busemann.Geometry.GeodesicLowerCut
+public import Busemann.Process.ShiftCovariantCoalescingGeodesicSystem
 public import LPP_Foundations.Frozen.Model.EnvironmentLaw
 public import LPP_Foundations.Probability.TranslationEquiv
 public import LPP_Foundations.Model.Paths.Coalescence
@@ -25,26 +26,21 @@ open MeasureTheory LPPDifferentiability Filter
 
 namespace LPP.Busemann
 
-/-- A measurable shift-covariant coalescing family of locally rightmost
-geodesics has the same zero-root path after independent resampling left of the
-vertical axis, almost surely under the vertical half-plane coupling.
-Public Strong Existence, lm:pi-forward, lines 985–999. -/
-theorem ae_geodesic_family_eq_vertical_halfPlane_resample
-    (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (π : Lattice → Environment → (ℕ → Lattice))
-    (hMeas : ∀ u : Lattice, Measurable (π u))
-    (hGeo : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      IsLocallyRightmostGeodesic ω u (π u ω))
-    (hShift : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      π u ω = (fun n : ℕ => π 0 (environmentTranslationEquiv u ω) n + u))
-    (hCoal : ∀ u v : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      paths_coalesce u v (π u ω) (π v ω)) :
+/-- The zero-root path of a shift-covariant coalescing geodesic system is
+unchanged almost surely by independent resampling left of the vertical axis.
+Strong Existence, `lm:pi-forward`, public source lines 985–999. -/
+theorem IsShiftCovariantCoalescingGeodesicSystem.ae_eq_vertical_halfPlane_resample
+    {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    {π : Lattice → Environment → (ℕ → Lattice)}
+    (hSystem : IsShiftCovariantCoalescingGeodesicSystem μ π) :
     ∀ᵐ p : Environment × Environment ∂
       (((environmentLaw μ).prod (environmentLaw μ)).map
         (fun q : Environment × Environment =>
           (q.1, fun z : Lattice => if 0 ≤ z.1 then q.1 z else q.2 z))),
       π 0 p.1 = π 0 p.2 := by
   classical
+  unfold IsShiftCovariantCoalescingGeodesicSystem at hSystem
+  obtain ⟨hMeas, hGeo, hShift, hCoal⟩ := hSystem
   let P : Measure Environment := environmentLaw μ
   let input : Measure (Environment × Environment) := P.prod P
   let C : Environment × Environment → Environment × Environment :=
@@ -362,5 +358,27 @@ theorem ae_geodesic_family_eq_vertical_halfPlane_resample
       (hGeoFirst zell) hkOrder hellOrder hMiddle
     exact False.elim (hNoOuter hOuter)
   exact hNotEqual hEqual
+
+/-- A measurable shift-covariant coalescing family of locally rightmost
+geodesics has the same zero-root path after independent resampling left of the
+vertical axis, almost surely under the vertical half-plane coupling.
+Public Strong Existence, lm:pi-forward, lines 985–999. -/
+theorem ae_geodesic_family_eq_vertical_halfPlane_resample
+    (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (π : Lattice → Environment → (ℕ → Lattice))
+    (hMeas : ∀ u : Lattice, Measurable (π u))
+    (hGeo : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      IsLocallyRightmostGeodesic ω u (π u ω))
+    (hShift : ∀ u : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      π u ω = (fun n : ℕ => π 0 (environmentTranslationEquiv u ω) n + u))
+    (hCoal : ∀ u v : Lattice, ∀ᵐ ω ∂environmentLaw μ,
+      paths_coalesce u v (π u ω) (π v ω)) :
+    ∀ᵐ p : Environment × Environment ∂
+      (((environmentLaw μ).prod (environmentLaw μ)).map
+        (fun q : Environment × Environment =>
+          (q.1, fun z : Lattice => if 0 ≤ z.1 then q.1 z else q.2 z))),
+      π 0 p.1 = π 0 p.2 :=
+  IsShiftCovariantCoalescingGeodesicSystem.ae_eq_vertical_halfPlane_resample
+    (μ := μ) (π := π) ⟨hMeas, hGeo, hShift, hCoal⟩
 
 end LPP.Busemann

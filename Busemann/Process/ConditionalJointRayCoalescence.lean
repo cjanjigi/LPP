@@ -6,6 +6,7 @@ module
 
 public import Busemann.Process.ConditionalPathKernel
 public import Busemann.Frozen.Definitions.CoalescingRightmostPaths
+public import LPP_Foundations.Model.Paths.Coalescence
 import Busemann.Process.RightmostPathMeasurability
 
 @[expose] public section
@@ -40,9 +41,7 @@ theorem conditional_joint_rightmost_rays_coalesce
       ((κ₂ u v) ω).map Prod.fst = (κ u) ω ∧
       ((κ₂ u v) ω).map Prod.snd = (κ v) ω ∧
       (κ₂ u v) ω
-        {p | ∃ m n : ℕ,
-          u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-          ∀ k : ℕ, p.1 (m + k) = p.2 (n + k)} = 1 := by
+        {p | paths_coalesce u v p.1 p.2} = 1 := by
   classical
   let κ : Lattice → Kernel Environment (ℕ → Lattice) :=
     fun u => condDistrib
@@ -60,9 +59,7 @@ theorem conditional_joint_rightmost_rays_coalesce
     ((κ₂ u v) ω).map Prod.fst = (κ u) ω ∧
     ((κ₂ u v) ω).map Prod.snd = (κ v) ω ∧
     (κ₂ u v) ω
-      {p | ∃ m n : ℕ,
-        u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-        ∀ k : ℕ, p.1 (m + k) = p.2 (n + k)} = 1
+      {p | paths_coalesce u v p.1 p.2} = 1
 
   have hProcessEnvironment : Measurable processEnvironment := by
     change Measurable (fun s : ProcessSample => s.1)
@@ -114,9 +111,7 @@ theorem conditional_joint_rightmost_rays_coalesce
       ∀ k : ℕ, p.1 (m + k) = p.2 (n + k)}
   let tailEvent (u v : Lattice) :
       Set ((ℕ → Lattice) × (ℕ → Lattice)) :=
-    {p | ∃ m n : ℕ,
-      u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-      ∀ k : ℕ, p.1 (m + k) = p.2 (n + k)}
+    {p | paths_coalesce u v p.1 p.2}
   have hCoordinateEq (m n k : ℕ) :
       MeasurableSet
         {p : (ℕ → Lattice) × (ℕ → Lattice) |
@@ -143,7 +138,7 @@ theorem conditional_joint_rightmost_rays_coalesce
   have hTailUnion (u v : Lattice) :
       tailEvent u v = ⋃ m : ℕ, ⋃ n : ℕ, tailPiece u v m n := by
     ext p
-    simp [tailEvent, tailPiece]
+    simp [tailEvent, tailPiece, paths_coalesce]
   have hTailEventMeas (u v : Lattice) :
       MeasurableSet (tailEvent u v) := by
     rw [hTailUnion]

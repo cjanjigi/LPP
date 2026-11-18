@@ -5,6 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Busemann.Geometry.GeodesicCocycleOrder
+public import Busemann.Geometry.CocycleSoutheastOrder
 public import Busemann.Geometry.LocallyRightmostGeodesic
 public import Busemann.Process.CoalescingCocycleRepresentation
 public import Busemann.Frozen.Definitions.GeneralizedBusemann
@@ -97,11 +98,8 @@ theorem ae_cocycle_opposite_edge_order_of_rightmostPath_order
       pathSoutheastLE
         (rightmostCocyclePath (fun x y => B x y ω) u)
         (rightmostCocyclePath (fun x y => C x y ω) u)) :
-    ∀ᵐ ω ∂environmentLaw μ, ∀ x : Lattice,
-      C x (x + ((1 : ℤ), (0 : ℤ))) ω ≤
-        B x (x + ((1 : ℤ), (0 : ℤ))) ω ∧
-      B x (x + ((0 : ℤ), (1 : ℤ))) ω ≤
-        C x (x + ((0 : ℤ), (1 : ℤ))) ω := by
+    ∀ᵐ ω ∂environmentLaw μ,
+      cocycleSoutheastLE (fun x y => B x y ω) (fun x y => C x y ω) := by
   classical
   filter_upwards [hB.1.2.2, hB.2.1, hCoalB,
     hC.1.2.2, hC.2.1, hCoalC, hPaths] with

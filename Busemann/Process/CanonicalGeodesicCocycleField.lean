@@ -139,17 +139,10 @@ theorem exists_forward_real_cocycle_of_coalescing_geodesic_family
       paths_coalesce u v (π u ω) (π v ω) :=
     ae_all_iff.mpr fun u => ae_all_iff.mpr (hCoal u)
 
-  have hCoalOld (u v : Lattice) : ∀ᵐ ω ∂P,
-      ∃ m n : ℕ,
-        u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-        ∀ k : ℕ, (π u ω) (m + k) = (π v ω) (n + k) := by
-    filter_upwards [hCoal u v] with ω hω
-    exact hω
-
   -- Select the forward versions of this same original-space family.
-  have hVersions :=
-    exists_forwardWeightSigma_versions_of_coalescing_geodesic_family
-      μ π hMeas hGeo hShift hCoalOld
+  have hSystem : IsShiftCovariantCoalescingGeodesicSystem μ π :=
+    ⟨hMeas, hGeo, hShift, hCoal⟩
+  have hVersions := hSystem.exists_forward_measurable_versions
   choose F hFMeas hFEq using hVersions
   have hFAll : ∀ᵐ ω ∂P, ∀ u : Lattice, π u ω = F u ω :=
     ae_all_iff.mpr hFEq
@@ -309,6 +302,7 @@ theorem exists_forward_real_cocycle_of_coalescing_geodesic_family
             ((((π 0 (environmentTranslationEquiv z ω)) (N + n)).1 - y.1).toNat,
              (((π 0 (environmentTranslationEquiv z ω)) (N + n)).2 - y.2).toNat)) :=
       funext fun n => hSeq n
+    simp only [natDisplacement] at hLeft hRight
     rw [hEqual] at hLeft
     exact tendsto_nhds_unique hLeft hRight
 

@@ -20,22 +20,49 @@ import Mathlib.Tactic.Ring
 open scoped NNReal
 
 namespace LPPDifferentiability
+
+/-- The signed transverse coordinate relative to the direction `(t, 1 - t)`. -/
+noncomputable abbrev transverseCoordinate (t : ℝ) (z : ℝ × ℝ) : ℝ :=
+  (1 - t) * z.1 - t * z.2
+
+/-- The transverse coordinate of a signed lattice site, using its real coordinates. -/
+noncomputable abbrev latticeTransverseCoordinate (t : ℝ) (z : Lattice) : ℝ :=
+  transverseCoordinate t ((z.1 : ℝ), (z.2 : ℝ))
+
+/-- The supporting functional with value `G` in direction `(t, 1 - t)` and
+profile slope `slope`. Use the left or right slope for the corresponding extreme. -/
+noncomputable abbrev supportingFunctional (t G slope : ℝ) (z : ℝ × ℝ) : ℝ :=
+  G * (z.1 + z.2) + slope * transverseCoordinate t z
+
+/-- The average of the two extreme supporting functionals, expressed with the
+average slope. -/
+noncomputable abbrev averageSupportingFunctional (t G dl dr : ℝ) (z : ℝ × ℝ) : ℝ :=
+  supportingFunctional t G ((dl + dr) / 2) z
+
 namespace Path
+
+/-- The supporting value of the path displacement minus its terminal-excluded
+weight. The left and right defects use the corresponding one-sided slope. -/
+noncomputable abbrev supportDefect (t G slope : ℝ) (ω : Environment)
+    {u : Lattice} {d : ℕ × ℕ} (p : Path u d) : ℝ :=
+  supportingFunctional t G slope ((d.1 : ℝ), (d.2 : ℝ)) - pathWeight ω p
+
+/-- The defect measured against the average supporting functional. -/
+noncomputable abbrev averageSupportDefect (t G dl dr : ℝ) (ω : Environment)
+    {u : Lattice} {d : ℕ × ℕ} (p : Path u d) : ℝ :=
+  averageSupportingFunctional t G dl dr ((d.1 : ℝ), (d.2 : ℝ)) - pathWeight ω p
+
+/-- The smaller of the two extreme supporting defects of the same path. -/
+noncomputable abbrev minimumSupportDefect (t G dl dr : ℝ) (ω : Environment)
+    {u : Lattice} {d : ℕ × ℕ} (p : Path u d) : ℝ :=
+  min (supportDefect t G dl ω p) (supportDefect t G dr ω p)
 
 /-- The source level and signed transverse coordinate are linear on the entire
 real plane, so each source support is additive without a quadrant restriction. -/
 theorem source_support_add (t G slope : ℝ) (z w : ℝ × ℝ) :
-    (fun z : ℝ × ℝ =>
-      G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2)) (z + w) =
-      ((fun z : ℝ × ℝ =>
-        G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2)) z) +
-      ((fun z : ℝ × ℝ =>
-        G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2)) w) := by
-  change G * ((z + w).1 + (z + w).2) +
-      slope * ((1 - t) * (z + w).1 - t * (z + w).2) =
-    (G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2)) +
-      (G * (w.1 + w.2) + slope * ((1 - t) * w.1 - t * w.2))
-  simp only [Prod.fst_add, Prod.snd_add]
+    supportingFunctional t G slope (z + w) =
+      supportingFunctional t G slope z + supportingFunctional t G slope w := by
+  simp only [supportingFunctional, transverseCoordinate, Prod.fst_add, Prod.snd_add]
   ring
 
 /-- The literal left-slope support is additive on the entire real plane. -/
@@ -56,10 +83,8 @@ theorem source_fplus_add (t G dr : ℝ) (z w : ℝ × ℝ) :
 
 /-- The literal average support is additive on the entire real plane. -/
 theorem source_favg_add (t G dl dr : ℝ) (z w : ℝ × ℝ) :
-    G * ((z + w).1 + (z + w).2) +
-      ((dl + dr) / 2) * ((1 - t) * (z + w).1 - t * (z + w).2) =
-    (G * (z.1 + z.2) + ((dl + dr) / 2) * ((1 - t) * z.1 - t * z.2)) +
-      (G * (w.1 + w.2) + ((dl + dr) / 2) * ((1 - t) * w.1 - t * w.2) ) := by
+    averageSupportingFunctional t G dl dr (z + w) =
+      averageSupportingFunctional t G dl dr z + averageSupportingFunctional t G dl dr w := by
   exact source_support_add t G ((dl + dr) / 2) z w
 
 /-- For one actual path and one actual signed weight, the minimum of the two
@@ -67,38 +92,25 @@ extreme defects is the average defect minus the source half-gap times the
 absolute transverse displacement. -/
 theorem path_defect_min_identity (t G dl dr : ℝ) (hgap : dr ≤ dl)
     (ω : Environment) {u : Lattice} {d : ℕ × ℕ} (p : Path u d) :
-    min
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p)
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p) =
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        ((dl + dr) / 2) * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) -
-        pathWeight ω p -
-          ((dl - dr) / 2) *
-            |(1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)| := by
-  let r : ℝ := (1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)
-  let havg : ℝ := G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-    ((dl + dr) / 2) * r - pathWeight ω p
+    minimumSupportDefect t G dl dr ω p =
+      averageSupportDefect t G dl dr ω p -
+        ((dl - dr) / 2) * |transverseCoordinate t ((d.1 : ℝ), (d.2 : ℝ))| := by
+  let r := transverseCoordinate t ((d.1 : ℝ), (d.2 : ℝ))
+  let havg := averageSupportDefect t G dl dr ω p
   let cgap : ℝ := (dl - dr) / 2
+  change minimumSupportDefect t G dl dr ω p = havg - cgap * |r|
   have hcgap : 0 ≤ cgap := by
     dsimp [cgap]
     linarith
-  have hminus :
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p =
-          havg + cgap * r := by
-    dsimp [havg, cgap, r]
+  have hminus : supportDefect t G dl ω p = havg + cgap * r := by
+    dsimp [supportDefect, havg, averageSupportDefect, averageSupportingFunctional,
+      supportingFunctional, cgap, r]
     ring
-  have hplus :
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p =
-          havg - cgap * r := by
-    dsimp [havg, cgap, r]
+  have hplus : supportDefect t G dr ω p = havg - cgap * r := by
+    dsimp [supportDefect, havg, averageSupportDefect, averageSupportingFunctional,
+      supportingFunctional, cgap, r]
     ring
-  rw [hminus, hplus]
-  change min (havg + cgap * r) (havg - cgap * r) =
-    havg - cgap * |r|
+  rw [minimumSupportDefect, hminus, hplus]
   by_cases hr : 0 ≤ r
   · have hmul : 0 ≤ cgap * r := mul_nonneg hcgap hr
     rw [abs_of_nonneg hr, min_eq_right (by linarith)]
@@ -110,14 +122,7 @@ theorem path_defect_min_identity (t G dl dr : ℝ) (hgap : dr ≤ dl)
 /-- The extreme-defect minimum is bounded above by the average defect. -/
 theorem path_defect_min_le_average (t G dl dr : ℝ) (hgap : dr ≤ dl)
     (ω : Environment) {u : Lattice} {d : ℕ × ℕ} (p : Path u d) :
-    min
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p)
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p) ≤
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        ((dl + dr) / 2) * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) -
-        pathWeight ω p := by
+    minimumSupportDefect t G dl dr ω p ≤ averageSupportDefect t G dl dr ω p := by
   rw [path_defect_min_identity t G dl dr hgap ω p]
   have hcgap : 0 ≤ (dl - dr) / 2 := by linarith
   exact sub_le_self _ (mul_nonneg hcgap (abs_nonneg _))
@@ -126,33 +131,22 @@ theorem path_defect_min_le_average (t G dl dr : ℝ) (hgap : dr ≤ dl)
 theorem path_defect_min_eq_average_of_equal_slopes (t G dl dr : ℝ)
     (heq : dl = dr) (ω : Environment) {u : Lattice} {d : ℕ × ℕ}
     (p : Path u d) :
-    min
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p)
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p) =
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        ((dl + dr) / 2) * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) -
-        pathWeight ω p := by
+    minimumSupportDefect t G dl dr ω p = averageSupportDefect t G dl dr ω p := by
   subst dr
   rw [path_defect_min_identity t G dl dl le_rfl ω p]
-  ring
+  simp
 
 /-- When the transverse displacement is nonnegative, the right-slope defect
 realizes the minimum. -/
 theorem path_defect_min_eq_fplus_of_rho_nonneg (t G dl dr : ℝ)
     (hgap : dr ≤ dl) (ω : Environment) {u : Lattice} {d : ℕ × ℕ}
     (p : Path u d)
-    (hr : 0 ≤ (1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) :
-    min
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p)
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p) =
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p := by
+    (hr : 0 ≤ transverseCoordinate t ((d.1 : ℝ), (d.2 : ℝ))) :
+    minimumSupportDefect t G dl dr ω p = supportDefect t G dr ω p := by
   rw [path_defect_min_identity t G dl dr hgap ω p]
   rw [abs_of_nonneg hr]
+  simp only [averageSupportDefect, averageSupportingFunctional, supportDefect,
+    supportingFunctional]
   ring
 
 /-- When the transverse displacement is nonpositive, the left-slope defect
@@ -160,16 +154,12 @@ realizes the minimum. -/
 theorem path_defect_min_eq_fminus_of_rho_nonpos (t G dl dr : ℝ)
     (hgap : dr ≤ dl) (ω : Environment) {u : Lattice} {d : ℕ × ℕ}
     (p : Path u d)
-    (hr : (1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ) ≤ 0) :
-    min
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p)
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dr * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p) =
-      G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        dl * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p := by
+    (hr : transverseCoordinate t ((d.1 : ℝ), (d.2 : ℝ)) ≤ 0) :
+    minimumSupportDefect t G dl dr ω p = supportDefect t G dl ω p := by
   rw [path_defect_min_identity t G dl dr hgap ω p]
   rw [abs_of_nonpos hr]
+  simp only [averageSupportDefect, averageSupportingFunctional, supportDefect,
+    supportingFunctional]
   ring
 
 /-- A constant environment with any real value, including a negative one,
@@ -188,7 +178,8 @@ theorem path_defect_min_identity_constant_environment (t G dl dr w : ℝ)
           (((d.1 + d.2 : ℕ) : ℝ) * w) -
           ((dl - dr) / 2) *
             |(1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)| := by
-  simpa only [pathWeight_const] using
+  simpa only [minimumSupportDefect, averageSupportDefect, averageSupportingFunctional,
+    supportDefect, supportingFunctional, transverseCoordinate, pathWeight_const] using
     (path_defect_min_identity t G dl dr hgap
       (fun _ : Lattice => w) p)
 
@@ -250,15 +241,12 @@ theorem path_support_defect_concat (t G slope : ℝ) (ω : Environment)
         ((d.1 : ℝ), (d.2 : ℝ)) + ((e.1 : ℝ), (e.2 : ℝ)) := by
     ext <;> simp only [Prod.fst_add, Prod.snd_add, Nat.cast_add]
   change
-    (fun z : ℝ × ℝ =>
-      G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
+    supportingFunctional t G slope
         (((d + e).1 : ℝ), ((d + e).2 : ℝ)) -
         (pathWeight ω p + pathWeight ω q) =
-      ((fun z : ℝ × ℝ =>
-        G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
+      (supportingFunctional t G slope
           ((d.1 : ℝ), (d.2 : ℝ)) - pathWeight ω p) +
-        ((fun z : ℝ × ℝ =>
-          G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
+        (supportingFunctional t G slope
             ((e.1 : ℝ), (e.2 : ℝ)) - pathWeight ω q)
   rw [hdisp, source_support_add]
   ring
@@ -274,15 +262,8 @@ theorem path_defect_favg_concat (t G dl dr : ℝ) (ω : Environment)
     {u : Lattice} {d e : ℕ × ℕ}
     (p : Path u d)
     (q : Path (u + ((d.1 : ℤ), (d.2 : ℤ))) e) :
-    G * (((d + e).1 : ℝ) + ((d + e).2 : ℝ)) +
-        ((dl + dr) / 2) * ((1 - t) * ((d + e).1 : ℝ) - t * ((d + e).2 : ℝ)) -
-        pathWeight ω (p.concat q) =
-      (G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-          ((dl + dr) / 2) * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) -
-          pathWeight ω p) +
-        (G * ((e.1 : ℝ) + (e.2 : ℝ)) +
-          ((dl + dr) / 2) * ((1 - t) * (e.1 : ℝ) - t * (e.2 : ℝ)) -
-          pathWeight ω q) := by
+    averageSupportDefect t G dl dr ω (p.concat q) =
+      averageSupportDefect t G dl dr ω p + averageSupportDefect t G dl dr ω q := by
   exact path_support_defect_concat t G ((dl + dr) / 2) ω p q
 
 /-- A generic source support defect adds over the actual prefix and suffix
@@ -291,18 +272,10 @@ suffix weight. -/
 theorem path_support_defect_split (t G slope : ℝ) (ω : Environment)
     {u : Lattice} {d : ℕ × ℕ}
     (p : Path u d) (k : Fin (d.1 + d.2 + 1)) :
-    G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        slope * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p =
-      (G * (((p.splitDisplacement k).1 : ℝ) +
-          ((p.splitDisplacement k).2 : ℝ)) +
-          slope * ((1 - t) * ((p.splitDisplacement k).1 : ℝ) -
-            t * ((p.splitDisplacement k).2 : ℝ)) -
-          pathWeight ω (p.prefixPath k)) +
-        (G * ((((d - p.splitDisplacement k).1 : ℝ) +
-          ((d - p.splitDisplacement k).2 : ℝ))) +
-          slope * ((1 - t) * (((d - p.splitDisplacement k).1 : ℝ)) -
-            t * (((d - p.splitDisplacement k).2 : ℝ)) ) -
-          pathWeight ω (p.suffix k)) := by
+    supportDefect t G slope ω p =
+      supportDefect t G slope ω (p.prefixPath k) +
+        supportDefect t G slope ω (p.suffix k) := by
+  simp only [supportDefect]
   rw [pathWeight_split]
   have hdisp :
       ((d.1 : ℝ), (d.2 : ℝ)) =
@@ -323,21 +296,6 @@ theorem path_support_defect_split (t G slope : ℝ) (ω : Environment)
         simpa only [Prod.snd_add] using h
       have hr := congrArg (fun n : ℕ => (n : ℝ)) h'.symm
       simpa only [Nat.cast_add, Prod.snd_add] using hr
-  change
-    (fun z : ℝ × ℝ =>
-      G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
-        ((d.1 : ℝ), (d.2 : ℝ)) -
-        (pathWeight ω (p.prefixPath k) + pathWeight ω (p.suffix k)) =
-      ((fun z : ℝ × ℝ =>
-        G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
-          (((p.splitDisplacement k).1 : ℝ),
-            ((p.splitDisplacement k).2 : ℝ)) -
-          pathWeight ω (p.prefixPath k)) +
-        ((fun z : ℝ × ℝ =>
-          G * (z.1 + z.2) + slope * ((1 - t) * z.1 - t * z.2))
-            (((d - p.splitDisplacement k).1 : ℝ),
-              ((d - p.splitDisplacement k).2 : ℝ)) -
-            pathWeight ω (p.suffix k))
   rw [hdisp, source_support_add]
   ring
 
@@ -351,18 +309,9 @@ alias path_defect_fplus_split := path_support_defect_split
 theorem path_defect_favg_split (t G dl dr : ℝ) (ω : Environment)
     {u : Lattice} {d : ℕ × ℕ}
     (p : Path u d) (k : Fin (d.1 + d.2 + 1)) :
-    G * ((d.1 : ℝ) + (d.2 : ℝ)) +
-        ((dl + dr) / 2) * ((1 - t) * (d.1 : ℝ) - t * (d.2 : ℝ)) - pathWeight ω p =
-      (G * (((p.splitDisplacement k).1 : ℝ) +
-          ((p.splitDisplacement k).2 : ℝ)) +
-          ((dl + dr) / 2) * ((1 - t) * ((p.splitDisplacement k).1 : ℝ) -
-            t * ((p.splitDisplacement k).2 : ℝ)) -
-          pathWeight ω (p.prefixPath k)) +
-        (G * ((((d - p.splitDisplacement k).1 : ℝ) +
-          ((d - p.splitDisplacement k).2 : ℝ))) +
-          ((dl + dr) / 2) * ((1 - t) * (((d - p.splitDisplacement k).1 : ℝ)) -
-            t * (((d - p.splitDisplacement k).2 : ℝ)) ) -
-          pathWeight ω (p.suffix k)) := by
+    averageSupportDefect t G dl dr ω p =
+      averageSupportDefect t G dl dr ω (p.prefixPath k) +
+        averageSupportDefect t G dl dr ω (p.suffix k) := by
   exact path_support_defect_split t G ((dl + dr) / 2) ω p k
 
 /-- The actual horizontal-axis defect minimum uses transverse displacement
@@ -376,7 +325,9 @@ theorem path_defect_min_identity_horizontal (t G dl dr : ℝ)
         G * (n : ℝ) + ((dl + dr) / 2) * ((1 - t) * (n : ℝ)) -
           pathWeight ω p -
             ((dl - dr) / 2) * |(1 - t) * (n : ℝ)| := by
-  simpa using (path_defect_min_identity t G dl dr hgap ω p)
+  simpa [minimumSupportDefect, averageSupportDefect, averageSupportingFunctional,
+    supportDefect, supportingFunctional, transverseCoordinate] using
+    (path_defect_min_identity t G dl dr hgap ω p)
 
 /-- The actual vertical-axis defect minimum uses transverse displacement
 `-nt` and the same terminal-excluded path weight. -/
@@ -389,7 +340,9 @@ theorem path_defect_min_identity_vertical (t G dl dr : ℝ)
         G * (n : ℝ) + ((dl + dr) / 2) * (-(t * (n : ℝ))) -
           pathWeight ω p -
             ((dl - dr) / 2) * |-(t * (n : ℝ))| := by
-  simpa using (path_defect_min_identity t G dl dr hgap ω p)
+  simpa [minimumSupportDefect, averageSupportDefect, averageSupportingFunctional,
+    supportDefect, supportingFunctional, transverseCoordinate] using
+    (path_defect_min_identity t G dl dr hgap ω p)
 
 /-- For the literal canonical profile, the source minimum identity uses the
 actual one-sided derivatives. Their ordering is proved from concavity. -/
@@ -402,14 +355,10 @@ theorem canonical_path_defect_min
     let H : ℝ → ℝ := fun h => quadrantExtension g (a + h, 1 - a - h)
     let dl := derivWithin H (Set.Iio 0) 0
     let dr := derivWithin H (Set.Ioi 0) 0
-    let rho := (1 - a) * (d.1 : ℝ) - a * (d.2 : ℝ)
-    let fminus := H 0 * ((d.1 : ℝ) + (d.2 : ℝ)) + dl * rho
-    let fplus := H 0 * ((d.1 : ℝ) + (d.2 : ℝ)) + dr * rho
-    let favg := H 0 * ((d.1 : ℝ) + (d.2 : ℝ)) + ((dl + dr) / 2) * rho
-    min (fminus - pathWeight ω p) (fplus - pathWeight ω p) =
-      favg - pathWeight ω p - ((dl - dr) / 2) * |rho| ∧
-    min (fminus - pathWeight ω p) (fplus - pathWeight ω p) ≤
-      favg - pathWeight ω p := by
+    let rho := transverseCoordinate a ((d.1 : ℝ), (d.2 : ℝ))
+    minimumSupportDefect a (H 0) dl dr ω p =
+      averageSupportDefect a (H 0) dl dr ω p - ((dl - dr) / 2) * |rho| ∧
+    minimumSupportDefect a (H 0) dl dr ω p ≤ averageSupportDefect a (H 0) dl dr ω p := by
   let H : ℝ → ℝ := fun h => quadrantExtension g (a + h, 1 - a - h)
   have hhalf := quadrant_supporting_functionals_half_gap_algebra g hgconc a ha₀ ha₁
   have hgap : derivWithin H (Set.Ioi 0) 0 ≤ derivWithin H (Set.Iio 0) 0 := by
@@ -432,12 +381,9 @@ theorem canonical_path_defect_lower_bounds
     let H : ℝ → ℝ := fun h => quadrantExtension g (a + h, 1 - a - h)
     let dl := derivWithin H (Set.Iio 0) 0
     let dr := derivWithin H (Set.Ioi 0) 0
-    let rho := (1 - a) * (d.1 : ℝ) - a * (d.2 : ℝ)
-    let fminus := H 0 * ((d.1 : ℝ) + (d.2 : ℝ)) + dl * rho
-    let fplus := H 0 * ((d.1 : ℝ) + (d.2 : ℝ)) + dr * rho
     let z : Quadrant := ((d.1 : ℝ≥0), (d.2 : ℝ≥0))
-    g z - pathWeight ω p ≤ fminus - pathWeight ω p ∧
-    g z - pathWeight ω p ≤ fplus - pathWeight ω p ∧
+    g z - pathWeight ω p ≤ supportDefect a (H 0) dl ω p ∧
+    g z - pathWeight ω p ≤ supportDefect a (H 0) dr ω p ∧
     g z - lastPassage ω u d ≤ g z - pathWeight ω p := by
   let z : Quadrant := ((d.1 : ℝ≥0), (d.2 : ℝ≥0))
   have hs := (quadrant_supporting_functionals_and_contact

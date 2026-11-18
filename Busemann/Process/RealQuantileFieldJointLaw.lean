@@ -271,7 +271,7 @@ theorem exists_measurable_real_quantile_field_with_original_joint_law
     have hShifted : Tendsto
         (fun k : ℕ => D x y (k + m) (a.1, π 0))
         atTop (𝓝 (C x y)) := by
-      simpa only [D, π, Nat.add_comm] using hC.1 0 x y m hx hy
+      simpa only [D, π, natDisplacement, Nat.add_comm] using hC.1 0 x y m hx hy
     have hLimit : Tendsto (fun k => D x y k (a.1, π 0))
         atTop (𝓝 (C x y)) :=
       (tendsto_add_atTop_iff_nat m).1 hShifted

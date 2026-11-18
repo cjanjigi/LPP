@@ -161,6 +161,8 @@ theorem corner_excluded_at_scale_general (μ : Measure ℝ) [IsProbabilityMeasur
         have hE := hN1 N hN1N d p' cuts hunion hblock hsteps hpi0 hidx0
         have hlin := linear_defect_of_few_witnesses_excess η s _ _ N _
           (mul_nonneg hη0.le hs0.le) (le_trans (le_max_right _ _) hN) hcap hE hineq
+        simp only [Path.averageSupportDefect, averageSupportingFunctional,
+          supportingFunctional, transverseCoordinate] at hlin
         rw [hp'] at hlin
         linarith
     refine corner_defect_contradiction _ m (max (max N0 N1) 3) hm (η * s / 2)

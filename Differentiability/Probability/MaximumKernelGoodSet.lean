@@ -58,12 +58,12 @@ theorem maximum_kernel_good_set (μ : Measure ℝ) [IsProbabilityMeasure μ]
                 ENNReal.ofReal δ • Measure.dirac true))) := by
   dsimp only
   obtain ⟨α, hα, c, hc, hbad⟩ := maximum_quantile_internal_good_set μ hβ
-  let M : EReal := sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
+  let M : EReal := supportTop μ
   let I : Set ℝ := {t : ℝ | (t : EReal) < M ∧
     μ.real (Iic t) ≤ 1 - α ∧
     c ≤ sInf {s : ℝ | μ.real (Iic t) + α / 2 ≤ μ.real (Iic s)} - t}
   let below : Set ℝ := {t : ℝ | (t : EReal) < M}
-  let top : Set ℝ := {t : ℝ | (t : EReal) = M}
+  let top : Set ℝ := supportTopAtom μ
   let bad : Set ℝ := {t : ℝ | μ.real (Iic t) < 1 ∧
     ¬(μ.real (Iic t) ≤ 1 - α ∧
       c ≤ sInf {s : ℝ | μ.real (Iic t) + α / 2 ≤ μ.real (Iic s)} - t)}

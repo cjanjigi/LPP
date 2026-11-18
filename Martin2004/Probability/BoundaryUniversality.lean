@@ -15,6 +15,7 @@ public import Martin2004.Probability.MeanVarianceTruncationTail
 public import Martin2004.Probability.ShapeComparison
 public import Martin2004.Shape.ExpectedRateShape
 import Martin2004.Probability.GaussianBlockComparisonBound
+import ProbabilityBasics.Probability.SqrtCdfDistance
 
 @[expose] public section
 
@@ -40,18 +41,6 @@ open scoped NNReal ENNReal Topology
 
 namespace LPPDifferentiability
 
-/-! ### The two forms of the square-root distance -/
-
-/-- Lemma 4.3 states the square-root distance with the integrand `ofReal (|F - G| ^ (1/2))` on the
-distribution functions `(μ (Iic s)).toReal`; Lemma 4.2 states it as `(ofReal |F - G|) ^ (1/2)` on
-`μ.real (Iic s)`. The two integrals are equal. -/
-private lemma lintegral_sqrt_distance_eq (μ ν : Measure ℝ) :
-    ∫⁻ s : ℝ, ENNReal.ofReal (|(μ (Iic s)).toReal - (ν (Iic s)).toReal| ^ (1 / 2 : ℝ)) =
-      ∫⁻ s : ℝ, (ENNReal.ofReal |μ.real (Iic s) - ν.real (Iic s)|) ^ (1 / 2 : ℝ) := by
-  refine lintegral_congr fun s => ?_
-  rw [ENNReal.ofReal_rpow_of_nonneg (abs_nonneg _) (by norm_num), measureReal_def,
-    measureReal_def]
-
 /-! ### Second term of the split: Lemma 4.2 -/
 
 /-- The last display of the proof of Martin (2004), Lemma 4.6: if two laws satisfy the tail
@@ -65,12 +54,12 @@ private lemma shape_diff_le (μ ν : Measure ℝ) [IsProbabilityMeasure μ] [IsP
     (hmean : ∫ t : ℝ, t ∂ν = ∫ t : ℝ, t ∂μ)
     (g h : Quadrant → ℝ) (hg : IsExpectedRateShape μ g) (hh : IsExpectedRateShape ν h)
     (ε : ℝ) (hε : 0 < ε)
-    (hJ : (∫⁻ s : ℝ, ENNReal.ofReal
-      (|(μ (Iic s)).toReal - (ν (Iic s)).toReal| ^ (1 / 2 : ℝ))) < ENNReal.ofReal ε)
+    (hJ : sqrtCdfDistance μ ν < ENNReal.ofReal ε)
     (α : ℝ≥0) (hα : 0 < α) :
     |g (1, α) - h (1, α)| / Real.sqrt (α : ℝ) ≤ 2 * Real.sqrt (1 + (α : ℝ)) * ε := by
   have h42 := martin_lemma_4_2 μ ν hneg₁ hpos₁ hneg₂ hpos₂ g h hg hh α hα
-  rw [hmean, sub_self, mul_zero, sub_zero, ← lintegral_sqrt_distance_eq] at h42
+  rw [hmean, sub_self, mul_zero, sub_zero] at h42
+  change _ ≤ _ * sqrtCdfDistance μ ν at h42
   have hc : 0 ≤ 2 * Real.sqrt ((α : ℝ) * (1 + (α : ℝ))) := by positivity
   have h1 : ENNReal.ofReal |g (1, α) - h (1, α)| ≤
       ENNReal.ofReal (2 * Real.sqrt ((α : ℝ) * (1 + (α : ℝ))) * ε) := by
@@ -200,8 +189,11 @@ theorem martin_lemma_4_6
     nhdsWithin_le_nhds (Iic_mem_nhds (by norm_num : (0 : ℝ≥0) < 3))
   filter_upwards [hfirst', hpos', hle] with α hα hαpos hα3
   -- step 4: the second term, by Lemma 4.2 and the distance bound
+  have hdist : sqrtCdfDistance μ ν₀ < ENNReal.ofReal (ε / 8) := by
+    rw [sqrtCdfDistance_eq_lintegral_ofReal_rpow]
+    exact hJ
   have hd := shape_diff_le μ ν₀ hneg hpos hneg₂ hpos₂ hmean g h₀ hg hshape (ε / 8)
-    (by positivity) hJ α hαpos
+    (by positivity) hdist α hαpos
   have hs : 0 < Real.sqrt (α : ℝ) := Real.sqrt_pos.2 (by exact_mod_cast hαpos)
   have hsq : Real.sqrt (1 + (α : ℝ)) ≤ 2 := by
     refine Real.sqrt_le_iff.2 ⟨by norm_num, ?_⟩

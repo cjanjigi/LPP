@@ -11,6 +11,7 @@ public import LPP_Foundations.Frozen.Model.Quadrant
 public import Martin2004.Probability.AffineShape
 public import Martin2004.Probability.NormalExponentialTails
 public import Martin2004.Probability.ShapeComparison
+public import ProbabilityBasics.Probability.SqrtCdfDistance
 import LPP_Foundations.Probability.PassageMeanBounds
 
 @[expose] public section
@@ -113,10 +114,9 @@ private lemma real_Iic_map_affine (γ : Measure ℝ) {a : ℝ} (ha : 0 < a) (b u
 /-- After the change of variables `s = a u + b`, the square-root distance of `ν` and the image of
 `γ` is `a` times that of the normalized law of `ν` and `γ`. -/
 private lemma sqrt_distance_affine (ν γ : Measure ℝ) {a : ℝ} (ha : 0 < a) (b : ℝ) :
-    ∫⁻ s : ℝ, (ENNReal.ofReal |ν.real (Iic s) -
-        (γ.map (fun t : ℝ => a * t + b)).real (Iic s)|) ^ (1 / 2 : ℝ) =
-      ENNReal.ofReal a * ∫⁻ u : ℝ, (ENNReal.ofReal |(ν.map fun s : ℝ => (s - b) / a).real (Iic u) -
-        γ.real (Iic u)|) ^ (1 / 2 : ℝ) := by
+    sqrtCdfDistance ν (γ.map (fun t : ℝ => a * t + b)) =
+      ENNReal.ofReal a * sqrtCdfDistance (ν.map (fun s : ℝ => (s - b) / a)) γ := by
+  unfold sqrtCdfDistance
   rw [lintegral_affine _ ha b]
   congr 1
   refine lintegral_congr fun u => ?_
@@ -331,9 +331,8 @@ theorem block_shape_gaussian_estimate
     (r : ℕ) (hr : 1 ≤ r) (β : ℝ≥0) (hβ : 0 < β) :
     ENNReal.ofReal |G r (1, β) - σ * Real.sqrt r * gΦ (1, β) - r * m * (1 + (β : ℝ))| ≤
       ENNReal.ofReal (2 * Real.sqrt ((β : ℝ) * (1 + (β : ℝ))) * (σ * Real.sqrt r)) *
-        ∫⁻ x : ℝ, (ENNReal.ofReal |((ν r).map
-            (fun s : ℝ => (s - r * m) / (σ * Real.sqrt r))).real (Iic x) -
-          (gaussianReal 0 1).real (Iic x)|) ^ (1 / 2 : ℝ) := by
+        sqrtCdfDistance ((ν r).map (fun s : ℝ => (s - r * m) / (σ * Real.sqrt r)))
+          (gaussianReal 0 1) := by
   have hμ := integrable_id_of_ae_abs_le μ K hK
   have hγ : Integrable (fun t : ℝ => t) (gaussianReal 0 1) :=
     memLp_one_iff_integrable.1 (memLp_id_gaussianReal' 1 ENNReal.one_ne_top)
@@ -362,8 +361,10 @@ theorem block_shape_gaussian_estimate
   have hmean₂ : ∫ t : ℝ, t ∂N = r * m := by
     rw [hN]
     exact integral_map_affine_gaussian _ _
-  rw [hmean₁, hmean₂, sub_self, mul_zero, sub_zero, hN,
-    sqrt_distance_affine (ν r) (gaussianReal 0 1) ha] at h42
+  rw [hmean₁, hmean₂, sub_self, mul_zero, sub_zero, hN] at h42
+  change _ ≤ _ * sqrtCdfDistance (ν r)
+    ((gaussianReal 0 1).map (fun t : ℝ => σ * Real.sqrt r * t + r * m)) at h42
+  rw [sqrt_distance_affine (ν r) (gaussianReal 0 1) ha] at h42
   have hlhs : G r (1, β) - σ * Real.sqrt r * gΦ (1, β) - r * m * (1 + (β : ℝ)) =
       G r (1, β) - (σ * Real.sqrt r * gΦ (1, β) + r * m * (((1 : ℝ≥0) : ℝ) + (β : ℝ))) := by
     simp only [NNReal.coe_one]

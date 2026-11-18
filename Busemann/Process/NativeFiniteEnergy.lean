@@ -5,8 +5,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 module
 
 public import Busemann.Process.DownwardFiniteEnergyIndependence
-public import Busemann.Frozen.Definitions.FutureVariables
-public import Busemann.Frozen.Definitions.PastVariables
+public import Busemann.Process.BackwardIndependence
 public import Busemann.Frozen.Definitions.ProcessEnvironment
 public import Busemann.Frozen.Definitions.OutsideWeightsAndCocycleIncrements
 public import LPP_Foundations.Probability.CoordinateLaw
@@ -38,8 +37,7 @@ theorem ae_singleton_outside_condExp_pos_native_family_of_backward_independence
     (hMeasPlus : Measurable
       (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2))
-    (hBackward : ∀ I : Set Lattice,
-      IndepFun (futureVariables g I Bminus Bplus) (pastVariables I) P) :
+    (hBackward : HasBackwardIndependence g P Bminus Bplus) :
     ∀ (h : SupportTilt g) (right : Bool),
       let C := if right then Bplus h else Bminus h
       ∀ (z : Lattice) (K : ℝ),
@@ -153,7 +151,8 @@ theorem ae_singleton_outside_condExp_pos_native_family_of_backward_independence
             hBminusSection q
 
   -- The backward clause makes the site and southwest block independent of all future data.
-  have hBackwardPast : IndepFun (pastVariables I) U P := (hBackward I).symm
+  have hBackwardPast : IndepFun (pastVariables I) U P :=
+    (show IndepFun U (pastVariables I) P from hBackward I).symm
   have hBlock : IndepFun XS U P := by
     rw [hPastPair]
     exact hBackwardPast.comp hPastToPairMeas measurable_id
@@ -351,8 +350,7 @@ theorem hasDownwardFiniteEnergy_native_family_of_backward_independence
     (hMeasPlus : Measurable
       (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2))
-    (hBackward : ∀ I : Set Lattice,
-      IndepFun (futureVariables g I Bminus Bplus) (pastVariables I) P) :
+    (hBackward : HasBackwardIndependence g P Bminus Bplus) :
     ∀ h : SupportTilt g,
       HasDownwardFiniteEnergy P processEnvironment (Bminus h) ∧
       HasDownwardFiniteEnergy P processEnvironment (Bplus h) := by

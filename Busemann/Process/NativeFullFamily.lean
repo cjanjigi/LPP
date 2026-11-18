@@ -6,7 +6,8 @@ module
 
 public import Busemann.Process.NativeOrderedSeed
 public import LPP_Foundations.Statements.ShapeDefinitions
-public import Busemann.Frozen.Definitions.FutureVariables
+public import LPP_Foundations.Statements.WeightMoments
+public import Busemann.Process.BackwardIndependence
 public import Busemann.Frozen.Definitions.Recovery
 import Busemann.Geometry.DenseOrderedTilts
 import Busemann.Process.EnvelopeCocycles
@@ -30,8 +31,7 @@ endpoint squeezing are separate conclusions and are not asserted here. -/
 theorem exists_native_full_family
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (g : Quadrant → ℝ) (hg : IsExpectedRateShape μ g) :
     ∃ (P : Measure ProcessSample)
       (Bminus Bplus : SupportTilt g → Lattice → Lattice → ProcessSample → ℝ)
@@ -43,9 +43,7 @@ theorem exists_native_full_family
         Bminus q.1 q.2.1 q.2.2.1 q.2.2.2) ∧
       Measurable (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2) ∧
-      (∀ I : Set Lattice,
-        ProbabilityTheory.IndepFun
-          (futureVariables g I Bminus Bplus) (pastVariables I) P) ∧
+      HasBackwardIndependence g P Bminus Bplus ∧
       (∀ h : SupportTilt g, ∀ x y : Lattice,
         Integrable (Bminus h x y) P ∧ Integrable (Bplus h x y) P) ∧
       (∀ h : SupportTilt g, ∀ x : Lattice,
@@ -190,9 +188,7 @@ theorem exists_native_full_family
         _ = ∫ s, ePlus h x 1 s ∂(P : Measure ProcessSample) :=
           integral_congr_ae (ae_of_all _ fun s => (hUnitPlus s h x).2)
         _ = -h.1.2 := (hUnitData h x 1).2.2.2
-  have hFuture : ∀ I : Set Lattice,
-      IndepFun (futureVariables g I Rminus Rplus) (pastVariables I)
-        (P : Measure ProcessSample) :=
+  have hFuture : HasBackwardIndependence g (P : Measure ProcessSample) Rminus Rplus :=
     envelope_cocycles_future_indep_past g D happrox (P : Measure ProcessSample) hRawIndep
   obtain ⟨hBelow, hAbove, hEqual⟩ := signed_envelopes_tendsto g D happrox
   -- Equality is asserted on a full event for each FIXED h, not one event over all h.

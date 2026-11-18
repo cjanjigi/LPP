@@ -71,8 +71,7 @@ theorem differentiableAt_of_top_flat
         |lastPassage ω 0 d - g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
           ε * ((d.1 + d.2 : ℕ) : ℝ))
     (a : ℝ) (ha₀ : 0 < a) (ha₁ : a < 1)
-    (htop : Tendsto (fun m : ℕ => (∫ ω : Environment, lastPassage (fun z =>
-      if (ω z : EReal) = sSup ((fun t : ℝ => (t : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    (htop : Tendsto (fun m : ℕ => (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω)
         0 (⌊(m : ℝ) * a⌋₊, ⌊(m : ℝ) * (1 - a)⌋₊) ∂environmentLaw μ) / (m : ℝ))
       atTop (𝓝 1)) :
     DifferentiableAt ℝ (quadrantExtension g) (a, 1 - a) := by

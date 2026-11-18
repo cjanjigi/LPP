@@ -14,6 +14,7 @@ public import Differentiability.Analysis.DirectionalAssembly
 public import LPP_Foundations.Frozen.Model.LastPassage
 public import LPP_Foundations.Frozen.Model.EnvironmentLaw
 public import LPP_Foundations.Frozen.Model.Quadrant
+public import LPP_Foundations.Statements.ShapeDefinitions
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-!
@@ -52,27 +53,17 @@ last-passage times, and its quadrant extension is differentiable at every point 
 quadrant (the shape theorem (2.3) and Theorem 2.1 of the differentiability preprint). -/
 theorem exists_unique_shape_differentiable
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hnondegenerate : ∀ c : ℝ, μ ({c} : Set ℝ) < 1)
-    (hneg : ∃ pneg : ℝ, 1 < pneg ∧
-      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ pneg) ∂μ) < ∞)
-    (hpos : ∃ ppos : ℝ, 4 < ppos ∧
-      (∫⁻ t, ENNReal.ofReal ((max t 0) ^ ppos) ∂μ) < ∞) :
+    (hnondegenerate : LPPStatements.NotAPointMass μ)
+    (hneg : LPPStatements.HasNegativePartMomentAbove μ 1)
+    (hpos : LPPStatements.HasPositivePartMomentAbove μ 4) :
     ∃! g : Quadrant → ℝ,
       Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant),
-        g (c * x.1, c * x.2) = (c : ℝ) * g x) ∧
-      (∀ (x y : Quadrant) (a b : ℝ≥0), a + b = 1 →
-        (a : ℝ) * g x + (b : ℝ) * g y ≤
-          g (a * x.1 + b * y.1, a * x.2 + b * y.2)) ∧
-      (∀ᵐ ω ∂environmentLaw μ,
-        ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ z : ℕ × ℕ,
-          N ≤ z.1 + z.2 →
-          |lastPassage ω (0, 0) z - g ((z.1 : ℝ≥0), (z.2 : ℝ≥0))| ≤
-            ε * ((z.1 + z.2 : ℕ) : ℝ)) ∧
-      (∀ x : ℝ × ℝ, 0 < x.1 → 0 < x.2 →
-        DifferentiableAt ℝ (quadrantExtension g) x) := by
+      LPPStatements.IsHomogeneous g ∧
+      LPPStatements.IsConcaveOnQuadrant g ∧
+      LPPStatements.ApproximatesLastPassage μ g ∧
+      LPPStatements.DifferentiableOnOpenQuadrant g := by
   -- Step 1 (assumption (A3)): the p > 4 moment gives the integrated square-root tail.
-  have hsqrt : (∫⁻ t in Set.Ioi (0 : ℝ), (μ (Set.Ioi t)) ^ (1 / 2 : ℝ)) < ∞ :=
+  have hsqrt : LPPStatements.HasSqrtUpperTail μ :=
     positive_integrated_sqrt_tail_lt_top_of_full_positive_moment μ hpos
   -- Step 2 (shape theorem (2.3)): the unique shape, with the `1 ≤ N` limit clause.
   obtain ⟨g, ⟨hgcont, hghom, hgconc, hgshape⟩, hguniq⟩ :=
@@ -105,18 +96,9 @@ theorem exists_unique_shape_differentiable
   -- Step 7 (homogeneity, the remark after Theorem 2.1): from the segment to the open quadrant.
   refine ⟨g, ⟨hgcont, hghom, hgconc, ?_,
     differentiableAt_quadrantExtension_of_segment g hghom hseg⟩, ?_⟩
-  · -- Step 8: the limit clause as stated in `Frozen/`, dropping `1 ≤ N`.
-    filter_upwards [hgshape] with ω hω
-    intro ε hε
-    obtain ⟨N, -, hN⟩ := hω ε hε
-    exact ⟨N, hN⟩
-  · -- Step 9 (uniqueness): a competitor meets the shape theorem's clause with `max N 1`.
-    rintro f ⟨hfcont, hfhom, hfconc, hfshape, -⟩
-    apply hguniq f
-    refine ⟨hfcont, hfhom, hfconc, ?_⟩
-    filter_upwards [hfshape] with ω hω
-    intro ε hε
-    obtain ⟨N, hN⟩ := hω ε hε
-    exact ⟨max N 1, le_max_right _ _, fun d hd => hN d ((le_max_left _ _).trans hd)⟩
+  · exact (LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mpr hgshape
+  · rintro f ⟨hfcont, hfhom, hfconc, hfshape, -⟩
+    exact hguniq f ⟨hfcont, hfhom, hfconc,
+      (LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mp hfshape⟩
 
 end LPPDifferentiability.Full

@@ -6,6 +6,8 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 module
 
 public import ProbabilityBasics.Analysis.PositiveSubadditiveRate
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettRowLaws
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettSubadditive
 public import Mathlib.Probability.IdentDistrib
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
@@ -24,14 +26,14 @@ open scoped Topology
 
 namespace LPPDifferentiability
 
+open ProbabilityBasics.Liggett
+
 /-- Adjacent whole-column laws propagate to every origin. The coordinates
 are all positive lengths, indexed by `k + 1`. -/
 theorem liggett_column_identDistrib {Ω : Type*} [MeasurableSpace Ω]
     {μ : Measure Ω} (A : ℕ → ℕ → Ω → ℝ)
     (hmeas : ∀ n : ℕ, 0 < n → Measurable (A 0 n))
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (k : ℕ) => A (m + 1) (m + 1 + (k + 1)) ω)
-        (fun ω (k : ℕ) => A m (m + (k + 1)) ω) μ μ)
+    (hadj : LiggettRowLaws μ A)
     (m : ℕ) :
     IdentDistrib (fun ω (k : ℕ) => A m (m + (k + 1)) ω)
       (fun ω (k : ℕ) => A 0 (k + 1) ω) μ μ := by
@@ -46,9 +48,7 @@ theorem liggett_column_identDistrib {Ω : Type*} [MeasurableSpace Ω]
 theorem liggett_block_identDistrib {Ω : Type*} [MeasurableSpace Ω]
     {μ : Measure Ω} (A : ℕ → ℕ → Ω → ℝ)
     (hmeas : ∀ n : ℕ, 0 < n → Measurable (A 0 n))
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (k : ℕ) => A (m + 1) (m + 1 + (k + 1)) ω)
-        (fun ω (k : ℕ) => A m (m + (k + 1)) ω) μ μ)
+    (hadj : LiggettRowLaws μ A)
     (m n : ℕ) (hn : 0 < n) :
     IdentDistrib (A m (m + n)) (A 0 n) μ μ := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
@@ -60,9 +60,7 @@ theorem liggett_block_integrable_integral {Ω : Type*} [MeasurableSpace Ω]
     {μ : Measure Ω} (A : ℕ → ℕ → Ω → ℝ)
     (hmeas : ∀ n : ℕ, 0 < n → Measurable (A 0 n))
     (hint : ∀ n : ℕ, 0 < n → Integrable (A 0 n) μ)
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (k : ℕ) => A (m + 1) (m + 1 + (k + 1)) ω)
-        (fun ω (k : ℕ) => A m (m + (k + 1)) ω) μ μ)
+    (hadj : LiggettRowLaws μ A)
     (m n : ℕ) (hn : 0 < n) :
     Integrable (A m (m + n)) μ ∧
       (∫ ω, A m (m + n) ω ∂μ) = ∫ ω, A 0 n ω ∂μ := by
@@ -75,11 +73,8 @@ theorem liggett_expected_subadditive {Ω : Type*} [MeasurableSpace Ω]
     {μ : Measure Ω} (A : ℕ → ℕ → Ω → ℝ)
     (hmeas : ∀ n : ℕ, 0 < n → Measurable (A 0 n))
     (hint : ∀ n : ℕ, 0 < n → Integrable (A 0 n) μ)
-    (hsub : ∀ m n : ℕ, 0 < m → m < n →
-      ∀ᵐ ω ∂μ, A 0 n ω ≤ A 0 m ω + A m n ω)
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (k : ℕ) => A (m + 1) (m + 1 + (k + 1)) ω)
-        (fun ω (k : ℕ) => A m (m + (k + 1)) ω) μ μ)
+    (hsub : LiggettSubadditive μ A)
+    (hadj : LiggettRowLaws μ A)
     (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
     (∫ ω, A 0 (m + n) ω ∂μ) ≤
       (∫ ω, A 0 m ω ∂μ) + ∫ ω, A 0 n ω ∂μ := by
@@ -99,11 +94,8 @@ theorem exists_liggett_expected_rate {Ω : Type*} [MeasurableSpace Ω]
     (hint : ∀ n : ℕ, 0 < n → Integrable (A 0 n) μ)
     (c : ℝ)
     (hlower : ∀ n : ℕ, 0 < n → -(c * (n : ℝ)) ≤ ∫ ω, A 0 n ω ∂μ)
-    (hsub : ∀ m n : ℕ, 0 < m → m < n →
-      ∀ᵐ ω ∂μ, A 0 n ω ≤ A 0 m ω + A m n ω)
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (k : ℕ) => A (m + 1) (m + 1 + (k + 1)) ω)
-        (fun ω (k : ℕ) => A m (m + (k + 1)) ω) μ μ) :
+    (hsub : LiggettSubadditive μ A)
+    (hadj : LiggettRowLaws μ A) :
     ∃ γ : ℝ,
       Tendsto (fun n : ℕ => (∫ ω, A 0 (n + 1) ω ∂μ) / ((n + 1 : ℕ) : ℝ))
         atTop (𝓝 γ) ∧

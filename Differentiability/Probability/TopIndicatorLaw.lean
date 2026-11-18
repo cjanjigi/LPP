@@ -25,172 +25,119 @@ open MeasureTheory ProbabilityTheory Set
 
 namespace LPPDifferentiability
 
+/-- The indicator of a real weight equal to the top of the support of `μ`.
+This is the site indicator of the differentiability preprint, Section 2.3. -/
+@[expose] noncomputable def topWeightIndicator (μ : Measure ℝ) (t : ℝ) : ℝ :=
+  if (t : EReal) = supportTop μ then 1 else 0
+
+/-- Apply the top-weight indicator at each site of the original environment.
+Its marginal image law is `μ.map (topWeightIndicator μ)`. -/
+@[expose] noncomputable def topWeightIndicatorField (μ : Measure ℝ) (ω : Environment) :
+    Environment :=
+  fun z => topWeightIndicator μ (ω z)
+
 theorem source_top_indicator_event_measurable (μ : Measure ℝ) :
-    MeasurableSet {t : ℝ | (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} :=
+    MeasurableSet (supportTopAtom μ) :=
   measurableSet_eq_fun measurable_coe_real_ereal measurable_const
 
 theorem source_top_indicator_eq_indicator (μ : Measure ℝ) :
-    (fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-      {t : ℝ | (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}.indicator (fun _ => (1 : ℝ)) := by
+    topWeightIndicator μ = (supportTopAtom μ).indicator (fun _ => (1 : ℝ)) := by
   classical
   funext t
-  simp only [Set.indicator_apply, mem_ofPred_eq]
+  simp only [topWeightIndicator, Set.indicator_apply, supportTopAtom, mem_ofPred_eq]
 
 theorem measurable_source_top_indicator (μ : Measure ℝ) :
-    Measurable (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) := by
-  exact Measurable.ite (source_top_indicator_event_measurable μ)
-    measurable_const measurable_const
+    Measurable (topWeightIndicator μ) :=
+  Measurable.ite (source_top_indicator_event_measurable μ) measurable_const measurable_const
 
 theorem source_top_indicator_zero_or_one (μ : Measure ℝ) (t : ℝ) :
-    (if (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
-      then (1 : ℝ) else 0) = 0 ∨
-    (if (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
-      then (1 : ℝ) else 0) = 1 := by
-  by_cases h : (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
-  · simp [h]
-  · simp [h]
+    topWeightIndicator μ t = 0 ∨ topWeightIndicator μ t = 1 := by
+  by_cases h : (t : EReal) = supportTop μ <;> simp [topWeightIndicator, h]
 
 theorem source_top_indicator_mem_unitInterval (μ : Measure ℝ) (t : ℝ) :
-    (if (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
-      then (1 : ℝ) else 0) ∈ Icc (0 : ℝ) 1 := by
+    topWeightIndicator μ t ∈ Icc (0 : ℝ) 1 := by
   rcases source_top_indicator_zero_or_one μ t with h | h <;> rw [h] <;> norm_num
 
 theorem source_top_mass_mem_unitInterval (μ : Measure ℝ) [IsProbabilityMeasure μ] :
-    μ.real {t : ℝ | (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} ∈ Icc (0 : ℝ) 1 :=
+    μ.real (supportTopAtom μ) ∈ Icc (0 : ℝ) 1 :=
   ⟨measureReal_nonneg, measureReal_le_one⟩
 
 theorem source_top_indicator_hasLaw (μ : Measure ℝ) [IsProbabilityMeasure μ] :
-    HasLaw
-      (fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
-      (bernoulliMeasure (1 : ℝ) 0
-        ⟨μ.real {t : ℝ | (t : EReal) =
-          sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}, by simp⟩)
-      μ := by
+    HasLaw (topWeightIndicator μ)
+      (bernoulliMeasure (1 : ℝ) 0 ⟨μ.real (supportTopAtom μ), by simp⟩) μ := by
   rw [source_top_indicator_eq_indicator μ]
   exact hasLaw_indicator_one_bernoulliMeasure
     (source_top_indicator_event_measurable μ).nullMeasurableSet
 
 theorem measurable_source_top_indicator_environment (μ : Measure ℝ) :
-    Measurable (fun ω : Environment => fun z : Lattice =>
-      if (ω z : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)
-        then (1 : ℝ) else 0) :=
-  measurable_coordinatewise_environment_map
-    (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    Measurable (topWeightIndicatorField μ) :=
+  measurable_coordinatewise_environment_map (topWeightIndicator μ)
     (measurable_source_top_indicator μ)
 
 theorem source_top_indicator_environment_eval_independent (μ : Measure ℝ)
     [IsProbabilityMeasure μ] :
-    iIndepFun
-      (fun z (ω : Environment) => if (ω z : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
-      (environmentLaw μ) := by
-  exact iIndepFun_coordinatewise_environment_eval μ
-    (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    iIndepFun (fun z ω => topWeightIndicatorField μ ω z) (environmentLaw μ) :=
+  iIndepFun_coordinatewise_environment_eval μ (topWeightIndicator μ)
     (measurable_source_top_indicator μ)
 
 theorem environmentLaw_map_source_top_indicator_eval (μ : Measure ℝ)
     [IsProbabilityMeasure μ] (z : Lattice) :
-    (environmentLaw μ).map
-      (fun ω : Environment => if (ω z : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-      μ.map (fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) := by
-  exact environmentLaw_map_coordinatewise_eval μ
-    (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    (environmentLaw μ).map (fun ω => topWeightIndicatorField μ ω z) =
+      μ.map (topWeightIndicator μ) :=
+  environmentLaw_map_coordinatewise_eval μ (topWeightIndicator μ)
     (measurable_source_top_indicator μ) z
 
 theorem source_top_indicator_environment_eval_hasLaw (μ : Measure ℝ)
     [IsProbabilityMeasure μ] (z : Lattice) :
-    HasLaw
-      (fun ω : Environment => if (ω z : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
-      (bernoulliMeasure (1 : ℝ) 0
-        ⟨μ.real {t : ℝ | (t : EReal) =
-          sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}, by simp⟩)
-      (environmentLaw μ) := by
-  refine ⟨(measurable_source_top_indicator μ).comp (measurable_environment_eval z) |>.aemeasurable,
+    HasLaw (fun ω => topWeightIndicatorField μ ω z)
+      (bernoulliMeasure (1 : ℝ) 0 ⟨μ.real (supportTopAtom μ), by simp⟩) (environmentLaw μ) := by
+  refine ⟨((measurable_source_top_indicator μ).comp (measurable_environment_eval z)).aemeasurable,
     ?_⟩
   calc
-    (environmentLaw μ).map
-        (fun ω : Environment => if (ω z : EReal) =
-          sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-        μ.map (fun t : ℝ => if (t : EReal) =
-          sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) :=
-      environmentLaw_map_source_top_indicator_eval μ z
-    _ = bernoulliMeasure (1 : ℝ) 0
-        ⟨μ.real {t : ℝ | (t : EReal) =
-          sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}, by simp⟩ :=
+    (environmentLaw μ).map (fun ω => topWeightIndicatorField μ ω z) =
+        μ.map (topWeightIndicator μ) := environmentLaw_map_source_top_indicator_eval μ z
+    _ = bernoulliMeasure (1 : ℝ) 0 ⟨μ.real (supportTopAtom μ), by simp⟩ :=
       (source_top_indicator_hasLaw μ).map_eq
 
 theorem source_top_indicator_environmentLaw_map (μ : Measure ℝ)
     [IsProbabilityMeasure μ] :
-    (environmentLaw μ).map
-      (fun ω : Environment => fun z : Lattice => if (ω z : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-      environmentLaw (μ.map (fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)) := by
-  exact environmentLaw_map_coordinatewise μ
-    (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    (environmentLaw μ).map (topWeightIndicatorField μ) =
+      environmentLaw (μ.map (topWeightIndicator μ)) :=
+  environmentLaw_map_coordinatewise μ (topWeightIndicator μ)
     (measurable_source_top_indicator μ)
 
 theorem source_top_indicator_map_ae_mem_unitInterval (μ : Measure ℝ)
     [IsProbabilityMeasure μ] :
-    ∀ᵐ y : ℝ ∂μ.map (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0),
-      y ∈ Icc (0 : ℝ) 1 := by
-  exact (ae_map_iff
-      (f := fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    ∀ᵐ y : ℝ ∂μ.map (topWeightIndicator μ), y ∈ Icc (0 : ℝ) 1 :=
+  (ae_map_iff (f := topWeightIndicator μ)
       (μ := μ) (p := fun y : ℝ => y ∈ Icc (0 : ℝ) 1)
       (measurable_source_top_indicator μ).aemeasurable measurableSet_Icc).2
     (Filter.Eventually.of_forall (source_top_indicator_mem_unitInterval μ))
 
 theorem source_top_indicator_eq_zero_of_endpoint_top (μ : Measure ℝ)
-    (hM : sSup ((fun s : ℝ => (s : EReal)) '' μ.support) = ⊤) :
-    ∀ t : ℝ, (if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) = 0 := by
+    (hM : supportTop μ = ⊤) :
+    ∀ t : ℝ, topWeightIndicator μ t = 0 := by
   intro t
-  simp only [hM, EReal.coe_ne_top, ite_false]
+  simp only [topWeightIndicator, hM, EReal.coe_ne_top, ite_false]
 
 theorem source_top_mass_eq_zero_of_endpoint_top (μ : Measure ℝ)
-    (hM : sSup ((fun s : ℝ => (s : EReal)) '' μ.support) = ⊤) :
-    μ.real {t : ℝ | (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} = 0 := by
+    (hM : supportTop μ = ⊤) :
+    μ.real (supportTopAtom μ) = 0 := by
   rw [source_top_atom_eq_empty_of_support_sSup_eq_top μ hM]
   simp
 
 theorem source_top_indicator_hasLaw_dirac_zero_of_endpoint_top (μ : Measure ℝ)
-    [IsProbabilityMeasure μ]
-    (hM : sSup ((fun s : ℝ => (s : EReal)) '' μ.support) = ⊤) :
-    HasLaw
-      (fun t : ℝ => if (t : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
-      (Measure.dirac 0) μ := by
+    [IsProbabilityMeasure μ] (hM : supportTop μ = ⊤) :
+    HasLaw (topWeightIndicator μ) (Measure.dirac 0) μ := by
   refine ⟨(measurable_source_top_indicator μ).aemeasurable, ?_⟩
-  have hzero : (fun t : ℝ => if (t : EReal) =
-      sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-      fun _ => (0 : ℝ) := by
-    funext t
-    exact source_top_indicator_eq_zero_of_endpoint_top μ hM t
+  have hzero : topWeightIndicator μ = fun _ => (0 : ℝ) :=
+    funext (source_top_indicator_eq_zero_of_endpoint_top μ hM)
   rw [hzero]
   simp
 
 theorem source_top_indicator_environment_field_eq_zero_of_endpoint_top (μ : Measure ℝ)
-    (hM : sSup ((fun s : ℝ => (s : EReal)) '' μ.support) = ⊤) :
-    ∀ ω : Environment,
-      (fun z : Lattice => if (ω z : EReal) =
-        sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-      fun _ => (0 : ℝ) := by
+    (hM : supportTop μ = ⊤) :
+    ∀ ω : Environment, topWeightIndicatorField μ ω = fun _ => (0 : ℝ) := by
   intro ω
   funext z
   exact source_top_indicator_eq_zero_of_endpoint_top μ hM (ω z)

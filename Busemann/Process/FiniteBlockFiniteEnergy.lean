@@ -35,8 +35,7 @@ theorem ae_finset_outside_condExp_pos_native_family_of_backward_independence
     (hMeasPlus : Measurable
       (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2))
-    (hBackward : ∀ I : Set Lattice,
-      IndepFun (futureVariables g I Bminus Bplus) (pastVariables I) P) :
+    (hBackward : HasBackwardIndependence g P Bminus Bplus) :
     ∀ (h : SupportTilt g) (right : Bool),
       let C := if right then Bplus h else Bminus h
       ∀ (K : ℝ), 0 < μ (Set.Iic K) →

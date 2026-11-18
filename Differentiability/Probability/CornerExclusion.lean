@@ -164,6 +164,8 @@ theorem corner_excluded_at_scale (μ : Measure ℝ) [IsProbabilityMeasure μ]
           (Finset.sum_eq_zero fun z _ => max_eq_right (by linarith [hb z])).le
         have hlin := linear_defect_of_few_witnesses η s _ _ N _ (mul_nonneg hη0.le hs0.le)
           (le_trans (le_max_right _ _) hN) hcap hE hineq
+        simp only [Path.averageSupportDefect, averageSupportingFunctional,
+          supportingFunctional, transverseCoordinate] at hlin
         rw [hp] at hlin
         linarith
     refine corner_defect_contradiction _ m (max N0 3) hm (η * s / 2)

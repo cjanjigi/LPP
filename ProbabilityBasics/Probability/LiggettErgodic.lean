@@ -24,6 +24,8 @@ open scoped Topology BigOperators
 
 namespace LPPDifferentiability
 
+open ProbabilityBasics.Liggett
+
 /-- If all positive-length stationary block processes are ergodic,
 Liggett's normalized array converges almost surely and in L1 to the same
 finite real rate characterized by the expected-rate limit and positive infimum. -/
@@ -33,14 +35,9 @@ theorem exists_liggett_ergodic_convergence {Ω : Type*} [MeasurableSpace Ω]
     (hint : ∀ n : ℕ, 0 < n → Integrable (A 0 n) μ)
     (c : ℝ)
     (hlower : ∀ n : ℕ, 0 < n → -(c * (n : ℝ)) ≤ ∫ ω, A 0 n ω ∂μ)
-    (hsub : ∀ m n : ℕ, 0 < m → m < n →
-      ∀ᵐ ω ∂μ, A 0 n ω ≤ A 0 m ω + A m n ω)
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (j : ℕ) => A (m + 1) (m + 1 + (j + 1)) ω)
-        (fun ω (j : ℕ) => A m (m + (j + 1)) ω) μ μ)
-    (hstat : ∀ k : ℕ, 0 < k → IdentDistrib
-      (fun ω (j : ℕ) => A ((j + 2) * k) ((j + 3) * k) ω)
-      (fun ω (j : ℕ) => A ((j + 1) * k) ((j + 2) * k) ω) μ μ)
+    (hsub : LiggettSubadditive μ A)
+    (hadj : LiggettRowLaws μ A)
+    (hstat : LiggettBlockStationary μ A)
     (hErg : ∀ k : ℕ, 0 < k → Ergodic sequenceShift
       (μ.map (fun ω (j : ℕ) => A ((j + 1) * k) ((j + 2) * k) ω))) :
     ∃ γ : ℝ,

@@ -121,8 +121,6 @@ same witness has the expected-floor characterization, all finite passage mean
 bounds and the zero conclusion at an infinite top. The marginal is only assumed
 to be a probability measure. -/
 theorem exists_source_top_indicator_shape (μ : Measure ℝ) [IsProbabilityMeasure μ] :
-    let M : EReal := sSup ((fun t : ℝ => (t : EReal)) '' μ.support)
-    let χ : ℝ → ℝ := fun t => if (t : EReal) = M then 1 else 0
     ∃ g : Quadrant → ℝ,
       Continuous g ∧
       (∀ (c : ℝ≥0) (x : Quadrant),
@@ -132,29 +130,27 @@ theorem exists_source_top_indicator_shape (μ : Measure ℝ) [IsProbabilityMeasu
           g (a * x.1 + b * y.1, a * x.2 + b * y.2)) ∧
       (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
         ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1 + d.2 →
-          |lastPassage (fun z => χ (ω z)) 0 d -
+          |lastPassage (topWeightIndicatorField μ ω) 0 d -
             g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
               ε * ((d.1 + d.2 : ℕ) : ℝ)) ∧
       (∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage (fun z => χ (ω z)) 0
+        (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω) 0
           (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
           ∂environmentLaw μ) / (n : ℝ)) atTop (𝓝 (g x))) ∧
       (∀ (u : Lattice) (d : ℕ × ℕ),
-        Integrable (fun ω : Environment => lastPassage (fun z => χ (ω z)) u d)
+        Integrable (fun ω : Environment => lastPassage (topWeightIndicatorField μ ω) u d)
           (environmentLaw μ)) ∧
       (∀ x : Quadrant, 0 ≤ g x ∧ g x ≤ (x.1 : ℝ) + x.2) ∧
       (∀ (u : Lattice) (d : ℕ × ℕ),
-        (∫ ω : Environment, lastPassage (fun z => χ (ω z)) u d ∂environmentLaw μ) ≤
+        (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω) u d ∂environmentLaw μ) ≤
           g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))) ∧
-      (∀ x : Quadrant, (∫ t : ℝ, t ∂μ.map χ) * ((x.1 : ℝ) + x.2) ≤ g x) ∧
-      (M = ⊤ → g = fun _ => 0) := by
-  let M : EReal := sSup ((fun t : ℝ => (t : EReal)) '' μ.support)
-  let χ : ℝ → ℝ := fun t => if (t : EReal) = M then 1 else 0
-  let ν : Measure ℝ := μ.map χ
-  have hfield : Measurable (fun ω : Environment => fun z : Lattice => χ (ω z)) :=
+      (∀ x : Quadrant, (∫ t : ℝ, t ∂μ.map (topWeightIndicator μ)) * ((x.1 : ℝ) + x.2) ≤ g x) ∧
+      (supportTop μ = ⊤ → g = fun _ => 0) := by
+  let ν : Measure ℝ := μ.map (topWeightIndicator μ)
+  have hfield : Measurable (topWeightIndicatorField μ) :=
     measurable_source_top_indicator_environment μ
   have hlaw : (environmentLaw μ).map
-      (fun ω : Environment => fun z : Lattice => χ (ω z)) = environmentLaw ν :=
+      (topWeightIndicatorField μ) = environmentLaw ν :=
     source_top_indicator_environmentLaw_map μ
   have hν : ∀ᵐ t ∂ν, 0 ≤ t ∧ t ≤ 1 :=
     source_top_indicator_map_ae_mem_unitInterval μ
@@ -165,12 +161,12 @@ theorem exists_source_top_indicator_shape (μ : Measure ℝ) [IsProbabilityMeasu
   have hfirst := integrable_id_of_ae_abs_le ν 1 habs
   obtain ⟨g, hg⟩ := exists_shape_with_expected_bounds_of_ae_mem_unit_interval ν hν
   have hpass (u : Lattice) (d : ℕ × ℕ) :
-      Integrable (fun ω : Environment => lastPassage (fun z => χ (ω z)) u d)
+      Integrable (fun ω : Environment => lastPassage (topWeightIndicatorField μ ω) u d)
         (environmentLaw μ) ∧
-      (∫ ω : Environment, lastPassage (fun z => χ (ω z)) u d ∂environmentLaw μ) =
+      (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω) u d ∂environmentLaw μ) =
         ∫ η : Environment, lastPassage η u d ∂environmentLaw ν := by
     have hi : Integrable (fun η : Environment => lastPassage η u d)
-        ((environmentLaw μ).map (fun ω : Environment => fun z : Lattice => χ (ω z))) := by
+        ((environmentLaw μ).map (topWeightIndicatorField μ)) := by
       rw [hlaw]
       exact hg.2.2.2.2.2.1 u d
     refine ⟨hi.comp_measurable hfield, ?_⟩
@@ -179,13 +175,13 @@ theorem exists_source_top_indicator_shape (μ : Measure ℝ) [IsProbabilityMeasu
     exact heq.symm
   have hsample : ∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
       ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1 + d.2 →
-        |lastPassage (fun z => χ (ω z)) 0 d -
+        |lastPassage (topWeightIndicatorField μ ω) 0 d -
           g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤ ε * ((d.1 + d.2 : ℕ) : ℝ) := by
     have h := hg.2.2.2.1
     rw [← hlaw] at h
     exact ae_of_ae_map hfield.aemeasurable h
   have hlim (x : Quadrant) : Tendsto (fun n : ℕ =>
-      (∫ ω : Environment, lastPassage (fun z => χ (ω z)) 0
+      (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω) 0
         (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
         ∂environmentLaw μ) / (n : ℝ)) atTop (𝓝 (g x)) := by
     simpa only [(hpass _ _).2] using hg.2.2.2.2.1 x
@@ -197,15 +193,14 @@ theorem exists_source_top_indicator_shape (μ : Measure ℝ) [IsProbabilityMeasu
   · exact real_expected_rate_ge_path_mean ν hfirst g hg.2.2.2.2.1
   · intro hM
     have hz (u : Lattice) (d : ℕ × ℕ) :
-        (∫ ω : Environment, lastPassage (fun z => χ (ω z)) u d ∂environmentLaw μ) = 0 := by
+        (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω) u d ∂environmentLaw μ) = 0 := by
       have hzero := source_top_indicator_environment_field_eq_zero_of_endpoint_top μ hM
       calc
         _ = ∫ _ω : Environment, (0 : ℝ) ∂environmentLaw μ := by
           apply integral_congr_ae
           exact Eventually.of_forall fun ω => by
-            change lastPassage (fun z => χ (ω z)) u d = 0
-            rw [show (fun z : Lattice => χ (ω z)) = fun _ => (0 : ℝ) from hzero ω,
-              lastPassage_const, mul_zero]
+            change lastPassage (topWeightIndicatorField μ ω) u d = 0
+            rw [hzero ω, lastPassage_const, mul_zero]
         _ = 0 := by simp only [integral_zero]
     funext x
     apply tendsto_nhds_unique (hlim x)

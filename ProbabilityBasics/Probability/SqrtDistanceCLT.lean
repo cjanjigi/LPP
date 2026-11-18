@@ -5,6 +5,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 -/
 module
 
+public import ProbabilityBasics.Probability.SqrtCdfDistance
 public import Mathlib.Probability.CentralLimitTheorem
 public import Mathlib.Probability.ProductMeasure
 public import Mathlib.Probability.Independence.InfinitePi
@@ -381,8 +382,7 @@ private lemma sqrt_distance_tendsto {ρ : ℕ → Measure ℝ} [∀ r, IsProbabi
       (ρ r).real (Ici t) ≤ A / t ^ 4 ∧ (ρ r).real (Iic (-t)) ≤ A / t ^ 4)
     (hγ : ∀ t : ℝ, 0 < t → γ.real (Ici t) ≤ A / t ^ 4 ∧ γ.real (Iic (-t)) ≤ A / t ^ 4)
     (hconv : ∀ x : ℝ, Tendsto (fun r : ℕ => (ρ r).real (Iic x)) atTop (𝓝 (γ.real (Iic x)))) :
-    Tendsto (fun r : ℕ => ∫⁻ x : ℝ,
-      (ENNReal.ofReal |(ρ r).real (Iic x) - γ.real (Iic x)|) ^ (1 / 2 : ℝ)) atTop (𝓝 0) := by
+    Tendsto (fun r : ℕ => sqrtCdfDistance (ρ r) γ) atTop (𝓝 0) := by
   have hbound : ∀ (r : ℕ) (x : ℝ),
       (ENNReal.ofReal |(ρ r).real (Iic x) - γ.real (Iic x)|) ^ (1 / 2 : ℝ) ≤
         ENNReal.ofReal (2 * (1 + Real.sqrt (2 * A)) * (1 + x ^ 2)⁻¹) := by
@@ -545,10 +545,9 @@ theorem sqrt_cdf_distance_normalized_sum_tendsto_zero
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (K : ℝ) (hK : ∀ᵐ t ∂μ, |t| ≤ K)
     (m σ : ℝ) (hσ : 0 < σ) (hm : ∫ t : ℝ, t ∂μ = m)
     (hvar : ∫ t : ℝ, (t - m) ^ 2 ∂μ = σ ^ 2) :
-    Tendsto (fun r : ℕ => ∫⁻ x : ℝ,
-      (ENNReal.ofReal |((Measure.pi (fun _ : Fin r => μ)).map
-          (fun y : Fin r → ℝ => ((∑ i, y i) - r * m) / (σ * Real.sqrt r))).real (Iic x) -
-        (gaussianReal 0 1).real (Iic x)|) ^ (1 / 2 : ℝ)) atTop (𝓝 0) := by
+    Tendsto (fun r : ℕ => sqrtCdfDistance ((Measure.pi (fun _ : Fin r => μ)).map
+      (fun y : Fin r → ℝ => ((∑ i, y i) - r * m) / (σ * Real.sqrt r)))
+      (gaussianReal 0 1)) atTop (𝓝 0) := by
   obtain ⟨hmeas, hind, hbd, h0, h2, -⟩ := coordinate_facts μ K hK m σ hσ hm hvar
   simp_rw [law_eq μ m σ]
   have hB4 : 0 ≤ ((K + |m|) / σ) ^ 4 := by positivity
@@ -573,9 +572,8 @@ theorem sqrt_cdf_distance_sum_law_tendsto_zero
     (hvar : ∫ t : ℝ, (t - m) ^ 2 ∂μ = σ ^ 2)
     (ν : ℕ → Measure ℝ)
     (hν : ∀ k, ν k = (Measure.pi (fun _ : Fin k => μ)).map (fun y => ∑ i, y i)) :
-    Tendsto (fun r : ℕ => ∫⁻ x : ℝ,
-      (ENNReal.ofReal |((ν r).map (fun s : ℝ => (s - r * m) / (σ * Real.sqrt r))).real (Iic x) -
-        (gaussianReal 0 1).real (Iic x)|) ^ (1 / 2 : ℝ)) atTop (𝓝 0) := by
+    Tendsto (fun r : ℕ => sqrtCdfDistance ((ν r).map
+      (fun s : ℝ => (s - r * m) / (σ * Real.sqrt r))) (gaussianReal 0 1)) atTop (𝓝 0) := by
   have e : ∀ r : ℕ, (ν r).map (fun s : ℝ => (s - r * m) / (σ * Real.sqrt r)) =
       (Measure.pi fun _ : Fin r => μ).map
         (fun y : Fin r → ℝ => ((∑ i, y i) - r * m) / (σ * Real.sqrt r)) := by

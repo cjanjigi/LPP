@@ -11,6 +11,7 @@ public import Busemann.Process.RightmostPathCovariance
 public import Busemann.Process.CoalescingCocycleRepresentation
 public import Busemann.Probability.CanonicalCocycleMeans
 public import LPP_Foundations.Probability.TranslationErgodic
+import LPP_Foundations.Model.Paths.Coalescence
 import Busemann.Geometry.CrossedGeodesicCoalescenceAtRoots
 import Busemann.Process.RightmostPathGeodesic
 import Busemann.Process.RightmostPathMeasurability
@@ -59,12 +60,8 @@ private theorem rightmost_families_order_at_all_roots
     (π ρ : Lattice → ℕ → Lattice)
     (hπ : ∀ u, IsLocallyRightmostGeodesic ω u (π u))
     (hρ : ∀ u, IsLocallyRightmostGeodesic ω u (ρ u))
-    (hcoalπ : ∀ u v : Lattice, ∃ m n : ℕ,
-      u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-      ∀ k : ℕ, π u (m + k) = π v (n + k))
-    (hcoalρ : ∀ u v : Lattice, ∃ m n : ℕ,
-      u.1 + u.2 + (m : ℤ) = v.1 + v.2 + (n : ℤ) ∧
-      ∀ k : ℕ, ρ u (m + k) = ρ v (n + k))
+    (hcoalπ : ∀ u v : Lattice, paths_coalesce u v (π u) (π v))
+    (hcoalρ : ∀ u v : Lattice, paths_coalesce u v (ρ u) (ρ v))
     (u v : Lattice) (hu : pathSoutheastLE (π u) (ρ u)) :
     pathSoutheastLE (π v) (ρ v) := by
   by_cases hSame : π u = ρ u

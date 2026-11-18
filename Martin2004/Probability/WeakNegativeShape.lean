@@ -10,6 +10,7 @@ public import Martin2004.Probability.MartinWeakContinuity
 public import Martin2004.Probability.WeakUniformUpper
 public import Martin2004.Probability.WeakUniformLower
 public import LPP_Foundations.Shape.Uniqueness
+public import LPP_Foundations.Statements.ShapeDefinitions
 import Mathlib.MeasureTheory.Integral.Layercake
 
 /-!
@@ -32,10 +33,9 @@ namespace LPPDifferentiability
 square-root tail give a first moment for the signed marginal. -/
 theorem integrable_id_of_negative_moment_and_positive_tail
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hneg : ∃ p : ℝ, 1 < p ∧
-      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
-    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
-    Integrable (fun t : ℝ => t) μ := by
+    (hneg : LPPStatements.HasNegativePartMomentAbove μ 1)
+    (hpos : LPPStatements.HasSqrtUpperTail μ) :
+    LPPStatements.HasFiniteMean μ := by
   obtain ⟨p, hp, hmoment⟩ := hneg
   have hn := integrable_negativePart_of_lintegral_lt_top μ p hp hmoment
   have hpTail : (∫⁻ t in Ioi (0 : ℝ), μ (Ioi t)) < ∞ := by
@@ -60,6 +60,7 @@ theorem integrable_id_of_negative_moment_and_positive_tail
     ext x
     simp only [mem_ofPred_eq, mem_Ioi, lt_max_iff,
       not_lt.mpr (le_of_lt ht), or_false]
+  change Integrable (fun t : ℝ => t) μ
   convert hpIntegrable.sub hn using 1
   ext t
   dsimp
@@ -72,20 +73,13 @@ under the weak negative moment. This is an expected-rate
 existence theorem; it does not assume or assert a uniform sample limit. -/
 theorem exists_unique_continuous_expected_shape_of_negative_moment_and_positive_tail
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hneg : ∃ p : ℝ, 1 < p ∧
-      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
-    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
+    (hneg : LPPStatements.HasNegativePartMomentAbove μ 1)
+    (hpos : LPPStatements.HasSqrtUpperTail μ) :
     ∃! g : Quadrant → ℝ,
       Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant),
-        g (c * x.1, c * x.2) = (c : ℝ) * g x) ∧
-      (∀ (x y : Quadrant) (a b : ℝ≥0), a + b = 1 →
-        (a : ℝ) * g x + (b : ℝ) * g y ≤
-          g (a * x.1 + b * y.1, a * x.2 + b * y.2)) ∧
-      (∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ) / (n : ℝ)) atTop (𝓝 (g x))) ∧
+      LPPStatements.IsHomogeneous g ∧
+      LPPStatements.IsConcaveOnQuadrant g ∧
+      LPPStatements.IsExpectedRateShape μ g ∧
       (∀ d : ℕ × ℕ, Integrable (fun ω : Environment => lastPassage ω 0 d)
         (environmentLaw μ)) := by
   have hμ := integrable_id_of_negative_moment_and_positive_tail μ hneg hpos
@@ -108,24 +102,17 @@ original-environment event, for every positive real tolerance. The expected
 characterization and finite passage integrability are kept. -/
 theorem exists_unique_shape_with_expected_rate_of_negative_moment_and_positive_tail
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hneg : ∃ p : ℝ, 1 < p ∧
-      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
-    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
+    (hneg : LPPStatements.HasNegativePartMomentAbove μ 1)
+    (hpos : LPPStatements.HasSqrtUpperTail μ) :
     ∃! g : Quadrant → ℝ,
       Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant),
-        g (c * x.1, c * x.2) = (c : ℝ) * g x) ∧
-      (∀ (x y : Quadrant) (a b : ℝ≥0), a + b = 1 →
-        (a : ℝ) * g x + (b : ℝ) * g y ≤
-          g (a * x.1 + b * y.1, a * x.2 + b * y.2)) ∧
+      LPPStatements.IsHomogeneous g ∧
+      LPPStatements.IsConcaveOnQuadrant g ∧
       (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
         ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1 + d.2 →
           |lastPassage ω 0 d - g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
             ε * ((d.1 + d.2 : ℕ) : ℝ)) ∧
-      (∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ) / (n : ℝ)) atTop (𝓝 (g x))) ∧
+      LPPStatements.IsExpectedRateShape μ g ∧
       (∀ d : ℕ × ℕ, Integrable (fun ω : Environment => lastPassage ω 0 d)
         (environmentLaw μ)) := by
   have hμ := integrable_id_of_negative_moment_and_positive_tail μ hneg hpos
@@ -160,16 +147,12 @@ integrated square-root tail. Uniqueness is among all continuous homogeneous
 sample-shape candidates, without an expected-rate premise for a competitor. -/
 theorem exists_unique_shape_of_negative_moment_and_positive_tail
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hneg : ∃ p : ℝ, 1 < p ∧
-      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
-    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
+    (hneg : LPPStatements.HasNegativePartMomentAbove μ 1)
+    (hpos : LPPStatements.HasSqrtUpperTail μ) :
     ∃! g : Quadrant → ℝ,
       Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant),
-        g (c * x.1, c * x.2) = (c : ℝ) * g x) ∧
-      (∀ (x y : Quadrant) (a b : ℝ≥0), a + b = 1 →
-        (a : ℝ) * g x + (b : ℝ) * g y ≤
-          g (a * x.1 + b * y.1, a * x.2 + b * y.2)) ∧
+      LPPStatements.IsHomogeneous g ∧
+      LPPStatements.IsConcaveOnQuadrant g ∧
       (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
         ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1 + d.2 →
           |lastPassage ω 0 d - g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
@@ -178,14 +161,8 @@ theorem exists_unique_shape_of_negative_moment_and_positive_tail
     exists_unique_shape_with_expected_rate_of_negative_moment_and_positive_tail μ hneg hpos
   refine ⟨g, ⟨hg.1, hg.2.1, hg.2.2.1, hg.2.2.2.1⟩, ?_⟩
   intro f hf
-  apply shapeCandidates_eq μ f g hf.1 hg.1 hf.2.1 hg.2.1
-  · filter_upwards [hf.2.2.2] with ω hω
-    intro ε hε
-    obtain ⟨N, _hN, hbound⟩ := hω ε hε
-    exact ⟨N, hbound⟩
-  · filter_upwards [hg.2.2.2.1] with ω hω
-    intro ε hε
-    obtain ⟨N, _hN, hbound⟩ := hω ε hε
-    exact ⟨N, hbound⟩
+  exact shapeCandidates_eq μ f g hf.1 hg.1 hf.2.1 hg.2.1
+    ((LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mpr hf.2.2.2)
+    ((LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mpr hg.2.2.2.1)
 
 end LPPDifferentiability

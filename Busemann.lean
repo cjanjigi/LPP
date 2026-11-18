@@ -16,6 +16,10 @@ public import Busemann.Process.RightmostPathCoalescenceApplications
 public import Busemann.Process.CoalescingTiltTimeClosedness
 public import Busemann.Process.StrongSkorokhodRealization
 public import Busemann.Process.OrdinaryGeodesicDirectedness
+public import Busemann.Geometry.CocycleSoutheastOrder
+public import Busemann.Probability.CocycleMeanTilt
+public import Busemann.Process.BackwardIndependence
+public import Busemann.Process.ShiftCovariantCoalescingGeodesicSystem
 
 /-!
 # Busemann processes in the planar corner growth model

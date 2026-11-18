@@ -21,8 +21,7 @@ for each fixed tilt and both signs. Strong Existence, public source lines
 theorem exists_native_full_family_with_coalescing_rightmost_paths
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (g : Quadrant → ℝ) (hg : IsExpectedRateShape μ g) :
     ∃ (P : Measure ProcessSample)
       (Bminus Bplus : SupportTilt g → Lattice → Lattice → ProcessSample → ℝ)
@@ -34,9 +33,7 @@ theorem exists_native_full_family_with_coalescing_rightmost_paths
         Bminus q.1 q.2.1 q.2.2.1 q.2.2.2) ∧
       Measurable (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2) ∧
-      (∀ I : Set Lattice,
-        ProbabilityTheory.IndepFun
-          (futureVariables g I Bminus Bplus) (pastVariables I) P) ∧
+      HasBackwardIndependence g P Bminus Bplus ∧
       (∀ h : SupportTilt g, ∀ x y : Lattice,
         Integrable (Bminus h x y) P ∧ Integrable (Bplus h x y) P) ∧
       (∀ h : SupportTilt g, ∀ x : Lattice,

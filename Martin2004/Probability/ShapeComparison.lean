@@ -9,6 +9,7 @@ public import LPP_Foundations.Frozen.Model.EnvironmentLaw
 public import LPP_Foundations.Frozen.Model.LastPassage
 public import LPP_Foundations.Frozen.Model.Quadrant
 public import LPP_Foundations.Probability.MartinFirstMoment
+public import LPP_Foundations.Statements.ShapeDefinitions
 public import Martin2004.Probability.ShapeComparisonBound
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Analysis.SpecificLimits.Basic
@@ -42,18 +43,12 @@ namespace LPPDifferentiability
 `g1(1, α) - g2(1, α) - (1 + α)(m1 - m2) ≤ 2 √(α (1 + α)) ∫ |F1 - F2|^(1/2)`. The finite-box bound
 holds at every `n` for the box `(n, ⌊n α⌋)`; dividing by `n` and letting `n → ∞` gives the claim. -/
 theorem shape_sub_le_cdf_integral (μ₁ μ₂ : Measure ℝ) [IsProbabilityMeasure μ₁]
-    [IsProbabilityMeasure μ₂] (h₁ : Integrable (fun t : ℝ => t) μ₁)
-    (h₂ : Integrable (fun t : ℝ => t) μ₂)
+    [IsProbabilityMeasure μ₂] (h₁ : LPPStatements.HasFiniteMean μ₁)
+    (h₂ : LPPStatements.HasFiniteMean μ₂)
     (hG : Integrable (fun s : ℝ => |μ₁.real (Iic s) - μ₂.real (Iic s)| ^ (1 / 2 : ℝ)))
     (g₁ g₂ : Quadrant → ℝ)
-    (hg₁ : ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ₁) / (n : ℝ)) atTop (𝓝 (g₁ x)))
-    (hg₂ : ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ₂) / (n : ℝ)) atTop (𝓝 (g₂ x)))
+    (hg₁ : LPPStatements.IsExpectedRateShape μ₁ g₁)
+    (hg₂ : LPPStatements.IsExpectedRateShape μ₂ g₂)
     (α : ℝ≥0) :
     g₁ (1, α) - g₂ (1, α) - (1 + (α : ℝ)) * ((∫ t : ℝ, t ∂μ₁) - ∫ t : ℝ, t ∂μ₂) ≤
       2 * Real.sqrt ((α : ℝ) * (1 + (α : ℝ))) *
@@ -118,19 +113,13 @@ finite integrated square-root tails (2.6) and (2.7), then for every `α > 0`,
 `[0, ∞]`; if the integral is infinite the claim is trivial. -/
 theorem martin_lemma_4_2
     (μ₁ μ₂ : Measure ℝ) [IsProbabilityMeasure μ₁] [IsProbabilityMeasure μ₂]
-    (hneg₁ : (∫⁻ t in Iio (0 : ℝ), (μ₁ (Iic t)) ^ (1 / 2 : ℝ)) < ∞)
-    (hpos₁ : (∫⁻ t in Ioi (0 : ℝ), (μ₁ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞)
-    (hneg₂ : (∫⁻ t in Iio (0 : ℝ), (μ₂ (Iic t)) ^ (1 / 2 : ℝ)) < ∞)
-    (hpos₂ : (∫⁻ t in Ioi (0 : ℝ), (μ₂ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞)
+    (hneg₁ : LPPStatements.HasSqrtLowerTail μ₁)
+    (hpos₁ : LPPStatements.HasSqrtUpperTail μ₁)
+    (hneg₂ : LPPStatements.HasSqrtLowerTail μ₂)
+    (hpos₂ : LPPStatements.HasSqrtUpperTail μ₂)
     (g₁ g₂ : Quadrant → ℝ)
-    (hg₁ : ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ₁) / (n : ℝ)) atTop (𝓝 (g₁ x)))
-    (hg₂ : ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage ω 0
-          (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
-          ∂environmentLaw μ₂) / (n : ℝ)) atTop (𝓝 (g₂ x)))
+    (hg₁ : LPPStatements.IsExpectedRateShape μ₁ g₁)
+    (hg₂ : LPPStatements.IsExpectedRateShape μ₂ g₂)
     (α : ℝ≥0) (hα : 0 < α) :
     ENNReal.ofReal |g₁ (1, α) - g₂ (1, α) -
         (1 + (α : ℝ)) * ((∫ t : ℝ, t ∂μ₁) - ∫ t : ℝ, t ∂μ₂)| ≤

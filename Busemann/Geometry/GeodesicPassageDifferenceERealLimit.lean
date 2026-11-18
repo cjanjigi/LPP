@@ -6,8 +6,10 @@ module
 
 public import LPP_Foundations.Model.LastPassage.OptimalSplit
 public import LPP_Foundations.Model.LastPassage.GeodesicSegments
+public import LPP_Foundations.Model.Paths.UpRightRay
 public import Mathlib.Topology.Instances.EReal.Lemmas
 public import Mathlib.Topology.Order.MonotoneConvergence
+import LPP_Foundations.Model.LastPassage.PassageDifferenceLimits
 import Busemann.Geometry.GeodesicPassageDifferenceLimit
 import Mathlib.Tactic
 
@@ -19,44 +21,6 @@ open scoped Topology
 
 namespace LPP.Busemann
 
-private def displacement (a b : Lattice) : ℕ × ℕ :=
-  ((b.1 - a.1).toNat, (b.2 - a.2).toNat)
-
-private theorem displacement_cast (a b : Lattice) (h : a ≤ b) :
-    a + (((displacement a b).1 : ℤ), ((displacement a b).2 : ℤ)) = b := by
-  have h1 := Int.toNat_of_nonneg (show 0 ≤ b.1 - a.1 by have := h.1; omega)
-  have h2 := Int.toNat_of_nonneg (show 0 ≤ b.2 - a.2 by have := h.2; omega)
-  apply Prod.ext <;> simp only [Prod.fst_add, Prod.snd_add, displacement] <;> omega
-
-private theorem displacement_add (a b c : Lattice) (hab : a ≤ b) (hbc : b ≤ c) :
-    displacement a b + displacement b c = displacement a c := by
-  have h1 := congrArg Prod.fst (displacement_cast a b hab)
-  have h2 := congrArg Prod.snd (displacement_cast a b hab)
-  have h3 := congrArg Prod.fst (displacement_cast b c hbc)
-  have h4 := congrArg Prod.snd (displacement_cast b c hbc)
-  have h5 := congrArg Prod.fst (displacement_cast a c (le_trans hab hbc))
-  have h6 := congrArg Prod.snd (displacement_cast a c (le_trans hab hbc))
-  simp only [Prod.fst_add, Prod.snd_add] at h1 h2 h3 h4 h5 h6
-  apply Prod.ext <;> simp only [Prod.fst_add, Prod.snd_add] <;>
-    apply Int.ofNat_inj.mp <;> push_cast <;> omega
-
-private theorem displacement_unique (a b : Lattice) (d : ℕ × ℕ)
-    (h : a + ((d.1 : ℤ), (d.2 : ℤ)) = b) (hab : a ≤ b) :
-    d = displacement a b := by
-  have h' := displacement_cast a b hab
-  have h1 := congrArg Prod.fst (h.trans h'.symm)
-  have h2 := congrArg Prod.snd (h.trans h'.symm)
-  simp only [Prod.fst_add, Prod.snd_add] at h1 h2
-  apply Prod.ext <;> omega
-
-private theorem passage_through (ω : Environment) (a b c : Lattice)
-    (hab : a ≤ b) (hbc : b ≤ c) :
-    lastPassage ω a (displacement a b) + lastPassage ω b (displacement b c) ≤
-      lastPassage ω a (displacement a c) := by
-  have h := lastPassage_superadditive ω a (displacement a b) (displacement b c)
-  rw [displacement_cast a b hab, displacement_add a b c hab hbc] at h
-  exact h
-
 /-- Along one coordinate-escaping geodesic, every signed site has a unique
 passage-difference limit strictly above minus infinity, possibly plus infinity.
 Every valid entry time gives the same limit and its finite initial lower bound.
@@ -66,9 +30,7 @@ theorem exists_unique_geodesic_passage_difference_ereal_limit
     (u : LPPDifferentiability.Lattice)
     (γ : ℕ → LPPDifferentiability.Lattice)
     (hstart : γ 0 = u)
-    (hsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ)))
+    (hsteps : IsUpRightRay γ)
     (hsegments : LPPDifferentiability.has_maximizing_segments ω γ)
     (hescape₁ : Tendsto (fun n : ℕ => (γ n).1) atTop atTop)
     (hescape₂ : Tendsto (fun n : ℕ => (γ n).2) atTop atTop) :
@@ -86,20 +48,13 @@ theorem exists_unique_geodesic_passage_difference_ereal_limit
             Tendsto (fun n : ℕ => (f n : EReal)) atTop (𝓝 b) ∧
             (f 0 : EReal) ≤ b := by
   classical
-  have hmonoγ : Monotone γ := by
-    apply monotone_nat_of_le_succ
-    intro n
-    rcases hsteps n with he | hn
-    · rw [he]
-      constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
-    · rw [hn]
-      constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
+  have hmonoγ : Monotone γ := hsteps.monotone
   have huγ (n : ℕ) : u ≤ γ n := by
     simpa only [hstart] using hmonoγ (Nat.zero_le n)
   have hden (t : ℕ) :
-      lastPassage ω u (displacement u (γ (t + 1))) =
-        lastPassage ω u (displacement u (γ t)) +
-          lastPassage ω (γ t) (displacement (γ t) (γ (t + 1))) := by
+      lastPassage ω u (natDisplacement u (γ (t + 1))) =
+        lastPassage ω u (natDisplacement u (γ t)) +
+          lastPassage ω (γ t) (natDisplacement (γ t) (γ (t + 1))) := by
     have hseg := hsegments 0 (t + 1) (by omega)
     rw [hstart] at hseg
     obtain ⟨d, p, hdlen, htrace, hp⟩ := hseg
@@ -108,21 +63,21 @@ theorem exists_unique_geodesic_passage_difference_ereal_limit
     have hend : u + ((d.1 : ℤ), (d.2 : ℤ)) = γ (t + 1) := by
       rw [← p.finish, htrace']
       simp only [Fin.val_last, hdlen]
-    have hd : d = displacement u (γ (t + 1)) :=
-      displacement_unique u (γ (t + 1)) d hend (huγ (t + 1))
+    have hd : d = natDisplacement u (γ (t + 1)) :=
+      natDisplacement_unique u (γ (t + 1)) d hend (huγ (t + 1))
     let i : Fin (d.1 + d.2 + 1) := ⟨t, by omega⟩
     have hi : p.vertex i = γ t := htrace' i
-    have ha : p.splitDisplacement i = displacement u (γ t) := by
-      apply displacement_unique u (γ t) (p.splitDisplacement i)
+    have ha : p.splitDisplacement i = natDisplacement u (γ t) := by
+      apply natDisplacement_unique u (γ t) (p.splitDisplacement i)
       exact (p.split_vertex i).symm.trans hi
       exact huγ t
-    have hadd := displacement_add u (γ t) (γ (t + 1)) (huγ t)
+    have hadd := natDisplacement_add u (γ t) (γ (t + 1)) (huγ t)
       (hmonoγ (Nat.le_succ t))
-    have hb : d - displacement u (γ t) = displacement (γ t) (γ (t + 1)) := by
+    have hb : d - natDisplacement u (γ t) = natDisplacement (γ t) (γ (t + 1)) := by
       rw [hd, ← hadd]
       apply Prod.ext <;> simp
     have hs := p.lastPassage_eq_split_of_maximizing ω hp i
-    rw [ha, displacement_cast u (γ t) (huγ t), hb, hd] at hs
+    rw [ha, add_cast_natDisplacement u (γ t) (huγ t), hb, hd] at hs
     exact hs
   intro x
   have hentry : ∃ N : ℕ, x ≤ γ N := by
@@ -135,14 +90,14 @@ theorem exists_unique_geodesic_passage_difference_ereal_limit
     · exact hn₁ _ (le_max_left _ _)
     · exact hn₂ _ (le_max_right _ _)
   let f (N n : ℕ) : ℝ :=
-    lastPassage ω x (displacement x (γ (N + n))) -
-      lastPassage ω u (displacement u (γ (N + n)))
+    lastPassage ω x (natDisplacement x (γ (N + n))) -
+      lastPassage ω u (natDisplacement u (γ (N + n)))
   have hprops (N : ℕ) (hN : x ≤ γ N) : Monotone (f N) := by
     have hvalid (n : ℕ) : x ≤ γ (N + n) :=
       le_trans hN (hmonoγ (Nat.le_add_right N n))
     apply monotone_nat_of_le_succ
     intro n
-    have hgrow := passage_through ω x (γ (N + n)) (γ (N + n + 1))
+    have hgrow := lastPassage_superadditive_between ω x (γ (N + n)) (γ (N + n + 1))
       (hvalid n) (hmonoγ (Nat.le_succ (N + n)))
     have heq := hden (N + n)
     dsimp only [f]

@@ -6,6 +6,7 @@ module
 
 public import Busemann.Geometry.GeodesicOrder
 public import Busemann.Geometry.GeodesicPrefixOrder
+import LPP_Foundations.Model.Paths.UpRightRay
 import Lean.Elab.Tactic.Omega
 
 /-! Opposite strict orders prevent aligned outer coalescence of crossed rays. -/
@@ -20,17 +21,7 @@ private theorem locallyRightmost_absolute_level
     (ω : Environment) (u : Lattice) (γ : ℕ → Lattice)
     (hγ : IsLocallyRightmostGeodesic ω u γ) (n : ℕ) :
     (γ n).1 + (γ n).2 = u.1 + u.2 + (n : ℤ) := by
-  -- The geodesic definition has one east or north step at each time.
-  induction n with
-  | zero => simp [hγ.1]
-  | succ n ih =>
-      rcases hγ.2.1 n with hEast | hNorth
-      · rw [hEast]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
-      · rw [hNorth]
-        simp only [Prod.fst_add, Prod.snd_add, Nat.cast_succ]
-        omega
+  simpa only [hγ.1] using IsUpRightRay.level (γ := γ) hγ.2.1 n
 
 private theorem locallyRightmost_same_root_level
     (ω : Environment) (u : Lattice) (γ δ : ℕ → Lattice)

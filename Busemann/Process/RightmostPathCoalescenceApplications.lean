@@ -8,6 +8,7 @@ public import Busemann.Process.RightmostPathCoalescence
 public import Busemann.Process.FiniteBlockFiniteEnergy
 public import Busemann.Process.ShiftTopology
 public import LPP_Foundations.Probability.TranslationEquiv
+public import LPP_Foundations.Statements.WeightMoments
 
 /-! Coalescence in the native family and canonical environment. -/
 
@@ -23,8 +24,7 @@ The finite-block criterion follows from its backward independence. -/
 theorem hasCoalescingRightmostPaths_native_family_of_backward_independence
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (g : Quadrant → ℝ) (P : Measure ProcessSample)
     (hP : P Set.univ = 1)
     (Bminus Bplus : SupportTilt g → Lattice → Lattice → ProcessSample → ℝ)
@@ -36,9 +36,7 @@ theorem hasCoalescingRightmostPaths_native_family_of_backward_independence
     (hMeasPlus : Measurable
       (fun q : SupportTilt g × (Lattice × (Lattice × ProcessSample)) =>
         Bplus q.1 q.2.1 q.2.2.1 q.2.2.2))
-    (hBackward : ∀ I : Set Lattice,
-      ProbabilityTheory.IndepFun
-        (futureVariables g I Bminus Bplus) (pastVariables I) P)
+    (hBackward : HasBackwardIndependence g P Bminus Bplus)
     (h : SupportTilt g) (right : Bool) :
     let C := if right then Bplus h else Bminus h
     is_shift_covariant_cocycle P processShift C →
@@ -63,8 +61,7 @@ its finite-block criterion is derived from the original product environment. -/
 theorem hasCoalescingRightmostPaths_environmentLaw_of_isForwardMeasurable
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (B : Lattice → Lattice → LPPDifferentiability.Environment → ℝ)
     (hB : is_shift_covariant_cocycle (environmentLaw μ)
       (fun z ω => environmentTranslationEquiv z ω) B)

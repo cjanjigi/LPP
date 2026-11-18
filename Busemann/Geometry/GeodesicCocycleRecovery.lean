@@ -8,6 +8,7 @@ module
 public import LPP_Foundations.Model.LastPassage.Basic
 public import LPP_Foundations.Model.LastPassage.PassageDifferenceLimits
 public import LPP_Foundations.Model.LastPassage.GeodesicSegments
+public import LPP_Foundations.Model.Paths.UpRightRay
 public import Busemann.Frozen.Definitions.Recovery
 public import Mathlib.Topology.Instances.Real.Lemmas
 import LPP_Foundations.Model.LastPassage.Outgoing
@@ -23,36 +24,6 @@ open Filter LPPDifferentiability
 open scoped Topology
 
 namespace LPP.Busemann
-
-private def displacement (a b : Lattice) : ℕ × ℕ :=
-  ((b.1 - a.1).toNat, (b.2 - a.2).toNat)
-
-private theorem displacement_cast (a b : Lattice) (h : a ≤ b) :
-    a + (((displacement a b).1 : ℤ), ((displacement a b).2 : ℤ)) = b := by
-  have h1 := Int.toNat_of_nonneg (show 0 ≤ b.1 - a.1 by have := h.1; omega)
-  have h2 := Int.toNat_of_nonneg (show 0 ≤ b.2 - a.2 by have := h.2; omega)
-  apply Prod.ext <;> simp only [Prod.fst_add, Prod.snd_add, displacement] <;> omega
-
-private theorem displacement_add (a b c : Lattice) (hab : a ≤ b) (hbc : b ≤ c) :
-    displacement a b + displacement b c = displacement a c := by
-  have h1 := congrArg Prod.fst (displacement_cast a b hab)
-  have h2 := congrArg Prod.snd (displacement_cast a b hab)
-  have h3 := congrArg Prod.fst (displacement_cast b c hbc)
-  have h4 := congrArg Prod.snd (displacement_cast b c hbc)
-  have h5 := congrArg Prod.fst (displacement_cast a c (le_trans hab hbc))
-  have h6 := congrArg Prod.snd (displacement_cast a c (le_trans hab hbc))
-  simp only [Prod.fst_add, Prod.snd_add] at h1 h2 h3 h4 h5 h6
-  apply Prod.ext <;> simp only [Prod.fst_add, Prod.snd_add] <;>
-    apply Int.ofNat_inj.mp <;> push_cast <;> omega
-
-private theorem displacement_unique (a b : Lattice) (d : ℕ × ℕ)
-    (h : a + ((d.1 : ℤ), (d.2 : ℤ)) = b) (hab : a ≤ b) :
-    d = displacement a b := by
-  have h' := displacement_cast a b hab
-  have h1 := congrArg Prod.fst (h.trans h'.symm)
-  have h2 := congrArg Prod.snd (h.trans h'.symm)
-  simp only [Prod.fst_add, Prod.snd_add] at h1 h2
-  apply Prod.ext <;> omega
 
 private theorem int_toNat_sub_one (z : ℤ) (hz : 1 ≤ z) :
     (z - 1).toNat + 1 = z.toNat := by
@@ -71,9 +42,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
     (ω : LPPDifferentiability.Environment) (u : Lattice)
     (γ : ℕ → Lattice) (C : Lattice → Lattice → ℝ)
     (_hstart : γ 0 = u)
-    (hsteps : ∀ n : ℕ,
-      γ (n + 1) = γ n + ((1 : ℤ), (0 : ℤ)) ∨
-        γ (n + 1) = γ n + ((0 : ℤ), (1 : ℤ)))
+    (hsteps : IsUpRightRay γ)
     (hsegments : has_maximizing_segments ω γ)
     (hescape₁ : Tendsto (fun n : ℕ => (γ n).1) atTop atTop)
     (hescape₂ : Tendsto (fun n : ℕ => (γ n).2) atTop atTop)
@@ -82,14 +51,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
       ∀ n : ℕ, C (γ n) (γ (n + 1)) = ω (γ n) := by
   classical
   -- Source step 1: unit steps make the ray monotone in both coordinates.
-  have hmonoγ : Monotone γ := by
-    apply monotone_nat_of_le_succ
-    intro n
-    rcases hsteps n with he | hn
-    · rw [he]
-      constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
-    · rw [hn]
-      constructor <;> simp only [Prod.fst_add, Prod.snd_add] <;> omega
+  have hmonoγ : Monotone γ := hsteps.monotone
 
   -- Both coordinate escapes give one entry time beyond both outgoing neighbors.
   have hcommonEntry (x : Lattice) :
@@ -130,15 +92,15 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
     have hvalidNorth (n : ℕ) : x + (0, 1) ≤ γ (N + n) :=
       le_trans hNorth (hmonoγ (Nat.le_add_right N n))
     let fEast : ℕ → ℝ := fun n =>
-      lastPassage ω x (displacement x (γ (N + n))) -
-        lastPassage ω (x + (1, 0)) (displacement (x + (1, 0)) (γ (N + n)))
+      lastPassage ω x (natDisplacement x (γ (N + n))) -
+        lastPassage ω (x + (1, 0)) (natDisplacement (x + (1, 0)) (γ (N + n)))
     let fNorth : ℕ → ℝ := fun n =>
-      lastPassage ω x (displacement x (γ (N + n))) -
-        lastPassage ω (x + (0, 1)) (displacement (x + (0, 1)) (γ (N + n)))
+      lastPassage ω x (natDisplacement x (γ (N + n))) -
+        lastPassage ω (x + (0, 1)) (natDisplacement (x + (0, 1)) (γ (N + n)))
     have hLimitEast : Tendsto fEast atTop (𝓝 (C x (x + (1, 0)))) := by
-      simpa only [fEast, displacement] using hLimit x (x + (1, 0)) N hxN hEast
+      simpa only [fEast, natDisplacement] using hLimit x (x + (1, 0)) N hxN hEast
     have hLimitNorth : Tendsto fNorth atTop (𝓝 (C x (x + (0, 1)))) := by
-      simpa only [fNorth, displacement] using hLimit x (x + (0, 1)) N hxN hNorth
+      simpa only [fNorth, natDisplacement] using hLimit x (x + (0, 1)) N hxN hNorth
 
     -- The integer offsets let the exact outgoing recurrence use its natural-index form.
     let horizontalTail (n : ℕ) : ℕ := ((γ (N + n)).1 - x.1).toNat - 1
@@ -190,7 +152,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
       have hoffset := hvertical n
       omega
     have hdispEast (n : ℕ) :
-        displacement (x + (1, 0)) (γ (N + n)) = (horizontalTail n, verticalTail n + 1) := by
+        natDisplacement (x + (1, 0)) (γ (N + n)) = (horizontalTail n, verticalTail n + 1) := by
       apply Prod.ext
       · change ((γ (N + n)).1 - (x + (1, 0)).1).toNat = horizontalTail n
         exact hhorizontalNeighbor n
@@ -199,7 +161,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
         rw [hshift]
         exact hvertical n
     have hdispNorth (n : ℕ) :
-        displacement (x + (0, 1)) (γ (N + n)) = (horizontalTail n + 1, verticalTail n) := by
+        natDisplacement (x + (0, 1)) (γ (N + n)) = (horizontalTail n + 1, verticalTail n) := by
       apply Prod.ext
       · have hshift : (x + (0, 1)).1 = x.1 := by simp
         change ((γ (N + n)).1 - (x + (0, 1)).1).toNat = horizontalTail n + 1
@@ -208,23 +170,23 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
       · change ((γ (N + n)).2 - (x + (0, 1)).2).toNat = verticalTail n
         exact hverticalNeighbor n
     have houtgoing (n : ℕ) :
-        lastPassage ω x (displacement x (γ (N + n))) =
+        lastPassage ω x (natDisplacement x (γ (N + n))) =
           ω x + max
             (lastPassage ω (x + (1, 0))
-              (displacement (x + (1, 0)) (γ (N + n))))
+              (natDisplacement (x + (1, 0)) (γ (N + n))))
             (lastPassage ω (x + (0, 1))
-              (displacement (x + (0, 1)) (γ (N + n)))) := by
+              (natDisplacement (x + (0, 1)) (γ (N + n)))) := by
       rw [hdispEast n, hdispNorth n]
-      simpa only [displacement, hhorizontal n, hvertical n] using
+      simpa only [natDisplacement, hhorizontal n, hvertical n] using
         lastPassage_outgoing_succ_succ ω x
           (horizontalTail n) (verticalTail n)
     have hminimum (n : ℕ) : min (fEast n) (fNorth n) = ω x := by
       dsimp only [fEast, fNorth]
-      let passageAtX : ℝ := lastPassage ω x (displacement x (γ (N + n)))
+      let passageAtX : ℝ := lastPassage ω x (natDisplacement x (γ (N + n)))
       let passageEast : ℝ := lastPassage ω (x + (1, 0))
-        (displacement (x + (1, 0)) (γ (N + n)))
+        (natDisplacement (x + (1, 0)) (γ (N + n)))
       let passageNorth : ℝ := lastPassage ω (x + (0, 1))
-        (displacement (x + (0, 1)) (γ (N + n)))
+        (natDisplacement (x + (0, 1)) (γ (N + n)))
       have hmaximum : passageAtX = ω x + max passageEast passageNorth := by
         dsimp only [passageAtX, passageEast, passageNorth]
         exact houtgoing n
@@ -257,9 +219,9 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
 
   -- Source step 3: split the supplied maximizing segment at its actual first ray edge.
   have hpassageDifference (k n : ℕ) :
-      lastPassage ω (γ k) (displacement (γ k) (γ ((k + 1) + n))) -
+      lastPassage ω (γ k) (natDisplacement (γ k) (γ ((k + 1) + n))) -
         lastPassage ω (γ (k + 1))
-          (displacement (γ (k + 1)) (γ ((k + 1) + n))) = ω (γ k) := by
+          (natDisplacement (γ (k + 1)) (γ ((k + 1) + n))) = ω (γ k) := by
     have hsegment := hsegments k (n + 1) (by omega)
     obtain ⟨d, p, hdlength, htrace, hmaximizing⟩ := hsegment
     have hendIndex : k + (n + 1) = (k + 1) + n := by omega
@@ -271,8 +233,8 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
         _ = p.vertex (Fin.last (d.1 + d.2)) := p.finish.symm
         _ = γ (k + (n + 1)) := htraceEnd
         _ = γ ((k + 1) + n) := congrArg γ hendIndex
-    have htotal : d = displacement (γ k) (γ ((k + 1) + n)) :=
-      displacement_unique (γ k) (γ ((k + 1) + n)) d hend (hmonoγ (by omega))
+    have htotal : d = natDisplacement (γ k) (γ ((k + 1) + n)) :=
+      natDisplacement_unique (γ k) (γ ((k + 1) + n)) d hend (hmonoγ (by omega))
     let first : Fin (d.1 + d.2 + 1) := ⟨1, by rw [hdlength]; omega⟩
     have hfirstIndex : k + first.val = k + 1 := by simp [first]
     have hfirstVertex : p.vertex first = γ (k + 1) := by
@@ -303,13 +265,13 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
         simp only [Prod.fst_add, Prod.snd_add] at h₁ h₂
         apply Prod.ext <;> omega
     have hfirstDisplacement :
-        p.splitDisplacement first = displacement (γ k) (γ (k + 1)) :=
-      displacement_unique (γ k) (γ (k + 1)) (p.splitDisplacement first)
+        p.splitDisplacement first = natDisplacement (γ k) (γ (k + 1)) :=
+      natDisplacement_unique (γ k) (γ (k + 1)) (p.splitDisplacement first)
         hsplitVertex (hmonoγ (by omega))
-    have hdisplacementAdd := displacement_add (γ k) (γ (k + 1))
+    have hdisplacementAdd := natDisplacement_add (γ k) (γ (k + 1))
       (γ ((k + 1) + n)) (hmonoγ (by omega)) (hmonoγ (by omega))
     have htail : d - p.splitDisplacement first =
-        displacement (γ (k + 1)) (γ ((k + 1) + n)) := by
+        natDisplacement (γ (k + 1)) (γ ((k + 1) + n)) := by
       have htotal₁ := congrArg Prod.fst htotal
       have htotal₂ := congrArg Prod.snd htotal
       have hfirst₁ := congrArg Prod.fst hfirstDisplacement
@@ -330,7 +292,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
     have hsplit := p.lastPassage_eq_split_of_maximizing ω hmaximizing first
     rw [hfirstPassage, hsplitVertex, htail, htotal] at hsplit
     -- The split identity now has the literal two passage differences in the target.
-    dsimp only [displacement] at hsplit ⊢
+    dsimp only [natDisplacement] at hsplit ⊢
     linarith
 
   -- Source steps 4–5: the edge difference is constant on the common valid tail.
@@ -345,7 +307,7 @@ theorem recovers_environment_and_calibrates_ray_of_passage_difference_limits
               (((γ ((k + 1) + n)).1 - (γ (k + 1)).1).toNat,
                 ((γ ((k + 1) + n)).2 - (γ (k + 1)).2).toNat))
           atTop (𝓝 (C (γ k) (γ (k + 1)))) := by
-      simpa only [displacement] using hLimit (γ k) (γ (k + 1)) (k + 1)
+      simpa only [natDisplacement] using hLimit (γ k) (γ (k + 1)) (k + 1)
         (hmonoγ (by omega)) le_rfl
     have hconstant :
         (fun n : ℕ =>

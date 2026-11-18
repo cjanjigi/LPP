@@ -105,15 +105,12 @@ theorem liggett_subadditive_ergodic (μ : Measure Ω) [IsProbabilityMeasure μ]
   have hAlower : ∀ n : ℕ, 0 < n → -(c * (n : ℝ)) ≤ ∫ ω, A 0 n ω ∂μ := fun n hn => by
     rw [hmeaneq n hn]
     exact hlower n hn
-  have hAsub : ∀ m n : ℕ, 0 < m → m < n →
-      ∀ᵐ ω ∂μ, A 0 n ω ≤ A 0 m ω + A m n ω := by
+  have hAsub : LiggettSubadditive μ A := by
     intro m n hm hmn
     filter_upwards [h17 m n hm hmn, hae0] with ω h hω
     rw [← hω n (by omega), ← hω m hm, hA m n hm.ne']
     exact h
-  have hAadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (j : ℕ) => A (m + 1) (m + 1 + (j + 1)) ω)
-        (fun ω (j : ℕ) => A m (m + (j + 1)) ω) μ μ := by
+  have hAadj : LiggettRowLaws μ A := by
     intro m
     have h1 : (fun ω (j : ℕ) => A (m + 1) (m + 1 + (j + 1)) ω) =
         fun ω (j : ℕ) => X (m + 1) (m + 1 + (j + 1)) ω := by
@@ -138,10 +135,10 @@ theorem liggett_subadditive_ergodic (μ : Measure Ω) [IsProbabilityMeasure μ]
     intro k hk j
     funext ω
     exact congrFun (hA _ _ (by positivity)) ω
-  have hAstat : ∀ k : ℕ, 0 < k → IdentDistrib
-      (fun ω (j : ℕ) => A ((j + 2) * k) ((j + 3) * k) ω)
-      (fun ω (j : ℕ) => A ((j + 1) * k) ((j + 2) * k) ω) μ μ := by
+  have hAstat : LiggettBlockStationary μ A := by
     intro k hk
+    change IdentDistrib (fun ω (j : ℕ) => A ((j + 2) * k) ((j + 3) * k) ω)
+      (fun ω (j : ℕ) => A ((j + 1) * k) ((j + 2) * k) ω) μ μ
     have e1 : (fun ω (j : ℕ) => A ((j + 2) * k) ((j + 3) * k) ω) =
         fun ω (n : ℕ) => liggettBlockProcess X k (n + 1) ω := by
       funext ω j

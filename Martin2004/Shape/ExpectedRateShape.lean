@@ -6,6 +6,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 module
 
 public import Martin2004.Probability.MartinWeakContinuity
+public import LPP_Foundations.Statements.ShapeDefinitions
 
 /-!
 # Expected-rate shapes of an i.i.d. law
@@ -30,16 +31,9 @@ open scoped NNReal ENNReal Topology
 
 namespace LPPDifferentiability
 
-/-- `g` is the expected-rate shape of the i.i.d. law `μ`: in every direction `x`
-of the closed quadrant, `E T(0, ⌊n x⌋) / n` tends to `g x`. This is the
-  characterization stated by `LPPDifferentiability.martin_prop_2_1`; Martin's Proposition 2.1(i)
-  describes the same limit. -/
-def IsExpectedRateShape (μ : Measure ℝ) [IsProbabilityMeasure μ] (g : Quadrant → ℝ) :
-    Prop :=
-  ∀ x : Quadrant, Tendsto (fun n : ℕ =>
-    (∫ ω : Environment, lastPassage ω 0
-      (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊) ∂environmentLaw μ) / (n : ℝ))
-    atTop (𝓝 (g x))
+/-- The Martin shape modules use the common expected-rate shape predicate. -/
+def IsExpectedRateShape (μ : Measure ℝ) [IsProbabilityMeasure μ] (g : Quadrant → ℝ) : Prop :=
+  LPPStatements.IsExpectedRateShape μ g
 
 /-- A law has at most one expected-rate shape. In each direction the two
 candidates are limits of the same sequence, so they agree by uniqueness of limits
@@ -57,8 +51,8 @@ unique continuous expected-rate witness of the existence theorem,
 because an expected-rate shape is that witness. -/
 theorem isExpectedRateShape_continuous_and_axis_of_integrable_and_positive_tail
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (hμ : Integrable (fun t : ℝ => t) μ)
-    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞)
+    (hμ : LPPStatements.HasFiniteMean μ)
+    (hpos : LPPStatements.HasSqrtUpperTail μ)
     {g : Quadrant → ℝ} (hg : IsExpectedRateShape μ g) :
     Continuous g ∧ ∀ s : ℝ≥0, g (s, 0) = (∫ t : ℝ, t ∂μ) * (s : ℝ) := by
   obtain ⟨h, hh, _⟩ :=

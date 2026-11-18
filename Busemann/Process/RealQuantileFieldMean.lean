@@ -353,7 +353,7 @@ theorem exists_real_quantile_forward_field_with_pinned_mean_ae_parameter
               atTop (𝓝 (R (ω, s) x y)) := by
     have hForwardSections := Measure.ae_ae_of_ae_prod hRawLimit
     have hReverse := (Measure.ae_ae_comm hLMeas).mp hForwardSections
-    simpa only [L, ν, has_passage_difference_limits] using hReverse
+    simpa only [L, ν, has_passage_difference_limits, natDisplacement] using hReverse
 
   have hμIntegrable : Integrable (fun t : ℝ => t) μ := by
     obtain ⟨p, hp, hpMoment⟩ := hmoment

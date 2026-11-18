@@ -161,6 +161,25 @@ def ApproximatesLastPassage (μ : Measure ℝ) [IsProbabilityMeasure μ] (g : Qu
       |lastPassage ω (0, 0) z - g ((z.1 : ℝ≥0), (z.2 : ℝ≥0))| ≤
         ε * ((z.1 + z.2 : ℕ) : ℝ)
 
+/-- The lower threshold in the uniform approximation can be chosen positive
+on the same almost-sure event. -/
+theorem approximatesLastPassage_iff_positive_threshold
+    (μ : Measure ℝ) [IsProbabilityMeasure μ] (g : Quadrant → ℝ) :
+    ApproximatesLastPassage μ g ↔
+      ∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
+        ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1 + d.2 →
+          |lastPassage ω 0 d - g ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
+            ε * ((d.1 + d.2 : ℕ) : ℝ) := by
+  unfold ApproximatesLastPassage
+  refine Filter.eventually_congr (Filter.Eventually.of_forall fun ω => ?_)
+  constructor
+  · intro h ε hε
+    obtain ⟨N, hbound⟩ := h ε hε
+    exact ⟨max N 1, le_max_right _ _, fun d hd => hbound d ((le_max_left _ _).trans hd)⟩
+  · intro h ε hε
+    obtain ⟨N, _, hbound⟩ := h ε hε
+    exact ⟨N, hbound⟩
+
 /-- `h` approximates the first-passage time `S` uniformly, almost surely: for almost every
 environment `ω` and every `ε > 0`, `|S(0, z) - h z| ≤ ε ‖z‖` for all lattice points `z` far enough
 from the origin. The first-passage analogue of `ApproximatesLastPassage`; Martin (2004),

@@ -60,17 +60,17 @@ private theorem ae_environment_shift (μ : Measure ℝ) [IsProbabilityMeasure μ
 
 /-- A positive atom at the literal endpoint gives a real endpoint carrying that atom. -/
 theorem source_top_real_of_atom_pos (μ : Measure ℝ) [IsProbabilityMeasure μ]
-    (h : 0 < μ {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}) :
-    ∃ M : ℝ, (M : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support) ∧
+    (h : 0 < μ (supportTopAtom μ)) :
+    ∃ M : ℝ, (M : EReal) = supportTop μ ∧
       (∀ᵐ x ∂μ, x ≤ M) ∧
-      μ {M} = μ {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} := by
+      μ {M} = μ (supportTopAtom μ) := by
   obtain ⟨t0, ht0⟩ := nonempty_of_measure_ne_zero h.ne'
-  have ht0' : (t0 : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support) := ht0
-  have hset : {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} = {t0} := by
+  have ht0' : (t0 : EReal) = supportTop μ := ht0
+  have hset : supportTopAtom μ = {t0} := by
     ext t
     constructor
     · intro ht
-      have ht' : (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support) := ht
+      have ht' : (t : EReal) = supportTop μ := ht
       exact Set.mem_singleton_iff.mpr (EReal.coe_eq_coe_iff.mp (ht'.trans ht0'.symm))
     · intro ht
       rw [Set.mem_singleton_iff.mp ht]
@@ -84,42 +84,36 @@ theorem source_top_real_of_atom_pos (μ : Measure ℝ) [IsProbabilityMeasure μ]
 /-- A positive flat-segment limit forces a positive atom at the literal endpoint. -/
 theorem source_top_atom_pos_of_top_limit_pos (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (a : ℝ) (Gtop : ℝ)
-    (htop : Tendsto (fun m : ℕ => (∫ ω : Environment, lastPassage (fun z =>
-      if (ω z : EReal) = sSup ((fun t : ℝ => (t : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    (htop : Tendsto (fun m : ℕ => (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω)
         0 (⌊(m : ℝ) * a⌋₊, ⌊(m : ℝ) * (1 - a)⌋₊) ∂environmentLaw μ) / (m : ℝ))
       atTop (𝓝 Gtop))
     (hG : 0 < Gtop) :
-    0 < μ {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} := by
+    0 < μ (supportTopAtom μ) := by
   by_contra hle
-  have hzero : μ {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)} = 0 :=
+  have hzero : μ (supportTopAtom μ) = 0 :=
     le_antisymm (not_lt.mp hle) zero_le
   have hz : ∀ z : Lattice, ∀ᵐ ω ∂environmentLaw μ,
-      ¬ ((ω z : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)) := by
+      ¬ ((ω z : EReal) = supportTop μ) := by
     intro z
     rw [ae_iff]
     have hm := source_top_indicator_event_measurable μ
-    have h1 : environmentLaw μ ((fun ω : Environment => ω z) ⁻¹'
-        {t : ℝ | (t : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)}) = 0 := by
+    have h1 : environmentLaw μ ((fun ω : Environment => ω z) ⁻¹' supportTopAtom μ) = 0 := by
       rw [← Measure.map_apply (measurable_environment_eval z) hm, environmentLaw_map_eval μ z,
         hzero]
     refine measure_mono_null (fun ω hω => ?_) h1
     exact not_not.mp hω
   have hall : ∀ᵐ ω ∂environmentLaw μ, ∀ z : Lattice,
-      ¬ ((ω z : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support)) :=
+      ¬ ((ω z : EReal) = supportTop μ) :=
     ae_all_iff.mpr hz
-  have hint : ∀ m : ℕ, (∫ ω : Environment, lastPassage (fun z =>
-      if (ω z : EReal) = sSup ((fun t : ℝ => (t : EReal)) '' μ.support) then (1 : ℝ) else 0)
+  have hint : ∀ m : ℕ, (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω)
         0 (⌊(m : ℝ) * a⌋₊, ⌊(m : ℝ) * (1 - a)⌋₊) ∂environmentLaw μ) = 0 := by
     intro m
-    have hae : ∀ᵐ ω ∂environmentLaw μ, lastPassage (fun z =>
-        if (ω z : EReal) = sSup ((fun t : ℝ => (t : EReal)) '' μ.support) then (1 : ℝ) else 0)
+    have hae : ∀ᵐ ω ∂environmentLaw μ, lastPassage (topWeightIndicatorField μ ω)
           0 (⌊(m : ℝ) * a⌋₊, ⌊(m : ℝ) * (1 - a)⌋₊) = 0 := by
       filter_upwards [hall] with ω hω
-      have hfun : (fun z : Lattice =>
-          if (ω z : EReal) = sSup ((fun t : ℝ => (t : EReal)) '' μ.support) then (1 : ℝ) else 0) =
-          fun _ => (0 : ℝ) := by
+      have hfun : topWeightIndicatorField μ ω = fun _ => (0 : ℝ) := by
         funext z
-        exact ite_eq_right (hω z)
+        simp only [topWeightIndicatorField, topWeightIndicator, hω z, ite_false]
       rw [hfun, lastPassage_const, mul_zero]
     rw [integral_congr_ae hae]
     simp
@@ -129,12 +123,11 @@ theorem source_top_atom_pos_of_top_limit_pos (μ : Measure ℝ) [IsProbabilityMe
 
 /-- Shifting the weights by `1 - M` gives the shifted law, its top field, and an upper bound `1`. -/
 theorem shifted_law_environment (μ : Measure ℝ) [IsProbabilityMeasure μ] (M : ℝ)
-    (hM : (M : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support))
+    (hM : (M : EReal) = supportTop μ)
     (ν : Measure ℝ) [IsProbabilityMeasure ν] (hν : ν = μ.map (fun x => x + (1 - M))) :
     (environmentLaw μ).map (fun ω : Environment => fun z => ω z + (1 - M)) =
         environmentLaw ν ∧
-      (∀ ω : Environment, topField (fun z => ω z + (1 - M)) = fun z =>
-        if (ω z : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then 1 else 0) ∧
+      (∀ ω : Environment, topField (fun z => ω z + (1 - M)) = topWeightIndicatorField μ ω) ∧
       (∀ᵐ t ∂ν, t ≤ 1) ∧ ν {1} = μ {M} := by
   subst hν
   have hf : Measurable (fun x : ℝ => x + (1 - M)) := by fun_prop
@@ -146,8 +139,7 @@ theorem shifted_law_environment (μ : Measure ℝ) [IsProbabilityMeasure μ] (M 
   · exact environmentLaw_map_coordinatewise μ (fun x => x + (1 - M)) hf
   · intro ω
     funext z
-    rw [← hM]
-    simp only [topField]
+    simp only [topField, topWeightIndicatorField, topWeightIndicator, ← hM]
     by_cases h : ω z + (1 - M) = 1
     · rw [ite_eq_left h, ite_eq_left ((hiff (ω z)).mp h)]
     · rw [ite_eq_right h, ite_eq_right (fun h' => h ((hiff (ω z)).mpr h'))]
@@ -166,7 +158,7 @@ theorem shifted_law_environment (μ : Measure ℝ) [IsProbabilityMeasure μ] (M 
 
 /-- The top indicator field of the shifted law has a shape, and its expectations converge to it. -/
 theorem exists_top_shape_of_shifted_law (μ : Measure ℝ) [IsProbabilityMeasure μ] (M : ℝ)
-    (hM : (M : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support))
+    (hM : (M : EReal) = supportTop μ)
     (ν : Measure ℝ) [IsProbabilityMeasure ν] (hν : ν = μ.map (fun x => x + (1 - M))) :
     ∃ gtop : Quadrant → ℝ, Continuous gtop ∧
       (∀ (c : ℝ≥0) (x : Quadrant), gtop (c * x.1, c * x.2) = (c : ℝ) * gtop x) ∧
@@ -177,8 +169,7 @@ theorem exists_top_shape_of_shifted_law (μ : Measure ℝ) [IsProbabilityMeasure
           |lastPassage (topField ω) 0 d - gtop ((d.1 : ℝ≥0), (d.2 : ℝ≥0))| ≤
             ε * ((d.1 + d.2 : ℕ) : ℝ)) ∧
       (∀ x : Quadrant, Tendsto (fun n : ℕ =>
-        (∫ ω : Environment, lastPassage (fun z =>
-          if (ω z : EReal) = sSup ((fun s : ℝ => (s : EReal)) '' μ.support) then (1 : ℝ) else 0)
+        (∫ ω : Environment, lastPassage (topWeightIndicatorField μ ω)
           0 (⌊(n : ℝ) * (x.1 : ℝ)⌋₊, ⌊(n : ℝ) * (x.2 : ℝ)⌋₊)
           ∂environmentLaw μ) / (n : ℝ))
         atTop (𝓝 (gtop x))) := by

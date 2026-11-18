@@ -7,6 +7,8 @@ module
 
 public import Busemann.Process.MonotoneCocycleLimit
 public import Busemann.Frozen.Definitions.CoalescingTilt
+public import Busemann.Geometry.CocycleSoutheastOrder
+public import LPP_Foundations.Statements.WeightMoments
 
 import Busemann.Process.CoalescingRayGlobalOrder
 import Busemann.Process.CoalescingRayCocycleOrder
@@ -30,8 +32,7 @@ deterministic tilts are ordered by their first coordinate. -/
 theorem ae_forward_coalescing_cocycle_opposite_edge_order
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hμ : LPPStatements.NotAPointMass μ)
-    (hmoment : ∃ p : ℝ, 2 < p ∧
-      (∫⁻ t, ENNReal.ofReal (|t| ^ p) ∂μ) < ∞)
+    (hmoment : LPPStatements.HasAbsoluteMomentAbove μ 2)
     (B C : Lattice → Lattice → Environment → ℝ)
     (hB : IsGeneralizedBusemann (environmentLaw μ)
       (fun z ω => environmentTranslationEquiv z ω) (fun ω => ω) B)
@@ -49,11 +50,8 @@ theorem ae_forward_coalescing_cocycle_opposite_edge_order
       invariantCocycleTilt (environmentLaw μ)
         (fun z ω => environmentTranslationEquiv z ω) (fun ω => ω) C hC ω = k)
     (hfirst : h.1 < k.1) :
-    ∀ᵐ ω ∂environmentLaw μ, ∀ x : Lattice,
-      C x (x + ((1 : ℤ), (0 : ℤ))) ω ≤
-        B x (x + ((1 : ℤ), (0 : ℤ))) ω ∧
-      B x (x + ((0 : ℤ), (1 : ℤ))) ω ≤
-        C x (x + ((0 : ℤ), (1 : ℤ))) ω := by
+    ∀ᵐ ω ∂environmentLaw μ,
+      cocycleSoutheastLE (fun x y => B x y ω) (fun x y => C x y ω) := by
   rcases ae_rightmostCocyclePaths_globally_comparable
       μ B C hB hC hCoalB hCoalC with hPathsBC | hPathsCB
   · exact ae_cocycle_opposite_edge_order_of_rightmostPath_order

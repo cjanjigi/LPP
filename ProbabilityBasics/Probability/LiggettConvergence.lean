@@ -5,6 +5,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 -/
 module
 
+public import ProbabilityBasics.Frozen.Foundations.Liggett.LiggettBlockStationary
 public import ProbabilityBasics.Probability.LiggettLimitMoments
 public import ProbabilityBasics.Probability.LiggettLowerComparison
 public import ProbabilityBasics.Probability.LiggettBlockUpper
@@ -27,6 +28,8 @@ open scoped Topology BigOperators
 
 namespace LPPDifferentiability
 
+open ProbabilityBasics.Liggett
+
 /-- Liggett's hypotheses give one measurable integrable limit on the original space,
 almost-sure and L1 convergence, and one common rate for the mean, equal to the
 expected-rate limit and to the infimum over positive lengths. -/
@@ -36,14 +39,9 @@ theorem exists_liggett_convergence {Ω : Type*} [MeasurableSpace Ω]
     (hi : ∀ n : ℕ, 0 < n → Integrable (A 0 n) μ)
     (c : ℝ)
     (hlower : ∀ n : ℕ, 0 < n → -(c * (n : ℝ)) ≤ ∫ ω, A 0 n ω ∂μ)
-    (hsub : ∀ m n : ℕ, 0 < m → m < n →
-      ∀ᵐ ω ∂μ, A 0 n ω ≤ A 0 m ω + A m n ω)
-    (hadj : ∀ m : ℕ,
-      IdentDistrib (fun ω (j : ℕ) => A (m + 1) (m + 1 + (j + 1)) ω)
-        (fun ω (j : ℕ) => A m (m + (j + 1)) ω) μ μ)
-    (hstat : ∀ k : ℕ, 0 < k → IdentDistrib
-      (fun ω (j : ℕ) => A ((j + 2) * k) ((j + 3) * k) ω)
-      (fun ω (j : ℕ) => A ((j + 1) * k) ((j + 2) * k) ω) μ μ) :
+    (hsub : LiggettSubadditive μ A)
+    (hadj : LiggettRowLaws μ A)
+    (hstat : LiggettBlockStationary μ A) :
     ∃ γ : ℝ, ∃ g : Ω → ℝ, Measurable g ∧ Integrable g μ ∧
       (∀ᵐ ω ∂μ, Tendsto (fun n : ℕ => A 0 (n + 1) ω / ((n + 1 : ℕ) : ℝ))
         atTop (𝓝 (g ω))) ∧
