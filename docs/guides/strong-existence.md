@@ -1,7 +1,7 @@
 # Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model
 
 **Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen**<br>
-Numbering follows the accepted manuscript for *Electronic Journal of Probability*, dated 31 October 2026. [Earlier arXiv version](https://arxiv.org/abs/2507.08757v2).
+[*Electronic Journal of Probability* **31** (2026), 1–35](https://doi.org/10.1214/26-EJP1634). Result numbers and source locations in this guide follow the accepted manuscript of 31 October 2026.
 
 [All papers](../../README.md) · [Common LPP notation](../notation.md) · [Lean proof of Theorem 3.11](https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Full/StrongExistence.lean)
 
@@ -113,7 +113,7 @@ flowchart TD
 
 </details>
 
-The numbering follows the accepted manuscript for *Electronic Journal of Probability*, dated October 31, 2026. [The public arXiv v2](https://arxiv.org/abs/2507.08757v2) is an earlier version with different numbering in Section 3.
+Published in [*Electronic Journal of Probability* **31** (2026), 1–35](https://doi.org/10.1214/26-EJP1634). The map's result numbers and source locations follow the accepted manuscript of 31 October 2026. [The earlier arXiv v2](https://arxiv.org/abs/2507.08757v2) has different numbering in Section 3.
 
 Read the guide for the main results in the paper’s order and for differences in the Lean proofs.
 

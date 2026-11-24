@@ -214,7 +214,7 @@ flowchart TD
   class R53 not_assessed
 ```
 
-The numbering follows the accepted manuscript for *Electronic Journal of Probability*, dated October 31, 2026. [The public arXiv v2](https://arxiv.org/abs/2507.08757v2) is an earlier version with different numbering in Section 3.
+Published in [*Electronic Journal of Probability* **31** (2026), 1–35](https://doi.org/10.1214/26-EJP1634). The map's result numbers and source locations follow the accepted manuscript of 31 October 2026. [The earlier arXiv v2](https://arxiv.org/abs/2507.08757v2) has different numbering in Section 3.
 
 Read the guide for the main results in the paper’s order and for differences in the Lean proofs.
 

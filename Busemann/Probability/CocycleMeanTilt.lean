@@ -18,7 +18,8 @@ namespace LPP.Busemann
 
 /-- The negative means of the two origin increments, as in Theorem 3.11(c) of
 *Strong existence and uniqueness of the tilt-indexed Busemann process in the planar
-corner growth model*. These are ordinary integrals. Integrability is supplied
+corner growth model*, Electronic Journal of Probability 31 (2026), 1–35,
+https://doi.org/10.1214/26-EJP1634. These are ordinary integrals. Integrability is supplied
 by the generalized Busemann hypotheses in applications. -/
 noncomputable def meanCocycleTilt {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) (B : Lattice → Lattice → Ω → ℝ) : ℝ × ℝ :=

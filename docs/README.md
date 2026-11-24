@@ -8,6 +8,8 @@ These guides document the collection's current paper coverage.
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.
 
+[*Electronic Journal of Probability* **31** (2026), 1–35](https://doi.org/10.1214/26-EJP1634).
+
 [Formalization guide](guides/strong-existence.md) · [Dependency graph and coverage notes](graphs/paper-results/strong-existence.md)
 
 ## Busemann functions and Gibbs measures in directed polymer models on ℤ²
