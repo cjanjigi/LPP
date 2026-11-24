@@ -40,7 +40,7 @@ Certificate links in each guide identify the checked Lean revision. The guides d
 
 </details>
 
-The guides, dependency graphs and coverage notes are readable directly on GitHub. The interactive viewer remains a local preview while hosting is deferred. See the [graph instructions](docs/README.md#interactive-graphs) and [documentation style](STYLE.md).
+The guides, dependency graphs and coverage notes are readable directly on GitHub. The interactive viewer remains a local preview while hosting is deferred. See the [graph instructions](docs/README.md#interactive-graphs).
 
 ## Guarantees and limits
 

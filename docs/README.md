@@ -1,8 +1,8 @@
 # Formalization guides
 
-[Paper catalogue and build instructions](../README.md) · [Common LPP notation](notation.md) · [Documentation style](../STYLE.md)
+[Paper catalogue and build instructions](../README.md) · [Common LPP notation](notation.md)
 
-These guides document the collection's current paper coverage. Add a guide as results from another paper become available.
+These guides document the collection's current paper coverage.
 
 ## Strong existence and uniqueness of the tilt-indexed Busemann process in the planar corner growth model
 
@@ -42,7 +42,7 @@ Thomas M. Liggett.
 
 ## Interactive graphs
 
-The guides, graphs and coverage notes above are available in the private repository. Interactive hosting is deferred; the viewer remains a local preview. Publishing a public website requires separate approval.
+Interactive hosting is deferred; the viewer remains a local preview.
 
 ### Local preview
 
@@ -53,13 +53,3 @@ node scripts/serve-docs.mjs
 ```
 
 Open the address printed by the command, normally `http://127.0.0.1:4173/`. Use the paper selector to choose a guide. The viewer uses the same result data as the Markdown graphs. Its mathematics and graph libraries load from jsDelivr. Stop the local server with Ctrl-C.
-
-## Updating the documentation
-
-Follow [STYLE.md](../STYLE.md). Update short descriptions, source dependencies and certificate coverage in `docs/graphs/paper-results/*.json`, keeping those roles separate. Every restricted entry must compare the paper's scope, the certified scope and the remaining gap. Keep precise main theorem statements in the guides. Regenerate the graph sections and full maps from the repository root:
-
-```sh
-node scripts/render-doc-graphs.mjs
-```
-
-The generator preserves the mathematical prose outside the marked graph sections in each guide. Review all changed statements, scope descriptions and certificate links before publishing an update. Source papers, manuscript files and development records are not distributed with this library.
