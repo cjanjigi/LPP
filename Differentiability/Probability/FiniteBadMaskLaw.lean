@@ -21,16 +21,28 @@ open MeasureTheory
 
 namespace LPPDifferentiability
 
+/-- The configurations with the indicated very bad sites at threshold `-T`.
+The endpoint `-T` is on the good side, as in the conditional law for `lem:weights`. -/
+@[expose] def finiteThresholdMaskCube {I : Type*} (T : ℝ) (b : I → Bool) : Set (I → ℝ) :=
+  {x | ∀ i, if b i then x i < -T else -T ≤ x i}
+
+/-- Membership in the cube is the indicated one-site test at every coordinate. -/
+theorem mem_finiteThresholdMaskCube {I : Type*} (T : ℝ) (b : I → Bool) (x : I → ℝ) :
+    x ∈ finiteThresholdMaskCube T b ↔ ∀ i, if b i then x i < -T else -T ≤ x i :=
+  Iff.rfl
+
+/-- A fixed threshold mask is the product of its one-site half-lines. -/
+theorem finiteThresholdMaskCube_eq_pi {I : Type*} (T : ℝ) (b : I → Bool) :
+    finiteThresholdMaskCube T b =
+      Set.univ.pi (fun i => {y : ℝ | if b i then y < -T else -T ≤ y}) := by
+  ext x
+  simp [mem_finiteThresholdMaskCube]
+
 /-- The configurations with a fixed finite threshold mask form a measurable rectangle. -/
 theorem measurableSet_finite_threshold_mask_cube {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (_hT : 0 < T) (b : I → Bool) :
-    MeasurableSet {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} := by
-  have hcube :
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
-        Set.univ.pi (fun i => {y : ℝ | if b i then y < -T else -T ≤ y}) := by
-    ext x
-    simp
-  rw [hcube]
+    MeasurableSet (finiteThresholdMaskCube T b) := by
+  rw [finiteThresholdMaskCube_eq_pi]
   exact MeasurableSet.univ_pi fun i => by
     by_cases hb : b i
     · simpa [hb] using
@@ -41,30 +53,18 @@ theorem measurableSet_finite_threshold_mask_cube {I : Type*} [Fintype I]
 /-- Restricting the finite product to one fixed threshold mask restricts each factor. -/
 theorem finite_threshold_mask_cube_restrict {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (_hT : 0 < T) (b : I → Bool) :
-    (Measure.pi (fun _ : I => μ)).restrict
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
+    (Measure.pi (fun _ : I => μ)).restrict (finiteThresholdMaskCube T b) =
       Measure.pi (fun i => μ.restrict {y : ℝ | if b i then y < -T else -T ≤ y}) := by
-  have hcube :
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
-        Set.univ.pi (fun i => {y : ℝ | if b i then y < -T else -T ≤ y}) := by
-    ext x
-    simp
-  rw [hcube]
+  rw [finiteThresholdMaskCube_eq_pi]
   exact Measure.restrict_pi_pi (fun _ : I => μ)
     (fun i => {y : ℝ | if b i then y < -T else -T ≤ y})
 
 /-- The mass of a fixed threshold mask is the product of its coordinate masses. -/
 theorem finite_threshold_mask_cube_measure {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (_hT : 0 < T) (b : I → Bool) :
-    (Measure.pi (fun _ : I => μ))
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
+    (Measure.pi (fun _ : I => μ)) (finiteThresholdMaskCube T b) =
       ∏ i, μ {y : ℝ | if b i then y < -T else -T ≤ y} := by
-  have hcube :
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
-        Set.univ.pi (fun i => {y : ℝ | if b i then y < -T else -T ≤ y}) := by
-    ext x
-    simp
-  rw [hcube]
+  rw [finiteThresholdMaskCube_eq_pi]
   exact Measure.pi_pi (fun _ : I => μ)
     (fun i => {y : ℝ | if b i then y < -T else -T ≤ y})
 

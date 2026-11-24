@@ -10,6 +10,7 @@ public import LPP_Foundations.Probability.PassageMeanBounds
 public import LPP_Foundations.Model.LastPassage.AntidiagonalOscillation
 public import ProbabilityBasics.Analysis.MartinConcentrationConstants
 public import ProbabilityBasics.Probability.FiniteProductConcentration
+public import ProbabilityBasics.Probability.SharpFiniteProductConcentration
 
 /-!
 # Concentration of the finite passage maximum
@@ -226,6 +227,48 @@ private theorem measure_centered_passageBlocks_eq (μ : Measure ℝ) [IsProbabil
           (by simpa only [Real.norm_eq_abs] using
             ((measurable_passageBlockMaximum d L).sub_const
               (∫ η, lastPassage η 0 d ∂environmentLaw μ)).norm))).symm
+
+/-- The centered actual passage value has the sharp bounded-differences MGF
+bound for weights bounded in absolute value by `L`. -/
+public theorem integral_exp_centered_lastPassage_le
+    (μ : Measure ℝ) [IsProbabilityMeasure μ] (d : ℕ × ℕ) (L : ℝ) (hL : 0 ≤ L)
+    (hbound : ∀ᵐ x ∂μ, |x| ≤ L) (θ : ℝ) :
+    (∫ ω : Environment,
+      Real.exp (θ * (lastPassage ω 0 d - ∫ η, lastPassage η 0 d ∂environmentLaw μ))
+      ∂environmentLaw μ) ≤
+      Real.exp (((d.1 + d.2 : ℕ) : ℝ) * (2 * L) ^ 2 * θ ^ 2 / 8) := by
+  classical
+  let ν := fun k : Fin (d.1 + d.2) => Measure.pi (fun _ : PassageFiber d k =>
+    μ.map (Set.projIcc (-L) L (neg_le_self hL)))
+  let m := ∫ q, passageBlockMaximum d L q ∂Measure.pi ν
+  have hmean : (∫ ω, lastPassage ω 0 d ∂environmentLaw μ) = m := by
+    exact integral_passageBlocks_eq μ d L hL hbound
+  have hosc : ∀ q k y,
+      |passageBlockMaximum d L (Function.update q k y) - passageBlockMaximum d L q| ≤
+        2 * L := by
+    intro q k y
+    apply abs_passageBlockMaximum_sub_le d hL (Function.update q k y) q k
+    intro j hj
+    exact Function.update_of_ne hj y q
+  have hprod := integral_exp_centered_pi_le_sharp ν
+    (M := ((d.1 + d.2 : ℕ) : ℝ) * L) (b := 2 * L)
+    (mul_nonneg (Nat.cast_nonneg _) hL) (mul_nonneg (by norm_num) hL)
+    (measurable_passageBlockMaximum d L) (abs_passageBlockMaximum_le d hL) hosc θ
+  have hexp : Measurable (fun q : PassageBlocks d L =>
+      Real.exp (θ * (passageBlockMaximum d L q - m))) :=
+    measurable_const.mul ((measurable_passageBlockMaximum d L).sub_const m) |>.exp
+  calc
+    _ = ∫ ω : Environment,
+        Real.exp (θ * (passageBlockMaximum d L (actualPassageBlocks d L hL ω) - m))
+        ∂environmentLaw μ := by
+      apply integral_congr_ae
+      filter_upwards [ae_actualPassageBlocks_maximum μ d L hL hbound] with ω hω
+      rw [hmean, hω]
+    _ = ∫ q, Real.exp (θ * (passageBlockMaximum d L q - m)) ∂Measure.pi ν := by
+      exact integral_finite_bounded_environment_blocks μ L hL passageSite
+        (passageSite_injective d) _ hexp
+    _ ≤ Real.exp (((d.1 + d.2 : ℕ) : ℝ) * (2 * L) ^ 2 * θ ^ 2 / 8) := by
+      exact hprod
 
 /-- A zero-length actual passage has zero probability of a positive centered deviation. -/
 public theorem measure_abs_lastPassage_sub_integral_ge_eq_zero_of_length_zero

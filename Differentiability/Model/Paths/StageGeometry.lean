@@ -134,14 +134,14 @@ private theorem slice_partition {d : ℕ × ℕ} (p : Path 0 d) (N : ℕ)
 literal terminal-excluded collected-slice partition, all for the same returned cuts. -/
 theorem Path.exists_geometric_first_cuts {d : ℕ × ℕ} (p : Path 0 d)
     (a : ℝ) (ha : 0<a) (ha1 : a<1) (m : ℕ) (hm : 1≤m) (s : ℝ) (hs : 2≤s) :
-    let rho (t : Fin (d.1+d.2+1)) : ℝ := (1-a)*(p.vertex t).1-a*(p.vertex t).2
+    let rho (t : Fin (d.1+d.2+1)) : ℝ := latticeTransverseCoordinate a (p.vertex t)
     ∃ N : ℕ, ∃ cuts : Fin (N+2) → Fin (d.1+d.2+1),
       cuts 0 = 0 ∧ cuts (Fin.last (N+1)) = Fin.last (d.1+d.2) ∧
       Monotone cuts ∧ N ≤ d.1+d.2 ∧
       (∀ i : Fin N,
         let k := cuts ⟨i.val, by omega⟩
         let l := cuts ⟨i.val+1, by omega⟩
-        k < l ∧ (2*m ≤ l.val-k.val ∨ s ≤ |rho l-rho k|) ∧
+        k < l ∧ p.reaches_stage_cut a m s k l ∧
         ∀ t, k < t → t < l → t.val-k.val < 2*m ∧ |rho t-rho k| < s) ∧
       (∀ t, cuts ⟨N, by omega⟩ < t →
         t.val-(cuts ⟨N, by omega⟩).val < 2*m ∧ |rho t-rho (cuts ⟨N, by omega⟩)| < s) ∧
@@ -176,7 +176,7 @@ theorem Path.exists_geometric_first_cuts {d : ℕ × ℕ} (p : Path 0 d)
   refine ⟨N, cuts, h0, hlast, hmono, hN, hfull, hrem, hgeometry, ?_, hunion, hdisj⟩
   intro i ht
   have hg := (hgeometry ⟨i.val, by omega⟩).1
-  rcases (hfull i).2.1 with hd | hr
+  rcases (p.reaches_stage_cut_iff a m s _ _).mp (hfull i).2.1 with hd | hr
   · exact Nat.le_antisymm hg hd
   · exact (not_le_of_gt ht hr).elim
 

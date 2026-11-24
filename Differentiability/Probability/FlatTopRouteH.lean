@@ -22,22 +22,22 @@ This module assembles the three parts of the flat-segment theorem for a weight l
 value `1`:
 
 * (i) the description of the flat segment of the top shape, from
-  `gtop_flat_segment_route_h`;
+  `top_shape_flat_segment_of_expected_edge_rates`;
 * (ii) the top shape equal to one forces the shape of the weights equal to one, from
   `gbar_eq_one_of_gtop_eq_one`;
 * (iii) differentiability at the two ends of the flat segment, from
-  `gbar_differentiableAt_edge_route_h`, whose hypothesis that the shape is one on
-  `[1 - β, β]` comes from (i) and (ii).
+  `differentiableAt_flat_segment_endpoints_of_expected_edge_rate`. The hypothesis that the
+  shape is one on `[1 - β, β]` comes from (i) and (ii).
 
 ## Main results
 
-- `flat_top_route_h`: the three parts (i), (ii) and (iii) together.
+- `flat_segment_classification_of_weights_le_one`: the three parts (i), (ii) and (iii) together.
 
 ## References
 
 - Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation), the flat-edge theorem.
 - C. Janjigian, F. Rassoul-Agha and T. Seppäläinen, *Differentiability of the shape function in
-  the planar corner growth model*, preprint, Theorem 2.2.
+  the planar corner growth model*, Theorem `thm:flat-top`.
 -/
 
 public section
@@ -59,9 +59,9 @@ edge rates `E a_{n+1} / (n+1)`.
 * (iii) If `β` is the greatest lower bound of `R`, the quadrant extension of `g` is
   differentiable at both ends `(β, 1 - β)` and `(1 - β, β)` of the flat segment.
 
-This is the flat-edge theorem of Georgiou, Rassoul-Agha and Seppäläinen (manuscript in
-preparation). -/
-theorem flat_top_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
+This is the expected half-line edge-rate form of the flat-edge theorem of Georgiou,
+Rassoul-Agha and Seppäläinen cited in Section `sec:flat` of the differentiability paper. -/
+theorem flat_segment_classification_of_weights_le_one (ν : Measure ℝ) [IsProbabilityMeasure ν]
     (hle : ∀ᵐ t ∂ν, t ≤ 1) (hp₀ : 0 < ν {1}) (hp₁ : ν {1} < 1)
     (hneg : ∃ pneg : ℝ, 1 < pneg ∧
       (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ pneg) ∂ν) < ∞)
@@ -96,7 +96,8 @@ theorem flat_top_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
       DifferentiableAt ℝ (quadrantExtension g) (β, 1 - β) ∧
         DifferentiableAt ℝ (quadrantExtension g) (1 - β, β)) := by
   intro R
-  obtain ⟨hN9a, hN9b⟩ := gtop_flat_segment_route_h ν hp₀ hp₁ gtop htcont hthom htconc htshape
+  obtain ⟨hN9a, hN9b⟩ :=
+    top_shape_flat_segment_of_expected_edge_rates ν hp₀ hp₁ gtop htcont hthom htconc htshape
   have hN10 : ∀ t ∈ Icc (0 : ℝ) 1, gtop (toQuadrant (t, 1 - t)) = 1 →
       g (toQuadrant (t, 1 - t)) = 1 := fun t ht h1 =>
     gbar_eq_one_of_gtop_eq_one ν hle hp₀ hp₁ hneg g hgcont hghom hgconc hgshape gtop htcont
@@ -104,10 +105,13 @@ theorem flat_top_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
   refine ⟨hN9a, hN9b, hN10, ?_⟩
   intro β hβ
   obtain ⟨hβhalf, hβone, hiff⟩ := hN9b β hβ
-  refine gbar_differentiableAt_edge_route_h ν hle hp₀ hp₁ hneg g hgcont hghom hgconc hgshape β
-    hβhalf hβone hβ ?_
+  refine differentiableAt_flat_segment_endpoints_of_expected_edge_rate ν hle hp₀ hp₁ hneg
+    g hgcont hghom hgconc hgshape β hβhalf hβone hβ ?_
   intro t ht
   have ht01 : t ∈ Icc (0 : ℝ) 1 := ⟨by linarith [ht.1], by linarith [ht.2]⟩
   exact hN10 t ht01 ((hiff t ht01).2 ht)
+
+/-- Compatibility name for `flat_segment_classification_of_weights_le_one`. -/
+alias flat_top_route_h := flat_segment_classification_of_weights_le_one
 
 end LPPDifferentiability

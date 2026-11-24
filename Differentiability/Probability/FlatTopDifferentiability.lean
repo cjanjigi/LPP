@@ -22,21 +22,23 @@ If the expected top-indicator passage times, divided by their length, tend to `1
 direction `(a, 1 - a)`, then the shape of a general weight law is differentiable there.
 
 The proof shifts the law so that the top of the support becomes `1`, applies the flat-segment
-theorem for weights at most one (`flat_top_route_h`) to the shifted law, and then splits on the
-position of `a` in the flat interval `[1 - β, β]`: at an end, differentiability is part (iii)
-of that theorem; strictly inside, the shifted shape is linear on a neighbourhood
+theorem for weights at most one (`flat_segment_classification_of_weights_le_one`) to the
+shifted law, and then splits on the position of `a` in the flat interval `[1 - β, β]`.
+At an endpoint, differentiability is part (iii) of that theorem. In the interior, the
+shifted shape is linear on a neighbourhood
 (`differentiableAt_quadrantExtension_on_flat_interval`). The shifted shape and the original
 shape differ by a multiple of the level, which does not change differentiability.
 
 ## Main results
 
-- `differentiableAt_of_top_flat`: differentiability at a direction where the top-indicator
-  passage times grow at the maximal rate.
+- `differentiableAt_of_top_weight_count_rate_one`: differentiability at a direction where
+  the expected maximal count of collected top-weight sites, divided by the length scale,
+  tends to one.
 
 ## References
 
 - C. Janjigian, F. Rassoul-Agha and T. Seppäläinen, *Differentiability of the shape function in
-  the planar corner growth model*, preprint, Theorem 2.2.
+  the planar corner growth model*, Theorem `thm:flat-top`.
 - Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation), the flat-edge theorem.
 -/
 
@@ -54,10 +56,10 @@ passage times of the indicator of the sites at the top of the support, divided b
 `1` along the floors of `(m a, m (1 - a))`, then the quadrant extension of `g` is
 differentiable at `(a, 1 - a)`.
 
-This is Theorem 2.2 of the differentiability preprint, for a general weight law; it is derived
-from the case of weights at most one (`flat_top_route_h`) by the flat-cone theorem and the shift
-adapters. -/
-theorem differentiableAt_of_top_flat
+This proves differentiability on the flat segment as in Section `sec:flat` of the
+differentiability paper, using the endpoint clause for the law shifted to support top one
+and linearity in the interior. -/
+theorem differentiableAt_of_top_weight_count_rate_one
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hnondegenerate : ∀ c : ℝ, μ ({c} : Set ℝ) < 1)
     (hneg : ∃ pneg : ℝ, 1 < pneg ∧
@@ -105,7 +107,7 @@ theorem differentiableAt_of_top_flat
     rw [hqa, hqb] at h
     exact tendsto_nhds_unique h htop
   -- the flat-segment theorem for the shifted law
-  obtain ⟨hF1, hF2, hF3, hF4⟩ := flat_top_route_h ν hle hp₀ hp₁ hnegν
+  obtain ⟨hF1, hF2, hF3, hF4⟩ := flat_segment_classification_of_weights_le_one ν hle hp₀ hp₁ hnegν
     (fun z : Quadrant => g z + (1 - M) * ((z.1 : ℝ) + z.2)) hbcont hbhom hbconc hbshape
     gtop htcont hthom htconc htshape
   set R : Set ℝ := Set.range fun n : ℕ =>
@@ -138,5 +140,8 @@ theorem differentiableAt_of_top_flat
           (1 - β) β 1 (by linarith) (by linarith) hβone.le hlevel a ⟨h1, h2⟩
   exact (differentiableAt_quadrantExtension_add_level_iff g (1 - M) (a, 1 - a) ha₀
     (sub_pos.2 ha₁)).1 hgb
+
+/-- Compatibility name for `differentiableAt_of_top_weight_count_rate_one`. -/
+alias differentiableAt_of_top_flat := differentiableAt_of_top_weight_count_rate_one
 
 end LPPDifferentiability

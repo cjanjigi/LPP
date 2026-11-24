@@ -7,6 +7,7 @@ module
 
 public import Differentiability.Probability.TravelAssembly
 public import Differentiability.Probability.TravelPieceProbability
+public import LPP_Foundations.Statements.ShapeDefinitions
 import Mathlib.Algebra.Order.Archimedean.Basic
 
 /-!
@@ -23,23 +24,25 @@ open scoped Topology ENNReal NNReal
 
 namespace LPPDifferentiability
 
-/-- The unique shape also satisfies the travel estimate, with one probability
-function chosen before every scale, signed start and natural displacement. The
-weight and the real l1 tube refer to the same path. -/
-theorem exists_unique_shape_with_travel
+/-- The path event in `lem:travel` of the final draft.
+A path from `u` with displacement `d` loses at most `η * s` from the shape and stays
+within taxicab distance `δ * s` of the segment joining its endpoints. -/
+@[expose] def travelPathEvent (g : Quadrant → ℝ) (η δ s : ℝ)
+    (u : Lattice) (d : ℕ × ℕ) : Set Environment :=
+  {ω | ∃ q : Path u d,
+    g ((d.1 : ℝ≥0), (d.2 : ℝ≥0)) - η * s ≤ pathWeight ω q ∧
+    ∀ i, ∃ t : ℝ, 0 ≤ t ∧ t ≤ 1 ∧
+      |((q.vertex i).1 : ℝ) - ((u.1 : ℝ) + t * (d.1 : ℝ))| +
+      |((q.vertex i).2 : ℝ) - ((u.2 : ℝ) + t * (d.2 : ℝ))| ≤ δ * s}
+
+/-- The shape function and the uniform probability bound of `lem:travel` in the final draft.
+One probability function works for every deterministic starting point and displacement. -/
+theorem exists_unique_shape_with_travel_estimate
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hneg : ∃ p : ℝ, 1 < p ∧
       (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
     (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
-    ∃! g : Quadrant → ℝ,
-      Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant), g (c*x.1,c*x.2) = (c:ℝ)*g x) ∧
-      (∀ (x y : Quadrant) (r t : ℝ≥0), r+t=1 →
-        (r:ℝ)*g x+(t:ℝ)*g y ≤ g (r*x.1+t*y.1,r*x.2+t*y.2)) ∧
-      (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
-        ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1+d.2 →
-          |lastPassage ω 0 d-g ((d.1:ℝ≥0),(d.2:ℝ≥0))| ≤
-            ε*((d.1+d.2:ℕ):ℝ)) ∧
+    ∃! g : Quadrant → ℝ, LPPStatements.IsShapeFunction μ g ∧
       (∀ (a : ℝ), 0<a → a<1 → ∀ (D : ℝ), 1≤D →
         ∀ (theta : ℝ), 0<theta → theta<min a (1-a) →
         ∀ (η δ : ℝ), 0<η → 0<δ →
@@ -49,29 +52,24 @@ theorem exists_unique_shape_with_travel
             s≤((d.1+d.2:ℕ):ℝ) → ((d.1+d.2:ℕ):ℝ)≤D*s →
             |(1-a)*(d.1:ℝ)-a*(d.2:ℝ)| ≤
               (min a (1-a)-theta)*((d.1:ℝ)+(d.2:ℝ)) →
-            MeasurableSet {ω : Environment | ∃ q : Path u d,
-              g ((d.1:ℝ≥0),(d.2:ℝ≥0))-η*s ≤ pathWeight ω q ∧
-              ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
-                |((q.vertex i).1:ℝ)-((u.1:ℝ)+t*(d.1:ℝ))|+
-                |((q.vertex i).2:ℝ)-((u.2:ℝ)+t*(d.2:ℝ))|≤δ*s} ∧
-            p s ≤ (environmentLaw μ).real {ω : Environment | ∃ q : Path u d,
-              g ((d.1:ℝ≥0),(d.2:ℝ≥0))-η*s ≤ pathWeight ω q ∧
-              ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
-                |((q.vertex i).1:ℝ)-((u.1:ℝ)+t*(d.1:ℝ))|+
-                |((q.vertex i).2:ℝ)-((u.2:ℝ)+t*(d.2:ℝ))|≤δ*s}) := by
-  obtain ⟨g,hg,_hu⟩ := exists_unique_shape_with_travel_piece_probability μ hneg hpos
-  obtain ⟨_g0,_hg0,hunique⟩ :=
+            MeasurableSet (travelPathEvent g η δ s u d) ∧
+            p s ≤ (environmentLaw μ).real (travelPathEvent g η δ s u d)) := by
+  obtain ⟨g, ⟨hcont, hhom, hconc, happ, hpieces⟩, -⟩ :=
+    exists_unique_shape_with_travel_piece_probability μ hneg hpos
+  obtain ⟨_, -, hunique⟩ :=
     exists_unique_shape_of_negative_moment_and_positive_tail μ hneg hpos
-  refine ⟨g,⟨hg.1,hg.2.1,hg.2.2.1,hg.2.2.2.1,?_⟩,?_⟩
+  have hg : LPPStatements.IsShapeFunction μ g :=
+    ⟨hcont, hhom, hconc, (LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mpr happ⟩
+  refine ⟨g, ⟨hg, ?_⟩, ?_⟩
   · intro a ha0 ha1 D hD theta htheta hinterior η δ hη hδ
     obtain ⟨B,hbig⟩ := exists_nat_ge (max 1 (4*D/δ))
     have hBreal : (1:ℝ)≤(B:ℝ) := (le_max_left _ _).trans hbig
     have hB : 1≤B := by exact_mod_cast hBreal
     have hBr : 0<(B:ℝ) := lt_of_lt_of_le zero_lt_one hBreal
     have hBD : 4*D/δ≤(B:ℝ) := (le_max_right _ _).trans hbig
-    obtain ⟨L,hL,hassembly⟩ := exists_floorSegment_travel_assembly_constant g hg.1
-      hg.2.2.1 hg.2.1 a theta ha0 ha1 htheta hinterior
-    obtain ⟨p,hp,ht,hpieces⟩ := hg.2.2.2.2 D hD B hB η hη
+    obtain ⟨L,hL,hassembly⟩ := exists_floorSegment_travel_assembly_constant g hcont
+      hconc hhom a theta ha0 ha1 htheta hinterior
+    obtain ⟨p,hp,ht,hpieces_at_scale⟩ := hpieces D hD B hB η hη
     let C : ℝ := 2+2*(min a (1-a)-theta/2)
     let s1 : ℝ := max 1 (max (3*(B:ℝ)) (max (4*L*(B:ℝ)/η)
       (max (16/(3*δ)) (C*(B:ℝ)/(theta/2)))))
@@ -112,14 +110,58 @@ theorem exists_unique_shape_with_travel
         (fun v : Lattice => ∃ t : ℝ, 0≤t ∧ t≤1 ∧
           |(v.1:ℝ)-((u.1:ℝ)+t*(d.1:ℝ))|+
           |(v.2:ℝ)-((u.2:ℝ)+t*(d.2:ℝ))|≤δ*s)
-    · obtain ⟨_hm,_hb,_hfm,hprob⟩ := hpieces s u d hb.2.1 hd hdD
+    · obtain ⟨_hm,_hb,_hfm,hprob⟩ := hpieces_at_scale s u d hb.2.1 hd hdD
       apply hprob.trans
       apply measureReal_mono ?_ (measure_ne_top _ _)
       rintro ω ⟨paths,hpaths⟩
       exact hassembly B hB s η δ u d hinter hcut hloss htube ω paths
         (fun j => (hpaths j).2)
-  · intro f hf
-    exact (hunique f ⟨hf.1,hf.2.1,hf.2.2.1,hf.2.2.2.1⟩).trans
-      (hunique g ⟨hg.1,hg.2.1,hg.2.2.1,hg.2.2.2.1⟩).symm
+  · rintro f ⟨⟨hfcont, hfhom, hfconc, hfapp⟩, -⟩
+    have hf := (LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mp hfapp
+    exact (hunique f ⟨hfcont, hfhom, hfconc, hf⟩).trans
+      (hunique g ⟨hcont, hhom, hconc, happ⟩).symm
+
+/-- The travel estimate with the four shape clauses and a positive approximation threshold,
+as in the literal form of `lem:travel`. -/
+theorem exists_unique_shape_with_travel
+    (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (hneg : ∃ p : ℝ, 1 < p ∧
+      (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ p) ∂μ) < ∞)
+    (hpos : (∫⁻ t in Ioi (0 : ℝ), (μ (Ioi t)) ^ (1 / 2 : ℝ)) < ∞) :
+    ∃! g : Quadrant → ℝ,
+      Continuous g ∧
+      (∀ (c : ℝ≥0) (x : Quadrant), g (c*x.1,c*x.2) = (c:ℝ)*g x) ∧
+      (∀ (x y : Quadrant) (r t : ℝ≥0), r+t=1 →
+        (r:ℝ)*g x+(t:ℝ)*g y ≤ g (r*x.1+t*y.1,r*x.2+t*y.2)) ∧
+      (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0 < ε →
+        ∃ N : ℕ, 1 ≤ N ∧ ∀ d : ℕ × ℕ, N ≤ d.1+d.2 →
+          |lastPassage ω 0 d-g ((d.1:ℝ≥0),(d.2:ℝ≥0))| ≤
+            ε*((d.1+d.2:ℕ):ℝ)) ∧
+      (∀ (a : ℝ), 0<a → a<1 → ∀ (D : ℝ), 1≤D →
+        ∀ (theta : ℝ), 0<theta → theta<min a (1-a) →
+        ∀ (η δ : ℝ), 0<η → 0<δ →
+        ∃ s1 : ℝ, 1≤s1 ∧ ∃ p : ℝ → ℝ,
+          (∀ s, 0≤p s ∧ p s≤1) ∧ Tendsto p atTop (𝓝 1) ∧
+          ∀ (s : ℝ) (u : Lattice) (d : ℕ × ℕ), s1≤s →
+            s≤((d.1+d.2:ℕ):ℝ) → ((d.1+d.2:ℕ):ℝ)≤D*s →
+            |(1-a)*(d.1:ℝ)-a*(d.2:ℝ)| ≤
+              (min a (1-a)-theta)*((d.1:ℝ)+(d.2:ℝ)) →
+            MeasurableSet {ω : Environment | ∃ q : Path u d,
+              g ((d.1:ℝ≥0),(d.2:ℝ≥0))-η*s ≤ pathWeight ω q ∧
+              ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
+                |((q.vertex i).1:ℝ)-((u.1:ℝ)+t*(d.1:ℝ))|+
+                |((q.vertex i).2:ℝ)-((u.2:ℝ)+t*(d.2:ℝ))|≤δ*s} ∧
+            p s ≤ (environmentLaw μ).real {ω : Environment | ∃ q : Path u d,
+              g ((d.1:ℝ≥0),(d.2:ℝ≥0))-η*s ≤ pathWeight ω q ∧
+              ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
+                |((q.vertex i).1:ℝ)-((u.1:ℝ)+t*(d.1:ℝ))|+
+                |((q.vertex i).2:ℝ)-((u.2:ℝ)+t*(d.2:ℝ))|≤δ*s}) := by
+  obtain ⟨g, ⟨⟨hcont, hhom, hconc, happ⟩, hpaths⟩, hunique⟩ :=
+    exists_unique_shape_with_travel_estimate μ hneg hpos
+  refine ⟨g, ⟨hcont, hhom, hconc, ?_, hpaths⟩, ?_⟩
+  · exact (LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mp happ
+  · rintro f ⟨hfcont, hfhom, hfconc, hfapp, hfpaths⟩
+    exact hunique f ⟨⟨hfcont, hfhom, hfconc,
+      (LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mpr hfapp⟩, hfpaths⟩
 
 end LPPDifferentiability

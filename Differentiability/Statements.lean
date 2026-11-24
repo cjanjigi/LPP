@@ -8,25 +8,21 @@ module
 public import LPP_Foundations.Statements.ShapeDefinitions
 public import Martin2004.Statements.ShapeFacts
 public import Differentiability.Frozen.Main.Differentiability
+public import Differentiability.Paper.MainProof
 
 /-!
-# The differentiability theorem, in two versions
+# The main theorem of the differentiability paper
 
-Theorem 2.1 of the differentiability preprint: for an i.i.d. environment whose weight law `μ` is not
-a point mass, has a finite moment of some order above `1` for the negative part and of some order
-above `4` for the positive part, the shape function of last-passage percolation exists, is unique,
-and is differentiable at every point of the open quadrant.
+The paper supplies the shape function of last-passage percolation by Martin's shape theorem.
+Theorem 2.1 (`thm:main`) then proves that this shape function is differentiable at every point
+of the relative interior of the unit segment, equivalently throughout the open quadrant.
 
-* Version A (`literal_shape_exists_unique_and_differentiable`): the statement
-  `LPPDifferentiability.exists_unique_shape_differentiable_full` of the `Frozen` folder, copied
-  verbatim (the only change is a leading underscore on the names of hypotheses that the statement
-  does not use, to keep the unused-variable linter quiet).
-* Version B (`plain_shape_exists_unique_and_differentiable`): the statement in the form of the
-  paper, written with the named definitions of `ShapeDefinitions`: there is exactly one shape
-  function, and it is differentiable.
-* `plain_shape_exists_unique_and_differentiable_iff_literal`: the two versions are equivalent.
-* `shape_exists_unique_and_differentiable`: version B with ordinary binders, with the label
-  `Differentiability.theorem_2_1` as an alias.
+* `shape_differentiable_on_unit_segment` states Theorem 2.1 for a supplied shape.
+* `LPPDifferentiability.Paper.differentiable_on_unit_segment_iff_open_quadrant` states the
+  equivalence by homogeneity.
+* `shape_exists_unique_and_differentiable` combines Martin's shape theorem with Theorem 2.1.
+  `theorem_2_1` is its existing alias. The joint result is available in equivalent literal and
+  named forms for the frozen and comparator interfaces.
 
 ## References
 
@@ -43,7 +39,11 @@ open scoped NNReal ENNReal Topology Pointwise
 
 namespace LPPStatements.Differentiability
 
-/-- Version A of Theorem 2.1 of the differentiability preprint: the statement
+/-- Theorem 2.1 (`thm:main`) of the differentiability paper for a supplied last-passage shape. -/
+alias shape_differentiable_on_unit_segment :=
+  LPPDifferentiability.Paper.shape_differentiable_on_unit_segment
+
+/-- The literal form of the joint shape and differentiability theorem. This is the statement
 `LPPDifferentiability.exists_unique_shape_differentiable_full` of the `Frozen` folder, as a
 proposition, with no named definitions. -/
 def literal_shape_exists_unique_and_differentiable : Prop :=
@@ -68,26 +68,22 @@ def literal_shape_exists_unique_and_differentiable : Prop :=
       (∀ x : ℝ × ℝ, 0 < x.1 → 0 < x.2 →
         DifferentiableAt ℝ (quadrantExtension g) x)
 
-/-- The theorem of the `Frozen` folder proves version A. -/
+/-- The frozen theorem proves the literal joint shape and differentiability statement. -/
 theorem literal_shape_exists_unique_and_differentiable_holds :
     literal_shape_exists_unique_and_differentiable :=
   LPPDifferentiability.exists_unique_shape_differentiable_full
 
-/-- Version B of Theorem 2.1 of the differentiability preprint, in plain language and in the form
-of the paper: if the weight law is not a point mass (assumption A1), the negative part has a finite
-moment above order `1` (A2) and the positive part has a finite moment above order `4` (A3), then
-there is exactly one shape function, and it is differentiable on the open quadrant. -/
+/-- The joint shape and differentiability statement using the named shape predicate. Under
+(A1)–(A3) there is exactly one shape function and it is differentiable on the open quadrant. -/
 def plain_shape_exists_unique_and_differentiable : Prop :=
   ∀ (μ : Measure ℝ) [IsProbabilityMeasure μ],
     NotAPointMass μ → HasNegativePartMomentAbove μ 1 → HasPositivePartMomentAbove μ 4 →
       (∃! g : Quadrant → ℝ, IsShapeFunction μ g) ∧
         ∀ g : Quadrant → ℝ, IsShapeFunction μ g → DifferentiableOnOpenQuadrant g
 
-/-- Versions A and B state the same thing. Version A asks for exactly one function that is a shape
-function and is differentiable; shape functions are unique on their own (`isShapeFunction_unique`),
-so this is the same as exactly one shape function, all of whose members are differentiable. The
-named shape function is a block of four clauses in front of the differentiability clause, so the
-proof also reassociates the conjunction. -/
+/-- The named and literal joint statements are equivalent by uniqueness of the shape function.
+The named shape predicate collects the four clauses that precede differentiability in the
+literal statement. -/
 theorem plain_shape_exists_unique_and_differentiable_iff_literal :
     plain_shape_exists_unique_and_differentiable ↔
       literal_shape_exists_unique_and_differentiable := by
@@ -97,7 +93,7 @@ theorem plain_shape_exists_unique_and_differentiable_iff_literal :
   · intro h μ _ hμ hneg hpos
     exact (shapeFunction_form_iff μ _).mpr (h μ hμ hneg hpos)
 
-/-- Differentiability paper, Theorem 2.1 (`thm:main`).
+/-- The shape theorem and Theorem 2.1 (`thm:main`) of the differentiability paper, combined.
 
 Let `μ` be the law of i.i.d. real site weights, not a point mass (A1), with `E[(w⁻)^q] < ∞` for
 some `q > 1` (A2) and `E[(w⁺)^q] < ∞` for some `q > 4` (A3). Then the shape function exists and is
@@ -115,7 +111,7 @@ theorem shape_exists_unique_and_differentiable (μ : Measure ℝ) [IsProbability
   plain_shape_exists_unique_and_differentiable_iff_literal.mpr
     literal_shape_exists_unique_and_differentiable_holds μ hμ hneg hpos
 
-/-- The paper label of `shape_exists_unique_and_differentiable`. -/
+/-- The existing alias for the combined shape theorem and Theorem 2.1 (`thm:main`). -/
 alias theorem_2_1 := shape_exists_unique_and_differentiable
 
 end LPPStatements.Differentiability

@@ -26,7 +26,7 @@ namespace LPPDifferentiability
 theorem finite_threshold_mask_factor_mass_pos {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) (i : I) :
+      (finiteThresholdMaskCube T b)) (i : I) :
     0 < μ {y : ℝ | if b i then y < -T else -T ≤ y} := by
   rw [finite_threshold_mask_cube_measure μ T hT b] at hC
   exact bot_lt_iff_ne_bot.mpr
@@ -42,7 +42,7 @@ theorem finite_threshold_mask_factor_mass_lt_top
 theorem isProbabilityMeasure_finite_threshold_mask_factor {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) (i : I) :
+      (finiteThresholdMaskCube T b)) (i : I) :
     IsProbabilityMeasure
       ((μ {y : ℝ | if b i then y < -T else -T ≤ y})⁻¹ •
         μ.restrict {y : ℝ | if b i then y < -T else -T ≤ y}) := by
@@ -55,12 +55,12 @@ theorem isProbabilityMeasure_finite_threshold_mask_factor {I : Type*} [Fintype I
 theorem isProbabilityMeasure_finite_threshold_mask_normalized {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (_hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) :
+      (finiteThresholdMaskCube T b)) :
     IsProbabilityMeasure
       (((Measure.pi (fun _ : I => μ))
-          {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+          (finiteThresholdMaskCube T b))⁻¹ •
         (Measure.pi (fun _ : I => μ)).restrict
-          {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) := by
+          (finiteThresholdMaskCube T b)) := by
   constructor
   rw [Measure.smul_apply, Measure.restrict_apply_univ, smul_eq_mul]
   exact ENNReal.inv_mul_cancel hC.ne' (measure_ne_top _ _)
@@ -69,11 +69,11 @@ theorem isProbabilityMeasure_finite_threshold_mask_normalized {I : Type*} [Finty
 theorem finite_threshold_mask_normalized_eq_pi {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) :
+      (finiteThresholdMaskCube T b)) :
     ((Measure.pi (fun _ : I => μ))
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+        (finiteThresholdMaskCube T b))⁻¹ •
       (Measure.pi (fun _ : I => μ)).restrict
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i} =
+        (finiteThresholdMaskCube T b) =
       Measure.pi (fun i =>
         (μ {y : ℝ | if b i then y < -T else -T ≤ y})⁻¹ •
           μ.restrict {y : ℝ | if b i then y < -T else -T ≤ y}) := by
@@ -91,7 +91,7 @@ theorem finite_threshold_mask_cube_measure_zero_of_factor_zero {I : Type*} [Fint
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (i : I) (hi : μ {y : ℝ | if b i then y < -T else -T ≤ y} = 0) :
     (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ j, if b j then x j < -T else -T ≤ x j} = 0 := by
+      (finiteThresholdMaskCube T b) = 0 := by
   rw [finite_threshold_mask_cube_measure μ T hT b]
   exact Finset.prod_eq_zero (Finset.mem_univ i) hi
 

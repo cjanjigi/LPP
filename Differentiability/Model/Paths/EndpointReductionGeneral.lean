@@ -5,6 +5,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 -/
 module
 
+public import Differentiability.Model.Paths.DefectAlgebra
 public import Differentiability.Model.StairTrim
 public import Differentiability.Model.Paths.GridEntranceExitPoints
 public import Differentiability.Model.Paths.GreedyAttachmentSequence
@@ -27,32 +28,12 @@ public section
 
 namespace LPPDifferentiability
 
-/-- The defect of a path for the slope `sl`, with its displacement read off the type. -/
-private noncomputable def dfc (ω : Environment) (a G0 sl : ℝ) {u : Lattice} {d : ℕ × ℕ}
-    (p : Path u d) : ℝ :=
-  G0 * ((d.1 : ℝ) + (d.2 : ℝ)) + sl * ((1 - a) * (d.1 : ℝ) - a * (d.2 : ℝ)) - pathWeight ω p
-
-/-- Defect is additive when a path is split at a vertex. -/
-private theorem dfc_split (ω : Environment) (a G0 sl : ℝ) {u : Lattice} {d : ℕ × ℕ}
-    (p : Path u d) (k : Fin (d.1 + d.2 + 1)) :
-    dfc ω a G0 sl p = dfc ω a G0 sl (p.prefixPath k) + dfc ω a G0 sl (p.suffix k) := by
-  have hle := p.splitDisplacement_le k
-  have h1 : (((d - p.splitDisplacement k).1 : ℕ) : ℝ) =
-      (d.1 : ℝ) - ((p.splitDisplacement k).1 : ℝ) := by
-    rw [Prod.fst_sub]; exact Nat.cast_sub hle.1
-  have h2 : (((d - p.splitDisplacement k).2 : ℕ) : ℝ) =
-      (d.2 : ℝ) - ((p.splitDisplacement k).2 : ℝ) := by
-    rw [Prod.snd_sub]; exact Nat.cast_sub hle.2
-  unfold dfc
-  rw [pathWeight_split ω p k, h1, h2]
-  ring
-
 /-- On a path whose vertices lie in `Q`, where the weights are at most `t`, the defect for a slope
 of absolute value at most `K` is at least `-n (|G₀| + K + t)`, `n` the number of steps. -/
-private theorem dfc_lower (ω : Environment) (a G0 sl K t : ℝ) (Q : Set Lattice)
+private theorem support_defect_lower_bound (ω : Environment) (a G0 sl K t : ℝ) (Q : Set Lattice)
     (ha0 : 0 < a) (ha1 : a < 1) (hsl : |sl| ≤ K) (hω : ∀ z ∈ Q, ω z ≤ t)
     {u : Lattice} {d : ℕ × ℕ} (p : Path u d) (hp : ∀ i, p.vertex i ∈ Q) :
-    -(((d.1 : ℝ) + (d.2 : ℝ)) * (|G0| + K + t)) ≤ dfc ω a G0 sl p := by
+    -(((d.1 : ℝ) + (d.2 : ℝ)) * (|G0| + K + t)) ≤ Path.supportDefect a G0 sl ω p := by
   have hw : pathWeight ω p ≤ ((d.1 : ℝ) + (d.2 : ℝ)) * t := by
     unfold pathWeight
     calc ∑ i : Fin (d.1 + d.2), ω (p.vertex i.castSucc)
@@ -74,7 +55,7 @@ private theorem dfc_lower (ω : Environment) (a G0 sl K t : ℝ) (Q : Set Lattic
   have hg : -(|G0| * ((d.1 : ℝ) + (d.2 : ℝ))) ≤ G0 * ((d.1 : ℝ) + (d.2 : ℝ)) := by
     have := mul_le_mul_of_nonneg_right (neg_abs_le G0) (add_nonneg hd1 hd2)
     linarith
-  unfold dfc
+  simp only [Path.supportDefect, supportingFunctional, transverseCoordinate]
   linarith
 
 /-- Every vertex of a prefix is a vertex of the path. -/
@@ -94,7 +75,9 @@ private theorem split_three (ω : Environment) (a G0 sl : ℝ) {u : Lattice} {d 
     (p : Path u d) (i0 i1 : Fin (d.1 + d.2 + 1)) (h : i0.val ≤ i1.val) :
     ∃ w : Lattice, w = p.vertex i1 ∧ ∃ (dP dM dT : ℕ × ℕ) (P : Path u dP)
       (M : Path (p.vertex i0) dM) (T : Path w dT),
-      dfc ω a G0 sl p = dfc ω a G0 sl P + dfc ω a G0 sl M + dfc ω a G0 sl T ∧
+      Path.supportDefect a G0 sl ω p =
+        Path.supportDefect a G0 sl ω P + Path.supportDefect a G0 sl ω M +
+          Path.supportDefect a G0 sl ω T ∧
       p.vertex i0 + ((dM.1 : ℤ), (dM.2 : ℤ)) = w ∧
       dP.1 + dP.2 = i0.val ∧ dT.1 + dT.2 = d.1 + d.2 - i1.val ∧
       (∀ i, ∃ j, P.vertex i = p.vertex j) ∧ (∀ i, ∃ j, M.vertex i = p.vertex j) ∧
@@ -117,7 +100,8 @@ private theorem split_three (ω : Environment) (a G0 sl : ℝ) {u : Lattice} {d 
   have hT := (p.suffix i0).suffix_length jj
   refine ⟨(p.suffix i0).vertex jj, hv, _, _, _, p.prefixPath i0, (p.suffix i0).prefixPath jj,
     (p.suffix i0).suffix jj, ?_, hmid.symm, hsd, ?_, fun i => prefix_vertex p i0 i, ?_, ?_⟩
-  · rw [dfc_split ω a G0 sl p i0, dfc_split ω a G0 sl (p.suffix i0) jj]
+  · rw [Path.path_support_defect_split a G0 sl ω p i0,
+      Path.path_support_defect_split a G0 sl ω (p.suffix i0) jj]
     ring
   · have := i1.isLt
     omega
@@ -185,11 +169,9 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
         z₁ = gb u (u.1 + u.2 - (I + ((2 ^ (M - 4 * j - 1) : ℕ) : ℤ))).toNat →
       ∃ (D : ℕ × ℕ) (y : Path z₀ D),
         z₀ + ((D.1 : ℤ), (D.2 : ℤ)) = z₁ ∧
-        G0 * ((D.1 : ℝ) + (D.2 : ℝ)) + dl * ((1 - a) * (D.1 : ℝ) - a * (D.2 : ℝ)) -
-            pathWeight ω y ≤
+        Path.supportDefect a G0 dl ω y ≤
           c1 * ((j : ℝ) ^ 2 * ((2 ^ (k - j) : ℕ) : ℝ)) + 2 * (ε / 512 * 2 ^ k / (k : ℝ)) ∧
-        G0 * ((D.1 : ℝ) + (D.2 : ℝ)) + dr * ((1 - a) * (D.1 : ℝ) - a * (D.2 : ℝ)) -
-            pathWeight ω y ≤
+        Path.supportDefect a G0 dr ω y ≤
           c1 * ((j : ℝ) ^ 2 * ((2 ^ (k - j) : ℕ) : ℝ)) + 2 * (ε / 512 * 2 ^ k / (k : ℝ)) ∧
         ∀ i, |(1 - a) * ((y.vertex i).1 : ℝ) - a * ((y.vertex i).2 : ℝ) -
             ((1 - a) * (u.1 : ℝ) - a * (u.2 : ℝ))| ≤
@@ -203,11 +185,9 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
         z₁ = gf u (I + ((2 ^ (M - 4 * j - 1) : ℕ) : ℤ) - (u.1 + u.2)).toNat →
       ∃ (D : ℕ × ℕ) (y : Path z₀ D),
         z₀ + ((D.1 : ℤ), (D.2 : ℤ)) = z₁ ∧
-        G0 * ((D.1 : ℝ) + (D.2 : ℝ)) + dl * ((1 - a) * (D.1 : ℝ) - a * (D.2 : ℝ)) -
-            pathWeight ω y ≤
+        Path.supportDefect a G0 dl ω y ≤
           c1 * ((j : ℝ) ^ 2 * ((2 ^ (k - j) : ℕ) : ℝ)) + 2 * (ε / 512 * 2 ^ k / (k : ℝ)) ∧
-        G0 * ((D.1 : ℝ) + (D.2 : ℝ)) + dr * ((1 - a) * (D.1 : ℝ) - a * (D.2 : ℝ)) -
-            pathWeight ω y ≤
+        Path.supportDefect a G0 dr ω y ≤
           c1 * ((j : ℝ) ^ 2 * ((2 ^ (k - j) : ℕ) : ℝ)) + 2 * (ε / 512 * 2 ^ k / (k : ℝ)) ∧
         ∀ i, |(1 - a) * ((y.vertex i).1 : ℝ) - a * ((y.vertex i).2 : ℝ) -
             ((1 - a) * (u.1 : ℝ) - a * (u.2 : ℝ))| ≤
@@ -215,10 +195,7 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
   (∃ (u : Lattice) (e : ℕ × ℕ) (q : Path u e),
     (∀ i, |((q.vertex i).1 : ℝ) + ((q.vertex i).2 : ℝ)| ≤ A * 2 ^ M ∧
       |(1 - a) * ((q.vertex i).1 : ℝ) - a * ((q.vertex i).2 : ℝ)| ≤ R * 2 ^ k) ∧
-    min (G0 * ((e.1 : ℝ) + (e.2 : ℝ)) + dl * ((1 - a) * (e.1 : ℝ) - a * (e.2 : ℝ)) -
-        pathWeight ω q)
-      (G0 * ((e.1 : ℝ) + (e.2 : ℝ)) + dr * ((1 - a) * (e.1 : ℝ) - a * (e.2 : ℝ)) -
-        pathWeight ω q) < -(ε * 2 ^ k)) →
+    Path.minimumSupportDefect a G0 dl dr ω q < -(ε * 2 ^ k)) →
   ∃ p : ℤ × ℤ, (((2 ^ (M - 4 * J - 1) : ℕ) : ℤ) ∣ p.1 ∧ |(p.1 : ℝ)| ≤ (A + 4) * 2 ^ M) ∧
     (((2 ^ (M - 4 * J - 1) : ℕ) : ℤ) ∣ p.2 ∧ |(p.2 : ℝ)| ≤ (A + 4) * 2 ^ M) ∧
     2 * ((2 ^ (M - 4 * J - 1) : ℕ) : ℤ) ≤ p.2 - p.1 ∧
@@ -227,8 +204,7 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
     ∃ q : Path u e,
       (∀ i, |(1 - a) * ((q.vertex i).1 : ℝ) - a * ((q.vertex i).2 : ℝ)| ≤
         (R + 2 * c1) * 2 ^ k) ∧
-      G0 * ((e.1 : ℝ) + (e.2 : ℝ)) + sl * ((1 - a) * (e.1 : ℝ) - a * (e.2 : ℝ)) -
-        pathWeight ω q < -(ε / 2 * 2 ^ k) := by
+      Path.supportDefect a G0 sl ω q < -(ε / 2 * 2 ^ k) := by
   intro θ₁ reach reachBack Ntr _W0 L r0 _D1 _d0 _c0 _collar _Egeo gf gb ha0 ha1 hm1 hK1 hc1 hε hJ1
     hJ hjk hk hJε hdl hdr hscal hQ hE hω hgrid hev
   have hr0 : r0 = K1 * (2 * L + 1) + Ntr := rfl
@@ -251,7 +227,8 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
     have h1 := (hreg i).1
     push_cast
     exact h1
-  obtain ⟨sl, hsl, hxd⟩ : ∃ sl : ℝ, (sl = dr ∨ sl = dl) ∧ dfc ω a G0 sl x < -(ε * 2 ^ k) := by
+  obtain ⟨sl, hsl, hxd⟩ :
+      ∃ sl : ℝ, (sl = dr ∨ sl = dl) ∧ Path.supportDefect a G0 sl ω x < -(ε * 2 ^ k) := by
     rcases min_lt_iff.1 hmin with h | h
     · exact ⟨dl, Or.inr rfl, h⟩
     · exact ⟨dr, Or.inl rfl, h⟩
@@ -264,9 +241,9 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
   have hscal' : 2 * (r0 : ℝ) * Bd ≤ ε * 2 ^ k / 64 := by rw [hBd]; linarith
   have hlowQ : ∀ {u' : Lattice} {d' : ℕ × ℕ} (q : Path u' d'),
       (∀ i, ∃ j, q.vertex i = x.vertex j) →
-      -(((d'.1 : ℝ) + (d'.2 : ℝ)) * Bd) ≤ dfc ω a G0 sl q := fun q hq => by
+      -(((d'.1 : ℝ) + (d'.2 : ℝ)) * Bd) ≤ Path.supportDefect a G0 sl ω q := fun q hq => by
     rw [hBd]
-    exact dfc_lower ω a G0 sl K _ Q ha0 ha1 hKs hω q (fun i => by
+    exact support_defect_lower_bound ω a G0 sl K _ Q ha0 ha1 hKs hω q (fun i => by
       obtain ⟨j, hj⟩ := hq i
       rw [hj]
       exact hxQ j)
@@ -309,7 +286,7 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
   have hnT : ((dT.1 : ℝ) + (dT.2 : ℝ)) ≤ r0 := by
     have : dT.1 + dT.2 ≤ r0 := by omega
     exact_mod_cast this
-  have hMd : dfc ω a G0 sl xM < -(ε * 2 ^ k) + ε * 2 ^ k / 64 := by
+  have hMd : Path.supportDefect a G0 sl ω xM < -(ε * 2 ^ k) + ε * 2 ^ k / 64 := by
     have h1 := mul_le_mul_of_nonneg_right hnP hBd0
     have h2 := mul_le_mul_of_nonneg_right hnT hBd0
     have hP := hlowQ xP hPv
@@ -395,7 +372,7 @@ theorem endpoint_pair_of_mem_general (ω : Environment) (a G0 dl dr K c1 A R ε 
         have h2 := abs_le.1 (hreg i1).2
         rw [abs_le]; constructor <;> linarith
   refine ⟨(Im, Ip), ⟨hdv1, hb1⟩, ⟨hdv2, hb2⟩, hgap, sl, hsl, z, hzl, E2, hlen, x2, hvert, ?_⟩
-  unfold dfc at hMd
+  simp only [Path.supportDefect, supportingFunctional, transverseCoordinate] at hMd ⊢
   linarith
 
 end LPPDifferentiability

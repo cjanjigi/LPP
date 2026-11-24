@@ -29,6 +29,14 @@ noncomputable abbrev transverseCoordinate (t : ℝ) (z : ℝ × ℝ) : ℝ :=
 noncomputable abbrev latticeTransverseCoordinate (t : ℝ) (z : Lattice) : ℝ :=
   transverseCoordinate t ((z.1 : ℝ), (z.2 : ℝ))
 
+/-- The transverse coordinate of a displacement is the difference of the endpoint coordinates. -/
+theorem latticeTransverseCoordinate_sub (a : ℝ) (z w : Lattice) :
+    latticeTransverseCoordinate a (z - w) =
+      latticeTransverseCoordinate a z - latticeTransverseCoordinate a w := by
+  simp only [latticeTransverseCoordinate, transverseCoordinate, Prod.fst_sub, Prod.snd_sub,
+    Int.cast_sub]
+  ring
+
 /-- The supporting functional with value `G` in direction `(t, 1 - t)` and
 profile slope `slope`. Use the left or right slope for the corresponding extreme. -/
 noncomputable abbrev supportingFunctional (t G slope : ℝ) (z : ℝ × ℝ) : ℝ :=

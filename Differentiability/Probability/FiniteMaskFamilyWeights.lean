@@ -48,7 +48,7 @@ theorem finite_mask_family_weight_failure_le
   classical
   let P := Measure.pi (fun _ : I => μ)
   let mask := fun x : I → ℝ => fun i => if x i < -T then true else false
-  let C := fun a : I → Bool => {x : I → ℝ | ∀ i, if a i then x i < -T else -T ≤ x i}
+  let C (a : I → Bool) := finiteThresholdMaskCube T a
   let c : ℝ := ∫ y, max (-y) 0 ∂μ
   let R := (2 * n * (∫ y, (max (-y) 0) ^ p ∂μ) * b ^ (-p)) ^ K +
     Real.exp (-t ^ 2 / (2 * b * (2 * c * n + t / 3)))

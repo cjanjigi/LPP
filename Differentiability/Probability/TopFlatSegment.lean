@@ -36,7 +36,8 @@ The proof has four ingredients:
 
 ## Main results
 
-- `gtop_flat_segment_route_h`: the description of the flat segment of the top shape.
+- `top_shape_flat_segment_of_expected_edge_rates`: the description of the flat segment of
+  the top shape.
 
 ## References
 
@@ -69,10 +70,11 @@ is below `1` at every `(t, 1 - t)` with `t` in `[0, 1]`. If `β` is the greatest
 `t` lies in `[1 - β, β]`.
 
 This is the flat-segment description in the flat-edge theorem of Georgiou, Rassoul-Agha and
-Seppäläinen (manuscript in preparation). The proof combines the strict bound beyond the edge,
-the existence of a value-one direction at or beyond the edge speed, the shape adapters
-(swap symmetry, axis value, bound by the level) and `symmetric_flat_interval`. -/
-theorem gtop_flat_segment_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
+Seppäläinen, cited in Theorem `thm:flat-top` of the differentiability paper. The proof
+combines the strict bound beyond the edge, the existence of a value-one direction at or beyond
+the edge speed, the shape adapters (swap symmetry, axis value, bound by the level) and
+`symmetric_flat_interval`. -/
+theorem top_shape_flat_segment_of_expected_edge_rates (ν : Measure ℝ) [IsProbabilityMeasure ν]
     (hp₀ : 0 < ν {1}) (hp₁ : ν {1} < 1)
     (gtop : Quadrant → ℝ) (htcont : Continuous gtop)
     (hthom : ∀ (c : ℝ≥0) (x : Quadrant), gtop (c * x.1, c * x.2) = (c : ℝ) * gtop x)
@@ -209,5 +211,8 @@ theorem gtop_flat_segment_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
       have h := hbc t ht
       rw [hbeq, hf t] at h
       exact h
+
+/-- Compatibility name for `top_shape_flat_segment_of_expected_edge_rates`. -/
+alias gtop_flat_segment_route_h := top_shape_flat_segment_of_expected_edge_rates
 
 end LPPDifferentiability

@@ -14,6 +14,34 @@ public section
 
 namespace LPPDifferentiability
 
+/-- The deterministic trial centre in `eq:rhonu`, rounding half-integers upward. -/
+@[expose] noncomputable def coarseCrossingCentre (a h w : ℝ) (I : ℤ) (m ν : ℕ) : Lattice :=
+  let L : ℤ := I + (m : ℤ)
+  let x : ℤ := ⌊h * w + 30 * (ν : ℝ) * w + a * (L : ℝ) + (1 / 2 : ℝ)⌋
+  (x, L - x)
+
+/-- The rounded trial centre has the level and transverse error of `eq:rhonu`. -/
+theorem coarse_crossing_centre_spec (a h w : ℝ) (I : ℤ) (m ν : ℕ) :
+    let c := coarseCrossingCentre a h w I m ν
+    c.1 + c.2 = I + (m : ℤ) ∧
+      |(1 - a) * (c.1 : ℝ) - a * (c.2 : ℝ) - (h * w + 30 * (ν : ℝ) * w)| ≤ 1 / 2 := by
+  intro c
+  let L : ℤ := I + (m : ℤ)
+  let target : ℝ := h * w + 30 * (ν : ℝ) * w
+  let x : ℤ := ⌊target + a * (L : ℝ) + (1 / 2 : ℝ)⌋
+  change x + (L - x) = L ∧
+    |(1 - a) * (x : ℝ) - a * ((L - x : ℤ) : ℝ) - target| ≤ 1 / 2
+  constructor
+  · omega
+  · have hlow := Int.floor_le (target + a * (L : ℝ) + (1 / 2 : ℝ))
+    have hupp := Int.lt_floor_add_one (target + a * (L : ℝ) + (1 / 2 : ℝ))
+    change (x : ℝ) ≤ target + a * (L : ℝ) + 1 / 2 at hlow
+    change target + a * (L : ℝ) + 1 / 2 < (x : ℝ) + 1 at hupp
+    push_cast
+    rw [show (1 - a) * (x : ℝ) - a * ((L : ℝ) - x) - target =
+      (x : ℝ) - (target + a * (L : ℝ)) by ring, abs_le]
+    exact ⟨by linarith, by linarith⟩
+
 /-- Rounded centers and their actual closed crossing blocks, with the source
 counting bound and pairwise disjointness. -/
 theorem exists_coarse_crossing_blocks
@@ -36,42 +64,14 @@ theorem exists_coarse_crossing_blocks
   let level0 : ℤ := I + (m : ℤ)
   let target : Fin N → ℝ := fun nu =>
     h*w + 30*((nu.val+1 : ℕ) : ℝ)*w
-  let first : Fin N → ℤ := fun nu =>
-    Int.floor (target nu + a*(level0 : ℝ) + (1/2 : ℝ))
-  let center : Fin N → Lattice := fun nu => (first nu, level0-first nu)
+  let center : Fin N → Lattice := fun nu => coarseCrossingCentre a h w I m (nu.val + 1)
 
-  have hcenterLevel (nu : Fin N) :
-      (center nu).1+(center nu).2 = I+(m:ℤ) := by
-    simp only [center]
-    omega
-  have hcenterRho (nu : Fin N) :
-      (1-a)*((center nu).1:ℝ)-a*((center nu).2:ℝ) =
-        (first nu:ℝ)-a*(level0:ℝ) := by
-    have hsum : ((center nu).1:ℝ)+((center nu).2:ℝ)=(level0:ℝ) := by
-      exact_mod_cast hcenterLevel nu
-    calc
-      _ = (center nu).1 - a*(((center nu).1:ℝ)+((center nu).2:ℝ)) := by ring
-      _ = (first nu:ℝ)-a*(level0:ℝ) := by rw [hsum]
+  have hcenterLevel (nu : Fin N) : (center nu).1+(center nu).2 = I+(m:ℤ) :=
+    (coarse_crossing_centre_spec a h w I m (nu.val + 1)).1
 
   have hcenterRound (nu : Fin N) :
-      |(1-a)*((center nu).1:ℝ)-a*((center nu).2:ℝ)-target nu| ≤ 1/2 := by
-    let x0 : ℝ := target nu + a*(level0:ℝ)
-    have hfloorLe : (first nu:ℝ) ≤ x0 + 1/2 := by
-      dsimp only [first, x0]
-      exact Int.floor_le _
-    have hfloorLt : x0 + 1/2 < (first nu:ℝ)+1 := by
-      dsimp only [first, x0]
-      exact Int.lt_floor_add_one _
-    have hup : (first nu:ℝ)-x0 ≤ 1/2 := by linarith
-    have hlo : -(1/2:ℝ) ≤ (first nu:ℝ)-x0 := by linarith
-    have hformula :
-        (1-a)*((center nu).1:ℝ)-a*((center nu).2:ℝ)-target nu =
-          (first nu:ℝ)-x0 := by
-      rw [hcenterRho]
-      dsimp only [x0]
-      ring
-    rw [hformula]
-    exact abs_le.mpr ⟨hlo,hup⟩
+      |(1-a)*((center nu).1:ℝ)-a*((center nu).2:ℝ)-target nu| ≤ 1/2 :=
+    (coarse_crossing_centre_spec a h w I m (nu.val + 1)).2
 
   let tubeExists (nu : Fin N) :=
     exists_finset_signed_level_tube a (8*w)

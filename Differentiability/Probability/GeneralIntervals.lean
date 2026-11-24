@@ -14,7 +14,7 @@ import Mathlib.Tactic
 /-!
 # Simultaneous general-weight level intervals
 
-Lemma B.2 of the differentiability preprint extends the level-interval
+The final draft's `lem:intervals-general` extends the level-interval
 connection estimate to general weights. One shape function and one success
 probability work for every deterministic pair of level intervals.
 
@@ -46,21 +46,31 @@ private theorem heavy_interval_success_function (B : ℝ) (pf pb pT : ℝ → �
     ((tendsto_const_nhds (x := (1:ℝ))).min hfull)
   simpa only [sub_self,add_zero,mul_zero,sub_zero,min_self,max_eq_right zero_le_one] using hh
 
-/-- One unique actual shape and one success function work for every deterministic
-signed pair of closed level intervals at all sufficiently large scales. -/
-theorem exists_unique_shape_with_general_intervals
+/-- The simultaneous path event of `lem:intervals`, also used by `lem:intervals-general`.
+For every pair of endpoints in the two closed level intervals, one path satisfies
+both the shape weight bound and the tube bound. -/
+@[expose] def levelIntervalConnectionEvent (g : Quadrant → ℝ)
+    (a η δ s lo hi lo' hi' : ℝ) (I J : ℤ) : Set Environment :=
+  {ω | ∀ u v : Lattice,
+    (u.1 + u.2 = I ∧ (1 - a) * (u.1 : ℝ) - a * (u.2 : ℝ) ∈ Icc lo hi) →
+    (v.1 + v.2 = J ∧ (1 - a) * (v.1 : ℝ) - a * (v.2 : ℝ) ∈ Icc lo' hi') →
+    let d := ((v.1 - u.1).toNat, (v.2 - u.2).toNat)
+    ∃ q : Path u d,
+      q.vertex (Fin.last (d.1 + d.2)) = v ∧
+      g ((d.1 : ℝ≥0), (d.2 : ℝ≥0)) - η * s ≤ pathWeight ω q ∧
+      ∀ i, ∃ t : ℝ, 0 ≤ t ∧ t ≤ 1 ∧
+        |((q.vertex i).1 : ℝ) - ((1 - t) * (u.1 : ℝ) + t * (v.1 : ℝ))| +
+        |((q.vertex i).2 : ℝ) - ((1 - t) * (u.2 : ℝ) + t * (v.2 : ℝ))| ≤ δ * s}
+
+/-- The unique shape and simultaneous level-interval connections for general weights,
+as in `lem:intervals-general` of the final draft. One probability function applies to
+all deterministic level-interval pairs at each sufficiently large scale. -/
+theorem exists_unique_shape_with_level_interval_connections
     (μ : Measure ℝ) [IsProbabilityMeasure μ]
     (hneg : ∃ p : ℝ, 1<p ∧
       (∫⁻ x, ENNReal.ofReal ((max (-x) 0)^p) ∂μ)<∞)
     (hpos : (∫⁻ t in Ioi (0:ℝ), (μ (Ioi t))^(1/2:ℝ))<∞) :
-    ∃! g : Quadrant → ℝ,
-      Continuous g ∧
-      (∀ (c : ℝ≥0) (x : Quadrant), g (c*x.1,c*x.2)=(c:ℝ)*g x) ∧
-      (∀ (x y : Quadrant) (r t : ℝ≥0), r+t=1 →
-        (r:ℝ)*g x+(t:ℝ)*g y≤g (r*x.1+t*y.1,r*x.2+t*y.2)) ∧
-      (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0<ε →
-        ∃ N : ℕ, 1≤N ∧ ∀ d : ℕ × ℕ, N≤d.1+d.2 →
-          |lastPassage ω 0 d-g ((d.1:ℝ≥0),(d.2:ℝ≥0))|≤ε*((d.1+d.2:ℕ):ℝ)) ∧
+    ∃! g : Quadrant → ℝ, LPPStatements.IsShapeFunction μ g ∧
       (∀ a : ℝ, 0<a → a<1 → ∀ D : ℝ, 1≤D →
         ∀ theta : ℝ, 0<theta → theta<min a (1-a) →
         ∀ η δ : ℝ, 0<η → 0<δ → ∃ s1 : ℝ, 1≤s1 ∧ ∃ p : ℝ → ℝ,
@@ -73,24 +83,17 @@ theorem exists_unique_shape_with_general_intervals
               (v.1+v.2=J ∧ (1-a)*(v.1:ℝ)-a*(v.2:ℝ) ∈ Icc lo' hi') →
               |(1-a)*((v.1:ℝ)-(u.1:ℝ))-a*((v.2:ℝ)-(u.2:ℝ))|≤
                 (min a (1-a)-theta)*((J-I:ℤ):ℝ)) →
-            let E : Set Environment := {ω | ∀ u v : Lattice,
-              (u.1+u.2=I ∧ (1-a)*(u.1:ℝ)-a*(u.2:ℝ) ∈ Icc lo hi) →
-              (v.1+v.2=J ∧ (1-a)*(v.1:ℝ)-a*(v.2:ℝ) ∈ Icc lo' hi') →
-              ∃ q : Path u ((v.1-u.1).toNat,(v.2-u.2).toNat),
-                q.vertex (Fin.last ((v.1-u.1).toNat+(v.2-u.2).toNat))=v ∧
-                g (((v.1-u.1).toNat:ℝ≥0),((v.2-u.2).toNat:ℝ≥0))-η*s≤pathWeight ω q ∧
-                ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
-                  |((q.vertex i).1:ℝ)-((1-t)*(u.1:ℝ)+t*(v.1:ℝ))|+
-                  |((q.vertex i).2:ℝ)-((1-t)*(u.2:ℝ)+t*(v.2:ℝ))|≤δ*s}
-            MeasurableSet E ∧ p s≤(environmentLaw μ).real E) := by
-  obtain ⟨g,hg,_hu⟩ := exists_unique_shape_with_travel μ hneg hpos
-  obtain ⟨_g0,_hg0,hunique⟩ := exists_unique_shape_of_negative_moment_and_positive_tail μ hneg hpos
+            let E := levelIntervalConnectionEvent g a η δ s lo hi lo' hi' I J
+            MeasurableSet E ∧ p s ≤ (environmentLaw μ).real E) := by
+  obtain ⟨g, ⟨hg, htravel⟩, -⟩ := exists_unique_shape_with_travel_estimate μ hneg hpos
+  obtain ⟨_, -, hunique⟩ := exists_unique_shape_of_negative_moment_and_positive_tail μ hneg hpos
   obtain ⟨p0,hp0,hmoment⟩ := hneg
-  refine ⟨g,⟨hg.1,hg.2.1,hg.2.2.1,hg.2.2.2.1,?_⟩,?_⟩
+  refine ⟨g, ⟨hg, ?_⟩, ?_⟩
   · intro a ha ha1 D hD theta ht hti η δ hη hδ
-    obtain ⟨L,hL,hcompare⟩ := attachment_shape_comparison g hg.1 hg.2.2.1 hg.2.1 a theta ha ha1 ht hti
-    obtain ⟨sT,_hsT,pT,hpT,htT,htravel⟩ :=
-      hg.2.2.2.2 a ha ha1 (2*D) (by linarith) (theta/2) (by positivity) (by linarith) (η/2) δ (by positivity) hδ
+    obtain ⟨L,hL,hcompare⟩ :=
+      attachment_shape_comparison g hg.1 hg.2.2.1 hg.2.1 a theta ha ha1 ht hti
+    obtain ⟨sT,_hsT,pT,hpT,htT,htravel_at_scale⟩ :=
+      htravel a ha ha1 (2*D) (by linarith) (theta/2) (by positivity) (by linarith) (η/2) δ (by positivity) hδ
     let C1 : ℝ := ∫ x, max (-x) 0 ∂μ
     have hC1 : 0≤C1 := integral_nonneg fun _ => le_max_right _ _
     let r : ℝ := L+C1
@@ -141,10 +144,58 @@ theorem exists_unique_shape_with_general_intervals
       (fun u => ⟨(hd₁ u).1,(hd₁ u).2.1⟩) (fun v => ⟨(hd₃ v).1,(hd₃ v).2.1⟩)
       Af Ab hAf hAb (pf s) (pb s) hpf hpb hweight₁ hweight₃
     intro u d hdlo hdhi hc
-    have hh := htravel (s/2) u d (by linarith only [hcuts.2.1]) hdlo (by convert hdhi using 1; ring) hc
-    simpa only [show (η/2)*(s/2)=η*s/4 by ring,show δ*(s/2)=δ*s/2 by ring] using hh
-  · intro f hf
-    exact (hunique f ⟨hf.1,hf.2.1,hf.2.2.1,hf.2.2.2.1⟩).trans
-      (hunique g ⟨hg.1,hg.2.1,hg.2.2.1,hg.2.2.2.1⟩).symm
+    have hh := htravel_at_scale (s/2) u d (by linarith only [hcuts.2.1]) hdlo (by convert hdhi using 1; ring) hc
+    simpa only [travelPathEvent, show (η/2)*(s/2)=η*s/4 by ring,
+      show δ*(s/2)=δ*s/2 by ring] using hh
+  · rintro f ⟨⟨hfcont, hfhom, hfconc, hfapp⟩, -⟩
+    obtain ⟨hcont, hhom, hconc, happ⟩ := hg
+    have hf := (LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mp hfapp
+    have hg := (LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mp happ
+    exact (hunique f ⟨hfcont, hfhom, hfconc, hf⟩).trans (hunique g ⟨hcont, hhom, hconc, hg⟩).symm
+
+/-- The level-interval connections of `lem:intervals-general` with the four shape clauses and a
+positive approximation threshold written out. -/
+theorem exists_unique_shape_with_general_intervals
+    (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (hneg : ∃ p : ℝ, 1<p ∧
+      (∫⁻ x, ENNReal.ofReal ((max (-x) 0)^p) ∂μ)<∞)
+    (hpos : (∫⁻ t in Ioi (0:ℝ), (μ (Ioi t))^(1/2:ℝ))<∞) :
+    ∃! g : Quadrant → ℝ,
+      Continuous g ∧
+      (∀ (c : ℝ≥0) (x : Quadrant), g (c*x.1,c*x.2)=(c:ℝ)*g x) ∧
+      (∀ (x y : Quadrant) (r t : ℝ≥0), r+t=1 →
+        (r:ℝ)*g x+(t:ℝ)*g y≤g (r*x.1+t*y.1,r*x.2+t*y.2)) ∧
+      (∀ᵐ ω ∂environmentLaw μ, ∀ ε : ℝ, 0<ε →
+        ∃ N : ℕ, 1≤N ∧ ∀ d : ℕ × ℕ, N≤d.1+d.2 →
+          |lastPassage ω 0 d-g ((d.1:ℝ≥0),(d.2:ℝ≥0))|≤ε*((d.1+d.2:ℕ):ℝ)) ∧
+      (∀ a : ℝ, 0<a → a<1 → ∀ D : ℝ, 1≤D →
+        ∀ theta : ℝ, 0<theta → theta<min a (1-a) →
+        ∀ η δ : ℝ, 0<η → 0<δ → ∃ s1 : ℝ, 1≤s1 ∧ ∃ p : ℝ → ℝ,
+          (∀ s, 0≤p s ∧ p s≤1) ∧ Tendsto p atTop (𝓝 1) ∧
+          ∀ (s : ℝ) (I J : ℤ) (lo hi lo' hi' : ℝ), s1≤s → I<J →
+            lo≤hi → lo'≤hi' → s≤((J-I:ℤ):ℝ) → ((J-I:ℤ):ℝ)≤D*s →
+            hi-lo≤D*s → hi'-lo'≤D*s →
+            (∀ u v : Lattice,
+              (u.1+u.2=I ∧ (1-a)*(u.1:ℝ)-a*(u.2:ℝ) ∈ Icc lo hi) →
+              (v.1+v.2=J ∧ (1-a)*(v.1:ℝ)-a*(v.2:ℝ) ∈ Icc lo' hi') →
+              |(1-a)*((v.1:ℝ)-(u.1:ℝ))-a*((v.2:ℝ)-(u.2:ℝ))|≤
+                (min a (1-a)-theta)*((J-I:ℤ):ℝ)) →
+            let E : Set Environment := {ω | ∀ u v : Lattice,
+              (u.1+u.2=I ∧ (1-a)*(u.1:ℝ)-a*(u.2:ℝ) ∈ Icc lo hi) →
+              (v.1+v.2=J ∧ (1-a)*(v.1:ℝ)-a*(v.2:ℝ) ∈ Icc lo' hi') →
+              ∃ q : Path u ((v.1-u.1).toNat,(v.2-u.2).toNat),
+                q.vertex (Fin.last ((v.1-u.1).toNat+(v.2-u.2).toNat))=v ∧
+                g (((v.1-u.1).toNat:ℝ≥0),((v.2-u.2).toNat:ℝ≥0))-η*s≤pathWeight ω q ∧
+                ∀ i, ∃ t : ℝ, 0≤t ∧ t≤1 ∧
+                  |((q.vertex i).1:ℝ)-((1-t)*(u.1:ℝ)+t*(v.1:ℝ))|+
+                  |((q.vertex i).2:ℝ)-((1-t)*(u.2:ℝ)+t*(v.2:ℝ))|≤δ*s}
+            MeasurableSet E ∧ p s≤(environmentLaw μ).real E) := by
+  obtain ⟨g, ⟨⟨hcont, hhom, hconc, happ⟩, hpaths⟩, hunique⟩ :=
+    exists_unique_shape_with_level_interval_connections μ hneg hpos
+  refine ⟨g, ⟨hcont, hhom, hconc, ?_, hpaths⟩, ?_⟩
+  · exact (LPPStatements.approximatesLastPassage_iff_positive_threshold μ g).mp happ
+  · rintro f ⟨hfcont, hfhom, hfconc, hfapp, hfpaths⟩
+    exact hunique f ⟨⟨hfcont, hfhom, hfconc,
+      (LPPStatements.approximatesLastPassage_iff_positive_threshold μ f).mpr hfapp⟩, hfpaths⟩
 
 end LPPDifferentiability

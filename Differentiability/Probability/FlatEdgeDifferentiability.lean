@@ -39,15 +39,15 @@ positive deviation over start points, and the supporting line of
 
 ## Main results
 
-- `gbar_differentiableAt_edge_route_h`: differentiability of the quadrant extension at the two
-  edges of the flat segment.
+- `differentiableAt_flat_segment_endpoints_of_expected_edge_rate`: differentiability of the
+  quadrant extension at the two endpoints of the flat segment.
 
 ## References
 
 - Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation), the edge-differentiability
   theorem.
 - C. Janjigian, F. Rassoul-Agha and T. Seppäläinen, *Differentiability of the shape function in
-  the planar corner growth model*, preprint, Theorem 2.2(b) and (c).
+  the planar corner growth model*, parts `flat:b` and `flat:c` of Theorem `thm:flat-top`.
 -/
 
 public section
@@ -293,13 +293,16 @@ private theorem flatEdge_goal_bound (ν : Measure ℝ) [IsProbabilityMeasure ν]
   linarith
 
 /-- **Differentiability at the edges of the flat segment** (the edge-differentiability theorem of
-Georgiou, Rassoul-Agha and Seppäläinen (manuscript in preparation); the differentiability
-preprint, Theorem 2.2(b) and (c)). Let the weights be at most `1` with `0 < ν {1} < 1` and a
-finite negative moment above one, let `g` be the shape of `ν` (continuous, homogeneous,
-concave, uniform shape law), and let `β` be the infimum of the expected half-line edge rates
-`E a_{n+1} / (n + 1)`. If `1/2 ≤ β < 1` and `g (t, 1 - t) = 1` on `[1 - β, β]`, then the
-quadrant extension of `g` is differentiable at `(β, 1 - β)` and at `(1 - β, β)`. -/
-theorem gbar_differentiableAt_edge_route_h (ν : Measure ℝ) [IsProbabilityMeasure ν]
+Georgiou, Rassoul-Agha and Seppäläinen, corresponding to the endpoint conclusions of
+parts `flat:b` and `flat:c` of Theorem `thm:flat-top` of the differentiability paper).
+Let the weights be at most `1` with `0 < ν {1} < 1` and a finite negative moment of order
+above one. Let `g` be the shape of `ν` (continuous, homogeneous, concave, uniform shape law)
+and let `β` be the infimum of the expected half-line edge rates `E a_{n+1} / (n + 1)`.
+If `1/2 ≤ β < 1` and
+`g (t, 1 - t) = 1` on `[1 - β, β]`, the quadrant extension of `g` is differentiable at
+`(β, 1 - β)` and `(1 - β, β)`. -/
+theorem differentiableAt_flat_segment_endpoints_of_expected_edge_rate
+    (ν : Measure ℝ) [IsProbabilityMeasure ν]
     (hle : ∀ᵐ t ∂ν, t ≤ 1) (hp₀ : 0 < ν {1}) (hp₁ : ν {1} < 1)
     (hneg : ∃ pneg : ℝ, 1 < pneg ∧
       (∫⁻ t, ENNReal.ofReal ((max (-t) 0) ^ pneg) ∂ν) < ∞)
@@ -408,5 +411,9 @@ theorem gbar_differentiableAt_edge_route_h (ν : Measure ℝ) [IsProbabilityMeas
     linarith
   exact differentiableAt_flat_edges_of_chord_bound g hghom hgconc hswap β hβhalf hβone hflat
     hchord
+
+/-- Compatibility name for `differentiableAt_flat_segment_endpoints_of_expected_edge_rate`. -/
+alias gbar_differentiableAt_edge_route_h :=
+  differentiableAt_flat_segment_endpoints_of_expected_edge_rate
 
 end LPPDifferentiability

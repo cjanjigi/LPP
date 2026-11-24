@@ -192,7 +192,7 @@ theorem exists_rarefast_connector_scale
       rw [hD₀def]; exact le_max_of_le_right (le_max_of_le_right (le_max_right _ _))
     rw [div_le_iff₀ hθ] at h'
     linarith
-  -- Lemma 3.2 of the differentiability preprint with `D = D₀ + 1`, `θ = θ₀/2`, `η = ε/4`,
+  -- Lemma `lem:intervals` of the differentiability preprint with `D = D₀ + 1`, `θ = θ₀/2`, `η = ε/4`,
   -- `δ = 1/2`.
   obtain ⟨s₁', -, p, hp, hpt, hall⟩ := hint a ha₀ ha₁ (D₀ + 1) (by linarith)
     (min a (1 - a) / 2) (half_pos hθ) (by linarith) (ε / 4) (1 / 2) (div_pos hε (by norm_num))

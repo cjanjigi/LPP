@@ -27,11 +27,11 @@ or at least `-T`, as the mask says), divided by the mass of that half-line. -/
 theorem finite_threshold_mask_normalized_marginal {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) (i : I) :
+      (finiteThresholdMaskCube T b)) (i : I) :
     (((Measure.pi (fun _ : I => μ))
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+        (finiteThresholdMaskCube T b))⁻¹ •
       (Measure.pi (fun _ : I => μ)).restrict
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}).map
+        (finiteThresholdMaskCube T b)).map
           (fun x : I → ℝ => x i) =
       (μ {y : ℝ | if b i then y < -T else -T ≤ y})⁻¹ •
         μ.restrict {y : ℝ | if b i then y < -T else -T ≤ y} := by
@@ -43,12 +43,12 @@ theorem finite_threshold_mask_normalized_marginal {I : Type*} [Fintype I]
 theorem finite_threshold_mask_normalized_iIndepFun {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) :
+      (finiteThresholdMaskCube T b)) :
     iIndepFun (fun i (x : I → ℝ) => x i)
       (((Measure.pi (fun _ : I => μ))
-          {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+          (finiteThresholdMaskCube T b))⁻¹ •
         (Measure.pi (fun _ : I => μ)).restrict
-          {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}) := by
+          (finiteThresholdMaskCube T b)) := by
   have (j : I) := isProbabilityMeasure_finite_threshold_mask_factor μ T hT b hC j
   rw [finite_threshold_mask_normalized_eq_pi μ T hT b hC]
   exact iIndepFun_pi (fun _ => measurable_id.aemeasurable)
@@ -58,12 +58,12 @@ theorem finite_threshold_mask_normalized_selected_map_pi
     {I J : Type*} [Fintype I] [Fintype J]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})
+      (finiteThresholdMaskCube T b))
     (f : J → I) (hf : Function.Injective f) :
     (((Measure.pi (fun _ : I => μ))
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+        (finiteThresholdMaskCube T b))⁻¹ •
       (Measure.pi (fun _ : I => μ)).restrict
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}).map
+        (finiteThresholdMaskCube T b)).map
           (fun x : I → ℝ => fun j => x (f j)) =
       Measure.pi (fun j =>
         (μ {y : ℝ | if b (f j) then y < -T else -T ≤ y})⁻¹ •
@@ -81,12 +81,12 @@ theorem finite_threshold_mask_normalized_good_selected_map_pi
     {I J : Type*} [Fintype I] [Fintype J]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (hT : 0 < T) (b : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})
+      (finiteThresholdMaskCube T b))
     (f : J → I) (hf : Function.Injective f) (hgood : ∀ j, b (f j) = false) :
     (((Measure.pi (fun _ : I => μ))
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i})⁻¹ •
+        (finiteThresholdMaskCube T b))⁻¹ •
       (Measure.pi (fun _ : I => μ)).restrict
-        {x : I → ℝ | ∀ i, if b i then x i < -T else -T ≤ x i}).map
+        (finiteThresholdMaskCube T b)).map
           (fun x : I → ℝ => fun j => x (f j)) =
       Measure.pi (fun _ : J =>
         (μ (Set.Ici (-T)))⁻¹ • μ.restrict (Set.Ici (-T))) := by

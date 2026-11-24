@@ -141,25 +141,27 @@ private theorem exists_walk {k ℓ : ℕ} (p : Path 0 (k, ℓ)) :
   · intro i
     exact (congrArg p.vertex (Fin.ext (by simp))).trans (hX (i.val + 1) (by omega)).symm
 
-open Classical in
-private theorem coarse_of_walk (O : Set Lattice) (N : ℕ) (hN : 0 < N)
-    (c₁ s δ : ℝ) (hc₁ : c₁ < 1) (k ℓ : ℕ) (hks : s * (k + ℓ) ≤ k) (hlen : 3 * N ≤ k + ℓ)
-    (X : ℕ → Lattice) (hX0 : X 0 = 0) (hXn : X (k + ℓ) = ((k : ℤ), (ℓ : ℤ)))
-    (hstep : ∀ i, i < k + ℓ → X (i + 1) = X i + (1, 0) ∨ X (i + 1) = X i + (0, 1))
-    (hp : (1 - δ) * (k + ℓ) ≤
-      ∑ i ∈ range (k + ℓ), (if X (i + 1) ∈ O then (1 : ℝ) else 0)) :
-    ∃ q : Fin ((k + ℓ) / N - 2 + 1) → ℕ × ℕ, q 0 = (0, 0) ∧
-      (∀ i : Fin ((k + ℓ) / N - 2), q i.succ = q i.castSucc + (1, 0) ∨
-        q i.succ = q i.castSucc + (0, 1)) ∧
-      ((Finset.univ.filter fun j =>
-          IsBlackBlock O N c₁ (((q j).1 : ℤ), ((q j).2 : ℤ))).card : ℝ) ≤
-        δ * (k + ℓ) + (1 - s) * (k + ℓ) / ((1 - c₁) * N) := by
-  generalize hm : (k + ℓ) / N - 2 = m
-  have hmN : (m + 2) * N ≤ k + ℓ := by
-    have h3 : 3 ≤ (k + ℓ) / N := (Nat.le_div_iff_mul_le hN).2 hlen
-    have h4 : m + 2 = (k + ℓ) / N := by omega
-    rw [h4]
-    exact Nat.div_mul_le_self _ _
+/-- The block times and floor coordinates of an up-right walk determine one coarse path.
+Both black-block estimates use this same geometric construction. -/
+private theorem coarse_walk_geometry {n : ℕ} {X : ℕ → Lattice}
+    (hX0 : X 0 = 0)
+    (hstep : ∀ i, i < n → X (i + 1) = X i + (1, 0) ∨ X (i + 1) = X i + (0, 1))
+    (N m : ℕ) (hN : 0 < N) (hmN : (m + 2) * N ≤ n) :
+    ∃ (T : ℕ → ℕ) (A : ℕ → ℤ) (q : Fin (m + 1) → ℕ × ℕ),
+      (∀ j, T j = (j + 1) * N) ∧
+      (∀ j, T (j + 1) = T j + N) ∧
+      (∀ j, N ≤ T j) ∧
+      (∀ i j, i ≤ j → T i ≤ T j) ∧
+      T (m + 1) ≤ n ∧
+      (∀ j, j ≤ m → T j ≤ n) ∧
+      (∀ i, i ≤ n → 0 ≤ (X i).1 ∧ 0 ≤ (X i).2 ∧ (X i).1 + (X i).2 = (i : ℤ)) ∧
+      (∀ j, j ≤ m → 0 ≤ A j ∧ A j ≤ j ∧ (N : ℤ) * A j ≤ (X (T j - 1)).1 ∧
+        (X (T j - 1)).1 < (N : ℤ) * A j + N) ∧
+      (∀ j : Fin (m + 1),
+        ((q j).1 : ℤ) = A j.val ∧ ((q j).2 : ℤ) = (j.val : ℤ) - A j.val) ∧
+      q 0 = (0, 0) ∧
+      (∀ i : Fin m, q i.succ = q i.castSucc + (1, 0) ∨
+        q i.succ = q i.castSucc + (0, 1)) := by
   obtain ⟨T, hT⟩ : ∃ T : ℕ → ℕ, ∀ j, T j = (j + 1) * N :=
     ⟨fun j => (j + 1) * N, fun _ => rfl⟩
   have hT1 : ∀ j, T (j + 1) = T j + N := fun j => by rw [hT, hT]; try ring
@@ -168,10 +170,10 @@ private theorem coarse_of_walk (O : Set Lattice) (N : ℕ) (hN : 0 < N)
     rw [hT]; omega
   have hTmono : ∀ i j, i ≤ j → T i ≤ T j := fun i j h => by
     rw [hT, hT]; exact Nat.mul_le_mul_right N (by omega)
-  have hTm : T (m + 1) ≤ k + ℓ := by rw [hT]; exact hmN
-  have hjT : ∀ j, j ≤ m → T j ≤ k + ℓ := fun j hj =>
+  have hTm : T (m + 1) ≤ n := by rw [hT]; exact hmN
+  have hjT : ∀ j, j ≤ m → T j ≤ n := fun j hj =>
     le_trans (hTmono j (m + 1) (by omega)) hTm
-  have hb : ∀ i, i ≤ k + ℓ → 0 ≤ (X i).1 ∧ 0 ≤ (X i).2 ∧ (X i).1 + (X i).2 = (i : ℤ) :=
+  have hb : ∀ i, i ≤ n → 0 ≤ (X i).1 ∧ 0 ≤ (X i).2 ∧ (X i).1 + (X i).2 = (i : ℤ) :=
     fun i hi => walk_basic hX0 hstep hi
   obtain ⟨A, hA⟩ : ∃ A : ℕ → ℤ, ∀ j, A j = (X (T j - 1)).1 / N :=
     ⟨fun j => (X (T j - 1)).1 / N, fun _ => rfl⟩
@@ -217,7 +219,7 @@ private theorem coarse_of_walk (O : Set Lattice) (N : ℕ) (hN : 0 < N)
     show (((A j.val).toNat : ℕ) : ℤ) = A j.val ∧
       ((j.val - (A j.val).toNat : ℕ) : ℤ) = (j.val : ℤ) - A j.val
     omega
-  refine ⟨q, ?_, ?_, ?_⟩
+  refine ⟨T, A, q, hT, hT1, hTN, hTmono, hTm, hjT, hb, hAf, hq12, ?_, ?_⟩
   · have hA0 : A ((0 : Fin (m + 1)) : ℕ) = 0 := by
       rw [Fin.val_zero]
       obtain ⟨a0, a1, -, -⟩ := hAf 0 (Nat.zero_le m)
@@ -231,6 +233,29 @@ private theorem coarse_of_walk (O : Set Lattice) (N : ℕ) (hN : 0 < N)
     obtain ⟨a0, a1, -, -⟩ := hAf i.val (by omega)
     obtain ⟨b0, b1, -, -⟩ := hAf (i.val + 1) (by omega)
     rcases hAstep i.val hi with h | h <;> omega
+
+open Classical in
+private theorem coarse_of_walk (O : Set Lattice) (N : ℕ) (hN : 0 < N)
+    (c₁ s δ : ℝ) (hc₁ : c₁ < 1) (k ℓ : ℕ) (hks : s * (k + ℓ) ≤ k) (hlen : 3 * N ≤ k + ℓ)
+    (X : ℕ → Lattice) (hX0 : X 0 = 0) (hXn : X (k + ℓ) = ((k : ℤ), (ℓ : ℤ)))
+    (hstep : ∀ i, i < k + ℓ → X (i + 1) = X i + (1, 0) ∨ X (i + 1) = X i + (0, 1))
+    (hp : (1 - δ) * (k + ℓ) ≤
+      ∑ i ∈ range (k + ℓ), (if X (i + 1) ∈ O then (1 : ℝ) else 0)) :
+    ∃ q : Fin ((k + ℓ) / N - 2 + 1) → ℕ × ℕ, q 0 = (0, 0) ∧
+      (∀ i : Fin ((k + ℓ) / N - 2), q i.succ = q i.castSucc + (1, 0) ∨
+        q i.succ = q i.castSucc + (0, 1)) ∧
+      ((Finset.univ.filter fun j =>
+          IsBlackBlock O N c₁ (((q j).1 : ℤ), ((q j).2 : ℤ))).card : ℝ) ≤
+        δ * (k + ℓ) + (1 - s) * (k + ℓ) / ((1 - c₁) * N) := by
+  generalize hm : (k + ℓ) / N - 2 = m
+  have hmN : (m + 2) * N ≤ k + ℓ := by
+    have h3 : 3 ≤ (k + ℓ) / N := (Nat.le_div_iff_mul_le hN).2 hlen
+    have h4 : m + 2 = (k + ℓ) / N := by omega
+    rw [h4]
+    exact Nat.div_mul_le_self _ _
+  obtain ⟨T, A, q, hT, hT1, hTN, hTmono, hTm, hjT, hb, hAf, hq12, hq0, hqstep⟩ :=
+    coarse_walk_geometry hX0 hstep N m hN hmN
+  refine ⟨q, hq0, hqstep, ?_⟩
   · suffices hmain : ∀ S : Finset (Fin (m + 1)),
         (∀ j, j ∈ S → IsBlackBlock O N c₁ (((q j).1 : ℤ), ((q j).2 : ℤ))) →
         (S.card : ℝ) ≤ δ * (k + ℓ) + (1 - s) * (k + ℓ) / ((1 - c₁) * N) from

@@ -181,25 +181,38 @@ private theorem disp_eq {p q : Lattice} {d : ℕ × ℕ} (h : p + ((d.1 : ℤ), 
   simp only [Prod.fst_add, Prod.snd_add] at e1 e2
   exact Prod.ext (by simp only [disp]; omega) (by simp only [disp]; omega)
 
-/-- **The staircase count (5.25), deterministic form.** All pairs (start, displacement) of the two
-attachment staircases at a coarse scale, over the bin, the `j²` blocks and every crossing
-endpoint, lie in one set of at most `2 (w + 1) j² (16 w + 2)` pairs. -/
-theorem coarse_attachment_family (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
+private theorem disp_end_of_le {u v : Lattice} (h : u ≤ v) :
+    u + (((disp u v).1 : ℤ), ((disp u v).2 : ℤ)) = v := by
+  obtain ⟨h₁, h₂⟩ := h
+  apply Prod.ext <;> simp only [disp, Prod.fst_add, Prod.snd_add] <;> omega
+
+/-- An endpoint pair for one horizontal-first staircase in `eq:staircount`. The pair consists
+of a bin site and a site in the appropriate end of one of the fixed crossing blocks, in
+the order the path traverses them. -/
+@[expose] def IsCoarseAttachmentStaircase (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
+    (c : Fin (j ^ 2) → Lattice) (p : Lattice × (ℕ × ℕ)) : Prop :=
+  let r : Lattice → ℝ := fun z => (1 - a) * (z.1 : ℝ) - a * (z.2 : ℝ)
+  let u := p.1
+  let v := u + ((p.2.1 : ℤ), (p.2.2 : ℤ))
+  let inBin := fun (L : ℤ) (z : Lattice) => z.1 + z.2 = L ∧
+    (h : ℝ) * w - 1 < r z ∧ r z < ((h : ℝ) + 1) * w
+  let inBlock := fun (L : ℤ) (z : Lattice) => ∃ ν,
+    z.1 + z.2 = L ∧ |r z - r (c ν)| ≤ 8 * (w : ℝ)
+  (inBin I u ∧ inBlock (I + (m : ℤ)) v) ∨
+    (inBlock (I + (l : ℤ) - (m : ℤ)) u ∧ inBin (I + (l : ℤ)) v)
+
+/-- Each staircase in `eq:staircount` has the attachment length. -/
+theorem isCoarseAttachmentStaircase_length {a : ℝ} {I : ℤ} {l m j w : ℕ} {h : ℤ}
+    {c : Fin (j ^ 2) → Lattice} {p : Lattice × (ℕ × ℕ)}
+    (hp : IsCoarseAttachmentStaircase a I l m j w h c p) : p.2.1 + p.2.2 = m := by
+  rcases hp with (⟨⟨hu, _, _⟩, _, hv, _⟩ | ⟨⟨_, hu, _⟩, hv, _, _⟩) <;>
+    simp only [Prod.fst_add, Prod.snd_add] at hv <;> omega
+
+/-- The source attachment family in `eq:staircount` is finite and satisfies its size bound. -/
+theorem coarse_attachment_staircases (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
     (c : Fin (j ^ 2) → Lattice) :
     ∃ F : Finset (Lattice × (ℕ × ℕ)), F.card ≤ 2 * (w + 1) * j ^ 2 * (16 * w + 2) ∧
-      ∀ (ρ : ℝ), (h : ℝ) * w ≤ ρ → ρ < ((h : ℝ) + 1) * w →
-        ∀ (z₀ z₁ u u' : Lattice) (d₁ d₂ : ℕ × ℕ) (ν : Fin (j ^ 2)),
-        (z₀.1 + z₀.2 = I ∧ ρ - 1 < (1 - a) * (z₀.1 : ℝ) - a * (z₀.2 : ℝ) ∧
-          (1 - a) * (z₀.1 : ℝ) - a * (z₀.2 : ℝ) ≤ ρ) →
-        (z₁.1 + z₁.2 = I + (l : ℤ) ∧ ρ - 1 < (1 - a) * (z₁.1 : ℝ) - a * (z₁.2 : ℝ) ∧
-          (1 - a) * (z₁.1 : ℝ) - a * (z₁.2 : ℝ) ≤ ρ) →
-        u.1 + u.2 = I + (m : ℤ) → u'.1 + u'.2 = I + (l : ℤ) - (m : ℤ) →
-        |(1 - a) * (u.1 : ℝ) - a * (u.2 : ℝ) -
-          ((1 - a) * ((c ν).1 : ℝ) - a * ((c ν).2 : ℝ))| ≤ 8 * (w : ℝ) →
-        |(1 - a) * (u'.1 : ℝ) - a * (u'.2 : ℝ) -
-          ((1 - a) * ((c ν).1 : ℝ) - a * ((c ν).2 : ℝ))| ≤ 8 * (w : ℝ) →
-        z₀ + ((d₁.1 : ℤ), (d₁.2 : ℤ)) = u → u' + ((d₂.1 : ℤ), (d₂.2 : ℤ)) = z₁ →
-        (z₀, d₁) ∈ F ∧ (u', d₂) ∈ F := by
+      ∀ p, p ∈ F ↔ IsCoarseAttachmentStaircase a I l m j w h c p := by
   classical
   have hw0 : (0 : ℝ) ≤ w := Nat.cast_nonneg w
   obtain ⟨Z0, hZ0c, hZ0⟩ := level_points_open a I ((h : ℝ) * w - 1) (w + 1)
@@ -230,8 +243,10 @@ theorem coarse_attachment_family (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
       _ ≤ ∑ _ν : Fin (j ^ 2), (16 * w + 2) :=
           Finset.sum_le_sum fun ν _ => by have := hV ν; omega
       _ = j ^ 2 * (16 * w + 2) := by simp
-  refine ⟨(Z0 ×ˢ Ub).image (fun p => (p.1, disp p.1 p.2)) ∪
-    (Ub' ×ˢ Z1).image (fun p => (p.1, disp p.1 p.2)), ?_, ?_⟩
+  let entry := (Z0 ×ˢ Ub).filter (fun p => p.1 ≤ p.2)
+  let exit := (Ub' ×ˢ Z1).filter (fun p => p.1 ≤ p.2)
+  let index := fun p : Lattice × Lattice => (p.1, disp p.1 p.2)
+  refine ⟨entry.image index ∪ exit.image index, ?_, ?_⟩
   · refine (Finset.card_union_le _ _).trans ?_
     have h1 : (Z0 ×ˢ Ub).card ≤ (w + 1) * (j ^ 2 * (16 * w + 2)) := by
       rw [Finset.card_product]
@@ -239,21 +254,87 @@ theorem coarse_attachment_family (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
     have h2 : (Ub' ×ˢ Z1).card ≤ (j ^ 2 * (16 * w + 2)) * (w + 1) := by
       rw [Finset.card_product]
       exact Nat.mul_le_mul (hUbc U' hU'card) (by omega)
-    have h3 := Finset.card_image_le (s := Z0 ×ˢ Ub) (f := fun p => (p.1, disp p.1 p.2))
-    have h4 := Finset.card_image_le (s := Ub' ×ˢ Z1) (f := fun p => (p.1, disp p.1 p.2))
+    have h3 := (Finset.card_image_le (s := entry) (f := index)).trans (Finset.card_filter_le _ _)
+    have h4 := (Finset.card_image_le (s := exit) (f := index)).trans (Finset.card_filter_le _ _)
     calc _ ≤ (w + 1) * (j ^ 2 * (16 * w + 2)) + (j ^ 2 * (16 * w + 2)) * (w + 1) := by omega
       _ = 2 * (w + 1) * j ^ 2 * (16 * w + 2) := by ring
-  · intro ρ hρ1 hρ2 z₀ z₁ u u' d₁ d₂ ν hz₀ hz₁ hu hu' hru hru' hd₁ hd₂
-    obtain ⟨hz₀l, hz₀a, hz₀b⟩ := hz₀
-    obtain ⟨hz₁l, hz₁a, hz₁b⟩ := hz₁
-    have hz₀m : z₀ ∈ Z0 := (hZ0 z₀).2 ⟨hz₀l, by linarith, by push_cast; linarith⟩
-    have hz₁m : z₁ ∈ Z1 := (hZ1 z₁).2 ⟨hz₁l, by linarith, by push_cast; linarith⟩
-    have hum : u ∈ Ub := Finset.mem_biUnion.2 ⟨ν, Finset.mem_univ _, (hU ν u).2 ⟨hu, hru⟩⟩
-    have hum' : u' ∈ Ub' := Finset.mem_biUnion.2 ⟨ν, Finset.mem_univ _, (hU' ν u').2 ⟨hu', hru'⟩⟩
+  · rintro ⟨u, d⟩
+    have hbinEnd : (h : ℝ) * w - 1 + ((w + 1 : ℕ) : ℝ) = ((h : ℝ) + 1) * w := by
+      push_cast
+      ring
+    let r : Lattice → ℝ := fun z => (1 - a) * (z.1 : ℝ) - a * (z.2 : ℝ)
+    let inBin := fun (L : ℤ) (z : Lattice) => z.1 + z.2 = L ∧
+      (h : ℝ) * w - 1 < r z ∧ r z < ((h : ℝ) + 1) * w
+    let inBlock := fun (L : ℤ) (z : Lattice) => ∃ ν,
+      z.1 + z.2 = L ∧ |r z - r (c ν)| ≤ 8 * (w : ℝ)
+    have hzStart (z : Lattice) : z ∈ Z0 ↔ inBin I z := by
+      simpa only [inBin, r, hbinEnd] using hZ0 z
+    have hzEnd (z : Lattice) : z ∈ Z1 ↔ inBin (I + (l : ℤ)) z := by
+      simpa only [inBin, r, hbinEnd] using hZ1 z
+    have huStart (z : Lattice) : z ∈ Ub ↔ inBlock (I + (m : ℤ)) z := by
+      simp only [Ub, inBlock, r, Finset.mem_biUnion, Finset.mem_univ, true_and, hU]
+    have huEnd (z : Lattice) : z ∈ Ub' ↔ inBlock (I + (l : ℤ) - (m : ℤ)) z := by
+      simp only [Ub', inBlock, r, Finset.mem_biUnion, Finset.mem_univ, true_and, hU']
+    let v := u + ((d.1 : ℤ), (d.2 : ℤ))
+    change (u, d) ∈ entry.image index ∪ exit.image index ↔
+      (inBin I u ∧ inBlock (I + (m : ℤ)) v) ∨
+        (inBlock (I + (l : ℤ) - (m : ℤ)) u ∧ inBin (I + (l : ℤ)) v)
+    simp only [entry, exit, Finset.mem_union, Finset.mem_image, Finset.mem_filter,
+      Finset.mem_product, hzStart, hzEnd, huStart, huEnd]
     constructor
-    · refine Finset.mem_union_left _ (Finset.mem_image.2 ⟨(z₀, u), Finset.mem_product.2 ⟨hz₀m, hum⟩, ?_⟩)
-      simp only [disp_eq hd₁]
-    · refine Finset.mem_union_right _ (Finset.mem_image.2 ⟨(u', z₁), Finset.mem_product.2 ⟨hum', hz₁m⟩, ?_⟩)
-      simp only [disp_eq hd₂]
+    · rintro (⟨⟨x, y⟩, ⟨hxy, hle⟩, hp⟩ | ⟨⟨x, y⟩, ⟨hxy, hle⟩, hp⟩)
+      · have hx : x = u := congrArg Prod.fst hp
+        have hd : disp x y = d := congrArg Prod.snd hp
+        have hy := disp_end_of_le (u := x) (v := y) hle
+        rw [hd, hx] at hy
+        have hyv : v = y := hy
+        rw [hx] at hxy
+        exact Or.inl ⟨hxy.1, by rw [hyv]; exact hxy.2⟩
+      · have hx : x = u := congrArg Prod.fst hp
+        have hd : disp x y = d := congrArg Prod.snd hp
+        have hy := disp_end_of_le (u := x) (v := y) hle
+        rw [hd, hx] at hy
+        have hyv : v = y := hy
+        rw [hx] at hxy
+        exact Or.inr ⟨hxy.1, by rw [hyv]; exact hxy.2⟩
+    · have hle : u ≤ v := by
+        change u.1 ≤ u.1 + (d.1 : ℤ) ∧ u.2 ≤ u.2 + (d.2 : ℤ)
+        omega
+      have hi : index (u, v) = (u, d) := by
+        change (u, disp u v) = (u, d)
+        rw [disp_eq (show u + ((d.1 : ℤ), (d.2 : ℤ)) = v from rfl)]
+      rintro (h | h)
+      · exact Or.inl ⟨(u, v), ⟨h, hle⟩, hi⟩
+      · exact Or.inr ⟨(u, v), ⟨h, hle⟩, hi⟩
+
+/-- Every attachment used by a coarse connection belongs to the counted family of
+`eq:staircount`. -/
+theorem coarse_attachment_family (a : ℝ) (I : ℤ) (l m j w : ℕ) (h : ℤ)
+    (c : Fin (j ^ 2) → Lattice) :
+    ∃ F : Finset (Lattice × (ℕ × ℕ)), F.card ≤ 2 * (w + 1) * j ^ 2 * (16 * w + 2) ∧
+      ∀ (ρ : ℝ), (h : ℝ) * w ≤ ρ → ρ < ((h : ℝ) + 1) * w →
+        ∀ (z₀ z₁ u u' : Lattice) (d₁ d₂ : ℕ × ℕ) (ν : Fin (j ^ 2)),
+        (z₀.1 + z₀.2 = I ∧ ρ - 1 < (1 - a) * (z₀.1 : ℝ) - a * (z₀.2 : ℝ) ∧
+          (1 - a) * (z₀.1 : ℝ) - a * (z₀.2 : ℝ) ≤ ρ) →
+        (z₁.1 + z₁.2 = I + (l : ℤ) ∧ ρ - 1 < (1 - a) * (z₁.1 : ℝ) - a * (z₁.2 : ℝ) ∧
+          (1 - a) * (z₁.1 : ℝ) - a * (z₁.2 : ℝ) ≤ ρ) →
+        u.1 + u.2 = I + (m : ℤ) → u'.1 + u'.2 = I + (l : ℤ) - (m : ℤ) →
+        |(1 - a) * (u.1 : ℝ) - a * (u.2 : ℝ) -
+          ((1 - a) * ((c ν).1 : ℝ) - a * ((c ν).2 : ℝ))| ≤ 8 * (w : ℝ) →
+        |(1 - a) * (u'.1 : ℝ) - a * (u'.2 : ℝ) -
+          ((1 - a) * ((c ν).1 : ℝ) - a * ((c ν).2 : ℝ))| ≤ 8 * (w : ℝ) →
+        z₀ + ((d₁.1 : ℤ), (d₁.2 : ℤ)) = u → u' + ((d₂.1 : ℤ), (d₂.2 : ℤ)) = z₁ →
+        (z₀, d₁) ∈ F ∧ (u', d₂) ∈ F := by
+  obtain ⟨F, hcard, hmem⟩ := coarse_attachment_staircases a I l m j w h c
+  refine ⟨F, hcard, fun ρ hρ₁ hρ₂ z₀ z₁ u u' d₁ d₂ ν hz₀ hz₁ hu hu' hru hru' hd₁ hd₂ => ?_⟩
+  obtain ⟨hz₀l, hz₀a, hz₀b⟩ := hz₀
+  obtain ⟨hz₁l, hz₁a, hz₁b⟩ := hz₁
+  constructor
+  · apply (hmem _).2
+    simp only [IsCoarseAttachmentStaircase, hd₁]
+    exact Or.inl ⟨⟨hz₀l, by linarith, by linarith⟩, ν, hu, hru⟩
+  · apply (hmem _).2
+    simp only [IsCoarseAttachmentStaircase, hd₂]
+    exact Or.inr ⟨⟨ν, hu', hru'⟩, hz₁l, by linarith, by linarith⟩
 
 end LPPDifferentiability

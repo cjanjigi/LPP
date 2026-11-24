@@ -22,7 +22,7 @@ import Mathlib.Tactic.Linarith
 /-!
 # Restricted Boolean path-count maximum
 
-The finite, fixed-endpoint maximum used for the top-site count.
+The finite, fixed-endpoint maximum used to bound the top-site count in `lem:tilt`.
 The maximum is taken over actual paths that keep every vertex in the given
 finite region; its count uses only the collected nonterminal sites.
 -/
@@ -33,37 +33,42 @@ open scoped BigOperators
 
 namespace LPPDifferentiability
 
+/-- A path with specified endpoints whose vertices, including its terminal vertex, lie in `R`. -/
+abbrev PathInRegion (u : Lattice) (d : ℕ × ℕ) (R : Finset Lattice) :=
+  {p : Path u d // ∀ j, p.vertex j ∈ R}
+
+open Classical in
+/-- The number of marked sites collected by the path. The terminal vertex is excluded. -/
+noncomputable abbrev PathInRegion.countMarkedSites {u : Lattice} {d : ℕ × ℕ} {R : Finset Lattice}
+    (p : PathInRegion u d R) (x : {z : Lattice // z ∈ R} → Bool) : ℕ :=
+  (p.val.collectedSites.filter (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
+
+open Classical in
+/-- The maximum marked-site count over paths with the given endpoints inside `R`, as a real
+number. The value is zero when there is no eligible path. -/
+noncomputable abbrev restrictedPathMarkedCountMaximum (u : Lattice) (d : ℕ × ℕ) (R : Finset Lattice)
+    (x : {z : Lattice // z ∈ R} → Bool) : ℝ :=
+  (↑((Finset.univ : Finset (PathInRegion u d R)).sup (fun p => p.countMarkedSites x)) : ℝ)
+
 open Classical in
 private theorem restrictedPathCountMaximum_core (u : Lattice) (d : ℕ × ℕ)
     (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
-    let extended : (I → Bool) → Environment := fun x z =>
+    let F := restrictedPathMarkedCountMaximum u d R
+    let extended : ({z : Lattice // z ∈ R} → Bool) → Environment := fun x z =>
       if hz : z ∈ R then if x ⟨z, hz⟩ then (1 : ℝ) else 0 else 0
     Measurable F ∧
       (∀ x, 0 ≤ F x) ∧
       (∀ x, F x ≤ (d.1 + d.2 : ℕ)) ∧
       (∀ x i b, |F (Function.update x i b) - F x| ≤ 1) ∧
       (∀ x b, 0 ≤ b →
-        (F x > b ↔ ∃ p : Eligible, b < (count p x : ℝ))) ∧
+        (F x > b ↔ ∃ p : PathInRegion u d R, b < (p.countMarkedSites x : ℝ))) ∧
       (∀ x, F x ≤ lastPassage (extended x) u d) := by
   classical
   let I : Type := {z : Lattice // z ∈ R}
-  let Eligible : Type :=
-    {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
+  let Eligible := PathInRegion u d R
   let P : Finset Eligible := Finset.univ
-  let count : Eligible → (I → Bool) → ℕ := fun p x =>
-    (p.val.collectedSites.filter
-      (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-  let F : (I → Bool) → ℝ := fun x =>
-    (↑(P.sup (fun p => count p x)) : ℝ)
+  let count (p : Eligible) (x : I → Bool) := PathInRegion.countMarkedSites p x
+  let F := restrictedPathMarkedCountMaximum u d R
   let extended : (I → Bool) → Environment := fun x z =>
     if hz : z ∈ R then if x ⟨z, hz⟩ then (1 : ℝ) else 0 else 0
   change Measurable F ∧
@@ -113,7 +118,7 @@ private theorem restrictedPathCountMaximum_core (u : Lattice) (d : ℕ × ℕ)
         _ ≤ A.card + ({i.1} : Finset Lattice).card :=
           Finset.card_union_le A ({i.1} : Finset Lattice)
         _ = A.card + 1 := by simp
-    simpa [A, B, count] using hcard
+    simpa [A, B, count, PathInRegion.countMarkedSites] using hcard
   have hupdate_back (x : I → Bool) (i : I) (b : Bool) :
       Function.update (Function.update x i b) i (x i) = x := by
     funext j
@@ -215,10 +220,8 @@ private theorem restrictedPathCountMaximum_core (u : Lattice) (d : ℕ × ℕ)
             ∑ z ∈ p.val.collectedSites,
               if (if hz : z ∈ R then x ⟨z, hz⟩ = true else False)
               then (1 : ℝ) else 0 := by
-        rw [show count p x =
-            (p.val.collectedSites.filter
-              (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card from rfl]
-        rw [Finset.card_filter]
+        change (PathInRegion.countMarkedSites p x : ℝ) = _
+        rw [PathInRegion.countMarkedSites, Finset.card_filter]
         simp only [Nat.cast_sum, Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
       calc
         pathWeight (extended x) p.val =
@@ -249,95 +252,45 @@ private theorem restrictedPathCountMaximum_core (u : Lattice) (d : ℕ × ℕ)
       rw [hzero]
       exact hpassage_nonneg
 
-open Classical in
+/-- The maximum count is measurable on the finite space of Boolean marks. -/
 theorem restrictedPathCountMaximum_measurable (u : Lattice) (d : ℕ × ℕ)
-    (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
-    Measurable F := (restrictedPathCountMaximum_core u d R).1
+    (R : Finset Lattice) : Measurable (restrictedPathMarkedCountMaximum u d R) :=
+  (restrictedPathCountMaximum_core u d R).1
 
-open Classical in
+/-- The maximum count is nonnegative, including when there are no eligible paths. -/
 theorem restrictedPathCountMaximum_nonneg (u : Lattice) (d : ℕ × ℕ)
-    (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
-    ∀ x, 0 ≤ F x := (restrictedPathCountMaximum_core u d R).2.1
+    (R : Finset Lattice) : ∀ x, 0 ≤ restrictedPathMarkedCountMaximum u d R x :=
+  (restrictedPathCountMaximum_core u d R).2.1
 
-open Classical in
+/-- The maximum is at most the common length of the paths. -/
 theorem restrictedPathCountMaximum_le_length (u : Lattice) (d : ℕ × ℕ)
-    (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
-    ∀ x, F x ≤ (d.1 + d.2 : ℕ) :=
+    (R : Finset Lattice) : ∀ x, restrictedPathMarkedCountMaximum u d R x ≤ (d.1 + d.2 : ℕ) :=
   (restrictedPathCountMaximum_core u d R).2.2.1
 
 open Classical in
+/-- Flipping a site's mark changes the maximum count by at most one. -/
 theorem restrictedPathCountMaximum_update_abs_le (u : Lattice) (d : ℕ × ℕ)
     (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
+    let F := restrictedPathMarkedCountMaximum u d R
     ∀ x i b, |F (Function.update x i b) - F x| ≤ 1 :=
   (restrictedPathCountMaximum_core u d R).2.2.2.1
 
-open Classical in
+/-- A nonnegative threshold is exceeded exactly when some path in the region exceeds it. -/
 theorem restrictedPathCountMaximum_gt_iff (u : Lattice) (d : ℕ × ℕ)
     (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
     ∀ x b, 0 ≤ b →
-      (F x > b ↔ ∃ p : Eligible, b < (count p x : ℝ)) :=
+      (restrictedPathMarkedCountMaximum u d R x > b ↔
+        ∃ p : PathInRegion u d R, b < (p.countMarkedSites x : ℝ)) :=
   (restrictedPathCountMaximum_core u d R).2.2.2.2.1
 
 open Classical in
+/-- Extending the Boolean weights by zero outside the region makes the unrestricted last-passage
+value at least the restricted maximum count. -/
 theorem restrictedPathCountMaximum_le_lastPassage (u : Lattice) (d : ℕ × ℕ)
     (R : Finset Lattice) :
-    let I : Type := {z : Lattice // z ∈ R}
-    let Eligible : Type :=
-      {p : Path u d // ∀ j : Fin (d.1 + d.2 + 1), p.vertex j ∈ R}
-    let P : Finset Eligible := Finset.univ
-    let count : Eligible → (I → Bool) → ℕ := fun p x =>
-      (p.val.collectedSites.filter
-        (fun z => if hz : z ∈ R then x ⟨z, hz⟩ = true else False)).card
-    let F : (I → Bool) → ℝ := fun x =>
-      (↑(P.sup (fun p => count p x)) : ℝ)
-    let extended : (I → Bool) → Environment := fun x z =>
+    let extended : ({z : Lattice // z ∈ R} → Bool) → Environment := fun x z =>
       if hz : z ∈ R then if x ⟨z, hz⟩ then (1 : ℝ) else 0 else 0
-    ∀ x, F x ≤ lastPassage (extended x) u d :=
+    ∀ x, restrictedPathMarkedCountMaximum u d R x ≤ lastPassage (extended x) u d :=
   (restrictedPathCountMaximum_core u d R).2.2.2.2.2
 
 end LPPDifferentiability

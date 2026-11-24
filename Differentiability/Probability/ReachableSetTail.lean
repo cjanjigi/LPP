@@ -12,6 +12,7 @@ public import LPP_Foundations.Model.Paths.HorizontalFirst
 public import LPP_Foundations.Probability.CoordinateLaw
 public import LPP_Foundations.Probability.DisjointSupportEvents
 public import Differentiability.Probability.FiniteContourFamilyBadEvent
+import Differentiability.FinalDraft.StairGeometry.Reach
 import Mathlib.Tactic
 
 /-!
@@ -28,14 +29,12 @@ open MeasureTheory ProbabilityTheory
 namespace LPPDifferentiability
 
 /-- The forward reachable set, as in the statements below. -/
-private def reachSet (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
-  {y | ∃ (d : ℕ × ℕ) (q : Path z d), z + ((d.1 : ℤ), (d.2 : ℤ)) = y ∧
-    ∀ i : Fin (d.1 + d.2 + 1), i.val < d.1 + d.2 → -T ≤ ω (q.vertex i)}
+private abbrev reachSet (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
+  StairGeometry.reachSet ω T z
 
 /-- The backward reachable set, as in the statements below. -/
-private def reachBackSet (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
-  {y | ∃ (d : ℕ × ℕ) (q : Path y d), y + ((d.1 : ℤ), (d.2 : ℤ)) = z ∧
-    ∀ i : Fin (d.1 + d.2 + 1), i.val < d.1 + d.2 → -T ≤ ω (q.vertex i)}
+private abbrev reachBackSet (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
+  StairGeometry.reachBackSet ω T z
 
 private theorem vertex_mem_reach {ω : Environment} {T : ℝ} {z : Lattice} {d : ℕ × ℕ}
     (q : Path z d) (hg : ∀ i : Fin (d.1 + d.2 + 1), i.val < d.1 + d.2 → -T ≤ ω (q.vertex i))
@@ -47,20 +46,8 @@ private theorem vertex_mem_reach {ω : Environment} {T : ℝ} {z : Lattice} {d :
 
 private theorem reach_step {ω : Environment} {T : ℝ} {z y : Lattice} (hy : y ∈ reachSet ω T z)
     (hg : -T ≤ ω y) (e : ℕ × ℕ) (he : e = (1, 0) ∨ e = (0, 1)) :
-    y + ((e.1 : ℤ), (e.2 : ℤ)) ∈ reachSet ω T z := by
-  obtain ⟨d, q, rfl, hq⟩ := hy
-  have he1 : e.1 + e.2 = 1 := by rcases he with rfl | rfl <;> rfl
-  refine ⟨d + e, q.concat (horizontalFirst _ e), ?_, fun i hi => ?_⟩
-  · apply Prod.ext <;> simp [add_assoc]
-  · have hle : i.val ≤ d.1 + d.2 := by simp only [Prod.fst_add, Prod.snd_add] at hi; omega
-    have hv : (q.concat (horizontalFirst _ e)).vertex i = q.vertex ⟨i.val, by omega⟩ :=
-      Path.concat_vertex_left q (horizontalFirst _ e) ⟨i.val, by omega⟩
-    rw [hv]
-    by_cases h : i.val < d.1 + d.2
-    · exact hq ⟨i.val, by omega⟩ h
-    · have : (⟨i.val, by omega⟩ : Fin (d.1 + d.2 + 1)) = Fin.last _ := Fin.ext (by simp; omega)
-      rw [this, q.finish]
-      exact hg
+    y + ((e.1 : ℤ), (e.2 : ℤ)) ∈ reachSet ω T z :=
+  StairGeometry.reach_step hy hg e he
 
 private theorem reach_pred {ω : Environment} {T : ℝ} {z y : Lattice} (hy : y ∈ reachSet ω T z)
     (hne : y ≠ z) : ∃ e : ℕ × ℕ, (e = (1, 0) ∨ e = (0, 1)) ∧
@@ -100,21 +87,8 @@ private theorem vertex_mem_reachBack {ω : Environment} {T : ℝ} {z y : Lattice
 private theorem reachBack_step {ω : Environment} {T : ℝ} {z y : Lattice}
     (e : ℕ × ℕ) (he : e = (1, 0) ∨ e = (0, 1))
     (hy : y + ((e.1 : ℤ), (e.2 : ℤ)) ∈ reachBackSet ω T z) (hg : -T ≤ ω y) :
-    y ∈ reachBackSet ω T z := by
-  obtain ⟨d, q, hz, hq⟩ := hy
-  have he1 : e.1 + e.2 = 1 := by rcases he with rfl | rfl <;> rfl
-  refine ⟨e + d, (horizontalFirst y e).concat q, ?_, fun i hi => ?_⟩
-  · rw [← hz]; apply Prod.ext <;> simp [add_assoc]
-  · by_cases h0 : i.val = 0
-    · have : i = 0 := Fin.ext h0
-      rw [this, ((horizontalFirst y e).concat q).start]
-      exact hg
-    · simp only [Prod.fst_add, Prod.snd_add] at hi
-      have hi' : i = ⟨e.1 + e.2 + (i.val - 1), by simp only [Prod.fst_add, Prod.snd_add]; omega⟩ :=
-        Fin.ext (by show i.val = e.1 + e.2 + (i.val - 1); omega)
-      have hv := Path.concat_vertex_right (horizontalFirst y e) q ⟨i.val - 1, by omega⟩
-      rw [(congrArg ((horizontalFirst y e).concat q).vertex hi').trans hv]
-      exact hq ⟨i.val - 1, by omega⟩ (by show i.val - 1 < _; omega)
+    y ∈ reachBackSet ω T z :=
+  StairGeometry.reachBack_step e he hy hg
 
 private theorem reachBack_succ {ω : Environment} {T : ℝ} {z y : Lattice}
     (hy : y ∈ reachBackSet ω T z) (hne : y ≠ z) : ∃ e : ℕ × ℕ, (e = (1, 0) ∨ e = (0, 1)) ∧

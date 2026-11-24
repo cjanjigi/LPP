@@ -5,9 +5,11 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 -/
 module
 
+public import Differentiability.FinalDraft.StairGeometry.Event
 public import Differentiability.Probability.ClusterSizeTail
 public import Differentiability.Probability.NegativeThresholdMass
 public import Differentiability.Probability.ReachableSetTail
+import Differentiability.FinalDraft.StairGeometry.ContourTail
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Order.Filter.AtTopBot.Archimedean
 import Mathlib.Tactic
@@ -24,13 +26,9 @@ open scoped ENNReal
 
 namespace LPPDifferentiability
 
-private def reachS (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
-  {y | ∃ (d : ℕ × ℕ) (q : Path z d), z + ((d.1 : ℤ), (d.2 : ℤ)) = y ∧
-    ∀ i : Fin (d.1 + d.2 + 1), i.val < d.1 + d.2 → -T ≤ ω (q.vertex i)}
+private abbrev reachS := StairGeometry.reachSet
 
-private def reachBackS (ω : Environment) (T : ℝ) (z : Lattice) : Set Lattice :=
-  {y | ∃ (d : ℕ × ℕ) (q : Path y d), y + ((d.1 : ℤ), (d.2 : ℤ)) = z ∧
-    ∀ i : Fin (d.1 + d.2 + 1), i.val < d.1 + d.2 → -T ≤ ω (q.vertex i)}
+private abbrev reachBackS := StairGeometry.reachBackSet
 
 private def collarS (Q : Set Lattice) (c : ℕ) : Set Lattice :=
   {z | ∃ y ∈ Q, |z.1 - y.1| + |z.2 - y.2| ≤ (c : ℤ)}
@@ -39,10 +37,10 @@ private def boxS (a ℓ r : ℝ) : Set Lattice :=
   {z | |((z.1 + z.2 : ℤ) : ℝ)| ≤ ℓ ∧ |(1 - a) * (z.1 : ℝ) - a * (z.2 : ℝ)| ≤ r}
 
 private abbrev bigReach (m1 : ℕ) (ω : Environment) (T : ℝ) (z : Lattice) : Prop :=
-  (m1 : ℝ) ^ 2 ≤ ((reachS ω T z).ncard : ℝ) ∧ (reachS ω T z).Finite
+  m1 ^ 2 ≤ (reachS ω T z).ncard ∧ (reachS ω T z).Finite
 
 private abbrev bigBack (m1 : ℕ) (ω : Environment) (T : ℝ) (z : Lattice) : Prop :=
-  (m1 : ℝ) ^ 2 ≤ ((reachBackS ω T z).ncard : ℝ) ∧ (reachBackS ω T z).Finite
+  m1 ^ 2 ≤ (reachBackS ω T z).ncard ∧ (reachBackS ω T z).Finite
 
 private def EgeoS (K1 m1 d0 c0 : ℕ) (ω : Environment) (T : ℝ) (Q : Set Lattice) : Prop :=
   (¬ ∃ f : Fin (K1 + 1) → Lattice, Function.Injective f ∧
@@ -226,30 +224,17 @@ private theorem tendsto_card_mul_rpow (C ε p' r : ℝ) (n : ℕ) (hC : 0 ≤ C)
     exact mul_le_mul hQk (Real.rpow_le_rpow (hpT0 k) hpk hr.le)
       (Real.rpow_nonneg (hpT0 k) _) (by positivity)
 
-private theorem reach_tail (m1 : ℕ) (hm1 : 1 ≤ m1) :
-    ∃ C p : ℝ, 0 < p ∧ ∀ (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (z : Lattice),
-      μ.real (Iio (-T)) ≤ p →
-        (environmentLaw μ).real {ω | bigReach m1 ω T z} ≤ C * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2) ∧
-        (environmentLaw μ).real {ω | bigBack m1 ω T z} ≤ C * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2) := by
-  obtain ⟨Cf, pf, hpf, hF⟩ := reach_large_finite_tail m1 hm1
-  obtain ⟨Cb, pb, hpb, hB⟩ := reachBack_large_finite_tail m1 hm1
-  refine ⟨max Cf Cb, min pf pb, lt_min hpf hpb, fun μ _ T z hp => ⟨?_, ?_⟩⟩
-  · exact (hF μ T z (hp.trans (min_le_left _ _))).trans
-      (mul_le_mul_of_nonneg_right (le_max_left _ _) (Real.rpow_nonneg measureReal_nonneg _))
-  · exact (hB μ T z (hp.trans (min_le_right _ _))).trans
-      (mul_le_mul_of_nonneg_right (le_max_right _ _) (Real.rpow_nonneg measureReal_nonneg _))
-
 private theorem egeo_event_le (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ)
     (K1 m1 d0 c0 : ℕ) (Q : Set Lattice) (F G : Finset Lattice)
     (hF : (F : Set Lattice) = collarS Q (c0 + m1 ^ 2)) (hG : (G : Set Lattice) = collarS Q c0)
     (Cr : ℝ)
     (hr : ∀ z : Lattice,
-      (environmentLaw μ).real {ω | bigReach m1 ω T z} ≤ Cr * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2) ∧
-      (environmentLaw μ).real {ω | bigBack m1 ω T z} ≤ Cr * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2)) :
+      (environmentLaw μ).real {ω | bigReach m1 ω T z} ≤ Cr * (μ.real (Iio (-T))) ^ m1 ∧
+      (environmentLaw μ).real {ω | bigBack m1 ω T z} ≤ Cr * (μ.real (Iio (-T))) ^ m1) :
     (environmentLaw μ).real {ω : Environment | ¬ EgeoS K1 m1 d0 c0 ω T Q} ≤
       (F.card : ℝ) * (K1.factorial : ℝ) * (2 * (d0 : ℝ) + 1) ^ (2 * K1) *
         (μ.real (Iio (-T))) ^ (K1 + 1) +
-      (G.card : ℝ) * (2 * (Cr * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2))) := by
+      (G.card : ℝ) * (2 * (Cr * (μ.real (Iio (-T))) ^ m1)) := by
   have hsub : {ω : Environment | ¬ EgeoS K1 m1 d0 c0 ω T Q} ⊆
       {ω : Environment | ∃ f : Fin (K1 + 1) → Lattice, Function.Injective f ∧
         (∀ i, f i ∈ F ∧ ω (f i) < -T) ∧
@@ -271,16 +256,16 @@ private theorem egeo_event_le (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : 
       refine Or.inr ⟨z, hzG, ?_⟩
       rcases not_and_or.mp h with h | h
       · obtain ⟨hfin, hlt⟩ := not_imp.mp h
-        exact Or.inl ⟨by exact_mod_cast not_lt.mp hlt, hfin⟩
+        exact Or.inl ⟨not_lt.mp hlt, hfin⟩
       · obtain ⟨hfin, hlt⟩ := not_imp.mp h
-        exact Or.inr ⟨by exact_mod_cast not_lt.mp hlt, hfin⟩
+        exact Or.inr ⟨not_lt.mp hlt, hfin⟩
   have h1 := environmentLaw_real_close_chain_le μ T d0 K1 F
   have h2 : (environmentLaw μ).real (⋃ z ∈ G, ({ω : Environment | bigReach m1 ω T z} ∪
       {ω : Environment | bigBack m1 ω T z})) ≤
-      (G.card : ℝ) * (2 * (Cr * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2))) := by
+      (G.card : ℝ) * (2 * (Cr * (μ.real (Iio (-T))) ^ m1)) := by
     calc _ ≤ ∑ z ∈ G, (environmentLaw μ).real ({ω : Environment | bigReach m1 ω T z} ∪
           {ω : Environment | bigBack m1 ω T z}) := measureReal_biUnion_finset_le _ _
-      _ ≤ ∑ _z ∈ G, 2 * (Cr * (μ.real (Iio (-T))) ^ ((m1 : ℝ) / 2)) :=
+      _ ≤ ∑ _z ∈ G, 2 * (Cr * (μ.real (Iio (-T))) ^ m1) :=
           Finset.sum_le_sum fun z _ => (measureReal_union_le _ _).trans
             (by linarith [(hr z).1, (hr z).2])
       _ = _ := by rw [Finset.sum_const, nsmul_eq_mul]
@@ -291,7 +276,7 @@ private theorem egeo_tendsto_aux (μ : Measure ℝ) [IsProbabilityMeasure μ] (p
     (hp' : 1 < p') (hmom : (∫⁻ x, ENNReal.ofReal ((max (-x) 0) ^ p') ∂μ) < ∞)
     (a : ℝ) (ha₀ : 0 < a) (ha₁ : a < 1) (A B ε₀ : ℝ) (hA : 0 < A) (hB : 0 < B)
     (hε₀ : 0 < ε₀) (m1 K1 K2 : ℕ) (hm1 : 1 ≤ m1) (hK2 : 1 ≤ K2) (d0 c0 : ℕ)
-    (hm1p : 40 < (m1 : ℝ) * p') (hK1p : 4 < ((K1 : ℝ) + 1) * p')
+    (hm1p : 4 < (m1 : ℝ) * p') (hK1p : 4 < ((K1 : ℝ) + 1) * p')
     (k0 : ℕ) (m : ℕ → ℕ) (hm3 : ∀ k : ℕ, k0 ≤ k → m k ≤ 3 * k) (T : ℕ → ℝ)
     (hT : ∀ k, T k = ε₀ * (2 : ℝ) ^ k / (k : ℝ) / (4 * (K2 : ℝ))) :
     Tendsto (fun k : ℕ => (environmentLaw μ).real {ω : Environment |
@@ -300,7 +285,9 @@ private theorem egeo_tendsto_aux (μ : Measure ℝ) [IsProbabilityMeasure μ] (p
   have hm1pos : (0 : ℝ) < m1 := Nat.cast_pos.mpr (by omega)
   have hK2pos : (0 : ℝ) < 4 * (K2 : ℝ) := mul_pos four_pos (Nat.cast_pos.mpr (by omega))
   have hε : 0 < ε₀ / (4 * (K2 : ℝ)) := div_pos hε₀ hK2pos
-  obtain ⟨Cr, pp, hpp, hreach⟩ := reach_tail m1 hm1
+  let Cr : ℝ := 2 * (6 : ℝ) ^ (4 * m1)
+  let pp : ℝ := (1 / 12 : ℝ) ^ 4
+  have hpp : 0 < pp := by dsimp [pp]; positivity
   obtain ⟨hfin2, C2, hC2⟩ := collarS_card_bound a A B ha₀ ha₁ hA hB m k0 hm3 (c0 + m1 ^ 2)
   obtain ⟨hfin1, C1, hC1⟩ := collarS_card_bound a A B ha₀ ha₁ hA hB m k0 hm3 c0
   choose F hF using fun k => (hfin2 k).exists_finset_coe
@@ -343,8 +330,9 @@ private theorem egeo_tendsto_aux (μ : Measure ℝ) [IsProbabilityMeasure μ] (p
     exact h.trans (mul_le_mul_of_nonneg_right hC1C (by positivity))
   have hchain := tendsto_cluster_size_tail_bound d0 K1 C (ε₀ / (4 * (K2 : ℝ))) p' hC0 hε hK1p
     (fun k => (F k).card) pT hpT0 hpTev hQF
-  have hsec := tendsto_card_mul_rpow C (ε₀ / (4 * (K2 : ℝ))) p' ((m1 : ℝ) / 2) 4 hC0 hε
-    (by positivity) (by push_cast; linarith) (fun k => (G k).card) pT hpT0 hpTev hQG
+  have hsec := tendsto_card_mul_rpow C (ε₀ / (4 * (K2 : ℝ))) p' (m1 : ℝ) 4 hC0 hε
+    hm1pos (by simpa only [Nat.cast_ofNat, mul_comm] using hm1p) (fun k => (G k).card) pT hpT0 hpTev hQG
+  simp only [Real.rpow_natCast] at hsec
   have hsum := hchain.add (hsec.const_mul (2 * Cr))
   rw [mul_zero, add_zero] at hsum
   refine squeeze_zero' (Filter.Eventually.of_forall fun k => measureReal_nonneg) ?_ hsum
@@ -352,12 +340,12 @@ private theorem egeo_tendsto_aux (μ : Measure ℝ) [IsProbabilityMeasure μ] (p
   rw [hpTdef k] at hk
   have hb := egeo_event_le μ (T k) K1 m1 d0 c0
     (boxS a ((A + 5) * (2 : ℝ) ^ m k) (B * (2 : ℝ) ^ k)) (F k) (G k) (hF k) (hG k) Cr
-    (fun z => hreach μ (T k) z hk)
+    (fun z => StairGeometry.finite_reach_tail μ (T k) z m1 hk)
   rw [← hpTdef k] at hb
   refine hb.trans (le_of_eq ?_)
   ring
 
-/-- `P(E_geo^c) → 0` on the region `Q_k` with `T = t_k / (4 K2)`. -/
+/-- Compatibility with the earlier stronger reach-tail hypothesis. -/
 theorem stair_geometry_event_tendsto (μ : Measure ℝ) [IsProbabilityMeasure μ] (p' : ℝ) (hp' : 1 < p')
     (hmom : (∫⁻ x, ENNReal.ofReal ((max (-x) 0) ^ p') ∂μ) < ∞)
     (a : ℝ) (ha₀ : 0 < a) (ha₁ : a < 1) (A B ε₀ : ℝ) (hA : 0 < A) (hB : 0 < B)
@@ -397,7 +385,49 @@ theorem stair_geometry_event_tendsto (μ : Measure ℝ) [IsProbabilityMeasure μ
   intro _ _ _ _ _ _ _ _ d0 c0 _ _ _ _
   have _ := hK1
   exact egeo_tendsto_aux μ p' hp' hmom a ha₀ ha₁ A B ε₀ hA hB hε₀ m1 K1 K2 hm1 hK2 d0 c0
-    hm1p hK1p k0 m hm3 (fun k : ℕ => ε₀ * (2 : ℝ) ^ k / (k : ℝ) / (4 * (K2 : ℝ)))
+    ((by norm_num : (4 : ℝ) < 40).trans hm1p) hK1p k0 m hm3 (fun k : ℕ => ε₀ * (2 : ℝ) ^ k / (k : ℝ) / (4 * (K2 : ℝ)))
     (fun _ => rfl)
+
+/-- The final-draft geometry event tends to hold on the actual working region along the
+record scales, for every choice of the source parameters. Final draft, Lemma `lem:stair-geometry`. -/
+theorem stair_geometry_event_tendsto_final (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (p' : ℝ) (hp' : 1 < p') (hmom : (∫⁻ x, ENNReal.ofReal ((max (-x) 0) ^ p') ∂μ) < ∞)
+    (a : ℝ) (ha₀ : 0 < a) (ha₁ : a < 1) (A R C₁ ε₀ ρ : ℝ)
+    (hA : 0 < A) (hR : 0 < R) (hC₁ : 0 ≤ C₁) (hε₀ : 0 < ε₀) (_hρ : 1 ≤ ρ)
+    (K₁ K₂ K₃ : ℕ) (_hK₁ : 1 ≤ K₁) (hK₂ : 1 ≤ K₂) (hK₃ : 1 ≤ K₃)
+    (hK₃p : 4 < (K₃ : ℝ) * p') (hK₁p : 4 < ((K₁ : ℝ) + 1) * p')
+    (_hK₂p : 2 * ρ + 2 < (K₂ : ℝ) * (p' - 1))
+    (k0 : ℕ) (m : ℕ → ℕ) (record : Set ℕ)
+    (hm3 : ∀ k, k0 ≤ k → k ∈ record → m k ≤ 3 * k) :
+    Tendsto (fun k : ℕ => (environmentLaw μ).real
+      (StairGeometry.goodEvent (StairGeometry.slopeCutoff a) K₁ K₃
+        (StairGeometry.threshold ε₀ K₂ k) (StairGeometry.workingRegion a A R C₁ m k))ᶜ)
+      (atTop ⊓ 𝓟 record) (𝓝 0) := by
+  classical
+  let m' (k : ℕ) := if k ∈ record then m k else 0
+  have hm' (k : ℕ) (hk : k0 ≤ k) : m' k ≤ 3 * k := by
+    by_cases hr : k ∈ record
+    · simpa only [m', hr, ite_true] using hm3 k hk hr
+    · simp [m', hr]
+  have h := egeo_tendsto_aux μ p' hp' hmom a ha₀ ha₁ A (R + 2 * C₁ + 10) ε₀ hA
+    (by positivity) hε₀ K₃ K₁ K₂ hK₃ hK₂
+    (StairGeometry.clusterRadius (StairGeometry.slopeCutoff a) K₁ K₃)
+    (StairGeometry.collarRadius (StairGeometry.slopeCutoff a) K₁ K₃)
+    hK₃p hK₁p k0 m' hm' (StairGeometry.threshold ε₀ K₂) (fun _ => rfl)
+  refine (h.mono_left inf_le_left).congr' ?_
+  filter_upwards [(eventually_mem_principal record).filter_mono inf_le_right] with k hk
+  have hmk : m' k = m k := ite_eq_left hk
+  simp only [hmk, EgeoS, StairGeometry.goodEvent, StairGeometry.noLongChain,
+    StairGeometry.collar, collarS, boxS, StairGeometry.workingRegion,
+    StairGeometry.latticeDistance, Set.compl_ofPred, Set.mem_ofPred_eq]
+
+/-- Both source collars have finitely many sites at every scale. -/
+theorem stair_working_collars_finite (a A R C₁ : ℝ) (ha₀ : 0 < a) (ha₁ : a < 1)
+    (hA : 0 < A) (hR : 0 < R) (hC₁ : 0 ≤ C₁) (m : ℕ → ℕ) (c k : ℕ) :
+    (StairGeometry.collar (StairGeometry.workingRegion a A R C₁ m k) c).Finite := by
+  apply Set.Finite.subset (boxS_finite_ncard_le a _ _
+    (show 0 ≤ (A + 5) * (2 : ℝ) ^ m k + c by positivity)
+    (show 0 ≤ (R + 2 * C₁ + 10) * (2 : ℝ) ^ k + c by positivity)).1
+  exact collarS_subset_boxS a ha₀ ha₁ _ _ c
 
 end LPPDifferentiability

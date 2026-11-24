@@ -7,6 +7,7 @@ module
 
 public import Differentiability.Model.SquareBoundaryCircuit
 public import LPP_Foundations.Model.FiniteBoxWalkCount
+import Differentiability.FinalDraft.Contour.Definitions
 import LPP_Foundations.Model.ClosedLatticeWalkCounts
 import Mathlib.Tactic
 
@@ -17,25 +18,18 @@ public section
 
 namespace LPPDifferentiability
 
-private abbrev Step (c s : Lattice) : Prop :=
-  s - c = (0, 1) ∨ s - c = (0, -1) ∨ s - c = (-1, 0) ∨ s - c = (1, 0)
-
 /-- Signed crossings of the band between rows `b` and `b + 1` by one step, at columns in `P`. -/
-private def crossTerm (b : ℤ) (P : ℤ → Prop) [DecidablePred P] (c s : Lattice) : ℤ :=
+private def signedBandCrossing (b : ℤ) (P : ℤ → Prop) [DecidablePred P] (c s : Lattice) : ℤ :=
   if c.2 = b ∧ s.2 = b + 1 ∧ P c.1 then 1 else if c.2 = b + 1 ∧ s.2 = b ∧ P c.1 then -1 else 0
 
-private def IsBdry (T : Finset Lattice) (E : Finset (Lattice × Lattice)) : Prop :=
+/-- The oriented boundary edges, with the cell set to their left. -/
+private def is_oriented_boundary_edge_set (T : Finset Lattice)
+    (E : Finset (Lattice × Lattice)) : Prop :=
   ∀ e, e ∈ E ↔ ∃ z, z ∈ T ∧
     ((e = ((z.1, z.2), (z.1 + 1, z.2)) ∧ (z.1, z.2 - 1) ∉ T) ∨
      (e = ((z.1 + 1, z.2), (z.1 + 1, z.2 + 1)) ∧ (z.1 + 1, z.2) ∉ T) ∨
      (e = ((z.1 + 1, z.2 + 1), (z.1, z.2 + 1)) ∧ (z.1, z.2 + 1) ∉ T) ∨
      (e = ((z.1, z.2 + 1), (z.1, z.2)) ∧ (z.1 - 1, z.2) ∉ T))
-
-private theorem step_cases {c s : Lattice} (h : Step c s) :
-    (s.1 = c.1 ∧ s.2 = c.2 + 1) ∨ (s.1 = c.1 ∧ s.2 = c.2 - 1) ∨
-      (s.1 = c.1 - 1 ∧ s.2 = c.2) ∨ (s.1 = c.1 + 1 ∧ s.2 = c.2) := by
-  rcases h with h | h | h | h <;> have hx := congrArg Prod.fst h <;>
-    have hy := congrArg Prod.snd h <;> simp only [Prod.fst_sub, Prod.snd_sub] at hx hy <;> omega
 
 private theorem sum_telescope_closed {m : ℕ} (v : Fin (m + 1) → Lattice)
     (hclosed : v 0 = v (Fin.last m)) (φ : Lattice → ℤ) :
@@ -46,28 +40,36 @@ private theorem sum_telescope_closed {m : ℕ} (v : Fin (m + 1) → Lattice)
   rw [Finset.sum_sub_distrib]
   omega
 
-private theorem cross_split {c s : Lattice} (hs : Step c s) (a b : ℤ) :
-    crossTerm b (fun x => a + 1 ≤ x) c s + crossTerm b (fun x => x ≤ a) c s =
+private theorem cross_split {c s : Lattice} (hs : IsDualUnitEdge (c, s)) (a b : ℤ) :
+    signedBandCrossing b (fun x => a + 1 ≤ x) c s + signedBandCrossing b (fun x => x ≤ a) c s =
       (if b + 1 ≤ s.2 then 1 else 0) - (if b + 1 ≤ c.2 then 1 else 0) := by
-  have := step_cases hs; unfold crossTerm; split_ifs <;> omega
+  have := dual_unit_edge_cases hs; unfold signedBandCrossing; split_ifs <;> omega
 
-private theorem cross_shift {c s : Lattice} (hs : Step c s) (a b : ℤ)
+private theorem cross_shift {c s : Lattice} (hs : IsDualUnitEdge (c, s)) (a b : ℤ)
     (h₁ : ¬ (c = (a + 1, b) ∧ s = (a + 1, b + 1)))
     (h₂ : ¬ (c = (a + 1, b + 1) ∧ s = (a + 1, b))) :
-    crossTerm b (fun x => a + 1 ≤ x) c s = crossTerm b (fun x => a + 1 + 1 ≤ x) c s := by
-  have := step_cases hs; simp only [Prod.ext_iff] at h₁ h₂; unfold crossTerm; split_ifs <;> omega
+    signedBandCrossing b (fun x => a + 1 ≤ x) c s =
+      signedBandCrossing b (fun x => a + 1 + 1 ≤ x) c s := by
+  have := dual_unit_edge_cases hs
+  simp only [Prod.ext_iff] at h₁ h₂
+  unfold signedBandCrossing
+  split_ifs <;> omega
 
-private theorem cross_vertical {c s : Lattice} (hs : Step c s) (a b : ℤ)
+private theorem cross_vertical {c s : Lattice} (hs : IsDualUnitEdge (c, s)) (a b : ℤ)
     (h₁ : ¬ (c = (a, b + 1) ∧ s = (a + 1, b + 1)))
     (h₂ : ¬ (c = (a + 1, b + 1) ∧ s = (a, b + 1))) :
-    crossTerm b (fun x => a + 1 ≤ x) c s - crossTerm (b + 1) (fun x => a + 1 ≤ x) c s =
+    signedBandCrossing b (fun x => a + 1 ≤ x) c s -
+      signedBandCrossing (b + 1) (fun x => a + 1 ≤ x) c s =
       (if s.2 = b + 1 ∧ a + 1 ≤ s.1 then 1 else 0) -
         (if c.2 = b + 1 ∧ a + 1 ≤ c.1 then 1 else 0) := by
-  have := step_cases hs; simp only [Prod.ext_iff] at h₁ h₂; unfold crossTerm; split_ifs <;> omega
+  have := dual_unit_edge_cases hs
+  simp only [Prod.ext_iff] at h₁ h₂
+  unfold signedBandCrossing
+  split_ifs <;> omega
 
 /-- The two cells next to a boundary edge: the left one is in the set, the right one is not. -/
 private theorem edge_sides {T : Finset Lattice} {E : Finset (Lattice × Lattice)}
-    (hmem : IsBdry T E) {c s : Lattice} (he : (c, s) ∈ E) :
+    (hmem : is_oriented_boundary_edge_set T E) {c s : Lattice} (he : (c, s) ∈ E) :
     (s = (c.1, c.2 + 1) → (c.1 - 1, c.2) ∈ T ∧ (c.1, c.2) ∉ T) ∧
     (s = (c.1, c.2 - 1) → (c.1, c.2 - 1) ∈ T ∧ (c.1 - 1, c.2 - 1) ∉ T) ∧
     (s = (c.1 + 1, c.2) → (c.1, c.2) ∈ T ∧ (c.1, c.2 - 1) ∉ T) ∧
@@ -142,21 +144,22 @@ private theorem two_card_le_variation {m : ℕ} (f : Fin (m + 1) → ℤ) (hf : 
   omega
 
 /-- The steps of a walk that go up or left. -/
-private def upLeft {m : ℕ} (v : Fin (m + 1) → Lattice) : Finset (Fin m) :=
+private def upOrLeftSteps {m : ℕ} (v : Fin (m + 1) → Lattice) : Finset (Fin m) :=
   Finset.univ.filter fun i => v i.succ - v i.castSucc = (0, 1) ∨ v i.succ - v i.castSucc = (-1, 0)
 
-/-- The cell on the left of an up or left step, and the cell on its right. -/
-private def leftLab {m : ℕ} (v : Fin (m + 1) → Lattice) (i : Fin m) : ℕ × ℕ :=
+/-- The left cell label of an upward or leftward step, in natural coordinates. -/
+private def leftCellLabel {m : ℕ} (v : Fin (m + 1) → Lattice) (i : Fin m) : ℕ × ℕ :=
   (((v i.castSucc).1 - 1).toNat, ((v i.succ).2 - 1).toNat)
 
-private def rightLab {m : ℕ} (v : Fin (m + 1) → Lattice) (i : Fin m) : ℕ × ℕ :=
+/-- The right cell label of an upward or leftward step, in natural coordinates. -/
+private def rightCellLabel {m : ℕ} (v : Fin (m + 1) → Lattice) (i : Fin m) : ℕ × ℕ :=
   ((v i.succ).1.toNat, (min (v i.castSucc).2 (v i.succ).2).toNat)
 
 private theorem label_card {m : ℕ} (v : Fin (m + 1) → Lattice) (hclosed : v 0 = v (Fin.last m))
-    (hstep : ∀ i : Fin m, Step (v i.castSucc) (v i.succ)) (lab : Fin m → ℕ × ℕ)
+    (hstep : ∀ i : Fin m, IsDualUnitEdge (v i.castSucc, v i.succ)) (lab : Fin m → ℕ × ℕ)
     (hinj : ∀ i j, v i.succ - v i.castSucc = v j.succ - v j.castSucc →
       (v i.succ - v i.castSucc = (0, 1) ∨ v i.succ - v i.castSucc = (-1, 0)) →
-      lab i = lab j → i = j) : m ≤ 8 * ((upLeft v).image lab).card := by
+      lab i = lab j → i = j) : m ≤ 8 * ((upOrLeftSteps v).image lab).card := by
   classical
   let U := Finset.univ.filter fun i : Fin m => v i.succ - v i.castSucc = (0, 1)
   let L := Finset.univ.filter fun i : Fin m => v i.succ - v i.castSucc = (-1, 0)
@@ -168,11 +171,11 @@ private theorem label_card {m : ℕ} (v : Fin (m + 1) → Lattice) (hclosed : v 
   have hLi : Set.InjOn lab L := fun i hi j hj h => hinj i j
     (by rw [(Finset.mem_filter.mp hi).2, (Finset.mem_filter.mp hj).2])
     (Or.inr (Finset.mem_filter.mp hi).2) h
-  have h1 : U.card ≤ ((upLeft v).image lab).card := by
+  have h1 : U.card ≤ ((upOrLeftSteps v).image lab).card := by
     rw [← Finset.card_image_of_injOn hUi]
     exact Finset.card_le_card (Finset.image_subset_image fun i hi =>
       Finset.mem_filter.mpr ⟨Finset.mem_univ _, Or.inl (Finset.mem_filter.mp hi).2⟩)
-  have h2 : L.card ≤ ((upLeft v).image lab).card := by
+  have h2 : L.card ≤ ((upOrLeftSteps v).image lab).card := by
     rw [← Finset.card_image_of_injOn hLi]
     exact Finset.card_le_card (Finset.image_subset_image fun i hi =>
       Finset.mem_filter.mpr ⟨Finset.mem_univ _, Or.inr (Finset.mem_filter.mp hi).2⟩)
@@ -197,9 +200,9 @@ theorem exists_cell_set_contour_cover :
   choose U hU hcU using fun n : ℕ =>
     exists_finset_nonbacktracking_walks_in_box (n + 4) (by omega)
   let B : (n : ℕ) → (Fin (n + 5) → Lattice) → Finset (ℕ × ℕ) := fun n v =>
-    (upLeft (m := n + 4) v).image (leftLab v)
+    (upOrLeftSteps (m := n + 4) v).image (leftCellLabel v)
   let C : (n : ℕ) → (Fin (n + 5) → Lattice) → Finset (ℕ × ℕ) := fun n v =>
-    (upLeft (m := n + 4) v).image (rightLab v)
+    (upOrLeftSteps (m := n + 4) v).image (rightCellLabel v)
   let W (n : ℕ) : Finset (Fin (n + 5) → Lattice) :=
     (U n).filter fun v => n + 4 ≤ 8 * (B n v).card ∧ n + 4 ≤ 8 * (C n v).card
   refine ⟨W, B, C, ?_, fun n v hv => (Finset.mem_filter.mp hv).2, ?_⟩
@@ -212,7 +215,7 @@ theorem exists_cell_set_contour_cover :
     exists_square_boundary_circuit T hq h0
   have harea : 16 * T.card ≤ m ^ 2 := by
     let N : ℤ → ℤ → ℤ := fun a b =>
-      ∑ i : Fin m, crossTerm b (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ)
+      ∑ i : Fin m, signedBandCrossing b (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ)
     have hvert : ∀ a b : ℤ, (a, b) ∈ T → (a + 1, b) ∈ T → ∀ i : Fin m,
         ¬ (v i.castSucc = (a + 1, b) ∧ v i.succ = (a + 1, b + 1)) ∧
         ¬ (v i.castSucc = (a + 1, b + 1) ∧ v i.succ = (a + 1, b)) := by
@@ -239,8 +242,8 @@ theorem exists_cell_set_contour_cover :
       intro a b h1 h2
       have hd := sum_telescope_closed v hclosed
         (fun u => if u.2 = b + 1 ∧ a + 1 ≤ u.1 then (1 : ℤ) else 0)
-      have hd' : ∑ i : Fin m, (crossTerm b (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ) -
-          crossTerm (b + 1) (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ)) = 0 := by
+      have hd' : ∑ i : Fin m, (signedBandCrossing b (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ) -
+          signedBandCrossing (b + 1) (fun x => a + 1 ≤ x) (v i.castSucc) (v i.succ)) = 0 := by
         rw [← hd]
         exact Finset.sum_congr rfl fun i _ =>
           cross_vertical (hstep i) a b (hhorz a b h1 h2 i).1 (hhorz a b h1 h2 i).2
@@ -248,7 +251,7 @@ theorem exists_cell_set_contour_cover :
       exact sub_eq_zero.mp hd'
     have hN00 : N 0 0 = 1 := by
       rw [← hindex]
-      exact Finset.sum_congr rfl fun i _ => by simp only [crossTerm, zero_add]
+      exact Finset.sum_congr rfl fun i _ => by simp only [signedBandCrossing, zero_add]
     have hN : ∀ x ∈ T, N x.1 x.2 = 1 := by
       have key : ∀ k : ℕ, ∀ a b : ℤ, (a, b) ∈ T → a.toNat + b.toNat = k → N a b = 1 := by
         intro k
@@ -273,20 +276,24 @@ theorem exists_cell_set_contour_cover :
     have hhit : ∀ a b : ℤ, N a b = 1 → ((∃ p, (v p).1 ≤ a) ∧ ∃ q, a + 1 ≤ (v q).1) ∧
         ((∃ r, (v r).2 ≤ b) ∧ ∃ s, b + 1 ≤ (v s).2) := by
       intro a b hNab
-      have hsplit : N a b + ∑ i : Fin m, crossTerm b (fun x => x ≤ a) (v i.castSucc) (v i.succ) = 0 := by
+      have hsplit : N a b +
+          ∑ i : Fin m, signedBandCrossing b (fun x => x ≤ a) (v i.castSucc) (v i.succ) =
+            0 := by
         rw [← Finset.sum_add_distrib,
           ← sum_telescope_closed v hclosed (fun u => if b + 1 ≤ u.2 then (1 : ℤ) else 0)]
         exact Finset.sum_congr rfl fun i _ => cross_split (hstep i) a b
-      have hL : ∑ i : Fin m, crossTerm b (fun x => x ≤ a) (v i.castSucc) (v i.succ) ≠ 0 := by omega
+      have hL :
+          ∑ i : Fin m, signedBandCrossing b (fun x => x ≤ a) (v i.castSucc) (v i.succ) ≠ 0 := by
+        omega
       obtain ⟨i, _, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero (show N a b ≠ 0 by omega)
       obtain ⟨j, _, hj⟩ := Finset.exists_ne_zero_of_sum_ne_zero hL
       have hi' : ((v i.castSucc).2 = b ∧ (v i.succ).2 = b + 1 ∨
           (v i.castSucc).2 = b + 1 ∧ (v i.succ).2 = b) ∧ a + 1 ≤ (v i.castSucc).1 := by
-        unfold crossTerm at hi
+        unfold signedBandCrossing at hi
         split_ifs at hi with h1 h2
         exacts [⟨Or.inl ⟨h1.1, h1.2.1⟩, h1.2.2⟩, ⟨Or.inr ⟨h2.1, h2.2.1⟩, h2.2.2⟩, absurd rfl hi]
       have hj' : (v j.castSucc).1 ≤ a := by
-        unfold crossTerm at hj
+        unfold signedBandCrossing at hj
         split_ifs at hj with h1 h2
         exacts [h1.2.2, h2.2.2, absurd rfl hj]
       refine ⟨⟨⟨j.castSucc, hj'⟩, ⟨i.castSucc, hi'.2⟩⟩, ?_⟩
@@ -299,7 +306,7 @@ theorem exists_cell_set_contour_cover :
       have h1 : ∀ i : Fin m,
           |(v i.succ).1 - (v i.castSucc).1| + |(v i.succ).2 - (v i.castSucc).2| = 1 := by
         intro i
-        have := step_cases (hstep i)
+        have := dual_unit_edge_cases (hstep i)
         simp only [abs_eq_max_neg]; omega
       simp only [mh, mv, ← Finset.sum_add_distrib, h1, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul, mul_one]
@@ -329,22 +336,24 @@ theorem exists_cell_set_contour_cover :
   have hwq := fun i : Fin (n + 4) => hq _ (hw i).1
   have hlab : ∀ i : Fin (n + 4), (v i.succ - v i.castSucc = (0, 1) ∨
       v i.succ - v i.castSucc = (-1, 0)) →
-      ((leftLab v i).1 : ℤ) = (w i).1 ∧ ((leftLab v i).2 : ℤ) = (w i).2 ∧
-      (v i.succ - v i.castSucc = (0, 1) → ((rightLab v i).1 : ℤ) = (w i).1 + 1 ∧
-        ((rightLab v i).2 : ℤ) = (w i).2) ∧
-      (v i.succ - v i.castSucc = (-1, 0) → ((rightLab v i).1 : ℤ) = (w i).1 ∧
-        ((rightLab v i).2 : ℤ) = (w i).2 + 1) := by
+      ((leftCellLabel v i).1 : ℤ) = (w i).1 ∧ ((leftCellLabel v i).2 : ℤ) = (w i).2 ∧
+      (v i.succ - v i.castSucc = (0, 1) → ((rightCellLabel v i).1 : ℤ) = (w i).1 + 1 ∧
+        ((rightCellLabel v i).2 : ℤ) = (w i).2) ∧
+      (v i.succ - v i.castSucc = (-1, 0) → ((rightCellLabel v i).1 : ℤ) = (w i).1 ∧
+        ((rightCellLabel v i).2 : ℤ) = (w i).2 + 1) := by
     intro i hi
     have := hwq i
     rcases hi with hu | hl
     · obtain ⟨h1, h2, -⟩ := (hw i).2.1 hu
       have hl' : ¬ v i.succ - v i.castSucc = (-1, 0) := fun h => by
         rw [h] at hu; exact absurd (congrArg Prod.fst hu) (by norm_num)
-      refine ⟨?_, ?_, fun _ => ?_, fun h => absurd h hl'⟩ <;> simp only [leftLab, rightLab, h1, h2] <;> omega
+      refine ⟨?_, ?_, fun _ => ?_, fun h => absurd h hl'⟩ <;>
+        simp only [leftCellLabel, rightCellLabel, h1, h2] <;> omega
     · obtain ⟨h1, h2, -⟩ := (hw i).2.2 hl
       have hu' : ¬ v i.succ - v i.castSucc = (0, 1) := fun h => by
         rw [h] at hl; exact absurd (congrArg Prod.fst hl) (by norm_num)
-      refine ⟨?_, ?_, fun h => absurd h hu', fun _ => ?_⟩ <;> simp only [leftLab, rightLab, h1, h2] <;> omega
+      refine ⟨?_, ?_, fun h => absurd h hu', fun _ => ?_⟩ <;>
+        simp only [leftCellLabel, rightCellLabel, h1, h2] <;> omega
   have hedge : ∀ i j : Fin (n + 4), v i.succ - v i.castSucc = v j.succ - v j.castSucc →
       (v i.succ - v i.castSucc = (0, 1) ∨ v i.succ - v i.castSucc = (-1, 0)) →
       w i = w j → i = j := by
@@ -359,13 +368,13 @@ theorem exists_cell_set_contour_cover :
       obtain ⟨b1, b2, -⟩ := (hw j).2.2 (hd.symm.trans hl)
       rw [a1, a2, b1, b2, h]
   have hBc : n + 4 ≤ 8 * (B n v).card :=
-    label_card v hclosed hstep (leftLab v) fun i j hd hi h => by
+    label_card v hclosed hstep (leftCellLabel v) fun i j hd hi h => by
       have a := hlab i hi
       have b := hlab j (hi.imp hd.symm.trans hd.symm.trans)
       rw [h] at a
       exact hedge i j hd hi (Prod.ext (by omega) (by omega))
   have hCc : n + 4 ≤ 8 * (C n v).card :=
-    label_card v hclosed hstep (rightLab v) fun i j hd hi h => by
+    label_card v hclosed hstep (rightCellLabel v) fun i j hd hi h => by
       rcases hi with hu | hl
       · have a := (hlab i (Or.inl hu)).2.2.1 hu
         have b := (hlab j (Or.inl (hd.symm.trans hu))).2.2.1 (hd.symm.trans hu)

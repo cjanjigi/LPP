@@ -10,6 +10,7 @@ public import Differentiability.Model.Paths.StageGeometry
 public import LPP_Foundations.Model.Animals.PathSets
 public import Mathlib.Algebra.Order.Floor.Ring
 public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+import Differentiability.Model.Paths.DefectAlgebra
 import Mathlib.Tactic
 
 /-! Segments of an actual path and the greedy split of a stage into disjoint defect witnesses
@@ -22,28 +23,29 @@ open scoped BigOperators
 namespace LPPDifferentiability
 
 /-- The vertex of a path at a natural local time, zero past the end. -/
-private def vtx {d : ℕ × ℕ} (p : Path 0 d) (t : ℕ) : Lattice :=
+private def vertexAtTimeOrZero {d : ℕ × ℕ} (p : Path 0 d) (t : ℕ) : Lattice :=
   if h : t < d.1+d.2+1 then p.vertex ⟨t, h⟩ else 0
 
-private theorem vtx_fin {d : ℕ × ℕ} (p : Path 0 d) (t : Fin (d.1+d.2+1)) :
-    vtx p t.val = p.vertex t := by
-  unfold vtx
+private theorem vertexAtTimeOrZero_fin {d : ℕ × ℕ} (p : Path 0 d) (t : Fin (d.1+d.2+1)) :
+    vertexAtTimeOrZero p t.val = p.vertex t := by
+  unfold vertexAtTimeOrZero
   exact dite_eq_left t.isLt
 
-private theorem vtx_inj {d : ℕ × ℕ} (p : Path 0 d) {t t' : ℕ} (ht : t < d.1+d.2+1)
-    (ht' : t' < d.1+d.2+1) (h : vtx p t = vtx p t') : t = t' := by
-  have h1 := vtx_fin p ⟨t, ht⟩
-  have h2 := vtx_fin p ⟨t', ht'⟩
+private theorem vertexAtTimeOrZero_inj {d : ℕ × ℕ} (p : Path 0 d) {t t' : ℕ} (ht : t < d.1+d.2+1)
+    (ht' : t' < d.1+d.2+1) (h : vertexAtTimeOrZero p t = vertexAtTimeOrZero p t') : t = t' := by
+  have h1 := vertexAtTimeOrZero_fin p ⟨t, ht⟩
+  have h2 := vertexAtTimeOrZero_fin p ⟨t', ht'⟩
   have h3 : p.vertex ⟨t, ht⟩ = p.vertex ⟨t', ht'⟩ := h1.symm.trans (h.trans h2)
   exact congrArg Fin.val (p.vertex_injective h3)
 
 /-- The collected sites of a segment are the path's vertices at the segment's
 terminal-excluded window of local times. -/
-private theorem seg_cs {d : ℕ × ℕ} (p : Path 0 d) {u : Lattice} {e : ℕ × ℕ}
-    (y : Path u e) (k0 : ℕ)
+private theorem segment_collected_sites_eq_time_interval_image {d : ℕ × ℕ}
+    (p : Path 0 d)
+    {u : Lattice} {e : ℕ × ℕ} (y : Path u e) (k0 : ℕ)
     (hy : k0+(e.1+e.2) ≤ d.1+d.2 ∧ ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)),
       t.val = k0+i.val → y.vertex i = p.vertex t) :
-    y.collectedSites = (Finset.Ico k0 (k0+(e.1+e.2))).image (vtx p) := by
+    y.collectedSites = (Finset.Ico k0 (k0+(e.1+e.2))).image (vertexAtTimeOrZero p) := by
   obtain ⟨hfit, hv⟩ := hy
   ext z
   rw [Path.mem_collectedSites_iff, Finset.mem_image]
@@ -52,54 +54,61 @@ private theorem seg_cs {d : ℕ × ℕ} (p : Path 0 d) {u : Lattice} {e : ℕ ×
     have hi := i.isLt
     refine ⟨k0+i.val, Finset.mem_Ico.mpr ⟨by omega, by omega⟩, ?_⟩
     rw [hv i.castSucc ⟨k0+i.val, by omega⟩ rfl]
-    exact vtx_fin p ⟨k0+i.val, by omega⟩
+    exact vertexAtTimeOrZero_fin p ⟨k0+i.val, by omega⟩
   · rintro ⟨t, ht, rfl⟩
     rw [Finset.mem_Ico] at ht
     have hlt : t < d.1+d.2+1 := by omega
     refine ⟨⟨t-k0, by omega⟩, ?_⟩
     rw [hv (Fin.castSucc ⟨t-k0, by omega⟩) ⟨t, hlt⟩ (show t = k0+(t-k0) by omega)]
-    exact (vtx_fin p ⟨t, hlt⟩).symm
+    exact (vertexAtTimeOrZero_fin p ⟨t, hlt⟩).symm
 
-private theorem seg_sum {d : ℕ × ℕ} (p : Path 0 d) {u : Lattice} {e : ℕ × ℕ}
-    (y : Path u e) (k0 : ℕ)
+private theorem segment_site_sum_eq_time_interval_sum {d : ℕ × ℕ} (p : Path 0 d)
+    {u : Lattice} {e : ℕ × ℕ} (y : Path u e) (k0 : ℕ)
     (hy : k0+(e.1+e.2) ≤ d.1+d.2 ∧ ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)),
       t.val = k0+i.val → y.vertex i = p.vertex t) (f : Lattice → ℝ) :
-    ∑ z ∈ y.collectedSites, f z = ∑ t ∈ Finset.Ico k0 (k0+(e.1+e.2)), f (vtx p t) := by
+    ∑ z ∈ y.collectedSites, f z =
+      ∑ t ∈ Finset.Ico k0 (k0+(e.1+e.2)), f (vertexAtTimeOrZero p t) := by
   have hfit := hy.1
-  rw [seg_cs p y k0 hy, Finset.sum_image]
+  rw [segment_collected_sites_eq_time_interval_image p y k0 hy, Finset.sum_image]
   intro t ht t' ht' h
   simp only [Finset.coe_Ico, Set.mem_Ico] at ht ht'
   obtain ⟨_, ht2⟩ := ht
   obtain ⟨_, ht2'⟩ := ht'
-  exact vtx_inj p (by omega) (by omega) h
+  exact vertexAtTimeOrZero_inj p (by omega) (by omega) h
 
 /-- The literal support defect of a segment in terms of the path's vertices. -/
-private theorem seg_defect {d : ℕ × ℕ} (p : Path 0 d) (ω : Environment) (a G sl : ℝ)
+private theorem segment_support_defect_from_vertices {d : ℕ × ℕ} (p : Path 0 d)
+    (ω : Environment) (a G sl : ℝ)
     {u : Lattice} {e : ℕ × ℕ} (y : Path u e) (k0 : ℕ)
     (hy : k0+(e.1+e.2) ≤ d.1+d.2 ∧ ∀ (i : Fin (e.1+e.2+1)) (t : Fin (d.1+d.2+1)),
       t.val = k0+i.val → y.vertex i = p.vertex t) :
-    G*((e.1 : ℝ)+(e.2 : ℝ))+sl*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y =
+    Path.supportDefect a G sl ω y =
       G*(((k0+(e.1+e.2) : ℕ) : ℝ)-(k0 : ℝ)) +
-        sl*(((1-a)*((vtx p (k0+(e.1+e.2))).1 : ℝ)-a*((vtx p (k0+(e.1+e.2))).2 : ℝ)) -
-          ((1-a)*((vtx p k0).1 : ℝ)-a*((vtx p k0).2 : ℝ))) -
-        ∑ t ∈ Finset.Ico k0 (k0+(e.1+e.2)), ω (vtx p t) := by
-  have hsum := seg_sum p y k0 hy ω
+        sl*(((1-a)*((vertexAtTimeOrZero p (k0+(e.1+e.2))).1 : ℝ) -
+            a*((vertexAtTimeOrZero p (k0+(e.1+e.2))).2 : ℝ)) -
+          ((1-a)*((vertexAtTimeOrZero p k0).1 : ℝ)-a*((vertexAtTimeOrZero p k0).2 : ℝ))) -
+        ∑ t ∈ Finset.Ico k0 (k0+(e.1+e.2)), ω (vertexAtTimeOrZero p t) := by
+  have hsum := segment_site_sum_eq_time_interval_sum p y k0 hy ω
   obtain ⟨hfit, hv⟩ := hy
-  have h0 : y.vertex 0 = vtx p k0 := by
+  have h0 : y.vertex 0 = vertexAtTimeOrZero p k0 := by
     rw [hv 0 ⟨k0, by omega⟩ (by simp)]
-    exact (vtx_fin p ⟨k0, by omega⟩).symm
-  have hl : y.vertex (Fin.last (e.1+e.2)) = vtx p (k0+(e.1+e.2)) := by
+    exact (vertexAtTimeOrZero_fin p ⟨k0, by omega⟩).symm
+  have hl : y.vertex (Fin.last (e.1+e.2)) = vertexAtTimeOrZero p (k0+(e.1+e.2)) := by
     rw [hv (Fin.last (e.1+e.2)) ⟨k0+(e.1+e.2), by omega⟩ (by simp)]
-    exact (vtx_fin p ⟨k0+(e.1+e.2), by omega⟩).symm
-  have hdisp : vtx p (k0+(e.1+e.2)) = vtx p k0 + ((e.1 : ℤ), (e.2 : ℤ)) := by
+    exact (vertexAtTimeOrZero_fin p ⟨k0+(e.1+e.2), by omega⟩).symm
+  have hdisp : vertexAtTimeOrZero p (k0+(e.1+e.2)) =
+      vertexAtTimeOrZero p k0 + ((e.1 : ℤ), (e.2 : ℤ)) := by
     rw [← hl, y.finish, ← h0, y.start]
-  have hx : ((vtx p (k0+(e.1+e.2))).1 : ℝ) = ((vtx p k0).1 : ℝ)+(e.1 : ℝ) := by
+  have hx : ((vertexAtTimeOrZero p (k0+(e.1+e.2))).1 : ℝ) =
+      ((vertexAtTimeOrZero p k0).1 : ℝ)+(e.1 : ℝ) := by
     rw [hdisp]
     simp only [Prod.fst_add, Int.cast_add, Int.cast_natCast]
-  have hy2 : ((vtx p (k0+(e.1+e.2))).2 : ℝ) = ((vtx p k0).2 : ℝ)+(e.2 : ℝ) := by
+  have hy2 : ((vertexAtTimeOrZero p (k0+(e.1+e.2))).2 : ℝ) =
+      ((vertexAtTimeOrZero p k0).2 : ℝ)+(e.2 : ℝ) := by
     rw [hdisp]
     simp only [Prod.snd_add, Int.cast_add, Int.cast_natCast]
-  rw [Path.pathWeight_eq_sum_collectedSites, hsum, hx, hy2]
+  rw [Path.supportDefect, supportingFunctional, transverseCoordinate,
+    Path.pathWeight_eq_sum_collectedSites, hsum, hx, hy2]
   push_cast
   ring
 
@@ -177,11 +186,16 @@ theorem Path.segment_defect_add {d : ℕ × ℕ} (p : Path 0 d) (ω : Environmen
   have hk : k₀ ≤ k₁ := by omega
   have hk' : k₁ ≤ k₁+(e₂.1+e₂.2) := Nat.le_add_right _ _
   constructor
-  · rw [seg_defect p ω a G sl y k₀ hy, seg_defect p ω a G sl y₁ k₀ hy₁,
-      seg_defect p ω a G sl y₂ k₁ hy₂, hlen, hk₁, ← Finset.sum_Ico_consecutive _ hk hk']
+  · change Path.supportDefect a G sl ω y =
+      Path.supportDefect a G sl ω y₁ + Path.supportDefect a G sl ω y₂
+    rw [segment_support_defect_from_vertices p ω a G sl y k₀ hy,
+      segment_support_defect_from_vertices p ω a G sl y₁ k₀ hy₁,
+      segment_support_defect_from_vertices p ω a G sl y₂ k₁ hy₂,
+      hlen, hk₁, ← Finset.sum_Ico_consecutive _ hk hk']
     ring
-  · rw [seg_sum p y k₀ hy (fun z => max (ω z-M0) 0), seg_sum p y₁ k₀ hy₁ (fun z => max (ω z-M0) 0),
-      seg_sum p y₂ k₁ hy₂ (fun z => max (ω z-M0) 0), hlen, hk₁,
+  · rw [segment_site_sum_eq_time_interval_sum p y k₀ hy (fun z => max (ω z-M0) 0),
+      segment_site_sum_eq_time_interval_sum p y₁ k₀ hy₁ (fun z => max (ω z-M0) 0),
+      segment_site_sum_eq_time_interval_sum p y₂ k₁ hy₂ (fun z => max (ω z-M0) 0), hlen, hk₁,
       ← Finset.sum_Ico_consecutive _ hk hk']
 
 /-- Segments with disjoint terminal-excluded windows have disjoint collected sites. -/
@@ -195,12 +209,13 @@ theorem Path.segment_collectedSites_disjoint {d : ℕ × ℕ} (p : Path 0 d)
     Disjoint y₁.collectedSites y₂.collectedSites := by
   have hf₁ := hy₁.1
   have hf₂ := hy₂.1
-  rw [seg_cs p y₁ k₁ hy₁, seg_cs p y₂ k₂ hy₂, Finset.disjoint_left]
+  rw [segment_collected_sites_eq_time_interval_image p y₁ k₁ hy₁,
+    segment_collected_sites_eq_time_interval_image p y₂ k₂ hy₂, Finset.disjoint_left]
   intro z hz1 hz2
   obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hz1
   obtain ⟨t', ht', htt⟩ := Finset.mem_image.mp hz2
   rw [Finset.mem_Ico] at ht ht'
-  have := vtx_inj p (t := t') (t' := t) (by omega) (by omega) htt
+  have := vertexAtTimeOrZero_inj p (t := t') (t' := t) (by omega) (by omega) htt
   omega
 
 /-- The greedy split of Lemma 6.5 of the differentiability preprint, for abstract additive
@@ -290,10 +305,12 @@ theorem Path.stage_greedy_windows {d : ℕ × ℕ} (p : Path 0 d) (ω : Environm
           G0*((e.1 : ℝ)+(e.2 : ℝ))+((dl+dr)/2)*((1-a)*(e.1 : ℝ)-a*(e.2 : ℝ))-pathWeight ω y := by
   have hkl' : k.val ≤ l.val := hkl
   have hlt := l.isLt
-  let R : ℕ → ℝ := fun t => (1-a)*((vtx p t).1 : ℝ)-a*((vtx p t).2 : ℝ)
+  let R : ℕ → ℝ := fun t =>
+    (1-a)*((vertexAtTimeOrZero p t).1 : ℝ)-a*((vertexAtTimeOrZero p t).2 : ℝ)
   let D : ℕ → ℕ → ℝ := fun i j =>
-    G0*((j : ℝ)-(i : ℝ))+((dl+dr)/2)*(R j-R i)-∑ t ∈ Finset.Ico i j, ω (vtx p t)
-  let Z : ℕ → ℕ → ℝ := fun i j => ∑ t ∈ Finset.Ico i j, max (ω (vtx p t)-M0) 0
+    G0*((j : ℝ)-(i : ℝ))+((dl+dr)/2)*(R j-R i)-∑ t ∈ Finset.Ico i j, ω (vertexAtTimeOrZero p t)
+  let Z : ℕ → ℕ → ℝ := fun i j =>
+    ∑ t ∈ Finset.Ico i j, max (ω (vertexAtTimeOrZero p t)-M0) 0
   have hadd : ∀ i j l', i ≤ j → j ≤ l' → D i l' = D i j + D j l' := by
     intro i j l' h1 h2
     simp only [D]
@@ -317,20 +334,21 @@ theorem Path.stage_greedy_windows {d : ℕ × ℕ} (p : Path 0 d) (ω : Environm
   have hone : ∀ i, i+1 ≤ l.val → -(η*s/2) - Z i (i+1) ≤ D i (i+1) := by
     intro i hi
     have hiL : i < d.1+d.2 := by omega
-    have hvi : vtx p i = p.vertex (⟨i, hiL⟩ : Fin (d.1+d.2)).castSucc :=
-      vtx_fin p (⟨i, hiL⟩ : Fin (d.1+d.2)).castSucc
-    have hvi1 : vtx p (i+1) = p.vertex (⟨i, hiL⟩ : Fin (d.1+d.2)).succ :=
-      vtx_fin p (⟨i, hiL⟩ : Fin (d.1+d.2)).succ
+    have hvi : vertexAtTimeOrZero p i = p.vertex (⟨i, hiL⟩ : Fin (d.1+d.2)).castSucc :=
+      vertexAtTimeOrZero_fin p (⟨i, hiL⟩ : Fin (d.1+d.2)).castSucc
+    have hvi1 : vertexAtTimeOrZero p (i+1) = p.vertex (⟨i, hiL⟩ : Fin (d.1+d.2)).succ :=
+      vertexAtTimeOrZero_fin p (⟨i, hiL⟩ : Fin (d.1+d.2)).succ
     have hstepR : |R (i+1)-R i| ≤ 1 := by
       simp only [R]
       rw [hvi, hvi1]
       exact transverse_step p a ha ha1 ⟨i, hiL⟩
-    have hZ1 : Z i (i+1) = max (ω (vtx p i)-M0) 0 := by
+    have hZ1 : Z i (i+1) = max (ω (vertexAtTimeOrZero p i)-M0) 0 := by
       simp only [Z]
-      exact hsum1 i (fun t => max (ω (vtx p t)-M0) 0)
-    have hD1 : D i (i+1) = G0*(((i+1 : ℕ) : ℝ)-(i : ℝ))+((dl+dr)/2)*(R (i+1)-R i)-ω (vtx p i) := by
+      exact hsum1 i (fun t => max (ω (vertexAtTimeOrZero p t)-M0) 0)
+    have hD1 : D i (i+1) =
+        G0*(((i+1 : ℕ) : ℝ)-(i : ℝ))+((dl+dr)/2)*(R (i+1)-R i)-ω (vertexAtTimeOrZero p i) := by
       simp only [D]
-      rw [hsum1 i (fun t => ω (vtx p t))]
+      rw [hsum1 i (fun t => ω (vertexAtTimeOrZero p t))]
     rw [hZ1, hD1]
     have hcast : (((i+1 : ℕ) : ℝ)-(i : ℝ)) = 1 := by
       rw [Nat.cast_add, Nat.cast_one]
@@ -340,7 +358,8 @@ theorem Path.stage_greedy_windows {d : ℕ × ℕ} (p : Path 0 d) (ω : Environm
       rw [abs_mul]
       exact mul_le_of_le_one_right (abs_nonneg _) hstepR
     have h3 := neg_abs_le ((dl+dr)/2*(R (i+1)-R i))
-    have h4 : ω (vtx p i)-M0 ≤ max (ω (vtx p i)-M0) 0 := le_max_left _ _
+    have h4 : ω (vertexAtTimeOrZero p i)-M0 ≤ max (ω (vertexAtTimeOrZero p i)-M0) 0 :=
+      le_max_left _ _
     have h5 := neg_abs_le G0
     linarith
   obtain ⟨F, hF, hFdisj, hFb⟩ :=
@@ -348,17 +367,19 @@ theorem Path.stage_greedy_windows {d : ℕ × ℕ} (p : Path 0 d) (ω : Environm
   refine ⟨F, fun w hw => ?_, hFdisj, ?_⟩
   · obtain ⟨h1, h2, h3, h4⟩ := hF w hw
     refine ⟨h1, h2, h3, fun u e y hy hyl => ?_⟩
-    have hdef := seg_defect p ω a G0 ((dl+dr)/2) y w.1 hy
+    have hdef := segment_support_defect_from_vertices p ω a G0 ((dl+dr)/2) y w.1 hy
     rw [hyl] at hdef
     have h4' := h4
     simp only [D, R] at h4'
+    change Path.averageSupportDefect a G0 dl dr ω y < -(η*s)
     linarith
   · intro u e y hy hyl
-    have hdef := seg_defect p ω a G0 ((dl+dr)/2) y k.val hy
-    have hexc := seg_sum p y k.val hy (fun z => max (ω z-M0) 0)
+    have hdef := segment_support_defect_from_vertices p ω a G0 ((dl+dr)/2) y k.val hy
+    have hexc := segment_site_sum_eq_time_interval_sum p y k.val hy (fun z => max (ω z-M0) 0)
     rw [hyl] at hdef hexc
     have hFb' := hFb
     simp only [D, Z, R] at hFb'
+    change _ ≤ Path.averageSupportDefect a G0 dl dr ω y
     linarith
 
 end LPPDifferentiability

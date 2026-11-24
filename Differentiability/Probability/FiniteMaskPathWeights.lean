@@ -33,13 +33,13 @@ theorem finite_mask_selected_weight_failure_le
     (hmoment : (∫⁻ x, ENNReal.ofReal ((max (-x) 0) ^ p) ∂μ) < ∞)
     (mask : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x | ∀ i, if mask i then x i < -T else -T ≤ x i})
+      (finiteThresholdMaskCube T mask))
     (m n K : ℕ) (hmn : m ≤ n) (hK : 1 ≤ K)
     (f : Fin m → I) (hf : Function.Injective f) (hgood : ∀ j, mask (f j) = false) :
     (((Measure.pi (fun _ : I => μ))
-      {x | ∀ i, if mask i then x i < -T else -T ≤ x i})⁻¹ •
+      (finiteThresholdMaskCube T mask))⁻¹ •
         (Measure.pi (fun _ : I => μ)).restrict
-          {x | ∀ i, if mask i then x i < -T else -T ≤ x i}).real
+          (finiteThresholdMaskCube T mask)).real
       {x | (∑ j, x (f j)) < -2 * (∫ y, max (-y) 0 ∂μ) * m - (K - 1 : ℕ) * T - t} ≤
       (2 * n * (∫ y, (max (-y) 0) ^ p ∂μ) * b ^ (-p)) ^ K +
         Real.exp (-t ^ 2 / (2 * b * (2 * (∫ y, max (-y) 0 ∂μ) * n + t / 3))) := by
@@ -58,17 +58,17 @@ theorem finite_mask_restriction_real_eq_mass_mul
     {I : Type*} [Fintype I]
     (μ : Measure ℝ) [IsProbabilityMeasure μ] (T : ℝ) (mask : I → Bool)
     (hC : 0 < (Measure.pi (fun _ : I => μ))
-      {x | ∀ i, if mask i then x i < -T else -T ≤ x i}) (E : Set (I → ℝ)) :
+      (finiteThresholdMaskCube T mask)) (E : Set (I → ℝ)) :
     ((Measure.pi (fun _ : I => μ)).restrict
-      {x | ∀ i, if mask i then x i < -T else -T ≤ x i}).real E =
+      (finiteThresholdMaskCube T mask)).real E =
     (Measure.pi (fun _ : I => μ)).real
-      {x | ∀ i, if mask i then x i < -T else -T ≤ x i} *
+      (finiteThresholdMaskCube T mask) *
       (((Measure.pi (fun _ : I => μ))
-        {x | ∀ i, if mask i then x i < -T else -T ≤ x i})⁻¹ •
+        (finiteThresholdMaskCube T mask))⁻¹ •
         (Measure.pi (fun _ : I => μ)).restrict
-          {x | ∀ i, if mask i then x i < -T else -T ≤ x i}).real E := by
+          (finiteThresholdMaskCube T mask)).real E := by
   let P := Measure.pi (fun _ : I => μ)
-  let C := {x : I → ℝ | ∀ i, if mask i then x i < -T else -T ≤ x i}
+  let C := finiteThresholdMaskCube T mask
   change (P.restrict C).real E = P.real C * ((P C)⁻¹ • P.restrict C).real E
   rw [measureReal_ennreal_smul_apply, ENNReal.toReal_inv]
   have hpos : 0 < (P C).toReal := ENNReal.toReal_pos hC.ne' (measure_ne_top P C)
@@ -77,9 +77,10 @@ theorem finite_mask_restriction_real_eq_mass_mul
 /-- The threshold cube is the preimage of the Boolean mask under the threshold-indicator map. -/
 theorem finite_threshold_cube_eq_mask_fiber
     {I : Type*} (T : ℝ) (mask : I → Bool) :
-    {x : I → ℝ | ∀ i, if mask i then x i < -T else -T ≤ x i} =
+    finiteThresholdMaskCube T mask =
       (fun x : I → ℝ => fun i => if x i < -T then true else false) ⁻¹' {mask} := by
   ext x
+  rw [mem_finiteThresholdMaskCube]
   constructor
   · intro hx
     apply funext

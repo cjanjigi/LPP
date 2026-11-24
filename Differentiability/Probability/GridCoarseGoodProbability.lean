@@ -7,6 +7,7 @@ module
 
 public import Differentiability.Model.Paths.GridConnectionsGeneral
 public import Differentiability.Probability.HeavyCrossingTrials
+public import Differentiability.FinalDraft.Grid.GeneralEvents
 import Differentiability.Model.CoarseCrossingBlocks
 import Differentiability.Probability.FiniteHeavyVertices
 import Differentiability.Analysis.GridScaleSums
@@ -166,14 +167,33 @@ private theorem heavy_block_failure_le (μ : Measure ℝ) [IsProbabilityMeasure 
         rw [hpowsub]
         exact mul_le_mul_of_nonneg_left hdecay (mul_nonneg (by norm_num) hCp0)
 
-/-- **The coarse good event fails with probability at most `exp (-(q₀/2) j²)`**
-((5.22) of the differentiability preprint, item (C3)). At a coarse scale
+private theorem exists_grid_crossing_block_finset (a w : ℝ) (I : ℤ) (l m : ℕ) (c : Lattice)
+    (hw : 1 ≤ w) (hm : 2 * m < l) (hhalf : (l : ℝ) ≤ w ^ 3 / 2) :
+    ∃ B : Finset Lattice, (∀ z, z ∈ B ↔ z ∈ gridCrossingBlock a w I l m c) ∧
+      (B.card : ℝ) ≤ 17 * w ^ 4 := by
+  let center : ℝ := (1 - a) * (c.1 : ℝ) - a * (c.2 : ℝ)
+  obtain ⟨B, hmem, hcount⟩ := exists_finset_signed_level_tube a (8 * w) (fun _ => center)
+    (I + (m : ℤ)) (l - 2 * m) (by linarith only [hw])
+  have hlast : I + (m : ℤ) + ((l - 2 * m : ℕ) : ℤ) = I + (l : ℤ) - (m : ℤ) := by omega
+  have hlevels : ((l - 2 * m + 1 : ℕ) : ℝ) ≤ 2 * (l : ℝ) := by
+    exact_mod_cast (show l - 2 * m + 1 ≤ 2 * l by omega)
+  have hsites : 2 * (8 * w) + 1 ≤ 17 * w := by linarith only [hw]
+  refine ⟨B, fun z => ?_, ?_⟩
+  · simpa only [gridCrossingBlock, Set.mem_ofPred_eq, hlast, center] using hmem z
+  · calc
+      (B.card : ℝ) ≤ ((l - 2 * m + 1 : ℕ) : ℝ) * (2 * (8 * w) + 1) := hcount
+      _ ≤ (2 * (l : ℝ)) * (17 * w) := mul_le_mul hlevels hsites (by positivity) (by positivity)
+      _ = (34 * w) * (l : ℝ) := by ring
+      _ ≤ (34 * w) * (w ^ 3 / 2) := mul_le_mul_of_nonneg_left hhalf (by positivity)
+      _ = 17 * w ^ 4 := by ring
+
+/-- The fixed-centre coarse good event fails with probability at most `exp (-(q₀/2) j²)`
+(`differentiability_final_draft.tex`, `eq:allfail-general` and Appendix B item `ch:prob`). At a coarse scale
 (`8 c_* j² w ≤ l`, `w = 2^(k-j)`, `l = 2^(m_k - 4j - 1)`), suppose that a crossing of
 length `l - 2⌈c_* j² w⌉` has probability above `q₀` (hypothesis `hP`), that the mesh
 satisfies `l ≤ w³/2` (hypothesis `hhalf`), and that the heavy-vertex failure bound of one
-block is at most `q₀/2` (hypothesis `hsm`). Then the event `¬ CoarseGoodAt` has
-probability at most `exp (-(q₀/2) j²)`. -/
-theorem coarse_good_event_prob_le
+block is at most `q₀/2` (hypothesis `hsm`). The failure is that all fixed trials fail. -/
+theorem fixed_coarse_good_event_prob_le
     (μ : Measure ℝ) [IsProbabilityMeasure μ] {p : ℝ} (hp : 4 < p)
     (hmomp : (∫⁻ x, ENNReal.ofReal ((max x 0) ^ p) ∂μ) < ∞)
     (a G0 K cstar q0 : ℝ) (hcstar : 1 ≤ cstar) (k j mk : ℕ) (hj : 1 ≤ j)
@@ -190,7 +210,8 @@ theorem coarse_good_event_prob_le
           G0 * (n : ℝ) - K * (2 : ℝ) ^ (k - j) < pathWeight ω q})
     (hsm : 17 * (∫ x : ℝ, (max x 0) ^ p ∂μ) * (2 : ℝ) ^ (-(p - 4) * ((k : ℝ) - 3) / 4) ≤ q0 / 2)
     (I h : ℤ) :
-    (environmentLaw μ).real {ω : Environment | ¬ CoarseGoodAt ω a G0 K cstar mk k j I h} ≤
+    (environmentLaw μ).real
+      (generalGridCellGood a G0 K cstar I h (2 ^ (mk - 4 * j - 1)) j (2 ^ (k - j)))ᶜ ≤
       Real.exp (-(q0 / 2 * (j : ℝ) ^ 2)) := by
   classical
   have hwc : (((2 ^ (k - j) : ℕ)) : ℝ) = (2 : ℝ) ^ (k - j) := by push_cast; ring
@@ -217,8 +238,15 @@ theorem coarse_good_event_prob_le
     have h2 : (2 * mm : ℝ) < l := by nlinarith only [hmmR, hcoarse, hell8, hX]
     exact_mod_cast h2
   -- the blocks of the crossing trials
-  obtain ⟨c, B, hlevel, hround, hB, -, -, hB17, -⟩ :=
-    exists_coarse_crossing_blocks a (h : ℝ) (W : ℝ) I l mm (j ^ 2) hw1 hmmlt hhalf'
+  let c (ν : Fin (j ^ 2)) := coarseCrossingCentre a h W I mm (ν.val + 1)
+  have hlevel (ν : Fin (j ^ 2)) : (c ν).1 + (c ν).2 = I + (mm : ℤ) :=
+    (coarse_crossing_centre_spec a h W I mm (ν.val + 1)).1
+  have hround (ν : Fin (j ^ 2)) :
+      |(1 - a) * ((c ν).1 : ℝ) - a * ((c ν).2 : ℝ) -
+        ((h : ℝ) * (W : ℝ) + 30 * ((ν.val + 1 : ℕ) : ℝ) * (W : ℝ))| ≤ 1 / 2 :=
+    (coarse_crossing_centre_spec a h W I mm (ν.val + 1)).2
+  choose B hB hB17 using fun ν : Fin (j ^ 2) =>
+    exists_grid_crossing_block_finset a W I l mm (c ν) hw1 hmmlt hhalf'
   -- the crossing events and the untranslated crossing event
   let E : Fin (j ^ 2) → Set Environment := fun ν => {ω : Environment |
     ∃ (u : Lattice) (d : ℕ × ℕ) (x : Path u d),
@@ -249,27 +277,57 @@ theorem coarse_good_event_prob_le
     (heavy_block_failure_le μ hp hmomp (B ν) (W : ℝ) k j hwc hk4 (hB17 ν)).trans hsm
   -- all the trials fail with probability at most `exp (-(q0/2) j²)`
   obtain ⟨-, -, hall⟩ := heavy_crossing_trials_indep μ a G0 K (W : ℝ) (h : ℝ) hw1 I l mm
-    (j ^ 2) hmmlt.le c hlevel hround E (fun ν => rfl) E0 rfl B hB q0 hqE0 hsmall
-  -- the bad event is inside the event that all the trials fail
-  have hsub : {ω : Environment | ¬ CoarseGoodAt ω a G0 K cstar mk k j I h} ⊆
-      ⋂ ν, (E ν ∩ {ω : Environment | ∀ z ∈ B ν, ω z ≤ (W : ℝ)})ᶜ := by
-    intro ω hω
-    have hω' : ¬ CoarseGoodAt ω a G0 K cstar mk k j I h := hω
-    rw [Set.mem_iInter]
-    intro ν hν
-    obtain ⟨hEν, hHν⟩ := hν
-    obtain ⟨x₀, d, x, hx0, hd, hxloc, hxw⟩ := hEν
-    apply hω'
-    dsimp only [CoarseGoodAt]
-    refine ⟨ν.val + 1, Nat.le_add_left 1 ν.val, Nat.succ_le_of_lt ν.isLt, c ν, hround ν,
-      ⟨x₀, d, x, hx0, hd, hxloc, hxw⟩, ?_⟩
-    intro z hz1 hz2 hz3
-    exact hHν z ((hB ν z).2 ⟨hz1, hz2, hz3⟩)
-  calc (environmentLaw μ).real {ω : Environment | ¬ CoarseGoodAt ω a G0 K cstar mk k j I h}
-      ≤ (environmentLaw μ).real
-          (⋂ ν, (E ν ∩ {ω : Environment | ∀ z ∈ B ν, ω z ≤ (W : ℝ)})ᶜ) :=
-        measureReal_mono hsub
-    _ ≤ Real.exp (-(q0 / 2 * (((j ^ 2 : ℕ)) : ℝ))) := hall
-    _ = Real.exp (-(q0 / 2 * (j : ℝ) ^ 2)) := by simp only [Nat.cast_pow]
+    (j ^ 2) hmmlt.le c hlevel hround E (fun ν => rfl) E0 rfl B (fun ν z => hB ν z) q0 hqE0 hsmall
+  have hcap (ν : Fin (j ^ 2)) : {ω : Environment | ∀ z ∈ B ν, ω z ≤ (W : ℝ)} =
+      gridUpperCap (gridCrossingBlock a W I l mm (c ν)) W := by
+    ext ω
+    simp only [gridUpperCap, Set.mem_ofPred_eq, hB ν]
+  have hc : 8 * cstar * ((j : ℝ) ^ 2 * (W : ℝ)) ≤ (l : ℝ) := hcoarse
+  change (environmentLaw μ).real (generalGridCellGood a G0 K cstar I h l j W)ᶜ ≤ _
+  simpa only [hcap, generalGridCellGood, hc, ite_true, Set.compl_iUnion,
+    gridCappedTrial, Nat.cast_pow, mm, c, E, gridCrossingTrial] using hall
+
+/-- **The coarse good event fails with probability at most `exp (-(q₀/2) j²)`**
+((5.22) of the differentiability preprint, item (C3)). At a coarse scale
+(`8 c_* j² w ≤ l`, `w = 2^(k-j)`, `l = 2^(m_k - 4j - 1)`), suppose that a crossing of
+length `l - 2⌈c_* j² w⌉` has probability above `q₀` (hypothesis `hP`), that the mesh
+satisfies `l ≤ w³/2` (hypothesis `hhalf`), and that the heavy-vertex failure bound of one
+block is at most `q₀/2` (hypothesis `hsm`). Then the event `¬ CoarseGoodAt` has
+probability at most `exp (-(q₀/2) j²)`. -/
+theorem coarse_good_event_prob_le
+    (μ : Measure ℝ) [IsProbabilityMeasure μ] {p : ℝ} (hp : 4 < p)
+    (hmomp : (∫⁻ x, ENNReal.ofReal ((max x 0) ^ p) ∂μ) < ∞)
+    (a G0 K cstar q0 : ℝ) (hcstar : 1 ≤ cstar) (k j mk : ℕ) (hj : 1 ≤ j)
+    (hk4 : k ≤ 4 * (k - j) + 3)
+    (hcoarse : 8 * cstar * ((j : ℝ) ^ 2 * ((2 ^ (k - j) : ℕ) : ℝ)) ≤
+      ((2 ^ (mk - 4 * j - 1) : ℕ) : ℝ))
+    (hhalf : 1 < (2 : ℝ) ^ (mk - 4 * j - 1) →
+      (2 : ℝ) ^ (mk - 4 * j - 1) ≤ ((2 : ℝ) ^ (k - j)) ^ 3 / 2)
+    (hP : ∀ n : ℕ, 1 ≤ n → (n : ℝ) < (2 : ℝ) ^ (mk - 4 * j - 1) →
+      q0 < (environmentLaw μ).real {ω : Environment |
+        ∃ u : Lattice, u.1 + u.2 = 0 ∧ ∃ e : ℕ × ℕ, e.1 + e.2 = n ∧ ∃ q : Path u e,
+          (∀ i, |(1 - a) * ((q.vertex i).1 : ℝ) - a * ((q.vertex i).2 : ℝ)| ≤
+            8 * (2 : ℝ) ^ (k - j)) ∧
+          G0 * (n : ℝ) - K * (2 : ℝ) ^ (k - j) < pathWeight ω q})
+    (hsm : 17 * (∫ x : ℝ, (max x 0) ^ p ∂μ) * (2 : ℝ) ^ (-(p - 4) * ((k : ℝ) - 3) / 4) ≤ q0 / 2)
+    (I h : ℤ) :
+    (environmentLaw μ).real {ω : Environment | ¬ CoarseGoodAt ω a G0 K cstar mk k j I h} ≤
+      Real.exp (-(q0 / 2 * (j : ℝ) ^ 2)) := by
+  refine (measureReal_mono ?_).trans
+    (fixed_coarse_good_event_prob_le μ hp hmomp a G0 K cstar q0 hcstar k j mk hj hk4
+      hcoarse hhalf hP hsm I h)
+  intro ω hω hgood
+  rw [generalGridCellGood, ite_eq_left hcoarse] at hgood
+  obtain ⟨ν, hν⟩ := Set.mem_iUnion.mp hgood
+  let W : ℕ := 2 ^ (k - j)
+  let l : ℕ := 2 ^ (mk - 4 * j - 1)
+  let mm : ℕ := ⌈cstar * ((j : ℝ) ^ 2 * (W : ℝ))⌉₊
+  let c : Lattice := coarseCrossingCentre a h W I mm (ν.val + 1)
+  have hround := (coarse_crossing_centre_spec a h W I mm (ν.val + 1)).2
+  have hx : ω ∈ gridCrossingTrial a G0 K W I l mm c := hν.1
+  have hcap : ω ∈ gridUpperCap (gridCrossingBlock a W I l mm c) W := hν.2
+  apply hω
+  exact ⟨ν.val + 1, Nat.le_add_left 1 ν.val, Nat.succ_le_of_lt ν.isLt, c, hround,
+    hx, fun z hz₁ hz₂ hz₃ => hcap z ⟨hz₁, hz₂, hz₃⟩⟩
 
 end LPPDifferentiability

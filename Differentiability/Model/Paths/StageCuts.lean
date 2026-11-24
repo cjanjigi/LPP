@@ -5,6 +5,7 @@ Authors: Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen
 -/
 module
 
+public import Differentiability.Model.Paths.DefectAlgebra
 public import LPP_Foundations.Model.Animals.PathSets
 import Mathlib.Data.Nat.Find
 import Mathlib.Order.Fin.Basic
@@ -15,6 +16,30 @@ import Mathlib.Tactic
 public section
 
 namespace LPPDifferentiability
+
+/-- The stage starting at `k` reaches a longitudinal or transverse cutoff at `l`.
+The first such `l > k` ends a full stage, as in `eq:cut`. -/
+@[expose] def Path.reaches_stage_cut {d : ℕ × ℕ} (p : Path 0 d) (a : ℝ) (m : ℕ) (s : ℝ)
+    (k l : Fin (d.1 + d.2 + 1)) : Prop :=
+  2 * m ≤ l.val - k.val ∨
+    s ≤ |latticeTransverseCoordinate a (p.vertex l) - latticeTransverseCoordinate a (p.vertex k)|
+
+/-- A cut is reached when at least one of the two thresholds is met. -/
+theorem Path.reaches_stage_cut_iff {d : ℕ × ℕ} (p : Path 0 d)
+    (a : ℝ) (m : ℕ) (s : ℝ) (k l : Fin (d.1 + d.2 + 1)) :
+    p.reaches_stage_cut a m s k l ↔
+      2 * m ≤ l.val - k.val ∨
+        s ≤ |latticeTransverseCoordinate a (p.vertex l) - latticeTransverseCoordinate a (p.vertex k)| :=
+  Iff.rfl
+
+/-- Before a stage reaches a cutoff, both its length and transverse displacement are strictly
+below their thresholds. -/
+theorem Path.not_reaches_stage_cut_iff {d : ℕ × ℕ} (p : Path 0 d)
+    (a : ℝ) (m : ℕ) (s : ℝ) (k l : Fin (d.1 + d.2 + 1)) :
+    ¬ p.reaches_stage_cut a m s k l ↔
+      l.val - k.val < 2 * m ∧
+        |latticeTransverseCoordinate a (p.vertex l) - latticeTransverseCoordinate a (p.vertex k)| < s := by
+  simp only [reaches_stage_cut_iff, not_or, not_le]
 
 private theorem finite_first_cuts (L : ℕ) (C : Fin (L + 1) → Fin (L + 1) → Prop)
     (k : Fin (L + 1)) :
@@ -85,38 +110,28 @@ private theorem finite_first_cuts (L : ℕ) (C : Fin (L + 1) → Fin (L + 1) →
 /-- Actual first-cut stages, with a possibly empty final remainder. All cuts
 and their minimality are produced from the path, rather than supplied. -/
 theorem Path.exists_first_cuts {d : ℕ × ℕ} (p : Path 0 d) (a : ℝ) (m : ℕ) (s : ℝ) :
+    let transverse (t : Fin (d.1 + d.2 + 1)) := latticeTransverseCoordinate a (p.vertex t)
     ∃ N : ℕ, ∃ cuts : Fin (N + 2) → Fin (d.1 + d.2 + 1),
       cuts 0 = 0 ∧ cuts (Fin.last (N + 1)) = Fin.last (d.1 + d.2) ∧
       Monotone cuts ∧ N ≤ d.1 + d.2 ∧
       (∀ i : Fin N,
         let k := cuts ⟨i.val, by omega⟩
         let l := cuts ⟨i.val + 1, by omega⟩
-        k < l ∧
-        (2 * m ≤ l.val - k.val ∨
-          s ≤ |((1-a)*(p.vertex l).1-a*(p.vertex l).2) -
-            ((1-a)*(p.vertex k).1-a*(p.vertex k).2)|) ∧
+        k < l ∧ p.reaches_stage_cut a m s k l ∧
         ∀ t, k < t → t < l →
-          t.val - k.val < 2*m ∧
-          |((1-a)*(p.vertex t).1-a*(p.vertex t).2) -
-            ((1-a)*(p.vertex k).1-a*(p.vertex k).2)| < s) ∧
+          t.val - k.val < 2 * m ∧ |transverse t - transverse k| < s) ∧
       (∀ t, cuts ⟨N, by omega⟩ < t →
-        t.val - (cuts ⟨N, by omega⟩).val < 2*m ∧
-        |((1-a)*(p.vertex t).1-a*(p.vertex t).2) -
-          ((1-a)*(p.vertex (cuts ⟨N, by omega⟩)).1-
-            a*(p.vertex (cuts ⟨N, by omega⟩)).2)| < s) := by
-  let C (k l : Fin (d.1 + d.2 + 1)) :=
-    2*m ≤ l.val-k.val ∨
-      s ≤ |((1-a)*(p.vertex l).1-a*(p.vertex l).2) -
-        ((1-a)*(p.vertex k).1-a*(p.vertex k).2)|
+        t.val - (cuts ⟨N, by omega⟩).val < 2 * m ∧
+        |transverse t - transverse (cuts ⟨N, by omega⟩)| < s) := by
   obtain ⟨N, cuts, h0, hlast, hmono, hN, hfull, hrem⟩ :=
-    finite_first_cuts (d.1+d.2) C 0
+    finite_first_cuts (d.1 + d.2) (p.reaches_stage_cut a m s) 0
   refine ⟨N, cuts, h0, hlast, hmono, by simpa using hN, ?_, ?_⟩
   · intro i
     obtain ⟨hlt, hc, hmin⟩ := hfull i
     refine ⟨hlt, hc, ?_⟩
     intro t hkt htl
-    exact not_or.mp (hmin t hkt htl) |>.imp lt_of_not_ge lt_of_not_ge
+    exact (p.not_reaches_stage_cut_iff a m s _ t).mp (hmin t hkt htl)
   · intro t ht
-    exact not_or.mp (hrem t ht) |>.imp lt_of_not_ge lt_of_not_ge
+    exact (p.not_reaches_stage_cut_iff a m s _ t).mp (hrem t ht)
 
 end LPPDifferentiability
