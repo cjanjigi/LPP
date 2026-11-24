@@ -123,8 +123,11 @@ for (const slug of slugs) {
   const main = `## Progress and dependencies\n\n[Dependency graph and coverage notes](../graphs/paper-results/${p.slug}.md)\n\nThe graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.\n\n<details>\n<summary>Dependency overview</summary>\n\n\`\`\`mermaid\n${overview(p)}\n\`\`\`\n\n</details>\n\n${p.notes.map(n => n + '\n\n').join('')}<details>\n<summary>Every result and its status</summary>\n\n${key}\n\n\`\`\`mermaid\n${graph}\n\`\`\`\n\n${guideTable}\n\n</details>\n\n`;
   const guidePath = path.join(root, 'guides', slug + '.md');
   let guide = await fs.readFile(guidePath, 'utf8');
-  if (guide.includes('<!-- PAPER_MAP -->')) guide = guide.replace('<!-- PAPER_MAP -->', '<!-- PAPER_MAP_START -->\n' + main + '<!-- PAPER_MAP_END -->');
-  else if (guide.includes('<!-- PAPER_MAP_START -->')) guide = guide.replace(/<!-- PAPER_MAP_START -->[\s\S]*?<!-- PAPER_MAP_END -->/, '<!-- PAPER_MAP_START -->\n' + main + '<!-- PAPER_MAP_END -->');
+  const guideContent = guide.includes('<!-- PAPER_MAP_COMPACT -->')
+    ? `## Progress and dependencies\n\n[Dependency graph and coverage notes](../graphs/paper-results/${p.slug}.md)\n\nThe map follows the finalized paper and includes every named result, with certificate links and coverage notes for its remarks and examples.\n\n`
+    : main;
+  if (guide.includes('<!-- PAPER_MAP -->')) guide = guide.replace('<!-- PAPER_MAP -->', '<!-- PAPER_MAP_START -->\n' + guideContent + '<!-- PAPER_MAP_END -->');
+  else if (guide.includes('<!-- PAPER_MAP_START -->')) guide = guide.replace(/<!-- PAPER_MAP_START -->[\s\S]*?<!-- PAPER_MAP_END -->/, '<!-- PAPER_MAP_START -->\n' + guideContent + '<!-- PAPER_MAP_END -->');
   else throw new Error(`${slug}: no graph insertion marker`);
   await fs.writeFile(guidePath, githubMath(guide));
   const uses = p.edges.map(e => {

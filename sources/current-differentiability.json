@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "selection_date": "2026-11-23",
+  "title": "Differentiability of the shape function in the planar corner growth model",
+  "authors": [
+    "Christopher Janjigian",
+    "Firas Rassoul-Agha",
+    "Timo Seppäläinen"
+  ],
+  "source": {
+    "filename": "differentiability_final_draft.tex",
+    "sha256": "6d9253d4c96cc82686afa9944c0e3299bac6ef65d9c9c682a4137edec81db3b6",
+    "newline_count": 3228,
+    "distribution": "author supplied separately",
+    "line_count": 3229
+  },
+  "comparison_sources": [
+    {
+      "sha256": "780f2bff73db3757bf41d74c5ab6f4c143c98bf3e9df47ceb7db369387dc18c3",
+      "distribution": "author supplied separately",
+      "revision": "Separate comparison draft"
+    },
+    {
+      "revision": "Author draft of 3 November 2026",
+      "sha256": "25513f02919c13c0a035ec45c75fa4cc9a332762257e329ac9abf6a5fc2498a4",
+      "distribution": "Historical source"
+    }
+  ],
+  "guide": "docs/guides/differentiability.md",
+  "result_map": "docs/differentiability-paper-map.json",
+  "paper_import": "Differentiability.Paper",
+  "statement_import": "Differentiability.Statements",
+  "inventory": {
+    "named_results": 27,
+    "unnumbered_proof_entries": 58,
+    "active_remark_and_example_environments": 21
+  },
+  "cited_source_record": "sources/current-grs.json",
+  "target": "Main and supporting results of the selected differentiability draft, with explicit dispositions for its conditional claims and research discussion.",
+  "review": "docs/reviews/differentiability-final.md"
+}

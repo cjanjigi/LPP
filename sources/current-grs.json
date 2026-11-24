@@ -1,0 +1,1009 @@
+{
+  "version": 1,
+  "selection_date": "2026-11-23",
+  "source": {
+    "sha256": "db123fc668e5cedccdb4110fb4ff9e44f11c0a91dc8717083b530120ecebc8e4",
+    "line_count": 5367,
+    "access": "Author supplied separately"
+  },
+  "comparison_source": {
+    "revision": "Earlier author-supplied version",
+    "sha256": "d0fc109fcfa2c4ab0d86b04e8002d5d64bf9d6d794f82e9ee41e54162263c0e2"
+  },
+  "scope": "Previously formalized portions at their approved statement scopes",
+  "reviewed_exports": 48,
+  "reviewed_provider_files": 39,
+  "public_exports": 46,
+  "development_only_exports": 2,
+  "review": "docs/reviews/grs-final-comparison.md",
+  "groups": [
+    {
+      "topic": "Direction and support-face definitions",
+      "source_locators": [
+        "608",
+        "eq:sector1 678–680",
+        "eq:sector2 682–685"
+      ],
+      "reviewed_scope": "Reviewed direction and support-face definitions.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.InteriorDirection",
+          "reviewed_module": "Busemann.Frozen.Definitions.InteriorDirection",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.supportFace",
+          "reviewed_module": "Busemann.Frozen.Definitions.SupportFace",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.supportFacesUnion",
+          "reviewed_module": "Busemann.Frozen.Definitions.SupportFacesUnion",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Endpoints and tail differences",
+      "source_locators": [
+        "837",
+        "2118",
+        "eq:vn 839–840",
+        "eq:vn66 2119–2120",
+        "586–591",
+        "bu:G1 2123",
+        "bu:G2 2126–2129"
+      ],
+      "reviewed_scope": "Reviewed endpoint, face-approach and tail-difference definitions.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.latticeEndpoint",
+          "reviewed_module": "Busemann.Frozen.Definitions.LatticeEndpoint",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.approachesFaceInterval",
+          "reviewed_module": "Busemann.Frozen.Definitions.ApproachesFaceInterval",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.passageDifferenceOnTail",
+          "reviewed_module": "Busemann.Frozen.Definitions.PassageDifferenceOnTail",
+          "availability": "development_review_only"
+        }
+      ]
+    },
+    {
+      "topic": "Outside lower orthants",
+      "source_locators": [
+        "4192",
+        "4202"
+      ],
+      "reviewed_scope": "Reviewed finite modification set scope.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.outsideLowerOrthants",
+          "reviewed_module": "Busemann.Frozen.Definitions.OutsideLowerOrthants",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Fixed-cocycle outside field",
+      "source_locators": [
+        "4192–4197",
+        "th:cocycles 1848–1857",
+        "eq:3:6 4222–4244"
+      ],
+      "reviewed_scope": "Approved fixed-cocycle scope.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.OutsideIndex",
+          "reviewed_module": "Busemann.Frozen.Definitions.OutsideIndex",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.outsideWeightsAndCocycleIncrements",
+          "reviewed_module": "Busemann.Frozen.Definitions.OutsideWeightsAndCocycleIncrements",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.outsideSigma",
+          "reviewed_module": "Busemann.Frozen.Definitions.OutsideSigma",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Singleton finite energy",
+      "source_locators": [
+        "th:cocycles:indep 1852–1857",
+        "eq:3:6 4222–4244"
+      ],
+      "reviewed_scope": "Approved historical singleton scope.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.HasDownwardFiniteEnergy",
+          "reviewed_module": "Busemann.Frozen.Definitions.DownwardFiniteEnergy",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Extreme tilts and endpoints",
+      "source_locators": [
+        "653–679",
+        "eq:h=grad 1860",
+        "eq:sector1–eq:sector2 678–685"
+      ],
+      "reviewed_scope": "Approved extreme-tilt and face-endpoint geometry.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.exists_unique_left_extreme_tilt",
+          "reviewed_module": "Busemann.Frozen.Geometry.LeftExtremeTiltExistsUnique",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.exists_unique_right_extreme_tilt",
+          "reviewed_module": "Busemann.Frozen.Geometry.RightExtremeTiltExistsUnique",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.exists_unique_left_face_endpoint",
+          "reviewed_module": "Busemann.Frozen.Geometry.LeftFaceEndpointExistsUnique",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPP.Busemann.exists_unique_right_face_endpoint",
+          "reviewed_module": "Busemann.Frozen.Geometry.RightFaceEndpointExistsUnique",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Coupled process and fixed-direction squeeze",
+      "source_locators": [
+        "2d-ass 572–577",
+        "th:cocycles 1848–1882",
+        "th:construction 2114–2130",
+        "cor:buse 2150–2162",
+        "thm:buse 825–850"
+      ],
+      "reviewed_scope": "Approved nested readouts and conditional unit-edge convergence.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.exists_coupled_busemann_process_and_fixed_direction_squeeze",
+          "reviewed_module": "Busemann.Frozen.Process.CoupledProcessSqueeze",
+          "availability": "development_review_only"
+        }
+      ]
+    },
+    {
+      "topic": "Ordinary geodesic directions",
+      "source_locators": [
+        "976–994",
+        "thm-1:geod:exist 1139–1141",
+        "3053–3083"
+      ],
+      "reviewed_scope": "Reviewed ordinary-geodesic assertion about support-face directions.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.exists_full_event_ordinary_geodesics_directed_into_support_faces",
+          "reviewed_module": "Busemann.Process.OrdinaryGeodesicDirectedness",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Rightmost coalescence",
+      "source_locators": [
+        "2736–2770",
+        "th:geod:coal:t 2938–2942",
+        "eq:3:6 4224",
+        "lm:chuck 4234–4249"
+      ],
+      "reviewed_scope": "Reviewed implication from finite-block conditional expectations.",
+      "exports": [
+        {
+          "name": "LPP.Busemann.hasCoalescingRightmostPaths_of_finite_block_condExp",
+          "reviewed_module": "Busemann.Process.RightmostPathCoalescence",
+          "availability": "public_comment_only_difference"
+        }
+      ]
+    },
+    {
+      "topic": "Sparse coarse cutoff",
+      "source_locators": [
+        "lm:perc-aux 4709–4736"
+      ],
+      "reviewed_scope": "Specialized coarse cutoff interface.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.exists_sparse_good_coarse_path_cutoff",
+          "reviewed_module": "Differentiability.Probability.SparseCoarsePaths",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Block estimates",
+      "source_locators": [
+        "lm:t.aux7 4669–4704",
+        "prop:marchand 4740–4945",
+        "marchand:decay 4743–4745"
+      ],
+      "reviewed_scope": "Reviewed block and edge estimates with the accepted corrections and finite-rate proof.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.white_block_probability_le",
+          "reviewed_module": "Differentiability.Probability.WhiteBlockBound",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.coarse_path_few_black_blocks",
+          "reviewed_module": "Differentiability.Model.CoarseBlackBlocks",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.halfLineEdge_upper_deviation",
+          "reviewed_module": "Differentiability.Probability.HalfLineEdgeDeviation",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.top_passage_beyond_edge_decay_total",
+          "reviewed_module": "Differentiability.Probability.TopPassageDecay",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.top_passage_beyond_edge_decay",
+          "reviewed_module": "Differentiability.Probability.TopPassageDecay",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.gtop_lt_one_beyond_edge",
+          "reviewed_module": "Differentiability.Probability.TopShapeBeyondEdge",
+          "availability": "public_exact_source_match"
+        }
+      ],
+      "unmatched_source_locators": [
+        "lm:t.aux7"
+      ]
+    },
+    {
+      "topic": "Right block gain",
+      "source_locators": [
+        "op:lm4 5009–5026"
+      ],
+      "reviewed_scope": "Reviewed pathwise and integral gain forms.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.openEdge_union_gain_antitone",
+          "reviewed_module": "Differentiability.Probability.RightBlockGain",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.integral_halfLine_rightBlock_gain",
+          "reviewed_module": "Differentiability.Probability.RightBlockGain",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.lintegral_rightBlock_gain_ge",
+          "reviewed_module": "Differentiability.Probability.RightBlockGain",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Triangle estimates",
+      "source_locators": [
+        "fig:ELL 5079",
+        "op:45 5085–5091",
+        "rho->0 5132–5134"
+      ],
+      "reviewed_scope": "Reviewed supporting triangle results.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.triangle_target_passage",
+          "reviewed_module": "Differentiability.Model.PercolationTriangles",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.openReachSet_left_of_triangle",
+          "reviewed_module": "Differentiability.Model.PercolationTriangles",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.triangle_probability",
+          "reviewed_module": "Differentiability.Probability.TriangleProbability",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.exists_triangle_floor",
+          "reviewed_module": "Differentiability.Probability.TriangleProbability",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Augmented expectations",
+      "source_locators": [
+        "Kn-def 5128–5130",
+        "dif:lm5 5136–5153"
+      ],
+      "reviewed_scope": "Reviewed augmented count and gain results.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.openEdge_triangle_gain_ge",
+          "reviewed_module": "Differentiability.Model.AugmentedProcessLaws",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.measurable_maxFirst_augmentedProcess",
+          "reviewed_module": "Differentiability.Probability.AugmentedMeasurability",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.measurableSet_isTriangle_lowestPoint",
+          "reviewed_module": "Differentiability.Probability.AugmentedMeasurability",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.measure_isTriangle_lowestPoint",
+          "reviewed_module": "Differentiability.Probability.AugmentedBlockLaws",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.integral_isTriangle_lowestPoint_mul_shifted_gain",
+          "reviewed_module": "Differentiability.Probability.AugmentedBlockLaws",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.integral_augmented_count",
+          "reviewed_module": "Differentiability.Probability.AugmentedExpectation",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.integral_augmented_edge_gain",
+          "reviewed_module": "Differentiability.Probability.AugmentedExpectation",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Augmented passage",
+      "source_locators": [
+        "D.7' 5161–5174"
+      ],
+      "reviewed_scope": "Reviewed block-end form.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.augmentedProcess_subset_levelSet",
+          "reviewed_module": "Differentiability.Model.AugmentedPassage",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.augmentedProcess_passage_lower",
+          "reviewed_module": "Differentiability.Model.AugmentedPassage",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Start-set deviation",
+      "source_locators": [
+        "D.7'' 5176–5221",
+        "conv-switch 5188–5190"
+      ],
+      "reviewed_scope": "Matching window at C = 1 under the stronger Lean inputs.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.expected_max_positive_deviation_startSet",
+          "reviewed_module": "Differentiability.Probability.StartSetDeviation",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Finite-rate flat segment",
+      "source_locators": [
+        "perc-flat-thm 4658–4665",
+        "4947–4987"
+      ],
+      "reviewed_scope": "Approved finite-rate flat-segment scope.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.exists_gtop_eq_one_ge_edgeSpeed",
+          "reviewed_module": "Differentiability.Probability.TopFlatBeyondEdge",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.gtop_flat_segment_route_h",
+          "reviewed_module": "Differentiability.Probability.TopFlatSegment",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.gbar_eq_one_of_gtop_eq_one",
+          "reviewed_module": "Differentiability.Probability.FlatTopThinning",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    },
+    {
+      "topic": "Endpoint differentiability",
+      "source_locators": [
+        "thm:edge-diff 4995–4997",
+        "5223–5246",
+        "th:flat-edge 1503–1511"
+      ],
+      "reviewed_scope": "Approved finite-rate endpoint scope.",
+      "exports": [
+        {
+          "name": "LPPDifferentiability.gbar_differentiableAt_edge_route_h",
+          "reviewed_module": "Differentiability.Probability.FlatEdgeDifferentiability",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.flat_top_route_h",
+          "reviewed_module": "Differentiability.Probability.FlatTopRouteH",
+          "availability": "public_exact_source_match"
+        },
+        {
+          "name": "LPPDifferentiability.differentiableAt_of_top_flat",
+          "reviewed_module": "Differentiability.Probability.FlatTopDifferentiability",
+          "availability": "public_exact_source_match"
+        }
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.ApproachesFaceInterval",
+        "sha256": "e1076945192c121a43b7f417f53dda957a1daf283b544180a648be3dd392f485"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/ApproachesFaceInterval.lean",
+        "sha256": "e1076945192c121a43b7f417f53dda957a1daf283b544180a648be3dd392f485"
+      },
+      "exports": [
+        "LPP.Busemann.approachesFaceInterval"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.DownwardFiniteEnergy",
+        "sha256": "79881da8661b4d2e70742a8feb148062af12a6c07cb6c5531eed6eeaa45dbbaa"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/DownwardFiniteEnergy.lean",
+        "sha256": "79881da8661b4d2e70742a8feb148062af12a6c07cb6c5531eed6eeaa45dbbaa"
+      },
+      "exports": [
+        "LPP.Busemann.HasDownwardFiniteEnergy"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.InteriorDirection",
+        "sha256": "be09895b7d29c82d01368e59bd90dbd2c71e5d5c2a4bc146c21e67d06a607df2"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/InteriorDirection.lean",
+        "sha256": "be09895b7d29c82d01368e59bd90dbd2c71e5d5c2a4bc146c21e67d06a607df2"
+      },
+      "exports": [
+        "LPP.Busemann.InteriorDirection"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.LatticeEndpoint",
+        "sha256": "496551ccf844a530301296b5407d08e3bd3168273a5397fb3c7df0641ec10c0b"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/LatticeEndpoint.lean",
+        "sha256": "496551ccf844a530301296b5407d08e3bd3168273a5397fb3c7df0641ec10c0b"
+      },
+      "exports": [
+        "LPP.Busemann.latticeEndpoint"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.OutsideIndex",
+        "sha256": "13933d7001a9629e45c6b3e43683b2ed04e2355db03c39f9d951dd5ae560210d"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/OutsideIndex.lean",
+        "sha256": "13933d7001a9629e45c6b3e43683b2ed04e2355db03c39f9d951dd5ae560210d"
+      },
+      "exports": [
+        "LPP.Busemann.OutsideIndex"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.OutsideLowerOrthants",
+        "sha256": "b7c1c00e3b90b44a320304d8017618b8ea26bd556e96470a2a20837cf52ea737"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/OutsideLowerOrthants.lean",
+        "sha256": "b7c1c00e3b90b44a320304d8017618b8ea26bd556e96470a2a20837cf52ea737"
+      },
+      "exports": [
+        "LPP.Busemann.outsideLowerOrthants"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.OutsideSigma",
+        "sha256": "33042f1f5ae3d8b4780c7d2699dab02cc8f2030e9785d6d2a35fdd191f30c344"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/OutsideSigma.lean",
+        "sha256": "33042f1f5ae3d8b4780c7d2699dab02cc8f2030e9785d6d2a35fdd191f30c344"
+      },
+      "exports": [
+        "LPP.Busemann.outsideSigma"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.OutsideWeightsAndCocycleIncrements",
+        "sha256": "fec40a735aed1cee85355a1c52ba4db94d2c3f79841c1c4f1f23de7158d5dd4f"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/OutsideWeightsAndCocycleIncrements.lean",
+        "sha256": "fec40a735aed1cee85355a1c52ba4db94d2c3f79841c1c4f1f23de7158d5dd4f"
+      },
+      "exports": [
+        "LPP.Busemann.outsideWeightsAndCocycleIncrements"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.PassageDifferenceOnTail",
+        "sha256": "165fa0ac74fea3edde2d3486d2a139f2f39fe2a8145a25a4d97011206e0c79ce"
+      },
+      "availability": "development_review_only",
+      "public_source": null,
+      "exports": [
+        "LPP.Busemann.passageDifferenceOnTail"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.SupportFace",
+        "sha256": "e88b1f107a9dd85e723481e56b229511a8df992738fbe2500e7a15254ae7bbe7"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/SupportFace.lean",
+        "sha256": "e88b1f107a9dd85e723481e56b229511a8df992738fbe2500e7a15254ae7bbe7"
+      },
+      "exports": [
+        "LPP.Busemann.supportFace"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Definitions.SupportFacesUnion",
+        "sha256": "605af89eee24173705b20627c59d34842e9cab81261347a0c6e67b6d5a3d9608"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Definitions/SupportFacesUnion.lean",
+        "sha256": "605af89eee24173705b20627c59d34842e9cab81261347a0c6e67b6d5a3d9608"
+      },
+      "exports": [
+        "LPP.Busemann.supportFacesUnion"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Geometry.LeftExtremeTiltExistsUnique",
+        "sha256": "29c4a43154495a5eb6b751817c01f24457558ba13e269eca44d4fad49a0e2df0"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Geometry/LeftExtremeTiltExistsUnique.lean",
+        "sha256": "29c4a43154495a5eb6b751817c01f24457558ba13e269eca44d4fad49a0e2df0"
+      },
+      "exports": [
+        "LPP.Busemann.exists_unique_left_extreme_tilt"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Geometry.LeftFaceEndpointExistsUnique",
+        "sha256": "36334177fcf1a17f41222d988ff8e440087bebcdb0038291a2715705b6395365"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Geometry/LeftFaceEndpointExistsUnique.lean",
+        "sha256": "36334177fcf1a17f41222d988ff8e440087bebcdb0038291a2715705b6395365"
+      },
+      "exports": [
+        "LPP.Busemann.exists_unique_left_face_endpoint"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Geometry.RightExtremeTiltExistsUnique",
+        "sha256": "ffc502f0baf26621e475b702554f256898875883a5309fa0ed886a4cd2cda72c"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Geometry/RightExtremeTiltExistsUnique.lean",
+        "sha256": "ffc502f0baf26621e475b702554f256898875883a5309fa0ed886a4cd2cda72c"
+      },
+      "exports": [
+        "LPP.Busemann.exists_unique_right_extreme_tilt"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Geometry.RightFaceEndpointExistsUnique",
+        "sha256": "2eff133e6bfff2fdbc7f2bd51389f4a73a7c4cbec234687e5f8c004451399362"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Frozen/Geometry/RightFaceEndpointExistsUnique.lean",
+        "sha256": "2eff133e6bfff2fdbc7f2bd51389f4a73a7c4cbec234687e5f8c004451399362"
+      },
+      "exports": [
+        "LPP.Busemann.exists_unique_right_face_endpoint"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Frozen.Process.CoupledProcessSqueeze",
+        "sha256": "2613b047c9a20d87acef3061b28183b7b1d3dfc5bacba5c7373eb46a8361d443"
+      },
+      "availability": "development_review_only",
+      "public_source": null,
+      "exports": [
+        "LPP.Busemann.exists_coupled_busemann_process_and_fixed_direction_squeeze"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Process.OrdinaryGeodesicDirectedness",
+        "sha256": "91675bcd7474ed32307f73cf18ca593f91734f5870c03a3c09f7e394f24b24ff"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Busemann/Process/OrdinaryGeodesicDirectedness.lean",
+        "sha256": "91675bcd7474ed32307f73cf18ca593f91734f5870c03a3c09f7e394f24b24ff"
+      },
+      "exports": [
+        "LPP.Busemann.exists_full_event_ordinary_geodesics_directed_into_support_faces"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Busemann.Process.RightmostPathCoalescence",
+        "sha256": "ec1ed7b20c7f6e5616a9db57ca3d70e7de4616ae4ce20ddd69f71e125009f5e6"
+      },
+      "availability": "public_comment_only_difference",
+      "public_source": {
+        "path": "Busemann/Process/RightmostPathCoalescence.lean",
+        "sha256": "00c123b0a5e4adc868115356054bddc889dbdce64735a9a8cab7f5530953b91c"
+      },
+      "exports": [
+        "LPP.Busemann.hasCoalescingRightmostPaths_of_finite_block_condExp"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Model.AugmentedPassage",
+        "sha256": "8182b820279e6938fe743a17130f8a62a4275fd666706745a7c8e10583e3e022"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Model/AugmentedPassage.lean",
+        "sha256": "8182b820279e6938fe743a17130f8a62a4275fd666706745a7c8e10583e3e022"
+      },
+      "exports": [
+        "LPPDifferentiability.augmentedProcess_passage_lower",
+        "LPPDifferentiability.augmentedProcess_subset_levelSet"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Model.AugmentedProcessLaws",
+        "sha256": "831a89b6d3082952012cefd83ffe3022fe05250d0bd3fec832fc42de7ef86933"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Model/AugmentedProcessLaws.lean",
+        "sha256": "831a89b6d3082952012cefd83ffe3022fe05250d0bd3fec832fc42de7ef86933"
+      },
+      "exports": [
+        "LPPDifferentiability.openEdge_triangle_gain_ge"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Model.CoarseBlackBlocks",
+        "sha256": "fbbac1ed94a8c1c652882091257a590717a6a946fd7092736f3a2133d0f3367f"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Model/CoarseBlackBlocks.lean",
+        "sha256": "fbbac1ed94a8c1c652882091257a590717a6a946fd7092736f3a2133d0f3367f"
+      },
+      "exports": [
+        "LPPDifferentiability.coarse_path_few_black_blocks"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Model.PercolationTriangles",
+        "sha256": "aac1e09b7d5923b06aed9fb324e12c1ff9a17f042bc17f994f612e270c9756a6"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Model/PercolationTriangles.lean",
+        "sha256": "aac1e09b7d5923b06aed9fb324e12c1ff9a17f042bc17f994f612e270c9756a6"
+      },
+      "exports": [
+        "LPPDifferentiability.openReachSet_left_of_triangle",
+        "LPPDifferentiability.triangle_target_passage"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.AugmentedBlockLaws",
+        "sha256": "6135ebad5ff8bbedaa925dbb4883fe56de3ea101f705e9fed6019971db5558d4"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/AugmentedBlockLaws.lean",
+        "sha256": "6135ebad5ff8bbedaa925dbb4883fe56de3ea101f705e9fed6019971db5558d4"
+      },
+      "exports": [
+        "LPPDifferentiability.integral_isTriangle_lowestPoint_mul_shifted_gain",
+        "LPPDifferentiability.measure_isTriangle_lowestPoint"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.AugmentedExpectation",
+        "sha256": "64e17712645a6304530cfedcae77f8d46b67762439d2bb01240a2377c85eb064"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/AugmentedExpectation.lean",
+        "sha256": "64e17712645a6304530cfedcae77f8d46b67762439d2bb01240a2377c85eb064"
+      },
+      "exports": [
+        "LPPDifferentiability.integral_augmented_count",
+        "LPPDifferentiability.integral_augmented_edge_gain"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.AugmentedMeasurability",
+        "sha256": "02a9be22e96e4190ba0f39d860c05a1fbb716aec504a74854752db348eebea0b"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/AugmentedMeasurability.lean",
+        "sha256": "02a9be22e96e4190ba0f39d860c05a1fbb716aec504a74854752db348eebea0b"
+      },
+      "exports": [
+        "LPPDifferentiability.measurableSet_isTriangle_lowestPoint",
+        "LPPDifferentiability.measurable_maxFirst_augmentedProcess"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.FlatEdgeDifferentiability",
+        "sha256": "152d5acf4b2f094755436a9ff36a0976297877c800522480450557b2abdc69b9"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/FlatEdgeDifferentiability.lean",
+        "sha256": "152d5acf4b2f094755436a9ff36a0976297877c800522480450557b2abdc69b9"
+      },
+      "exports": [
+        "LPPDifferentiability.gbar_differentiableAt_edge_route_h"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.FlatTopDifferentiability",
+        "sha256": "365fd77ad1e256f5709c20d5fceb86c1c2903d11a2950d04f15b00def916681a"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/FlatTopDifferentiability.lean",
+        "sha256": "365fd77ad1e256f5709c20d5fceb86c1c2903d11a2950d04f15b00def916681a"
+      },
+      "exports": [
+        "LPPDifferentiability.differentiableAt_of_top_flat"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.FlatTopRouteH",
+        "sha256": "4f4312cbd78032580f280a002a2147c33beb9b68dd5be7b7c800bbbe29db0392"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/FlatTopRouteH.lean",
+        "sha256": "4f4312cbd78032580f280a002a2147c33beb9b68dd5be7b7c800bbbe29db0392"
+      },
+      "exports": [
+        "LPPDifferentiability.flat_top_route_h"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.FlatTopThinning",
+        "sha256": "ffd47000665b0358e30ee7f75f1a58e9f6e8b5c9bceeaf86665f710ba4452973"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/FlatTopThinning.lean",
+        "sha256": "ffd47000665b0358e30ee7f75f1a58e9f6e8b5c9bceeaf86665f710ba4452973"
+      },
+      "exports": [
+        "LPPDifferentiability.gbar_eq_one_of_gtop_eq_one"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.HalfLineEdgeDeviation",
+        "sha256": "a6910f2497e0f98ac27e022b4f8fdc78e834a654eb1cfc00a4a65d503f926c81"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/HalfLineEdgeDeviation.lean",
+        "sha256": "a6910f2497e0f98ac27e022b4f8fdc78e834a654eb1cfc00a4a65d503f926c81"
+      },
+      "exports": [
+        "LPPDifferentiability.halfLineEdge_upper_deviation"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.RightBlockGain",
+        "sha256": "f69d8d0f9dee305c725b9501fa9aca44d04286a57fc9ed8103c23839427f41c5"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/RightBlockGain.lean",
+        "sha256": "f69d8d0f9dee305c725b9501fa9aca44d04286a57fc9ed8103c23839427f41c5"
+      },
+      "exports": [
+        "LPPDifferentiability.integral_halfLine_rightBlock_gain",
+        "LPPDifferentiability.lintegral_rightBlock_gain_ge",
+        "LPPDifferentiability.openEdge_union_gain_antitone"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.SparseCoarsePaths",
+        "sha256": "03726afcc0e8250126a140483696fa855b1b26c0814addf9b0c5ee9a57310aa0"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/SparseCoarsePaths.lean",
+        "sha256": "03726afcc0e8250126a140483696fa855b1b26c0814addf9b0c5ee9a57310aa0"
+      },
+      "exports": [
+        "LPPDifferentiability.exists_sparse_good_coarse_path_cutoff"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.StartSetDeviation",
+        "sha256": "8455135cb2999028fdac7c6fc603e45ea7208da86b3fddcca179c121657db3a4"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/StartSetDeviation.lean",
+        "sha256": "8455135cb2999028fdac7c6fc603e45ea7208da86b3fddcca179c121657db3a4"
+      },
+      "exports": [
+        "LPPDifferentiability.expected_max_positive_deviation_startSet"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.TopFlatBeyondEdge",
+        "sha256": "21987bfa31cf4e76f2970134e7be35043f2ab4e76262c716be11e2705035c45b"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/TopFlatBeyondEdge.lean",
+        "sha256": "21987bfa31cf4e76f2970134e7be35043f2ab4e76262c716be11e2705035c45b"
+      },
+      "exports": [
+        "LPPDifferentiability.exists_gtop_eq_one_ge_edgeSpeed"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.TopFlatSegment",
+        "sha256": "9457f1a81610f16bd014b9652d7351679a7b217db582fdd3df32368cb132222a"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/TopFlatSegment.lean",
+        "sha256": "9457f1a81610f16bd014b9652d7351679a7b217db582fdd3df32368cb132222a"
+      },
+      "exports": [
+        "LPPDifferentiability.gtop_flat_segment_route_h"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.TopPassageDecay",
+        "sha256": "49dc3a65d3af7e6a8c2a3d888e23cb52787ba4935b5f58a5aea21ee7f0c3b79f"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/TopPassageDecay.lean",
+        "sha256": "49dc3a65d3af7e6a8c2a3d888e23cb52787ba4935b5f58a5aea21ee7f0c3b79f"
+      },
+      "exports": [
+        "LPPDifferentiability.top_passage_beyond_edge_decay",
+        "LPPDifferentiability.top_passage_beyond_edge_decay_total"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.TopShapeBeyondEdge",
+        "sha256": "3767c46007e6588634a80467f37e40e0eefddcb504e1ac5da8b511d763595fb6"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/TopShapeBeyondEdge.lean",
+        "sha256": "3767c46007e6588634a80467f37e40e0eefddcb504e1ac5da8b511d763595fb6"
+      },
+      "exports": [
+        "LPPDifferentiability.gtop_lt_one_beyond_edge"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.TriangleProbability",
+        "sha256": "e9e99a5021dbe843198873cf4a5a187703c3df3472e20a0edbcc4de425850689"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/TriangleProbability.lean",
+        "sha256": "e9e99a5021dbe843198873cf4a5a187703c3df3472e20a0edbcc4de425850689"
+      },
+      "exports": [
+        "LPPDifferentiability.exists_triangle_floor",
+        "LPPDifferentiability.triangle_probability"
+      ]
+    },
+    {
+      "review_identity": {
+        "module": "Differentiability.Probability.WhiteBlockBound",
+        "sha256": "ac1b11dd601ca36c293184d6a7d3199a063d8f441ca5e94d821af54f301f7382"
+      },
+      "availability": "public_exact_source_match",
+      "public_source": {
+        "path": "Differentiability/Probability/WhiteBlockBound.lean",
+        "sha256": "ac1b11dd601ca36c293184d6a7d3199a063d8f441ca5e94d821af54f301f7382"
+      },
+      "exports": [
+        "LPPDifferentiability.white_block_probability_le"
+      ]
+    }
+  ]
+}

@@ -10,71 +10,94 @@ A status applies to the scope stated below. Arrows point from a result to a resu
 
 ```mermaid
 flowchart TD
-  subgraph S0["Where the shape reaches the top weight"]
-    R1["◐ Theorem 2.2<br/>Where the shape equals the largest weight"]
-  end
-  subgraph S1["Paths between specified endpoints"]
+  subgraph S0["Shapes and supporting lines"]
+    R1["✓ Theorem 2.2<br/>Where the shape equals the largest weight"]
     R2["✓ Lemma 2.3<br/>Two linear bounds for the shape"]
-    R3["✓ Lemma 3.1<br/>High-weight paths near a prescribed segment"]
-    R4["✓ Lemma 3.2<br/>High-weight paths for all endpoint pairs"]
-    R5["✓ Proposition 3.4<br/>Paths rarely exceed either linear bound"]
-    R17["✓ Lemma A.1<br/>An infinite up-right path through likely events"]
-    R18["◐ Lemma B.1<br/>A lower bound for selected path weights"]
-    R19["✓ Lemma B.2<br/>Paths joining every pair of endpoints"]
-    R20["◐ Lemma B.3<br/>Short paths reaching prescribed points"]
-    R26["? Remark 3.3<br/>Choosing short paths after observing low weights"]
-    R27["? Remark 3.5<br/>The same bound for strips with any center"]
-    R40["? Remark B.4<br/>Why this proof needs a moment above one"]
+    R48["✓ Shape theorem (§2.2)<br/>The directional shape and uniform approximation"]
+    R49["✓ S1<br/>Uniform approximation at translated starting points"]
+    R50["✓ S2<br/>Uniform probabilities for deterministic endpoints"]
+    R51["✓ S3<br/>The shape dominates the mean weight"]
+    R52["✓ S4<br/>Lipschitz continuity away from the axes"]
+    R53["✓ Sublinear geodesic loss (§2.6)<br/>A directional geodesic has sublinear weight loss"]
   end
-  subgraph S2["Increasing weights in a finite region"]
-    R6["✓ Lemma 4.1<br/>Raising finitely many weights at small probability cost"]
-    R7["✓ Lemma 4.2<br/>Crossings of length ⌈s³⌉ become unlikely"]
-  end
-  subgraph S3["Choosing path lengths"]
-    R8["✓ Proposition 4.3<br/>The length where crossing probability becomes small"]
-    R9["✓ Lemma 4.4<br/>Infinitely many scales with comparable earlier lengths"]
-  end
-  subgraph S4["Paths with unrestricted endpoints"]
-    R10["✓ Lemma 5.7<br/>Paths between prescribed grid points"]
-    R11["✓ Proposition 5.9<br/>An upper weight bound for every path in a rectangle"]
-    R21["✓ Lemma B.5<br/>Paths can go around the very negative vertices"]
-    R22["✓ Lemma B.6<br/>A lower weight bound for many chosen paths"]
-    R23["✓ Lemma B.7<br/>Large positive weights do not spoil the connections"]
-    R28["? Remark 5.1<br/>Which connections require changes for unbounded weights"]
-    R29["? Remark 5.2<br/>The connecting paths are shorter than the proof needs"]
-    R30["✓ Remark 5.3<br/>Choose the connecting paths after locating negative weights"]
-    R31["✓ Remark 5.4<br/>The weight error on a short connecting interval"]
-    R32["✓ Remark 5.5<br/>Independent crossings with no very large weight"]
-    R33["✓ Remark 5.6<br/>The weight error when a crossing needs two connections"]
-    R34["✓ Remark 5.8<br/>The grid statement with random endpoints"]
-    R35["✓ Remark 5.10<br/>Removing a few endpoint vertices preserves the path bound"]
-  end
-  subgraph S5["Counting disjoint path events"]
-    R12["✓ Lemma 6.1<br/>Probability bound for disjoint path events"]
-    R15["✓ Proposition 6.7<br/>Long paths contain few rare subpaths"]
-  end
-  subgraph S6["Path weights and supporting lines"]
-    R13["✓ Lemma 6.3<br/>Paths containing no rare subpath"]
-    R14["✓ Lemma 6.5<br/>Weight bound from a count of rare subpaths"]
-    R16["✓ Lemma 6.8<br/>Path-weight bounds when the shape has a corner"]
-    R24["✓ Lemma B.8<br/>The path bounds with unbounded weights"]
-    R25["✓ Lemma B.9<br/>Bounding the contribution of large positive weights"]
-    R36["? Remark 6.2<br/>Choosing a scale for unbounded weights"]
-    R37["✓ Remark 6.4<br/>The cost of moving across a corner"]
-    R38["✓ Remark 6.6<br/>Subtracting the weight above a threshold"]
-    R39["✓ Remark 6.9<br/>The large-weight correction stays small"]
-    R41["? Remark B.10<br/>Why this proof requires a positive moment above four"]
-  end
-  subgraph S7["Differentiability"]
+  subgraph S1["Differentiability"]
     R0["✓ Theorem 2.1<br/>The shape is differentiable"]
   end
-  subgraph S8["A counterexample for small moments"]
-    R42["✓ Appendix C.1<br/>A law with no finite uniform shape limit"]
+  subgraph S2["Localized crossings"]
+    R3["✓ Lemma 4.1<br/>High-weight paths near a prescribed segment"]
+    R4["✓ Lemma 4.2<br/>High-weight paths for all endpoint pairs"]
+    R5["✓ Proposition 4.4<br/>Paths rarely exceed either linear bound"]
+    R27["? Remark 4.3<br/>Choosing short paths after observing low weights"]
+    R29["✓ Remark 4.6<br/>The same bound for strips with any center"]
+    R30["✓ Remark 4.7<br/>The same rarity with the shape threshold"]
+  end
+  subgraph S3["Characteristic scale"]
+    R6["✓ Lemma 5.1<br/>Raising finitely many weights at small probability cost"]
+    R7["✓ Lemma 5.2<br/>Crossings of length ⌈s³⌉ become unlikely"]
+    R8["✓ Proposition 5.3<br/>The length where crossing probability becomes small"]
+    R9["✓ Lemma 5.4<br/>Infinitely many scales with comparable earlier lengths"]
+  end
+  subgraph S4["Control over a parallelogram"]
+    R10["✓ Lemma 6.8<br/>Paths between prescribed grid points"]
+    R11["✓ Proposition 6.11<br/>An upper weight bound for every path in a rectangle"]
+    R31["✓ Remark 6.1<br/>Which connections require changes for unbounded weights"]
+    R32["✓ Remark 6.2<br/>The connecting paths are shorter than the proof needs"]
+    R33["✓ Remark 6.3<br/>Choose the connecting paths after locating negative weights"]
+    R34["✓ Remark 6.4<br/>The weight error on a short connecting interval"]
+    R35["✓ Remark 6.5<br/>Independent crossings with no very large weight"]
+    R36["✓ Remark 6.6<br/>The weight error when a crossing needs two connections"]
+    R37["✓ Remark 6.7<br/>The common good event for general weights"]
+    R38["✓ Remark 6.9<br/>The grid statement with random endpoints"]
+    R39["✓ Remark 6.10<br/>The general grid event still has high probability"]
+    R40["✓ Remark 6.12<br/>Removing a few endpoint vertices preserves the path bound"]
+  end
+  subgraph S5["Disjoint witnesses and corners"]
+    R12["✓ Lemma 7.2<br/>Paths containing no rare subpath"]
+    R13["✓ Lemma 7.4<br/>Weight bound from a count of rare subpaths"]
+    R14["✓ Proposition 7.6<br/>Long paths contain few rare subpaths"]
+    R15["✓ Lemma 7.7<br/>Path-weight bounds when the shape has a corner"]
+  end
+  subgraph S6["Moment assumptions and open questions"]
+    R28["✓ Remark 4.5<br/>For fixed lengths, a direct tail bound suffices"]
+    R41["✓ Remark 7.1<br/>Choosing a scale for unbounded weights"]
+    R42["✓ Remark 7.3<br/>The cost of moving across a corner"]
+    R43["✓ Remark 7.5<br/>The stage bound includes weights above the cutoff"]
+    R44["✓ Remark 7.8<br/>The large-weight correction stays small"]
+    R45["✓ Example 8.1<br/>A law with no finite uniform shape limit"]
+    R46["✓ Remark B.2<br/>How the selected-path probability bound is used"]
+    R47["✓ Remark B.5<br/>Why the attachment proof uses a moment above one"]
+    R54["✓ Moment bounds (§8.1)<br/>Where the moment bounds enter"]
+    R55["✓ Finite negative mean (§8.2)<br/>A finite horizontal rate needs an integrable negative part"]
+    R56["✓ Necessary upper tail (§8.3)<br/>The endpoint bound forces a small upper tail"]
+    R57["✓ Conditional cap (§8.3)<br/>Conditional cap bound for shorter blocks"]
+    R58["✓ Conditional excess (§8.3)<br/>The excess bound at a general aspect ratio"]
+    R59["? Scaling heuristics (§8.3)<br/>Heuristic characteristic lengths"]
+    R60["✓ Clipped shapes (§8.3)<br/>Upper truncation approximates the shape"]
+    R61["✓ Differentiability after capping (§8.3)<br/>Each fixed upper truncation is differentiable"]
+    R62["✓ Common modulus (§8.3)<br/>A shared modulus would pass differentiability to the limit"]
+    R63["✓ Confined top paths (§8.4)<br/>A confined all-top path is a near-optimal crossing"]
+    R64["✓ Fixed strip extinction (§8.4)<br/>All-top paths eventually die in a fixed strip"]
+    R65["? Exponential lifetime conjecture (§8.4)<br/>Conjectured exponential length in flat directions"]
+  end
+  subgraph S7["Oriented percolation and BK"]
+    R16["✓ Lemma A.1<br/>A boundary circuit around a finite lattice set"]
+    R17["✓ Lemma A.2<br/>An infinite up-right path through likely events"]
+    R18["✓ Lemma A.3<br/>Probability bound for disjoint path events"]
+  end
+  subgraph S8["Extension to unbounded weights"]
+    R19["✓ Lemma B.1<br/>A lower bound for selected path weights"]
+    R20["✓ Lemma B.3<br/>Paths joining every pair of endpoints"]
+    R21["✓ Lemma B.4<br/>Short paths reaching prescribed points"]
+    R22["✓ Lemma B.6<br/>Paths can go around the very negative vertices"]
+    R23["✓ Lemma B.7<br/>A lower weight bound for many chosen paths"]
+    R24["✓ Lemma B.8<br/>Large positive weights do not spoil the connections"]
+    R25["✓ Lemma B.9<br/>The path bounds with unbounded weights"]
+    R26["✓ Lemma B.10<br/>Bounding the contribution of large positive weights"]
   end
   R3 -->|bounded case| R4
-  R18 --> R20
-  R20 --> R19
-  R3 --> R19
+  R19 --> R21
+  R21 --> R20
+  R3 --> R20
   R2 --> R5
   R4 --> R5
   R17 --> R5
@@ -85,56 +108,78 @@ flowchart TD
   R8 --> R9
   R8 --> R10
   R9 --> R10
-  R17 --> R21
-  R18 --> R22
-  R8 --> R23
-  R9 --> R23
-  R21 -->|general weights| R10
-  R22 -->|general weights| R10
-  R23 -->|general weights| R10
+  R19 --> R23
+  R8 --> R24
+  R9 --> R24
   R10 --> R11
   R5 --> R11
-  R21 -->|general weights| R11
-  R23 -->|general weights| R11
+  R22 -->|general weights| R11
+  R24 -->|general weights| R11
+  R18 --> R14
+  R11 --> R14
+  R8 --> R14
   R12 --> R15
-  R11 --> R15
-  R8 --> R15
-  R13 --> R16
-  R14 --> R16
-  R13 --> R24
-  R8 --> R25
+  R13 --> R15
+  R12 --> R25
+  R8 --> R26
   R1 --> R0
+  R14 -->|bounded case| R0
   R15 -->|bounded case| R0
-  R16 -->|bounded case| R0
-  R24 -->|general weights| R0
   R25 -->|general weights| R0
-  R9 --> R15
-  R5 --> R27
-  R27 --> R11
-  R22 --> R30
-  R30 --> R31
-  R23 --> R32
-  R32 --> R33
-  R21 --> R33
-  R22 --> R33
-  R31 --> R34
+  R26 -->|general weights| R0
+  R9 --> R14
+  R29 --> R11
+  R16 --> R17
+  R16 --> R22
+  R48 --> R49
+  R48 --> R50
+  R48 --> R51
+  R48 --> R52
+  R50 --> R3
+  R52 --> R3
+  R51 -->|bounded case| R4
+  R52 --> R53
+  R48 --> R53
+  R53 -->|bounded case| R0
+  R5 --> R29
+  R5 --> R30
+  R2 --> R30
+  R23 --> R33
   R33 --> R34
-  R21 --> R34
-  R23 --> R34
-  R34 --> R35
-  R21 --> R35
-  R23 --> R35
-  R13 --> R37
-  R37 --> R16
-  R24 --> R38
+  R24 --> R35
+  R33 --> R36
+  R35 --> R36
+  R33 --> R37
+  R35 --> R37
+  R34 --> R38
+  R36 --> R38
+  R22 --> R39
   R24 --> R39
-  R25 --> R39
+  R37 --> R39
+  R23 --> R39
+  R38 --> R40
+  R11 --> R41
+  R12 --> R42
+  R2 --> R42
+  R25 --> R43
+  R26 --> R44
+  R25 --> R44
+  R19 --> R46
+  R21 --> R47
+  R11 --> R56
+  R0 --> R61
+  R60 --> R62
+  R61 --> R62
+  R22 --> R36
+  R38 -->|general weights| R11
+  R39 -->|general weights| R11
+  R44 -->|general weights| R0
   classDef certified fill:#eaf6ec,stroke:#2d8544,color:#163b20
   classDef restricted fill:#fff5db,stroke:#a77815,color:#594005
   classDef not_assessed fill:#f6f8fa,stroke:#8c959f,stroke-dasharray:4 3,color:#424a53
   classDef not_in_release fill:#fff,stroke:#8c959f,color:#59636e
   class R0 certified
-  class R1 restricted
+  class R1 certified
   class R2 certified
   class R3 certified
   class R4 certified
@@ -151,84 +196,130 @@ flowchart TD
   class R15 certified
   class R16 certified
   class R17 certified
-  class R18 restricted
+  class R18 certified
   class R19 certified
-  class R20 restricted
+  class R20 certified
   class R21 certified
   class R22 certified
   class R23 certified
   class R24 certified
   class R25 certified
-  class R26 not_assessed
+  class R26 certified
   class R27 not_assessed
-  class R28 not_assessed
-  class R29 not_assessed
+  class R28 certified
+  class R29 certified
   class R30 certified
   class R31 certified
   class R32 certified
   class R33 certified
   class R34 certified
   class R35 certified
-  class R36 not_assessed
+  class R36 certified
   class R37 certified
   class R38 certified
   class R39 certified
-  class R40 not_assessed
-  class R41 not_assessed
+  class R40 certified
+  class R41 certified
   class R42 certified
+  class R43 certified
+  class R44 certified
+  class R45 certified
+  class R46 certified
+  class R47 certified
+  class R48 certified
+  class R49 certified
+  class R50 certified
+  class R51 certified
+  class R52 certified
+  class R53 certified
+  class R54 certified
+  class R55 certified
+  class R56 certified
+  class R57 certified
+  class R58 certified
+  class R59 not_assessed
+  class R60 certified
+  class R61 certified
+  class R62 certified
+  class R63 certified
+  class R64 certified
+  class R65 not_assessed
 ```
 
-Section 6 first proves the bounded-weight case. The full theorem under the stated moment assumptions uses Appendix B.
+The map follows the final draft selected on 23 November 2026. Certificate coverage refers to the reviewed formalization of 24 November 2026.
 
-Lemma B.2 supplies the general-weight proof of Lemma 3.2. Remark 5.8 changes the endpoints and intervals in the general-weight version of Lemma 5.7.
+Sections 4, 6 and 7 present bounded-weight arguments; Appendix B supplies the general-weight forms used for the full theorem. Conditional claims retain their stated premises. Heuristics and conjectures are identified separately.
 
 ## Progress
 
 | Paper result | Formalization |
 | --- | --- |
-| **[Theorem 2.2](#theorem-22)**<br/>Where the shape equals the largest weight | **◐ Restricted**<br/>[Selected flat-segment conclusions](#theorem-22)<br/>[Flat-segment theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/FlatTopRouteH.lean#L64) · [Differentiability at every flat direction](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/FlatTopDifferentiability.lean#L60) |
-| **[Lemma 2.3](#lemma-23)**<br/>Two linear bounds for the shape | **✓ Certified**<br/>[Coverage note](#lemma-23)<br/>[Supporting functionals and contact](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean#L119) |
-| **[Lemma 3.1](#lemma-31)**<br/>High-weight paths near a prescribed segment | **✓ Certified**<br/>[Coverage note](#lemma-31)<br/>[Travel estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/Travel.lean#L29) |
-| **[Lemma 3.2](#lemma-32)**<br/>High-weight paths for all endpoint pairs | **✓ Certified**<br/>[Coverage note](#lemma-32)<br/>[General-weight interval connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralIntervals.lean#L51) |
-| **[Proposition 3.4](#proposition-34)**<br/>Paths rarely exceed either linear bound | **✓ Certified**<br/>[Coverage note](#proposition-34)<br/>[Uniform rare-fast-crossing bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/RareFastCrossings.lean#L40) |
-| **[Lemma A.1](#lemma-a1)**<br/>An infinite up-right path through likely events | **✓ Certified**<br/>[Coverage note](#lemma-a1)<br/>[High-density oriented-path theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HighDensityOrientedPaths.lean#L68) |
-| **[Lemma B.1](#lemma-b1)**<br/>A lower bound for selected path weights | **◐ Restricted**<br/>[Paths confined to a fixed finite region](#lemma-b1)<br/>[Bound for paths chosen from low-weight sites](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GlobalMaskFamilyWeights.lean#L245) · [Conditional single-path bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ConditionalFinitePathWeights.lean#L67) |
-| **[Lemma B.2](#lemma-b2)**<br/>Paths joining every pair of endpoints | **✓ Certified**<br/>[Coverage note](#lemma-b2)<br/>[General-weight interval connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralIntervals.lean#L51) |
-| **[Lemma B.3](#lemma-b3)**<br/>Short paths reaching prescribed points | **◐ Restricted**<br/>[One constructed target set](#lemma-b3)<br/>[Forward paths to the constructed target set](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ForwardHeavyAttachmentAsymptotics.lean#L27) · [Backward paths to the constructed target set](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/BackwardHeavyAttachmentAsymptotics.lean#L20) |
-| **[Remark 3.3](#remark-33)**<br/>Choosing short paths after observing low weights | **? Not assessed**<br/>[Coverage note](#remark-33) |
-| **[Remark 3.5](#remark-35)**<br/>The same bound for strips with any center | **? Not assessed**<br/>[Coverage note](#remark-35)<br/>[Translation of strip crossings](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/RarefastTranslation.lean#L96) · [Endpoint argument using translated strip bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77) |
-| **[Remark B.4](#remark-b4)**<br/>Why this proof needs a moment above one | **? Not assessed**<br/>[Coverage note](#remark-b4) |
-| **[Lemma 4.1](#lemma-41)**<br/>Raising finitely many weights at small probability cost | **✓ Certified**<br/>[Coverage note](#lemma-41)<br/>[Modified-field monotonicity and product law](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumModifiedFieldLaw.lean#L93) · [Absolute continuity and density bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumKernelRN.lean#L87) · [Good set and conditional independent boosts](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumKernelGoodSet.lean#L33) · [Strict quantile-gap positivity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/MaximumQuantileGap.lean#L120) |
-| **[Lemma 4.2](#lemma-42)**<br/>Crossings of length ⌈s³⌉ become unlikely | **✓ Certified**<br/>[Coverage note](#lemma-42)<br/>[Cubic-length crossing rarity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/TiltLimit.lean#L66) |
-| **[Proposition 4.3](#proposition-43)**<br/>The length where crossing probability becomes small | **✓ Certified**<br/>[Coverage note](#proposition-43)<br/>[Short-crossing abundance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ShortCrossingAbundance.lean#L336) · [Characteristic lengths and records](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/CharacteristicLengths.lean#L45) |
-| **[Lemma 4.4](#lemma-44)**<br/>Infinitely many scales with comparable earlier lengths | **✓ Certified**<br/>[Coverage note](#lemma-44)<br/>[Actual characteristic-length records](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/CharacteristicLengths.lean#L45) · [Deterministic record-scale lemma](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/RecordScales.lean#L62) |
-| **[Lemma 5.7](#lemma-57)**<br/>Paths between prescribed grid points | **✓ Certified**<br/>[Coverage note](#lemma-57)<br/>[Bounded grid connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneous.lean#L138) · [General-weight entrance and exit connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneousGeneral.lean#L50) |
-| **[Proposition 5.9](#proposition-59)**<br/>An upper weight bound for every path in a rectangle | **✓ Certified**<br/>[Coverage note](#proposition-59)<br/>[General-weight endpoint estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77) · [Bounded-grid endpoint estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpoints.lean#L151) · [Assembly supplying the grid estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralOffFlatDifferentiability.lean#L163) |
-| **[Lemma B.5](#lemma-b5)**<br/>Paths can go around the very negative vertices | **✓ Certified**<br/>[Coverage note](#lemma-b5)<br/>[Geometry-event probability](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StairGeometryEvent.lean#L361) · [Trapped component bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/StairTrappedComponents.lean#L277) · [Forward greedy path](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairGreedyForward.lean#L350) · [Backward greedy path](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairGreedyBackward.lean#L69) · [Arrival at the target](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairArrival.lean#L148) · [Crossing paths merge](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/TransverseMerge.lean#L107) · [Trimming vertices](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/StairTrim.lean#L167) |
-| **[Lemma B.6](#lemma-b6)**<br/>A lower weight bound for many chosen paths | **✓ Certified**<br/>[Coverage note](#lemma-b6)<br/>[General-weight staircase path-family theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StaircaseGeneral.lean#L270) |
-| **[Lemma B.7](#lemma-b7)**<br/>Large positive weights do not spoil the connections | **✓ Certified**<br/>[Coverage note](#lemma-b7)<br/>[No heavy vertex in working region](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L65) · [Uniform coarse-block decay](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L255) · [Heavy-trimmed crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66) |
-| **[Remark 5.1](#remark-51)**<br/>Which connections require changes for unbounded weights | **? Not assessed**<br/>[Coverage note](#remark-51) |
-| **[Remark 5.2](#remark-52)**<br/>The connecting paths are shorter than the proof needs | **? Not assessed**<br/>[Coverage note](#remark-52)<br/>[Dyadic length arithmetic](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/RecordScales.lean#L135) · [Staircase lower-tail bound with the retained length budget](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridStaircaseBad.lean#L30) |
-| **[Remark 5.3](#remark-53)**<br/>Choose the connecting paths after locating negative weights | **✓ Certified**<br/>[Coverage note](#remark-53)<br/>[General-weight staircase bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StaircaseGeneral.lean#L270) · [Avoiding-path geometry event](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StairGeometryEvent.lean#L361) |
-| **[Remark 5.4](#remark-54)**<br/>The weight error on a short connecting interval | **✓ Certified**<br/>[Coverage note](#remark-54)<br/>[General fine-grid paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridFineGeneral.lean#L226) · [Half-error input and local cost arithmetic](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridFineGeneral.lean#L183) |
-| **[Remark 5.5](#remark-55)**<br/>Independent crossings with no very large weight | **✓ Certified**<br/>[Coverage note](#remark-55)<br/>[Heavy-trimmed crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66) · [Coarse heavy-vertex bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L255) |
-| **[Remark 5.6](#remark-56)**<br/>The weight error when a crossing needs two connections | **✓ Certified**<br/>[Coverage note](#remark-56)<br/>[General coarse-grid paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralCost.lean#L27) · [Independent crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66) · [Arrival path with half-error allowance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralArrival.lean#L70) · [Merge and tail with combined error allowance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralMerge.lean#L45) · [Assembly of the local cost bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralAssembly.lean#L294) |
-| **[Remark 5.8](#remark-58)**<br/>The grid statement with random endpoints | **✓ Certified**<br/>[Coverage note](#remark-58)<br/>[General-weight grid connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneousGeneral.lean#L50) |
-| **[Remark 5.10](#remark-510)**<br/>Removing a few endpoint vertices preserves the path bound | **✓ Certified**<br/>[Coverage note](#remark-510)<br/>[General-weight endpoints](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77) · [Endpoint reduction with trimmed paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/EndpointReductionGeneral.lean#L138) |
-| **[Lemma 6.1](#lemma-61)**<br/>Probability bound for disjoint path events | **✓ Certified**<br/>[Coverage note](#lemma-61)<br/>[Path-event BK inequality](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/PathEventBK.lean#L90) |
-| **[Proposition 6.7](#proposition-67)**<br/>Long paths contain few rare subpaths | **✓ Certified**<br/>[Coverage note](#proposition-67)<br/>[Few disjoint stage witnesses](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LongPathWitnessBound.lean#L46) |
-| **[Lemma 6.3](#lemma-63)**<br/>Paths containing no rare subpath | **✓ Certified**<br/>[Coverage note](#lemma-63)<br/>[Witness-free stage defects](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L137) |
-| **[Lemma 6.5](#lemma-65)**<br/>Weight bound from a count of rare subpaths | **✓ Certified**<br/>[Coverage note](#lemma-65)<br/>[Stage split and defect bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58) |
-| **[Lemma 6.8](#lemma-68)**<br/>Path-weight bounds when the shape has a corner | **✓ Certified**<br/>[Coverage note](#lemma-68)<br/>[Full-stage estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L26) · [Total-path estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166) |
-| **[Lemma B.8](#lemma-b8)**<br/>The path bounds with unbounded weights | **✓ Certified**<br/>[Coverage note](#lemma-b8)<br/>[Stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58) · [Full-stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L26) · [Total defect](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166) · [Excess bounded by itinerary block sum](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L113) |
-| **[Lemma B.9](#lemma-b9)**<br/>Bounding the contribution of large positive weights | **✓ Certified**<br/>[Coverage note](#lemma-b9)<br/>[Uniform excess-animal bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ExcessAnimalBound.lean#L51) · [Actual path itineraries](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L113) |
-| **[Remark 6.2](#remark-62)**<br/>Choosing a scale for unbounded weights | **? Not assessed**<br/>[Coverage note](#remark-62)<br/>[General scale assembly](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralOffFlatDifferentiability.lean#L175) · [Excess scale eventually small](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/CornerDefectExcess.lean#L54) |
-| **[Remark 6.4](#remark-64)**<br/>The cost of moving across a corner | **✓ Certified**<br/>[Coverage note](#remark-64)<br/>[Extreme and average defect identity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/DefectAlgebra.lean#L68) · [Witness-free extreme-defect bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L137) · [Transverse corner-cost step](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L87) |
-| **[Remark 6.6](#remark-66)**<br/>Subtracting the weight above a threshold | **✓ Certified**<br/>[Coverage note](#remark-66)<br/>[Stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58) |
-| **[Remark 6.9](#remark-69)**<br/>The large-weight correction stays small | **✓ Certified**<br/>[Coverage note](#remark-69)<br/>[Total defect with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166) · [Eventual excess bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L182) · [Positive linear defect](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/CornerDefectExcess.lean#L36) |
-| **[Remark B.10](#remark-b10)**<br/>Why this proof requires a positive moment above four | **? Not assessed**<br/>[Coverage note](#remark-b10)<br/>[Current cubic-scale excess bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ExcessAnimalBound.lean#L51) · [Current heavy-vertex estimates](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L65) |
-| **[Theorem 2.1](#theorem-21)**<br/>The shape is differentiable | **✓ Certified**<br/>[Coverage note](#theorem-21)<br/>[Theorem 2.1](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Statements.lean#L110) · [Assembled proof](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Full/Differentiability.lean#L53) |
-| **[Appendix C.1](#appendix-c1)**<br/>A law with no finite uniform shape limit | **✓ Certified**<br/>[Coverage note](#appendix-c1)<br/>[Construction of the lower-tail law](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LowerTailExampleLaw.lean#L42) · [Lower-tail counterexample](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LowerTailExample.lean#L383) |
+| **[Theorem 2.2](#theorem-22)**<br/>Where the shape equals the largest weight | **✓ Certified**<br/>[Coverage note](#theorem-22)<br/>[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.FinalDraft.FlatTop.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/FlatTop/Theorem.lean) |
+| **[Lemma 2.3](#lemma-23)**<br/>Two linear bounds for the shape | **✓ Certified**<br/>[Coverage note](#lemma-23)<br/>[LPPDifferentiability.quadrant_supporting_functionals_and_contact](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean) |
+| **[Shape theorem (§2.2)](#shape-theorem-22)**<br/>The directional shape and uniform approximation | **✓ Certified**<br/>[Coverage note](#shape-theorem-22)<br/>[LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/UniformShapeProbability.lean) · [LPPDifferentiability.exists_unique_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/WeakNegativeShape.lean) · [LPPDifferentiability.positive_integrated_sqrt_tail_lt_top_of_moment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/ProbabilityBasics/Probability/PositiveMomentTail.lean) |
+| **[S1](#s1)**<br/>Uniform approximation at translated starting points | **✓ Certified**<br/>[Coverage note](#s1)<br/>[LPP.ae_uniform_passage_shape_all_starts_of_origin](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Model/LastPassage/UniformShapeAllStarts.lean) · [LPPDifferentiability.exists_unique_translated_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TranslatedShape.lean) |
+| **[S2](#s2)**<br/>Uniform probabilities for deterministic endpoints | **✓ Certified**<br/>[Coverage note](#s2)<br/>[LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/UniformShapeProbability.lean) |
+| **[S3](#s3)**<br/>The shape dominates the mean weight | **✓ Certified**<br/>[Coverage note](#s3)<br/>[LPPDifferentiability.level_mul_integral_le_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/ShapeAboveMean.lean) · [LPPDifferentiability.integral_le_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/ShapeAboveMean.lean) |
+| **[S4](#s4)**<br/>Lipschitz continuity away from the axes | **✓ Certified**<br/>[Coverage note](#s4)<br/>[LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_adapted_cone](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean) · [LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_fraction_cone](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean) |
+| **[Sublinear geodesic loss (§2.6)](#sublinear-geodesic-loss-26)**<br/>A directional geodesic has sublinear weight loss | **✓ Certified**<br/>[Coverage note](#sublinear-geodesic-loss-26)<br/>[LPPDifferentiability.floor_direction_geodesic_defect_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeodesicDefect.lean) · [LPPDifferentiability.exists_maximizing_floor_direction_path](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeodesicDefect.lean) |
+| **[Theorem 2.1](#theorem-21)**<br/>The shape is differentiable | **✓ Certified**<br/>[Coverage note](#theorem-21)<br/>[LPPDifferentiability.exists_unique_shape_differentiable_full](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/Main/Differentiability.lean) · [LPPDifferentiability.Paper.shape_differentiable_on_unit_segment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/MainProof.lean) · [LPPStatements.Differentiability.shape_differentiable_on_unit_segment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Statements.lean) · [LPPDifferentiability.Paper.differentiable_on_unit_segment_iff_open_quadrant](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/Setting.lean) · [LPPStatements.Differentiability.shape_exists_unique_and_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Statements.lean) · [LPPDifferentiability.Full.exists_unique_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Full/Differentiability.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean) |
+| **[Lemma 4.1](#lemma-41)**<br/>High-weight paths near a prescribed segment | **✓ Certified**<br/>[Coverage note](#lemma-41)<br/>[LPPDifferentiability.exists_unique_shape_with_travel](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/Travel.lean) |
+| **[Lemma 4.2](#lemma-42)**<br/>High-weight paths for all endpoint pairs | **✓ Certified**<br/>[Coverage note](#lemma-42)<br/>[LPPDifferentiability.exists_unique_shape_with_bounded_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/BoundedIntervals.lean) · [LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean) |
+| **[Proposition 4.4](#proposition-44)**<br/>Paths rarely exceed either linear bound | **✓ Certified**<br/>[Coverage note](#proposition-44)<br/>[LPPDifferentiability.rarefast_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RareFastCrossings.lean) · [LPPDifferentiability.measureReal_strip_crossing_translate](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RarefastTranslation.lean) |
+| **[Remark 4.3](#remark-43)**<br/>Choosing short paths after observing low weights | **? Not assessed**<br/>[Coverage note](#remark-43)<br/>[LPPDifferentiability.exists_rarefast_connector_scale](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RarefastConnectors.lean) · [LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean) · [LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) |
+| **[Remark 4.6](#remark-46)**<br/>The same bound for strips with any center | **✓ Certified**<br/>[Coverage note](#remark-46)<br/>[LPPDifferentiability.FinalDraft.exists_lattice_center_stripCrossing_subset](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/Translation.lean) · [LPPDifferentiability.FinalDraft.rarefast_real_center_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/Translation.lean) |
+| **[Remark 4.7](#remark-47)**<br/>The same rarity with the shape threshold | **✓ Certified**<br/>[Coverage note](#remark-47)<br/>[LPPDifferentiability.FinalDraft.strip_crossing_support_subset_shape](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean) · [LPPDifferentiability.FinalDraft.strip_crossing_shape_subset_support_union](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean) · [LPPDifferentiability.FinalDraft.rarefast_shape_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean) |
+| **[Lemma 5.1](#lemma-51)**<br/>Raising finitely many weights at small probability cost | **✓ Certified**<br/>[Coverage note](#lemma-51)<br/>[LPPDifferentiability.maximum_modification_ge_original](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean) · [LPPDifferentiability.maximum_modification_map_eq_density_product](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean) · [LPPDifferentiability.integral_sq_toReal_rnDeriv_maximum_kernel_map_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelRN.lean) · [LPPDifferentiability.maximum_kernel_good_set](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelGoodSet.lean) · [LPPDifferentiability.maximum_quantile_gap_pos](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/ProbabilityBasics/Probability/MaximumQuantileGap.lean) · [LPPDifferentiability.maximum_kernel_map_event_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelRN.lean) · [LPPDifferentiability.maximum_modification_map_eq_mixture_product](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean) |
+| **[Lemma 5.2](#lemma-52)**<br/>Crossings of length ⌈s³⌉ become unlikely | **✓ Certified**<br/>[Coverage note](#lemma-52)<br/>[LPPDifferentiability.tilt_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltLimit.lean) · [LPPDifferentiability.exists_source_top_indicator_shape_with_strip_rarity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltStripTopSites.lean) |
+| **[Proposition 5.3](#proposition-53)**<br/>The length where crossing probability becomes small | **✓ Certified**<br/>[Coverage note](#proposition-53)<br/>[LPPDifferentiability.short_crossing_abundance](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ShortCrossingAbundance.lean) · [LPPDifferentiability.characteristic_length_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/CharacteristicLengths.lean) |
+| **[Lemma 5.4](#lemma-54)**<br/>Infinitely many scales with comparable earlier lengths | **✓ Certified**<br/>[Coverage note](#lemma-54)<br/>[LPPDifferentiability.characteristic_length_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/CharacteristicLengths.lean) · [LPPDifferentiability.exists_infinite_record_scales](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/RecordScales.lean) |
+| **[Lemma 6.8](#lemma-68)**<br/>Paths between prescribed grid points | **✓ Certified**<br/>[Coverage note](#lemma-68)<br/>[LPPDifferentiability.bounded_grid_good_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridSimultaneous.lean) · [LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.general_grid_connections_on_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.mem_generalGridGoodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.grid_connections_simultaneous_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridSimultaneousGeneral.lean) |
+| **[Proposition 6.11](#proposition-611)**<br/>An upper weight bound for every path in a rectangle | **✓ Certified**<br/>[Coverage note](#proposition-611)<br/>[LPPDifferentiability.arbitrary_endpoints_defect_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpoints.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean) · [LPPDifferentiability.endpoint_pair_of_mem_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/EndpointReductionGeneral.lean) |
+| **[Remark 6.1](#remark-61)**<br/>Which connections require changes for unbounded weights | **✓ Certified**<br/>[Coverage note](#remark-61)<br/>[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean) |
+| **[Remark 6.2](#remark-62)**<br/>The connecting paths are shorter than the proof needs | **✓ Certified**<br/>[Coverage note](#remark-62)<br/>[LPPDifferentiability.sq_mul_two_pow_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/RecordScales.lean) · [LPPDifferentiability.grid_sq_mul_width_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/GridScaleCounts.lean) · [LPPDifferentiability.isCoarseAttachmentStaircase_length](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridFineStaircaseFamily.lean) · [LPPDifferentiability.staircase_weight_stretched_exponential_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean) |
+| **[Remark 6.3](#remark-63)**<br/>Choose the connecting paths after locating negative weights | **✓ Certified**<br/>[Coverage note](#remark-63)<br/>[LPPDifferentiability.StairGeometry.forward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.backward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.SelectedGridPaths.fineChoice](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SelectedGridPaths/Family.lean) · [LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/StaircaseWeights.lean) |
+| **[Remark 6.4](#remark-64)**<br/>The weight error on a short connecting interval | **✓ Certified**<br/>[Coverage note](#remark-64)<br/>[LPPDifferentiability.grid_vertex_clause_of_generalGridGoodEvent](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) |
+| **[Remark 6.5](#remark-65)**<br/>Independent crossings with no very large weight | **✓ Certified**<br/>[Coverage note](#remark-65)<br/>[LPPDifferentiability.gridCappedTrial](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralEvents.lean) · [LPPDifferentiability.fixed_coarse_good_event_prob_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridCoarseGoodProbability.lean) |
+| **[Remark 6.6](#remark-66)**<br/>The weight error when a crossing needs two connections | **✓ Certified**<br/>[Coverage note](#remark-66)<br/>[LPPDifferentiability.SelectedGridPaths.CoarseBlock.coarse_gridConnection](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SelectedGridPaths/Coarse/Connection.lean) |
+| **[Remark 6.7](#remark-67)**<br/>The common good event for general weights | **✓ Certified**<br/>[Coverage note](#remark-67)<br/>[LPPDifferentiability.generalGridCellGood](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralEvents.lean) · [LPPDifferentiability.generalGridGoodEventForPaths](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalEvents.lean) · [LPPDifferentiability.mem_generalGridGoodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) |
+| **[Remark 6.9](#remark-69)**<br/>The grid statement with random endpoints | **✓ Certified**<br/>[Coverage note](#remark-69)<br/>[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) |
+| **[Remark 6.10](#remark-610)**<br/>The general grid event still has high probability | **✓ Certified**<br/>[Coverage note](#remark-610)<br/>[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.general_grid_good_event_failure_eventually_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean) |
+| **[Remark 6.12](#remark-612)**<br/>Removing a few endpoint vertices preserves the path bound | **✓ Certified**<br/>[Coverage note](#remark-612)<br/>[LPPDifferentiability.endpoint_pair_of_mem_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/EndpointReductionGeneral.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean) |
+| **[Lemma 7.2](#lemma-72)**<br/>Paths containing no rare subpath | **✓ Certified**<br/>[Coverage note](#lemma-72)<br/>[LPPDifferentiability.Path.witness_free_stage_defect](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/WitnessFreeStage.lean) |
+| **[Lemma 7.4](#lemma-74)**<br/>Weight bound from a count of rare subpaths | **✓ Certified**<br/>[Coverage note](#lemma-74)<br/>[LPPDifferentiability.Path.stageWitnessMultiplicity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean) · [LPPDifferentiability.Path.has_stage_witness_family_multiplicity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/Maximum.lean) · [LPPDifferentiability.Path.stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) |
+| **[Proposition 7.6](#proposition-76)**<br/>Long paths contain few rare subpaths | **✓ Certified**<br/>[Coverage note](#proposition-76)<br/>[LPPDifferentiability.Path.exists_total_witness_family](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean) · [LPPDifferentiability.totalWitnessMultiplicity_lt_eventually_ae](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean) |
+| **[Lemma 7.7](#lemma-77)**<br/>Path-weight bounds when the shape has a corner | **✓ Certified**<br/>[Coverage note](#lemma-77)<br/>[LPPDifferentiability.Path.full_stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) |
+| **[Remark 4.5](#remark-45)**<br/>For fixed lengths, a direct tail bound suffices | **✓ Certified**<br/>[Coverage note](#remark-45)<br/>[LPPDifferentiability.FinalDraft.tendsto_sq_mul_upper_tail_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FixedLength.lean) · [LPPDifferentiability.FinalDraft.fixed_length_fast_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FixedLength.lean) · [LPPDifferentiability.rarefast_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RareFastCrossings.lean) |
+| **[Remark 7.1](#remark-71)**<br/>Choosing a scale for unbounded weights | **✓ Certified**<br/>[Coverage note](#remark-71)<br/>[LPPDifferentiability.exists_stage_witness_path_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageWitnessPathEvents.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean) |
+| **[Remark 7.3](#remark-73)**<br/>The cost of moving across a corner | **✓ Certified**<br/>[Coverage note](#remark-73)<br/>[LPPDifferentiability.quadrant_supporting_functionals_and_contact](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean) · [LPPDifferentiability.Path.canonical_path_defect_min](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/DefectAlgebra.lean) · [LPPDifferentiability.Path.full_stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) |
+| **[Remark 7.5](#remark-75)**<br/>The stage bound includes weights above the cutoff | **✓ Certified**<br/>[Coverage note](#remark-75)<br/>[LPPDifferentiability.Path.stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.full_stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean) |
+| **[Remark 7.8](#remark-78)**<br/>The large-weight correction stays small | **✓ Certified**<br/>[Coverage note](#remark-78)<br/>[LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.exists_stage_excess_total_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean) |
+| **[Example 8.1](#example-81)**<br/>A law with no finite uniform shape limit | **✓ Certified**<br/>[Coverage note](#example-81)<br/>[LPPDifferentiability.exists_lowerTail_law](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_ae_nonpos](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_lintegral_negPart_rpow_lt_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_lintegral_negPart_eq_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTailExample](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExample.lean) · [LPPDifferentiability.lowerTail_liminf_eq_bot](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExample.lean) |
+| **[Remark B.2](#remark-b2)**<br/>How the selected-path probability bound is used | **✓ Certified**<br/>[Coverage note](#remark-b2)<br/>[LPPDifferentiability.Paper.path_family_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/PathFamilyWeights.lean) · [LPPDifferentiability.staircase_weight_polynomial_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean) · [LPPDifferentiability.staircase_weight_stretched_exponential_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean) · [LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) |
+| **[Remark B.5](#remark-b5)**<br/>Why the attachment proof uses a moment above one | **✓ Certified**<br/>[Coverage note](#remark-b5)<br/>[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) |
+| **[Moment bounds (§8.1)](#moment-bounds-81)**<br/>Where the moment bounds enter | **✓ Certified**<br/>[Coverage note](#moment-bounds-81)<br/>[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) · [LPPDifferentiability.stair_geometry_event_tendsto_final](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StairGeometryEvent.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.exists_excess_animal_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ExcessAnimalBound.lean) |
+| **[Finite negative mean (§8.2)](#finite-negative-mean-82)**<br/>A finite horizontal rate needs an integrable negative part | **✓ Certified**<br/>[Coverage note](#finite-negative-mean-82)<br/>[LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_horizontal_rate](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean) · [LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_shape](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean) |
+| **[Necessary upper tail (§8.3)](#necessary-upper-tail-83)**<br/>The endpoint bound forces a small upper tail | **✓ Certified**<br/>[Coverage note](#necessary-upper-tail-83)<br/>[LPPDifferentiability.FinalDraft.endpoint_upper_tail_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean) · [LPPDifferentiability.FinalDraft.endpointFastEvent_eq_defect](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean) · [LPPDifferentiability.FinalDraft.measureReal_exists_site_above_eq](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FiniteSites.lean) · [LPPDifferentiability.measureReal_exists_upper_heavy_site_le_and_safe_ge](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/FiniteHeavyVertices.lean) |
+| **[Conditional cap (§8.3)](#conditional-cap-83)**<br/>Conditional cap bound for shorter blocks | **✓ Certified**<br/>[Coverage note](#conditional-cap-83)<br/>[LPPDifferentiability.FinalDraft.working_region_upper_cap_failure_tendsto_of_length_power_at_source_cutoff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean) · [LPPDifferentiability.FinalDraft.tendsto_global_heavy_scale_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean) · [LPPDifferentiability.heavy_working_region_event_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.heavy_coarse_block_events_eventually](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.gridHeavyTailOfLengthPower](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean) · [LPPDifferentiability.grid_trialCap_finite_bound_of_mesh_le_half_width_power](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean) · [LPPDifferentiability.heavy_grid_trials_of_characteristic_length_power](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean) |
+| **[Conditional excess (§8.3)](#conditional-excess-83)**<br/>The excess bound at a general aspect ratio | **✓ Certified**<br/>[Coverage note](#conditional-excess-83)<br/>[LPPDifferentiability.exists_excess_animal_bound_of_aspect_ratio](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/AnimalBound.lean) · [LPPDifferentiability.exists_excess_sum_integrated_sqrt_tail_bound_of_aspect_ratio](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/BlockTail.lean) · [LPPDifferentiability.excess_bound_ratio_tendsto_zero_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Threshold.lean) · [LPPDifferentiability.excess_bound_isLittleO_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Threshold.lean) |
+| **[Scaling heuristics (§8.3)](#scaling-heuristics-83)**<br/>Heuristic characteristic lengths | **? Not assessed**<br/>[Coverage note](#scaling-heuristics-83) |
+| **[Clipped shapes (§8.3)](#clipped-shapes-83)**<br/>Upper truncation approximates the shape | **✓ Certified**<br/>[Coverage note](#clipped-shapes-83)<br/>[LPPDifferentiability.FinalDraft.Truncation.measurePreserving_upperClippedField](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Laws.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison_of_paper_moments](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean) |
+| **[Differentiability after capping (§8.3)](#differentiability-after-capping-83)**<br/>Each fixed upper truncation is differentiable | **✓ Certified**<br/>[Coverage note](#differentiability-after-capping-83)<br/>[LPPDifferentiability.FinalDraft.Truncation.exists_unique_upperClipped_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Differentiability.lean) · [LPPDifferentiability.FinalDraft.Truncation.upperClipped_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Differentiability.lean) |
+| **[Common modulus (§8.3)](#common-modulus-83)**<br/>A shared modulus would pass differentiability to the limit | **✓ Certified**<br/>[Coverage note](#common-modulus-83)<br/>[LPPDifferentiability.FinalDraft.Truncation.differentiableAt_shape_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.shape_differentiable_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean) |
+| **[Confined top paths (§8.4)](#confined-top-paths-84)**<br/>A confined all-top path is a near-optimal crossing | **✓ Certified**<br/>[Coverage note](#confined-top-paths-84)<br/>[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.Path.level_zero_closed_strip_levels](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltWitnessSelection.lean) |
+| **[Fixed strip extinction (§8.4)](#fixed-strip-extinction-84)**<br/>All-top paths eventually die in a fixed strip | **✓ Certified**<br/>[Coverage note](#fixed-strip-extinction-84)<br/>[LPPDifferentiability.FinalDraft.ae_eventually_pathWeight_lt_top_in_fixed_strip](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/FixedWidthStrip.lean) |
+| **[Exponential lifetime conjecture (§8.4)](#exponential-lifetime-conjecture-84)**<br/>Conjectured exponential length in flat directions | **? Not assessed**<br/>[Coverage note](#exponential-lifetime-conjecture-84) |
+| **[Lemma A.1](#lemma-a1)**<br/>A boundary circuit around a finite lattice set | **✓ Certified**<br/>[Coverage note](#lemma-a1)<br/>[LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean) · [LPPDifferentiability.square_circuit_forward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.square_circuit_backward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.exists_finset_square_circuits_hitting_ray](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Count.lean) |
+| **[Lemma A.2](#lemma-a2)**<br/>An infinite up-right path through likely events | **✓ Certified**<br/>[Coverage note](#lemma-a2)<br/>[LPPDifferentiability.exists_high_density_oriented_path_cutoff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HighDensityOrientedPaths.lean) · [LPPDifferentiability.exists_square_contour_bad_site_cover](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/OrientedPaths/ContourCover.lean) · [LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean) |
+| **[Lemma A.3](#lemma-a3)**<br/>Probability bound for disjoint path events | **✓ Certified**<br/>[Coverage note](#lemma-a3)<br/>[LPPDifferentiability.path_event_bk](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/PathEventBK.lean) |
+| **[Lemma B.1](#lemma-b1)**<br/>A lower bound for selected path weights | **✓ Certified**<br/>[Coverage note](#lemma-b1)<br/>[LPPDifferentiability.Paper.path_family_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/PathFamilyWeights.lean) · [LPPDifferentiability.global_mask_path_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GlobalMaskFamilyWeights.lean) · [LPPDifferentiability.conditional_finite_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ConditionalFinitePathWeights.lean) |
+| **[Lemma B.3](#lemma-b3)**<br/>Paths joining every pair of endpoints | **✓ Certified**<br/>[Coverage note](#lemma-b3)<br/>[LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean) |
+| **[Lemma B.4](#lemma-b4)**<br/>Short paths reaching prescribed points | **✓ Certified**<br/>[Coverage note](#lemma-b4)<br/>[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) · [LPPDifferentiability.exists_uniform_prescribed_attachment_events](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/UniformEstimate.lean) · [LPPDifferentiability.exists_forward_prescribed_attachment_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/ForwardEvent.lean) · [LPPDifferentiability.exists_backward_prescribed_attachment_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/BackwardEvent.lean) |
+| **[Lemma B.6](#lemma-b6)**<br/>Paths can go around the very negative vertices | **✓ Certified**<br/>[Coverage note](#lemma-b6)<br/>[LPPDifferentiability.stair_geometry_event_tendsto_final](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StairGeometryEvent.lean) · [LPPDifferentiability.StairGeometry.mem_goodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Event.lean) · [LPPDifferentiability.StairGeometry.finite_reach_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/ContourTail.lean) · [LPPDifferentiability.StairGeometry.trapped_components_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.forward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.backward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.paths_merge](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.path_trim](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.arrival_path](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Arrival.lean) |
+| **[Lemma B.7](#lemma-b7)**<br/>A lower weight bound for many chosen paths | **✓ Certified**<br/>[Coverage note](#lemma-b7)<br/>[LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/StaircaseWeights.lean) · [LPPDifferentiability.staircase_general_family_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StaircaseGeneral.lean) |
+| **[Lemma B.8](#lemma-b8)**<br/>Large positive weights do not spoil the connections | **✓ Certified**<br/>[Coverage note](#lemma-b8)<br/>[LPPDifferentiability.heavy_grid_trials](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [LPPDifferentiability.gridCappedTrial_eq_inter_gridTrialCap](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [LPPDifferentiability.grid_working_cap_failure_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean) · [LPPDifferentiability.heavy_coarse_block_events_eventually](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.heavy_crossing_trials_indep](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyCrossingTrials.lean) · [LPPDifferentiability.fixed_coarse_good_event_prob_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridCoarseGoodProbability.lean) |
+| **[Lemma B.9](#lemma-b9)**<br/>The path bounds with unbounded weights | **✓ Certified**<br/>[Coverage note](#lemma-b9)<br/>[LPPDifferentiability.Path.stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.full_stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean) |
+| **[Lemma B.10](#lemma-b10)**<br/>Bounding the contribution of large positive weights | **✓ Certified**<br/>[Coverage note](#lemma-b10)<br/>[LPPDifferentiability.exists_excess_animal_maximum_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.rootedRadiusTwoAnimalMaximum_attained](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.iSup_radiusTwoAnimal_eq_maximum](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.rootedRadiusTwoAnimals_finite](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.exists_excess_animal_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ExcessAnimalBound.lean) · [LPPDifferentiability.limsup_iSup_radiusTwoAnimal_le_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Animals/RadiusTwoFamily.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/StageIndexSets.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean) |
 
 ## Coverage notes
 
@@ -238,37 +329,17 @@ These short descriptions locate the results and explain certificate coverage. Co
 
 **Where the shape equals the largest weight**
 
-For weights with finite largest possible value $`M`$, the theorem describes the directions where $`g(\xi)=M`$ and proves differentiability at the ends of that set. Its further classification distinguishes whether the probability of a weight equal to $`M`$ is below, at, or above the oriented percolation threshold.
+For a finite largest possible weight $`M`$, the weighted and top-indicator shapes have exactly the same flat directions. The theorem classifies this set below, at and above the oriented site-percolation threshold, and proves differentiability at its critical point or endpoints.
 
 Here $`M`$ is the smallest real number with $`\mathbb P\{\omega_0\le M\}=1`$, $`p=\mu(\{M\})`$, and $`g_{\rm top}`$ is the directional shape for weights $`\mathbf1\{\omega_z=M\}`$. A direction is $`\xi=(t,1-t)`$ with $`0\le t\le1`$.
 
 In the top-site model a site is open when $`\omega_z=M`$. The critical probability $`p_c`$ is the infimum of the independent open-site probabilities for which an infinite up-right open path from the origin has positive probability.
 
-**◐ Restricted**
+**✓ Certified**
 
-**Selected flat-segment conclusions**
+The stated mathematical conclusion is certified at the final-draft scope.
 
-**Paper scope**
-
-For a finite upper endpoint $`M`$, the paper identifies $`\{\xi\in\mathcal U:g(\xi)=M\}`$ with $`\{\xi\in\mathcal U:g_{\rm top}(\xi)=1\}`$, classifies this set according to $`p<p_c`$, $`p=p_c`$ and $`p>p_c`$, and proves differentiability at its endpoints.
-
-**Certified scope**
-
-The certificates describe the top-site flat interval through expected open-path edge rates, prove $`g_{\rm top}(\xi)=1\Rightarrow g(\xi)=M`$, and prove differentiability at every interior direction of $`\mathcal U`$ with $`g_{\rm top}(\xi)=1`$. The normalized edge-rate theorem assumes $`0<p<1`$.
-
-**Remaining gap**
-
-These certificates do not give the classification using $`p_c`$. They also do not supply the reverse implication $`g(\xi)=M\Rightarrow g_{\rm top}(\xi)=1`$, or equivalently the strict inequality $`g(\xi)<M`$ outside the top-site flat set.
-
-**Why this scope**
-
-The released flat-segment proof works with the shape of the zero-one top-site model and expected positions reached by its open paths. Its statements do not identify these quantities with the critical percolation probability. No reason for omitting those further identifications is recorded in the inspected modules.
-
-**Effect on main results**
-
-The full Theorem 2.1 is certified. Its proof separates directions by $`g_{\rm top}(\xi)=1`$ or $`g_{\rm top}(\xi)<1`$; it does not need the missing classification or reverse implication.
-
-[Flat-segment theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/FlatTopRouteH.lean#L64) · [Differentiability at every flat direction](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/FlatTopDifferentiability.lean#L60)
+[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.FinalDraft.FlatTop.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/FlatTop/Theorem.lean)
 
 *Source location* Theorem 2.2.
 
@@ -282,13 +353,113 @@ A supporting linear function is a linear function that is at least $`g`$ everywh
 
 **✓ Certified**
 
-Both supporting bounds, their contact with the shape, and their one-sided first-order approximation are certified. This deterministic result uses continuity, homogeneity and concavity of the shape.
+Both supporting bounds, their contact with the shape and their signed one-sided first-order errors are certified on the closed nonnegative quadrant.
 
-[Supporting functionals and contact](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean#L119)
+[LPPDifferentiability.quadrant_supporting_functionals_and_contact](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean)
 
 *Source location* Lemma 2.3.
 
-### Lemma 3.1
+### Shape theorem (§2.2)
+
+**The directional shape and uniform approximation**
+
+The limit-defined shape $`g`$ is finite, continuous, homogeneous and concave on $`\mathbb R_{\geq0}^2`$ under the stated moments. The cited shape theorem also gives a uniform almost-sure approximation.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/UniformShapeProbability.lean) · [LPPDifferentiability.exists_unique_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/WeakNegativeShape.lean) · [LPPDifferentiability.positive_integrated_sqrt_tail_lt_top_of_moment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/ProbabilityBasics/Probability/PositiveMomentTail.lean)
+
+*Source location* Section 2.2, shape theorem and equation eq:shape.
+
+### S1
+
+**Uniform approximation at translated starting points**
+
+The almost-sure uniform shape approximation holds at every fixed lattice start; countably many starts can be placed on one probability-one event.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPP.ae_uniform_passage_shape_all_starts_of_origin](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Model/LastPassage/UniformShapeAllStarts.lean) · [LPPDifferentiability.exists_unique_translated_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TranslatedShape.lean)
+
+*Source location* Section 2.2, consequence S1.
+
+### S2
+
+**Uniform probabilities for deterministic endpoints**
+
+The probability of a relative shape error larger than a fixed tolerance tends to zero uniformly over every ordered deterministic endpoint pair at large separation.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/UniformShapeProbability.lean)
+
+*Source location* Section 2.2, consequence S2.
+
+### S3
+
+**The shape dominates the mean weight**
+
+For every $`z\in\mathbb R_{\geq0}^2`$, the shape is at least the mean weight times $`\ell(z)`$.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.level_mul_integral_le_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/ShapeAboveMean.lean) · [LPPDifferentiability.integral_le_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/ShapeAboveMean.lean)
+
+*Source location* Section 2.2, consequence S3.
+
+### S4
+
+**Lipschitz continuity away from the axes**
+
+The shape is Lipschitz on each compact subset of the open quadrant and, by homogeneity, on each closed interior cone. No Lipschitz conclusion at the axes is claimed.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_adapted_cone](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean) · [LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_fraction_cone](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean)
+
+*Source location* Section 2.2, consequence S4.
+
+### Sublinear geodesic loss (§2.6)
+
+**A directional geodesic has sublinear weight loss**
+
+Geodesics to lattice approximations of $`n\xi`$ have weight equal to the average supporting value up to $`o(n)`$.
+
+For the fixed interior direction $`\xi`$, the two supporting linear functions are $`f_-`$ and $`f_+`$, and $`f=(f_-+f_+)/2`$.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.floor_direction_geodesic_defect_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeodesicDefect.lean) · [LPPDifferentiability.exists_maximizing_floor_direction_path](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeodesicDefect.lean)
+
+*Source location* Path weights and supporting functionals; equation eq:geodesic-defect.
+
+### Theorem 2.1
+
+**The shape is differentiable**
+
+For independent, identically distributed, nonconstant weights, $`g`$ is differentiable throughout $`\mathbb R_{>0}^2`$ if the negative part has a finite moment of some order greater than one and the positive part has a finite moment of some order greater than four. Atoms and signed weights are allowed.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.exists_unique_shape_differentiable_full](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/Main/Differentiability.lean) · [LPPDifferentiability.Paper.shape_differentiable_on_unit_segment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/MainProof.lean) · [LPPStatements.Differentiability.shape_differentiable_on_unit_segment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Statements.lean) · [LPPDifferentiability.Paper.differentiable_on_unit_segment_iff_open_quadrant](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/Setting.lean) · [LPPStatements.Differentiability.shape_exists_unique_and_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Statements.lean) · [LPPDifferentiability.Full.exists_unique_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Full/Differentiability.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean)
+
+*Source location* Theorem 2.1.
+
+### Lemma 4.1
 
 **High-weight paths near a prescribed segment**
 
@@ -298,13 +469,13 @@ The scale $`s`$ tends to infinity. Both the permitted loss in weight and the per
 
 **✓ Certified**
 
-The certificate covers signed, unbounded weights under the paper's assumptions, with one success-probability bound uniform over all permitted deterministic endpoint pairs.
+One scale cutoff and one probability bound work for all deterministic endpoint pairs permitted by the statement; both path clauses hold on the same path.
 
-[Travel estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/Travel.lean#L29)
+[LPPDifferentiability.exists_unique_shape_with_travel](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/Travel.lean)
 
-*Source location* Lemma 3.1.
+*Source location* Lemma 4.1.
 
-### Lemma 3.2
+### Lemma 4.2
 
 **High-weight paths for all endpoint pairs**
 
@@ -314,175 +485,75 @@ A level interval consists of the lattice points on $`z_1+z_2=I`$ between two spe
 
 **✓ Certified**
 
-The complete statement for all endpoint pairs on the same event is certified, including unbounded weights. Lemma B.2 supplies the paper's proof under the general weight assumptions.
+All allowed endpoint pairs are connected on one common event. Both the bounded and general-weight proofs are covered.
 
-[General-weight interval connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralIntervals.lean#L51)
+[LPPDifferentiability.exists_unique_shape_with_bounded_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/BoundedIntervals.lean) · [LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean)
 
-*Source location* Lemma 3.2.
+*Source location* Lemma 4.2.
 
-### Proposition 3.4
+### Proposition 4.4
 
 **Paths rarely exceed either linear bound**
 
-In a strip whose length grows much faster than its width, the probability that any directed path exceeds a supporting linear bound by a fixed multiple of the width tends to zero. Either of the two one-sided supporting functions can be used.
+For either supporting linear function, the probability that a path in a strip of width proportional to $`s`$ exceeds that linear value by $`εs`$ tends to zero as $`s→∞`$, uniformly over every positive integer path length.
 
 A supporting linear function is a linear function that is at least $`g`$ everywhere in $`\mathbb R_{\geq0}^2`$ and equals $`g`$ at the direction under consideration.
 
 **✓ Certified**
 
-The estimate is certified for either supporting linear function and every fixed strip-width factor. The probability bound is uniform once the width and the length-to-width ratio are sufficiently large.
+The probability limit is uniform over every positive integer length. The real-centre extension is recorded separately at Remark 4.6.
 
-[Uniform rare-fast-crossing bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/RareFastCrossings.lean#L40)
+[LPPDifferentiability.rarefast_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RareFastCrossings.lean) · [LPPDifferentiability.measureReal_strip_crossing_translate](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RarefastTranslation.lean)
 
-*Source location* Proposition 3.4.
+*Source location* Proposition 4.4.
 
-### Lemma A.1
-
-**An infinite up-right path through likely events**
-
-Events indexed by lattice sites admit an infinite up-right path through successful sites with positive probability, provided failures are uniformly sufficiently unlikely and events at well-separated sites are independent. The path starts at the origin, whose event must also succeed.
-
-**✓ Certified**
-
-The full statement is certified on any probability space for event families with the required small failure probability and independence at separated sites. The path starts at the origin, whose event is included.
-
-[High-density oriented-path theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HighDensityOrientedPaths.lean#L68)
-
-*Source location* Lemma A.1.
-
-### Lemma B.1
-
-**A lower bound for selected path weights**
-
-Choose finitely many paths using only the information of which sites satisfy $`\omega_z<-T`$, and require them to avoid collecting those sites. The lemma bounds the probability that any chosen path has a very negative weight. This permits path selection to depend on the locations of unusually negative weights.
-
-The threshold $`T>0`$ is fixed. Path selection may use all indicators $`\mathbf1\{\omega_z<-T\}`$ but no further weight values. Collected vertices exclude the terminal vertex.
-
-The region $`F`$ is fixed before observing the weights; it must contain the collected vertices for every possible outcome, rather than only the paths observed in one outcome.
-
-Here $`N`$ and $`n`$ are fixed nonnegative integers bounding the number of selected paths and their lengths.
-
-**◐ Restricted**
-
-**Paths confined to a fixed finite region**
-
-**Paper scope**
-
-The selected family contains at most $`N`$ paths of length at most $`n`$. It may depend on all indicators of sites with weight below $`-T`$, and the possible locations of its paths need not fit in one deterministic finite region.
-
-**Certified scope**
-
-The same probability bound is certified when one fixed finite set $`F\subset\mathbb Z^2`$ contains every collected vertex of every possible selected path. The path selection may still inspect the entire set of sites with weight below $`-T`$.
-
-**Remaining gap**
-
-The matched certificate does not cover random path locations with unbounded range and no common finite containing region. Removing that condition would require an additional argument, for example an exhaustion by finite regions; no such extension was found among uses of this certificate.
-
-**Why this scope**
-
-The proof splits the product environment into the finitely many coordinates in $`F`$ and all remaining coordinates, applies the finite-coordinate bound with the outside fixed, then integrates over the outside. This proof is formalized for a fixed finite $`F`$. That is a boundary of the certificate, not a necessity asserted by the paper.
-
-**Effect on main results**
-
-The attachment and connection constructions used in the released main proof each lie in a deterministic finite region. This restriction therefore does not alter the hypotheses or conclusion of Theorem 2.1.
-
-[Bound for paths chosen from low-weight sites](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GlobalMaskFamilyWeights.lean#L245) · [Conditional single-path bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ConditionalFinitePathWeights.lean#L67)
-
-*Source location* Lemma B.1.
-
-### Lemma B.2
-
-**Paths joining every pair of endpoints**
-
-The simultaneous connection estimate of Lemma 3.2 remains valid for unbounded signed weights under the stated moments. On one event of probability tending to one, all permitted endpoint pairs have paths that remain near their straight segments and collect nearly the shape-predicted weight.
-
-**✓ Certified**
-
-The full simultaneous connection statement is certified for unbounded weights. One success-probability bound works for every permitted deterministic pair of level intervals.
-
-[General-weight interval connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralIntervals.lean#L51)
-
-*Source location* Lemma B.2.
-
-### Lemma B.3
-
-**Short paths reaching prescribed points**
-
-Every point of a level interval can be joined by a short path to one of a suitably spaced finite set of points on a later level, with high probability. All these paths have a small lower bound on their weight. A corresponding construction works in the reverse direction.
-
-A source level interval is a finite interval of lattice points with $`\ell(z)=I`$, where $`I\in\mathbb Z`$. A target set consists of deterministic lattice points on level $`I+m`$, where the integer $`m\ge1`$ is the required path length. “Prescribed” means chosen before observing the weights.
-
-**◐ Restricted**
-
-**One constructed target set**
-
-**Paper scope**
-
-For each source level interval $`\mathcal J`$, the path bounds apply to every prescribed deterministic target set $`\mathcal N`$ satisfying the paper's spacing and endpoint conditions on the later level. The backward statement has the same universal choice of target set.
-
-**Certified scope**
-
-For each source interval the release constructs one target set $`\mathcal N`$ with those geometric conditions, then certifies the forward and backward connections to that set with the paper's path-weight bound.
-
-**Remaining gap**
-
-The difference is between “for every admissible $`\mathcal N`$” and “there exists an admissible $`\mathcal N`$.” A supplied target set cannot be substituted into the existential certificate. The restriction concerns that choice, not the moment assumptions or the path-weight bound.
-
-**Why this scope**
-
-The formal proof combines the construction of a common spaced set of target points with the connection estimate. Its input specifies the source interval, not a preselected target set. The inspected files do not record a reason for not exporting the universal target-set version.
-
-**Effect on main results**
-
-The constructed target sets suffice in the released proof of Lemma B.2 and the later endpoint estimates. The full Theorem 2.1 retains its stated hypotheses and conclusion.
-
-[Forward paths to the constructed target set](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ForwardHeavyAttachmentAsymptotics.lean#L27) · [Backward paths to the constructed target set](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/BackwardHeavyAttachmentAsymptotics.lean#L20)
-
-*Source location* Lemma B.3.
-
-### Remark 3.3
+### Remark 4.3
 
 **Choosing short paths after observing low weights**
 
-For bounded weights, the short connections between level intervals may be deterministic. The general-weight version allows them to depend on the locations of very negative sites.
+Deterministic short attachments need a stronger lower-tail estimate than the theorem assumes: under a power-law tail, their failure probability has an explicit lower bound. Selecting paths after locating very negative sites avoids this obstruction.
 
 A level interval consists of the lattice points on $`z_1+z_2=I`$ between two specified endpoints, for an integer $`I`$.
 
 **? Not assessed**
 
-No separate certificate is assigned to this explanation. The mathematical path-connection conclusions are covered by Lemmas 3.2 and B.2.
+The general-weight replacement and its simultaneous connection conclusions are certified. The correspondence for this remark’s separate power-tail lower bound has not been independently checked here.
 
-*Source location* Remark 3.3.
+[LPPDifferentiability.exists_rarefast_connector_scale](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RarefastConnectors.lean) · [LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean) · [LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean)
 
-### Remark 3.5
+*Source location* Remark 4.3.
+
+### Remark 4.6
 
 **The same bound for strips with any center**
 
-The strip estimate of Proposition 3.4 extends to any integer starting level and any real center. Enlarging the half-width from $`Rs`$ to $`(R+1)s`$ absorbs the rounding used to place the strip inside a lattice translate of an origin-centered strip.
+The strip estimate of Proposition 4.4 extends to any integer starting level and any real center. Enlarging the half-width from $`Rs`$ to $`(R+1)s`$ absorbs the rounding used to place the strip inside a lattice translate of an origin-centered strip.
 
 Here $`s\ge1`$ is the width scale and $`R>0`$ is fixed. The strip's center is measured in the coordinate $`r(z)=z_1-\xi_1(z_1+z_2)`$ for a fixed interior direction $`\xi=(\xi_1,1-\xi_1)`$.
 
-**? Not assessed**
+**✓ Certified**
 
-Exact translation for lattice-centered strips and the rounded instances used in Proposition 5.9 are certified. This review has not completed the correspondence for the remark's full arbitrary-real-center quantifier; a missing standalone theorem name does not establish a mathematical restriction.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[Translation of strip crossings](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/RarefastTranslation.lean#L96) · [Endpoint argument using translated strip bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77)
+[LPPDifferentiability.FinalDraft.exists_lattice_center_stripCrossing_subset](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/Translation.lean) · [LPPDifferentiability.FinalDraft.rarefast_real_center_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/Translation.lean)
 
-*Source location* Remark 3.5.
+*Source location* Remark 4.6.
 
-### Remark B.4
+### Remark 4.7
 
-**Why this proof needs a moment above one**
+**The same rarity with the shape threshold**
 
-Discusses a proposed logarithmic-moment alternative to the negative moment of order greater than one. Neither the paper nor this guide claims that the theorem has been proved under that proposed assumption.
+When the length is much larger than the strip width, the crossing threshold may be written using $`g`$ of the actual displacement. The supporting-line formulation retains the transverse contribution needed for uniformity.
 
-**? Not assessed**
+**✓ Certified**
 
-This is an explanation of the proof and a proposed weakening of its assumptions. No certificate for the proposed logarithmic-moment result is identified here.
+The two threshold formulations are certified in the regime where length divided by width tends to infinity. The level-only threshold warning is explanatory, without a claimed quantified counterexample.
 
-*Source location* Remark B.4.
+[LPPDifferentiability.FinalDraft.strip_crossing_support_subset_shape](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean) · [LPPDifferentiability.FinalDraft.strip_crossing_shape_subset_support_union](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean) · [LPPDifferentiability.FinalDraft.rarefast_shape_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean)
 
-### Lemma 4.1
+*Source location* Remark 4.7.
+
+### Lemma 5.1
 
 **Raising finitely many weights at small probability cost**
 
@@ -490,13 +561,13 @@ A small independent chance to replace each weight by the maximum of itself and a
 
 **✓ Certified**
 
-The linked certificates cover the probability cost of modifying the field, the set of weights that can be increased, and the conditional probability and independence of the increases.
+The same maximum-resampling law supplies monotonicity, the product density, the squared density bound and the independent positive boosts on the selected set.
 
-[Modified-field monotonicity and product law](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumModifiedFieldLaw.lean#L93) · [Absolute continuity and density bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumKernelRN.lean#L87) · [Good set and conditional independent boosts](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/MaximumKernelGoodSet.lean#L33) · [Strict quantile-gap positivity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/ProbabilityBasics/Probability/MaximumQuantileGap.lean#L120)
+[LPPDifferentiability.maximum_modification_ge_original](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean) · [LPPDifferentiability.maximum_modification_map_eq_density_product](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean) · [LPPDifferentiability.integral_sq_toReal_rnDeriv_maximum_kernel_map_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelRN.lean) · [LPPDifferentiability.maximum_kernel_good_set](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelGoodSet.lean) · [LPPDifferentiability.maximum_quantile_gap_pos](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/ProbabilityBasics/Probability/MaximumQuantileGap.lean) · [LPPDifferentiability.maximum_kernel_map_event_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumKernelRN.lean) · [LPPDifferentiability.maximum_modification_map_eq_mixture_product](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/MaximumModifiedFieldLaw.lean)
 
-*Source location* Lemma 4.1.
+*Source location* Lemma 5.1.
 
-### Lemma 4.2
+### Lemma 5.2
 
 **Crossings of length ⌈s³⌉ become unlikely**
 
@@ -506,13 +577,13 @@ The scale $`s`$ tends to infinity. A crossing joins the two end levels of the st
 
 **✓ Certified**
 
-The complete crossing estimate is certified outside the top-weight flat set, with the paper's strip width, cubic length and weight allowance. A crossing may start anywhere on the strip's first level.
+The full cubic-length crossing estimate is certified outside the top-indicator flat segment, including the free starting point and strict weight threshold.
 
-[Cubic-length crossing rarity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/TiltLimit.lean#L66)
+[LPPDifferentiability.tilt_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltLimit.lean) · [LPPDifferentiability.exists_source_top_indicator_shape_with_strip_rarity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltStripTopSites.lean)
 
-*Source location* Lemma 4.2.
+*Source location* Lemma 5.2.
 
-### Proposition 4.3
+### Proposition 5.3
 
 **The length where crossing probability becomes small**
 
@@ -520,13 +591,13 @@ A crossing with nearly the shape-predicted weight is likely at lengths comparabl
 
 **✓ Certified**
 
-The short-length probability limit and all the threshold-length bounds are certified. The certificate uses the first power-of-two threshold length specified in the paper.
+The certificates cover the short-length probability bound and the first dyadic characteristic length, including its minimizing length, divergence and cubic upper bound.
 
-[Short-crossing abundance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ShortCrossingAbundance.lean#L336) · [Characteristic lengths and records](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/CharacteristicLengths.lean#L45)
+[LPPDifferentiability.short_crossing_abundance](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ShortCrossingAbundance.lean) · [LPPDifferentiability.characteristic_length_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/CharacteristicLengths.lean)
 
-*Source location* Proposition 4.3.
+*Source location* Proposition 5.3.
 
-### Lemma 4.4
+### Lemma 5.4
 
 **Infinitely many scales with comparable earlier lengths**
 
@@ -534,27 +605,27 @@ Infinitely many strip widths have crossing lengths that remain comparable to tho
 
 **✓ Certified**
 
-The complete earlier-scale comparison is certified for the threshold lengths defined by the actual crossing probabilities. It is included in the certificate for Proposition 4.3.
+The infinite selected set satisfies the printed comparison at every permitted earlier index, including the current index.
 
-[Actual characteristic-length records](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/CharacteristicLengths.lean#L45) · [Deterministic record-scale lemma](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/RecordScales.lean#L62)
+[LPPDifferentiability.characteristic_length_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/CharacteristicLengths.lean) · [LPPDifferentiability.exists_infinite_record_scales](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/RecordScales.lean)
 
-*Source location* Lemma 4.4.
+*Source location* Lemma 5.4.
 
-### Lemma 5.7
+### Lemma 6.8
 
 **Paths between prescribed grid points**
 
-One event supplies many connecting paths at once. For bounded weights, their endpoints are prescribed lattice approximations to points on parallel lines. For unbounded weights, the paper replaces these endpoints by vertices of paths chosen to avoid very negative weights. Both forms have the bounds needed for Proposition 5.9.
+For bounded weights, one event supplies connecting paths between all prescribed grid points, with a common weight and location bound. Remarks 6.9 and 6.10 give the eligible random-endpoint form and its probability bound for general weights.
 
 **✓ Certified**
 
-Both source formulations are certified. Bounded weights allow all prescribed real-center connections. Unbounded weights use the changed endpoints and connection intervals specified in Remark 5.8, which avoid very negative sites.
+The bounded statement uses exactly the specified common event. Remarks 6.9 and 6.10 record the separately certified general-weight path and probability clauses.
 
-[Bounded grid connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneous.lean#L138) · [General-weight entrance and exit connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneousGeneral.lean#L50)
+[LPPDifferentiability.bounded_grid_good_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridSimultaneous.lean) · [LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.general_grid_connections_on_records](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.mem_generalGridGoodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.grid_connections_simultaneous_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridSimultaneousGeneral.lean)
 
-*Source location* Lemma 5.7.
+*Source location* Lemma 6.8.
 
-### Proposition 5.9
+### Proposition 6.11
 
 **An upper weight bound for every path in a rectangle**
 
@@ -564,67 +635,27 @@ A supporting linear function is a linear function that is at least $`g`$ everywh
 
 **✓ Certified**
 
-The full all-path estimate is certified under the paper's moment assumptions, for every lattice translate of the prescribed rectangle. The released proof supplies the required crossing lengths and simultaneous connections.
+The full endpoint rarity limit is certified for bounded and unbounded signed weights. The general proof uses eligible staircase windows and bounded endpoint trimming.
 
-[General-weight endpoint estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77) · [Bounded-grid endpoint estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpoints.lean#L151) · [Assembly supplying the grid estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralOffFlatDifferentiability.lean#L163)
+[LPPDifferentiability.arbitrary_endpoints_defect_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpoints.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean) · [LPPDifferentiability.endpoint_pair_of_mem_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/EndpointReductionGeneral.lean)
 
-*Source location* Proposition 5.9.
+*Source location* Proposition 6.11.
 
-### Lemma B.5
-
-**Paths can go around the very negative vertices**
-
-With probability tending to one, the obstructions created by very negative weights occur in bounded groups. Paths can then follow a prescribed direction while avoiding those weights, with uniformly bounded displacement from the line. The same construction supplies the endpoint adjustments needed to join these paths to crossings.
-
-**✓ Certified**
-
-The probability estimate and all five geometric conclusions are certified in separate declarations. These include forward and backward avoidance, bounded displacement from a line, joining paths, path intersections and endpoint adjustments, using the neighborhoods specified in the selected draft.
-
-[Geometry-event probability](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StairGeometryEvent.lean#L361) · [Trapped component bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/StairTrappedComponents.lean#L277) · [Forward greedy path](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairGreedyForward.lean#L350) · [Backward greedy path](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairGreedyBackward.lean#L69) · [Arrival at the target](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StairArrival.lean#L148) · [Crossing paths merge](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/TransverseMerge.lean#L107) · [Trimming vertices](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/StairTrim.lean#L167)
-
-*Source location* Lemma B.5.
-
-### Lemma B.6
-
-**A lower weight bound for many chosen paths**
-
-A family of short paths may be chosen after observing the locations of very negative weights. If it avoids those sites, the probability that any member has an excessively negative weight tends to zero, even when the number of candidate paths grows polynomially with the scale.
-
-**✓ Certified**
-
-The bound is certified for every permitted finite path family selected from the indicators of very negative weights. The certificate preserves the paper's size and length limits and its relation between the counting exponent and the negative moment order.
-
-[General-weight staircase path-family theorem](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StaircaseGeneral.lean#L270)
-
-*Source location* Lemma B.6.
-
-### Lemma B.7
-
-**Large positive weights do not spoil the connections**
-
-The positive moment assumption controls very large weights throughout the regions used for connections. Requiring each trial rectangle to contain no such weight still leaves a fixed positive crossing probability, and the crossing events in disjoint rectangles remain independent.
-
-**✓ Certified**
-
-The bounds for the large region and the smaller rectangles, and the probability and independence of the modified crossing trials, are all certified. They appear in separate declarations.
-
-[No heavy vertex in working region](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L65) · [Uniform coarse-block decay](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L255) · [Heavy-trimmed crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66)
-
-*Source location* Lemma B.7.
-
-### Remark 5.1
+### Remark 6.1
 
 **Which connections require changes for unbounded weights**
 
-The all-endpoint estimate of Proposition 5.9 holds under the main moment assumptions, including signed unbounded weights. The bounded- and general-weight formulations use different short connections.
+The arbitrary-endpoint bound holds for both bounded and unbounded weights. The general proof uses random paths avoiding very negative weights, with endpoint adjustments controlled in Appendix B.
 
-**? Not assessed**
+**✓ Certified**
 
-This is an explanation of the proof, rather than a separate theorem. The corresponding mathematical statements are recorded at Lemma 5.7, Remark 5.8 and Proposition 5.9.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-*Source location* Remark 5.1.
+[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean)
 
-### Remark 5.2
+*Source location* Remark 6.1.
+
+### Remark 6.2
 
 **The connecting paths are shorter than the proof needs**
 
@@ -632,15 +663,15 @@ The deterministic connecting paths have at most $`16C_*s_k`$ steps. The proof re
 
 Here $`s_k=2^k`$, and $`C_*=50/\min\{\xi_1,1-\xi_1\}`$ for the fixed interior direction $`\xi=(\xi_1,1-\xi_1)`$.
 
-**? Not assessed**
+**✓ Certified**
 
-The weaker connecting-path length bound used in the paper's probability estimates is certified. The sharper arithmetic is proved separately, but its combination for every path in the source family has not been fully checked. The weaker bound suffices for Theorem 2.1.
+The sharper length bound follows from the checked arithmetic and the printed staircase length estimate. The proof may retain its coarser bound.
 
-[Dyadic length arithmetic](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/RecordScales.lean#L135) · [Staircase lower-tail bound with the retained length budget](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridStaircaseBad.lean#L30)
+[LPPDifferentiability.sq_mul_two_pow_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/RecordScales.lean) · [LPPDifferentiability.grid_sq_mul_width_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/GridScaleCounts.lean) · [LPPDifferentiability.isCoarseAttachmentStaircase_length](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridFineStaircaseFamily.lean) · [LPPDifferentiability.staircase_weight_stretched_exponential_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean)
 
-*Source location* Remark 5.2.
+*Source location* Remark 6.2.
 
-### Remark 5.3
+### Remark 6.3
 
 **Choose the connecting paths after locating negative weights**
 
@@ -648,13 +679,13 @@ The general-weight connection statement allows paths chosen from the locations o
 
 **✓ Certified**
 
-The simultaneous lower weight estimate is certified for paths selected from the low-weight indicators. Separate certificates construct the paths and show that their collected vertices avoid all sites below the chosen negative threshold.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[General-weight staircase bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StaircaseGeneral.lean#L270) · [Avoiding-path geometry event](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StairGeometryEvent.lean#L361)
+[LPPDifferentiability.StairGeometry.forward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.backward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.SelectedGridPaths.fineChoice](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SelectedGridPaths/Family.lean) · [LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/StaircaseWeights.lean)
 
-*Source location* Remark 5.3.
+*Source location* Remark 6.3.
 
-### Remark 5.4
+### Remark 6.4
 
 **The weight error on a short connecting interval**
 
@@ -664,13 +695,13 @@ The error scale is $`t_k=\varepsilon_0 2^k/k`$, where $`k\ge1`$ is an integer an
 
 **✓ Certified**
 
-The short-interval estimate with additive error $`t_k/2`$ follows from the certified path-weight lower bound and transverse-location bound. The final exported grid theorem states the weaker common allowance $`2t_k`$. This changes the presentation of the local estimate, not the paper's mathematical coverage.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[General fine-grid paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridFineGeneral.lean#L226) · [Half-error input and local cost arithmetic](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridFineGeneral.lean#L183)
+[LPPDifferentiability.grid_vertex_clause_of_generalGridGoodEvent](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean)
 
-*Source location* Remark 5.4.
+*Source location* Remark 6.4.
 
-### Remark 5.5
+### Remark 6.5
 
 **Independent crossings with no very large weight**
 
@@ -678,13 +709,13 @@ The longer-interval construction uses independent crossings in disjoint rectangl
 
 **✓ Certified**
 
-The reduced success probability, independence across disjoint rectangles and exponential bound on failure of every trial are certified for the modified crossing events.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[Heavy-trimmed crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66) · [Coarse heavy-vertex bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L255)
+[LPPDifferentiability.gridCappedTrial](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralEvents.lean) · [LPPDifferentiability.fixed_coarse_good_event_prob_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridCoarseGoodProbability.lean)
 
-*Source location* Remark 5.5.
+*Source location* Remark 6.5.
 
-### Remark 5.6
+### Remark 6.6
 
 **The weight error when a crossing needs two connections**
 
@@ -694,75 +725,69 @@ The error scale is $`t_k=\varepsilon_0 2^k/k`$, where $`k\ge1`$ is an integer an
 
 **✓ Certified**
 
-The long-interval estimate with additive error $`3t_k/2`$ follows by joining the certified arrival path, trimmed crossing and final connection. The final exported grid theorem permits the weaker common allowance $`2t_k`$. The modified crossing probability and location bound are also certified.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[General coarse-grid paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralCost.lean#L27) · [Independent crossing trials](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyCrossingTrials.lean#L66) · [Arrival path with half-error allowance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralArrival.lean#L70) · [Merge and tail with combined error allowance](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralMerge.lean#L45) · [Assembly of the local cost bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/GridCoarseGeneralAssembly.lean#L294)
+[LPPDifferentiability.SelectedGridPaths.CoarseBlock.coarse_gridConnection](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SelectedGridPaths/Coarse/Connection.lean)
 
-*Source location* Remark 5.6.
+*Source location* Remark 6.6.
 
-### Remark 5.8
+### Remark 6.7
+
+**The common good event for general weights**
+
+Intersect the crossing events with the geometry, selected-path weight and upper-cap events. This gives one common event on which the general connections are available.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.generalGridCellGood](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralEvents.lean) · [LPPDifferentiability.generalGridGoodEventForPaths](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalEvents.lean) · [LPPDifferentiability.mem_generalGridGoodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean)
+
+*Source location* Remark 6.7.
+
+### Remark 6.9
 
 **The grid statement with random endpoints**
 
-For unbounded weights, the grid connections end on paths selected to avoid very negative sites. The source claims this only for the grid intervals used to reach or leave an endpoint in Proposition 5.9. That modified statement, rather than every prescribed line position, is certified.
+For unbounded weights, the grid connections end on paths selected to avoid very negative sites. The source claims this only for the grid intervals used to reach or leave an endpoint in Proposition 6.11. That modified statement, rather than every prescribed line position, is certified.
 
 **✓ Certified**
 
-The source's modified statement is certified with its selected random endpoints and the specified intervals for reaching or leaving an endpoint. The all-real-center clause of Lemma 5.7 belongs to its bounded-weight formulation.
+The eligible random-staircase path clause is certified with exactly the source endpoint windows. It does not claim the bounded theorem’s arbitrary prescribed line positions.
 
-[General-weight grid connections](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GridSimultaneousGeneral.lean#L50)
+[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean)
 
-*Source location* Remark 5.8.
+*Source location* Remark 6.9.
 
-### Remark 5.10
+### Remark 6.10
+
+**The general grid event still has high probability**
+
+The same common event has failure probability at most $`2\beta_J`$ for all sufficiently large selected scales, where $`\beta_J→0`$. The three additional error probabilities vanish with the scale.
+
+**✓ Certified**
+
+The literal common event, its added geometry and cap conditions, and its stated failure bound are certified on the same record-scale witnesses.
+
+[LPPDifferentiability.general_grid_theorem](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralTheorem.lean) · [LPPDifferentiability.general_grid_good_event_failure_eventually_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean)
+
+*Source location* Remark 6.10.
+
+### Remark 6.12
 
 **Removing a few endpoint vertices preserves the path bound**
 
-The general-weight all-endpoint estimate retains the conclusion of Proposition 5.9. It permits endpoint adjustments of a bounded number of steps, with negligible discarded weight at the required scale.
+The general-weight all-endpoint estimate retains the conclusion of Proposition 6.11. It permits endpoint adjustments of a bounded number of steps, with negligible discarded weight at the required scale.
 
 **✓ Certified**
 
-The full general-weight conclusion of Proposition 5.9 is certified, together with the endpoint shortening and lower- and upper-connection construction used here.
+The stated mathematical conclusion is certified at the final-draft scope.
 
-[General-weight endpoints](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ArbitraryEndpointsGeneral.lean#L77) · [Endpoint reduction with trimmed paths](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/EndpointReductionGeneral.lean#L138)
+[LPPDifferentiability.endpoint_pair_of_mem_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/EndpointReductionGeneral.lean) · [LPPDifferentiability.arbitrary_endpoints_defect_le_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ArbitraryEndpointsGeneral.lean)
 
-*Source location* Remark 5.10.
+*Source location* Remark 6.12.
 
-### Lemma 6.1
-
-**Probability bound for disjoint path events**
-
-For any finite list of high-weight path events, requiring the paths to collect disjoint sets of vertices has probability at most the product of the separate probabilities. The weights may have any real-valued distribution; the terminal vertex of each path is excluded from its collected set.
-
-**✓ Certified**
-
-The full probability inequality for every finite list of these path events is certified, including arbitrary real weight laws and the convention that the terminal vertex is not collected.
-
-[Path-event BK inequality](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/PathEventBK.lean#L90)
-
-*Source location* Lemma 6.1.
-
-### Proposition 6.7
-
-**Long paths contain few rare subpaths**
-
-At a suitably chosen fixed scale, almost surely every sufficiently long path from the origin has fewer than $`\lfloor N/32\rfloor`$ counted subpaths with disjoint collected vertices, where $`N`$ is the number of its full stages. The assertion holds simultaneously for all such paths.
-
-Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
-
-A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
-
-The counted subpaths either exceed one of the two supporting linear bounds by $`\eta s_*`$, or cross a specified strip of length $`n_*`$ and half-width $`8s_*`$ with weight greater than $`n_*g(\xi)-Ks_*`$. Here $`\eta,K>0`$ are fixed constants. Disjointness concerns collected vertices, so a terminal vertex may be shared.
-
-**✓ Certified**
-
-The complete simultaneous bound for every path is certified, including the paper's integer rounding. Counting finite collections of disjoint qualifying subpaths gives the same maximum as the source definition.
-
-[Few disjoint stage witnesses](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LongPathWitnessBound.lean#L46)
-
-*Source location* Proposition 6.7.
-
-### Lemma 6.3
+### Lemma 7.2
 
 **Paths containing no rare subpath**
 
@@ -778,13 +803,13 @@ The counted subpaths either exceed one of the two supporting linear bounds by $`
 
 **✓ Certified**
 
-Both supporting-function bounds are certified, including the stronger loss when a stage reaches its length threshold before its width threshold.
+The bound holds for both supporting functions. A full longitudinal stage also has the stated positive loss relative to their average.
 
-[Witness-free stage defects](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L137)
+[LPPDifferentiability.Path.witness_free_stage_defect](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/WitnessFreeStage.lean)
 
-*Source location* Lemma 6.3.
+*Source location* Lemma 7.2.
 
-### Lemma 6.5
+### Lemma 7.4
 
 **Weight bound from a count of rare subpaths**
 
@@ -800,13 +825,33 @@ The counted subpaths either exceed one of the two supporting linear bounds by $`
 
 **✓ Certified**
 
-The complete stage bound is certified. The certificate counts explicit finite collections of disjoint qualifying subpaths; taking their largest possible size gives the paper's formulation.
+The source maximum over disjoint witness families is attained on the tested stage and gives the printed weight bound.
 
-[Stage split and defect bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58)
+[LPPDifferentiability.Path.stageWitnessMultiplicity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean) · [LPPDifferentiability.Path.has_stage_witness_family_multiplicity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/Maximum.lean) · [LPPDifferentiability.Path.stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean)
 
-*Source location* Lemma 6.5.
+*Source location* Lemma 7.4.
 
-### Lemma 6.8
+### Proposition 7.6
+
+**Long paths contain few rare subpaths**
+
+At a suitably chosen fixed scale, almost surely every sufficiently long path from the origin has fewer than $`\lfloor N/32\rfloor`$ counted subpaths with disjoint collected vertices, where $`N`$ is the number of its full stages. The assertion holds simultaneously for all such paths.
+
+Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
+
+A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
+
+The counted subpaths either exceed one of the two supporting linear bounds by $`\eta s_*`$, or cross a specified strip of length $`n_*`$ and half-width $`8s_*`$ with weight greater than $`n_*g(\xi)-Ks_*`$. Here $`\eta,K>0`$ are fixed constants. Disjointness concerns collected vertices, so a terminal vertex may be shared.
+
+**✓ Certified**
+
+The printed strict integer bound holds eventually on one probability-one event for every path from the origin, with the actual stage maxima and remainder.
+
+[LPPDifferentiability.Path.exists_total_witness_family](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean) · [LPPDifferentiability.totalWitnessMultiplicity_lt_eventually_ae](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean)
+
+*Source location* Proposition 7.6.
+
+### Lemma 7.7
 
 **Path-weight bounds when the shape has a corner**
 
@@ -822,13 +867,441 @@ The counted subpaths either exceed one of the two supporting linear bounds by $`
 
 **✓ Certified**
 
-The full-stage and whole-path inequalities are certified for bounded weights. Their unbounded-weight versions, including the correction for large individual weights, are covered by Lemma B.8.
+The full-stage and whole-path inequalities use the stated multiplicities and include the final remainder.
 
-[Full-stage estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L26) · [Total-path estimate](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166)
+[LPPDifferentiability.Path.full_stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean)
 
-*Source location* Lemma 6.8.
+*Source location* Lemma 7.7.
+
+### Remark 4.5
+
+**For fixed lengths, a direct tail bound suffices**
+
+The integrated square-root upper-tail condition implies $`t^2\mathbb P(\omega_0>t)→0`$. For each fixed length, a union bound then rules out strip crossings that exceed a supporting value by a fixed multiple of the width.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.FinalDraft.tendsto_sq_mul_upper_tail_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FixedLength.lean) · [LPPDifferentiability.FinalDraft.fixed_length_fast_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FixedLength.lean) · [LPPDifferentiability.rarefast_uniform](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/RareFastCrossings.lean)
+
+*Source location* Remark 4.5.
+
+### Remark 7.1
+
+**Choosing a scale for unbounded weights**
+
+Discusses the parameter choice for unbounded weights, including a scale-dependent upper cutoff and the correction for weights above it. This is a parameter discussion rather than a separate theorem.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.exists_stage_witness_path_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageWitnessPathEvents.lean) · [LPPDifferentiability.differentiableAt_of_off_flat_general](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralOffFlatDifferentiability.lean)
+
+*Source location* Remark 7.1.
+
+### Remark 7.3
+
+**The cost of moving across a corner**
+
+When the left and right slopes of $`g`$ differ, moving sideways contributes a positive loss relative to their average supporting function. The loss is proportional to the slope difference and to the sideways displacement. This is the quantitative step that makes a corner incompatible with long near-optimal paths.
+
+A supporting linear function is a linear function that is at least $`g`$ everywhere in $`\mathbb R_{\geq0}^2`$ and equals $`g`$ at the direction under consideration.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.quadrant_supporting_functionals_and_contact](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean) · [LPPDifferentiability.Path.canonical_path_defect_min](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/DefectAlgebra.lean) · [LPPDifferentiability.Path.full_stage_weight_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean)
+
+*Source location* Remark 7.3.
+
+### Remark 7.5
+
+**The stage bound includes weights above the cutoff**
+
+For unbounded weights, each one-step estimate and the resulting stage estimate acquire the exact positive excess above the chosen cutoff. Lemma B.9 supplies the corresponding bound.
+
+Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
+
+A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
+
+**✓ Certified**
+
+The exact excess correction in this remark is certified by Lemma B.9.
+
+[LPPDifferentiability.Path.stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.full_stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean)
+
+*Source location* Remark 7.5.
+
+### Remark 7.8
+
+**The large-weight correction stays small**
+
+The positive moment estimate makes the accumulated contribution above the cutoff smaller than the loss forced by a putative corner. After combining this with the bound on counted high-weight subpaths, every long path still loses a positive amount per stage, contradicting the shape limit.
+
+Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
+
+A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
+
+The counted subpaths either exceed one of the two supporting linear bounds by $`\eta s_*`$, or cross a specified strip of length $`n_*`$ and half-width $`8s_*`$ with weight greater than $`n_*g(\xi)-Ks_*`$. Here $`\eta,K>0`$ are fixed constants. Disjointness concerns collected vertices, so a terminal vertex may be shared.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.exists_stage_excess_total_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean)
+
+*Source location* Remark 7.8.
+
+### Example 8.1
+
+**A law with no finite uniform shape limit**
+
+For every $`0<p<1`$, the example gives a weight law with finite negative moment of order $`p`$ but no finite uniform shape limit. Along infinitely many interior endpoints, the last-passage time divided by endpoint distance becomes arbitrarily negative.
+
+The endpoints lie in a fixed cone bounded away from the coordinate axes. The uniform limit concerns all sufficiently distant lattice endpoints in that cone at once.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.exists_lowerTail_law](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_ae_nonpos](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_lintegral_negPart_rpow_lt_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTail_lintegral_negPart_eq_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExampleLaw.lean) · [LPPDifferentiability.lowerTailExample](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExample.lean) · [LPPDifferentiability.lowerTail_liminf_eq_bot](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/LowerTailExample.lean)
+
+*Source location* Example 8.1.
+
+### Remark B.2
+
+**How the selected-path probability bound is used**
+
+Substituting the attachment and staircase parameters into the path-family weight estimate gives the required vanishing errors. The staircase substitution retains its logarithmic scale factor.
+
+**✓ Certified**
+
+The substitutions give the required vanishing polynomial and stretched-exponential errors. The staircase estimate retains its logarithmic correction.
+
+[LPPDifferentiability.Paper.path_family_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/PathFamilyWeights.lean) · [LPPDifferentiability.staircase_weight_polynomial_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean) · [LPPDifferentiability.staircase_weight_stretched_exponential_decay](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Analysis/StaircaseWeightDecay.lean) · [LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean)
+
+*Source location* Remark B.2.
+
+### Remark B.5
+
+**Why the attachment proof uses a moment above one**
+
+The attachment union bound needs polynomial lower-tail decay supplied by a moment above one. Integrability alone gives a weaker vanishing tail test; a possible logarithmic-moment extension is left open.
+
+**✓ Certified**
+
+The stated polynomial-decay explanation and the first-moment tail test are certified. The possible logarithmic-moment weakening remains speculative.
+
+[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean)
+
+*Source location* Remark B.5.
+
+### Moment bounds (§8.1)
+
+**Where the moment bounds enter**
+
+Avoiding very negative weights replaces deterministic short connections. Positive excess is controlled over connected collections of blocks. The cubic characteristic-length bound gives blocks with order $`s^4`$ vertices.
+
+**✓ Certified**
+
+The stated mathematical conclusion is certified at the final-draft scope.
+
+[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) · [LPPDifferentiability.stair_geometry_event_tendsto_final](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StairGeometryEvent.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.exists_excess_animal_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ExcessAnimalBound.lean)
+
+*Source location* Relaxing bounded weights; roles of the moment bounds.
+
+### Finite negative mean (§8.2)
+
+**A finite horizontal rate needs an integrable negative part**
+
+For upper-bounded independent weights, a finite horizontal passage rate forces the negative part to have finite first moment.
+
+**✓ Certified**
+
+For upper-bounded weights, finite horizontal passage rate forces a finite first negative moment; a finite shape gives the required rate.
+
+[LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_horizontal_rate](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean) · [LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_shape](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean)
+
+*Source location* Lower tail moment assumption; finite-mean necessity.
+
+### Necessary upper tail (§8.3)
+
+**The endpoint bound forces a small upper tail**
+
+The arbitrary-endpoint estimate forces the number of sites in a block times the probability of a weight of order its width to tend to zero. A single large collected starting vertex would violate that estimate.
+
+**✓ Certified**
+
+The necessary upper-tail conclusion is certified assuming the source endpoint probability limit, with the collected-start one-step convention.
+
+[LPPDifferentiability.FinalDraft.endpoint_upper_tail_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean) · [LPPDifferentiability.FinalDraft.endpointFastEvent_eq_defect](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean) · [LPPDifferentiability.FinalDraft.measureReal_exists_site_above_eq](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/FiniteSites.lean) · [LPPDifferentiability.measureReal_exists_upper_heavy_site_le_and_safe_ge](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/FiniteHeavyVertices.lean)
+
+*Source location* Upper tail moment assumption; necessary tail condition.
+
+### Conditional cap (§8.3)
+
+**Conditional cap bound for shorter blocks**
+
+Assume the characteristic lengths are eventually bounded by $`s_k^\gamma`$ at all sufficiently large indices. A positive moment of order $`p>2`$ with $`p>1+\gamma`$ controls large weights in the corresponding blocks; the global cap retains its logarithmic correction.
+
+Here $`s_k=2^k`$ is the transverse width and $`\Lambda_k`$ is the actual characteristic length of Proposition 5.3. The premise bounds $`\Lambda_k`$ by $`s_k^\gamma`$ eventually for every index, where $`\gamma>1`$. The positive moment order $`p`$ is greater than two.
+
+**✓ Certified**
+
+The improved eventual power bound is a premise. The checked cap estimate assumes both $`p>2`$ and $`p>1+\gamma`$, including all sufficiently large predecessor indices; it does not establish an improved characteristic length.
+
+[LPPDifferentiability.FinalDraft.working_region_upper_cap_failure_tendsto_of_length_power_at_source_cutoff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean) · [LPPDifferentiability.FinalDraft.tendsto_global_heavy_scale_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean) · [LPPDifferentiability.heavy_working_region_event_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.heavy_coarse_block_events_eventually](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.gridHeavyTailOfLengthPower](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean) · [LPPDifferentiability.grid_trialCap_finite_bound_of_mesh_le_half_width_power](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean) · [LPPDifferentiability.heavy_grid_trials_of_characteristic_length_power](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean)
+
+*Source location* Upper tail moment assumption; conditional block-cap estimate.
+
+### Conditional excess (§8.3)
+
+**The excess bound at a general aspect ratio**
+
+For $`p>2`$ and blocks of longitudinal size at most $`s^\gamma`$, the proved excess envelope has orders $`s^{(1+\gamma)/p}`$ and $`s^{2+\gamma-p}`$. This displayed envelope is $`o(s)`$ exactly when $`p>1+\gamma`$; the statement does not prove necessity for the actual excess.
+
+Here $`s_k=2^k`$ is the transverse width and $`\Lambda_k`$ is the actual characteristic length of Proposition 5.3. The premise bounds $`\Lambda_k`$ by $`s_k^\gamma`$ eventually for every index, where $`\gamma>1`$. The positive moment order $`p`$ is greater than two.
+
+**✓ Certified**
+
+The general two-power excess envelope and its little-o threshold are certified conditionally on the stated aspect-ratio bound. Necessity is asserted only for this envelope.
+
+[LPPDifferentiability.exists_excess_animal_bound_of_aspect_ratio](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/AnimalBound.lean) · [LPPDifferentiability.exists_excess_sum_integrated_sqrt_tail_bound_of_aspect_ratio](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/BlockTail.lean) · [LPPDifferentiability.excess_bound_ratio_tendsto_zero_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Threshold.lean) · [LPPDifferentiability.excess_bound_isLittleO_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Threshold.lean)
+
+*Source location* Upper tail moment assumption; conditional excess envelope.
+
+### Scaling heuristics (§8.3)
+
+**Heuristic characteristic lengths**
+
+KPZ and Flory fluctuation predictions suggest shorter characteristic lengths and lower positive-moment thresholds. These exponent laws are heuristic and do not lower the proved moment requirement.
+
+**? Not assessed**
+
+Heuristic or conjectural discussion. No certificate for the asserted exponent or exponential-growth law is claimed.
+
+*Source location* Upper tail moment assumption; KPZ and Flory heuristics.
+
+### Clipped shapes (§8.3)
+
+**Upper truncation approximates the shape**
+
+The shape for weights capped at $`M`$ lies below the original shape, with a uniform error controlled by the integrated square-root upper tail. This error tends to zero as $`M→∞`$.
+
+**✓ Certified**
+
+The actual capped marginal has the stated shape comparison and uniform tail error on the closed unit segment.
+
+[LPPDifferentiability.FinalDraft.Truncation.measurePreserving_upperClippedField](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Laws.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison_of_paper_moments](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean)
+
+*Source location* Upper tail moment assumption; clipped-shape comparison.
+
+### Differentiability after capping (§8.3)
+
+**Each fixed upper truncation is differentiable**
+
+Each fixed capped law preserves the required lower moment and has all positive moments. The main theorem, together with the linear shape of a constant law, gives differentiability at every fixed cutoff.
+
+**✓ Certified**
+
+Every fixed cutoff is covered. Nondegenerate clipped laws use the main theorem; constant laws use their exact linear shape.
+
+[LPPDifferentiability.FinalDraft.Truncation.exists_unique_upperClipped_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Differentiability.lean) · [LPPDifferentiability.FinalDraft.Truncation.upperClipped_shape_differentiable](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Differentiability.lean)
+
+*Source location* Upper tail moment assumption; differentiability at each cutoff.
+
+### Common modulus (§8.3)
+
+**A shared modulus would pass differentiability to the limit**
+
+If the clipped shape profiles have one differentiability modulus uniform over cutoffs, their uniform shape limit is differentiable. Existence of this common modulus is an unestablished premise.
+
+**✓ Certified**
+
+The implication is certified with a modulus shared over all cutoffs as an explicit premise. Existence of that common modulus remains unestablished.
+
+[LPPDifferentiability.FinalDraft.Truncation.differentiableAt_shape_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.shape_differentiable_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean)
+
+*Source location* Upper tail moment assumption; conditional common-modulus argument.
+
+### Confined top paths (§8.4)
+
+**A confined all-top path is a near-optimal crossing**
+
+In a flat direction, an all-top path has exactly the shape-predicted weight. If it also satisfies the strip constraint, the positive weight allowance makes it a crossing of the event used to define characteristic length.
+
+**✓ Certified**
+
+This elementary implication uses the actual flat-set equality and the strip crossing definition.
+
+[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.Path.level_zero_closed_strip_levels](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltWitnessSelection.lean)
+
+*Source location* Exclusion of the flat segment; confined all-top paths.
+
+### Fixed strip extinction (§8.4)
+
+**All-top paths eventually die in a fixed strip**
+
+In every fixed finite-width strip and at each fixed start level, sufficiently long confined paths eventually contain a collected site strictly below the top weight, almost surely.
+
+**✓ Certified**
+
+The almost-sure fixed-strip extinction claim is certified at every fixed signed start level. It does not imply any exponential lifetime bound.
+
+[LPPDifferentiability.FinalDraft.ae_eventually_pathWeight_lt_top_in_fixed_strip](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/FixedWidthStrip.lean)
+
+*Source location* Exclusion of the flat segment; fixed-strip extinction.
+
+### Exponential lifetime conjecture (§8.4)
+
+**Conjectured exponential length in flat directions**
+
+The paper expects near-optimal crossing probabilities in interior flat directions to remain large up to lengths exponential in the width. This is conjectural; the cited symmetric-strip and contact-process results do not establish the claim for every tilted strip.
+
+**? Not assessed**
+
+Heuristic or conjectural discussion. No certificate for the asserted exponent or exponential-growth law is claimed.
+
+*Source location* Exclusion of the flat segment; conjectured exponential lifetime.
+
+### Lemma A.1
+
+**A boundary circuit around a finite lattice set**
+
+Every finite connected set of lattice sites has a surrounding square-boundary circuit. Its forward and backward sides mark at least a quarter of its length, control the enclosed area, and admit the stated finite counting bound.
+
+**✓ Certified**
+
+All five clauses are certified for an arbitrary finite connected signed-lattice set and marked site, including both quarter-perimeter label bounds and the circuit count.
+
+[LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean) · [LPPDifferentiability.square_circuit_forward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.square_circuit_backward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.exists_finset_square_circuits_hitting_ray](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Count.lean)
+
+*Source location* Lemma A.1.
+
+### Lemma A.2
+
+**An infinite up-right path through likely events**
+
+Events indexed by lattice sites admit an infinite up-right path through successful sites with positive probability, provided failures are uniformly sufficiently unlikely and events at well-separated sites are independent. The path starts at the origin, whose event must also succeed.
+
+**✓ Certified**
+
+The certified high-density path begins at the origin and includes its event. The proof uses the separately certified contour with the printed dependence and count bounds.
+
+[LPPDifferentiability.exists_high_density_oriented_path_cutoff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HighDensityOrientedPaths.lean) · [LPPDifferentiability.exists_square_contour_bad_site_cover](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/OrientedPaths/ContourCover.lean) · [LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean)
+
+*Source location* Lemma A.2.
+
+### Lemma A.3
+
+**Probability bound for disjoint path events**
+
+For any finite list of high-weight path events, requiring the paths to collect disjoint sets of vertices has probability at most the product of the separate probabilities. The weights may have any real-valued distribution; the terminal vertex of each path is excluded from its collected set.
+
+**✓ Certified**
+
+The finite path-family inequality is certified for arbitrary real-valued independent weights and disjoint collected vertices. Its finite-chain proof is an approved alternative to the draft quantile-bit proof.
+
+[LPPDifferentiability.path_event_bk](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/PathEventBK.lean)
+
+*Source location* Lemma A.3.
+
+### Lemma B.1
+
+**A lower bound for selected path weights**
+
+Choose finitely many paths using only the information of which sites satisfy $`\omega_z<-T`$, and require them to avoid collecting those sites. The lemma bounds the probability that any chosen path has a very negative weight. This permits path selection to depend on the locations of unusually negative weights.
+
+The threshold $`T>0`$ is fixed. Path selection may use all indicators $`\mathbf1\{\omega_z<-T\}`$ but no further weight values. Collected vertices exclude the terminal vertex.
+
+The region $`F`$ is fixed before observing the weights; it must contain the collected vertices for every possible outcome, rather than only the paths observed in one outcome.
+
+Here $`N`$ and $`n`$ are fixed nonnegative integers bounding the number of selected paths and their lengths.
+
+**✓ Certified**
+
+The entire bad-site mask may select the finite path family. The count-tail and Bernstein terms hold at the printed thresholds, with the same bound after finite-region exhaustion.
+
+[LPPDifferentiability.Paper.path_family_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/PathFamilyWeights.lean) · [LPPDifferentiability.global_mask_path_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GlobalMaskFamilyWeights.lean) · [LPPDifferentiability.conditional_finite_weight_failure_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ConditionalFinitePathWeights.lean)
+
+*Source location* Lemma B.1.
+
+### Lemma B.3
+
+**Paths joining every pair of endpoints**
+
+Lemma 4.2 has the same simultaneous endpoint and path-location conclusion under the general moment assumptions. All permitted endpoint pairs are connected on one event whose probability tends to one.
+
+**✓ Certified**
+
+The simultaneous endpoint statement is certified under the appendix negative-moment and integrated square-root positive-tail assumptions.
+
+[LPPDifferentiability.exists_unique_shape_with_general_intervals](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GeneralIntervals.lean)
+
+*Source location* Lemma B.3.
+
+### Lemma B.4
+
+**Short paths reaching prescribed points**
+
+Every point of a level interval can be joined by a short path to one of a suitably spaced finite set of points on a later level, with high probability. All these paths have a small lower bound on their weight. A corresponding construction works in the reverse direction.
+
+A source level interval is a finite interval of lattice points with $`\ell(z)=I`$, where $`I\in\mathbb Z`$. A target set consists of deterministic lattice points on level $`I+m`$, where the integer $`m\ge1`$ is the required path length. “Prescribed” means chosen before observing the weights.
+
+**✓ Certified**
+
+Every prescribed finite net satisfying the stated spacing and count conditions is covered. A common positive lower bound tends to one for both forward and backward events.
+
+[LPPDifferentiability.prescribed_attachment_probability](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) · [LPPDifferentiability.exists_uniform_prescribed_attachment_events](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/UniformEstimate.lean) · [LPPDifferentiability.exists_forward_prescribed_attachment_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/ForwardEvent.lean) · [LPPDifferentiability.exists_backward_prescribed_attachment_event](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Attachments/BackwardEvent.lean)
+
+*Source location* Lemma B.4.
+
+### Lemma B.6
+
+**Paths can go around the very negative vertices**
+
+With probability tending to one, the obstructions created by very negative weights occur in bounded groups. Paths can then follow a prescribed direction while avoiding those weights, with uniformly bounded displacement from the line. The same construction supplies the endpoint adjustments needed to join these paths to crossings.
+
+**✓ Certified**
+
+The same event controls its probability and all five deterministic clauses in the specified region and collars. Both forward and backward reach estimates use the current contour lemma.
+
+[LPPDifferentiability.stair_geometry_event_tendsto_final](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StairGeometryEvent.lean) · [LPPDifferentiability.StairGeometry.mem_goodEvent_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Event.lean) · [LPPDifferentiability.StairGeometry.finite_reach_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/ContourTail.lean) · [LPPDifferentiability.StairGeometry.trapped_components_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.forward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.backward_greedy_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.paths_merge](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.path_trim](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Deterministic.lean) · [LPPDifferentiability.StairGeometry.arrival_path](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/StairGeometry/Arrival.lean)
+
+*Source location* Lemma B.6.
+
+### Lemma B.7
+
+**A lower weight bound for many chosen paths**
+
+A family of short paths may be chosen after observing the locations of very negative weights. If it avoids those sites, the probability that any member has an excessively negative weight tends to zero, even when the number of candidate paths grows polynomially with the scale.
+
+**✓ Certified**
+
+The stated lower-weight bound holds simultaneously for every mask-measurable avoiding family with the permitted polynomial count and path-length bound.
+
+[LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Paper/StaircaseWeights.lean) · [LPPDifferentiability.staircase_general_family_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StaircaseGeneral.lean)
+
+*Source location* Lemma B.7.
 
 ### Lemma B.8
+
+**Large positive weights do not spoil the connections**
+
+The positive moment assumption controls very large weights throughout the regions used for connections. Requiring each trial rectangle to contain no such weight still leaves a fixed positive crossing probability, and the crossing events in disjoint rectangles remain independent.
+
+**✓ Certified**
+
+The global upper cap and all coarse trial caps have the stated uniform probability limits. The capped trials have probability at least half the crossing threshold and are jointly independent.
+
+[LPPDifferentiability.heavy_grid_trials](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [LPPDifferentiability.gridCappedTrial_eq_inter_gridTrialCap](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [LPPDifferentiability.grid_working_cap_failure_tendsto](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean) · [LPPDifferentiability.heavy_coarse_block_events_eventually](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyVertexEvents.lean) · [LPPDifferentiability.heavy_crossing_trials_indep](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HeavyCrossingTrials.lean) · [LPPDifferentiability.fixed_coarse_good_event_prob_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/GridCoarseGoodProbability.lean)
+
+*Source location* Lemma B.8.
+
+### Lemma B.9
 
 **The path bounds with unbounded weights**
 
@@ -844,13 +1317,13 @@ For a fixed threshold $`M_0`$, the correction on a path $`\pi`$ is $`\sum_{z\tex
 
 **✓ Certified**
 
-The stage, full-stage and whole-path bounds are certified. The correction uses exactly the amount above the weight cutoff, summed over the blocks actually visited by the path.
+The one-step, stage and whole-path bounds include exactly the positive excess above the chosen cutoff, using the source witness maxima and connected block itinerary.
 
-[Stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58) · [Full-stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L26) · [Total defect](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166) · [Excess bounded by itinerary block sum](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L113)
+[LPPDifferentiability.Path.stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.full_stage_weight_le_with_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean) · [LPPDifferentiability.Path.total_weight_le_with_block_excess](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean)
 
-*Source location* Lemma B.8.
+*Source location* Lemma B.9.
 
-### Lemma B.9
+### Lemma B.10
 
 **Bounding the contribution of large positive weights**
 
@@ -860,123 +1333,11 @@ A block is one of the overlapping rectangles used to contain a stage. Connected 
 
 **✓ Certified**
 
-The uniform bound over connected block collections and its application to every path are certified. The certificate preserves the source's parameter dependence, with its constant chosen before the direction and scale.
+The same original translated excess weights attain their maximum over the finite rooted animal family. The real limsup estimate and the path itinerary bound are certified.
 
-[Uniform excess-animal bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ExcessAnimalBound.lean#L51) · [Actual path itineraries](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L113)
+[LPPDifferentiability.exists_excess_animal_maximum_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.rootedRadiusTwoAnimalMaximum_attained](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.iSup_radiusTwoAnimal_eq_maximum](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.rootedRadiusTwoAnimals_finite](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/ExcessScaling/Maximum.lean) · [LPPDifferentiability.exists_excess_animal_bound](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/ExcessAnimalBound.lean) · [LPPDifferentiability.limsup_iSup_radiusTwoAnimal_le_iff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Animals/RadiusTwoFamily.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Model/Paths/StageIndexSets.lean) · [LPPDifferentiability.Path.exists_first_stage_index_image_excess_le](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/StageExcessItinerary.lean)
 
-*Source location* Lemma B.9.
-
-### Remark 6.2
-
-**Choosing a scale for unbounded weights**
-
-Discusses the parameter choice for unbounded weights, including a scale-dependent upper cutoff and the correction for weights above it. This is a parameter discussion rather than a separate theorem.
-
-**? Not assessed**
-
-This is an explanation of how the proof chooses its parameters, rather than a separately stated theorem. Its correspondence with a separate certificate has not been assessed.
-
-[General scale assembly](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/GeneralOffFlatDifferentiability.lean#L175) · [Excess scale eventually small](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/CornerDefectExcess.lean#L54)
-
-*Source location* Remark 6.2.
-
-### Remark 6.4
-
-**The cost of moving across a corner**
-
-When the left and right slopes of $`g`$ differ, moving sideways contributes a positive loss relative to their average supporting function. The loss is proportional to the slope difference and to the sideways displacement. This is the quantitative step that makes a corner incompatible with long near-optimal paths.
-
-A supporting linear function is a linear function that is at least $`g`$ everywhere in $`\mathbb R_{\geq0}^2`$ and equals $`g`$ at the direction under consideration.
-
-**✓ Certified**
-
-The quantitative loss caused by reaching the sideways displacement threshold is certified. The discussion of why that loss vanishes when the two slopes agree is explanatory.
-
-[Extreme and average defect identity](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/DefectAlgebra.lean#L68) · [Witness-free extreme-defect bounds](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L137) · [Transverse corner-cost step](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L87)
-
-*Source location* Remark 6.4.
-
-### Remark 6.6
-
-**Subtracting the weight above a threshold**
-
-The general-weight stage estimate contains an explicit correction for weights above a fixed cutoff. It extends the bounded-weight inequality to weights without a uniform upper bound.
-
-Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
-
-A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
-
-**✓ Certified**
-
-The one-step and stage inequalities are certified, subtracting exactly the amount above the chosen cutoff at the collected vertices.
-
-[Stage estimate with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/WitnessFreeStage.lean#L58)
-
-*Source location* Remark 6.6.
-
-### Remark 6.9
-
-**The large-weight correction stays small**
-
-The positive moment estimate makes the accumulated contribution above the cutoff smaller than the loss forced by a putative corner. After combining this with the bound on counted high-weight subpaths, every long path still loses a positive amount per stage, contradicting the shape limit.
-
-Fix $`\xi=(\xi_1,1-\xi_1)`$ with $`0<\xi_1<1`$. Put $`r(z)=z_1-\xi_1(z_1+z_2)`$; this measures displacement from the line in direction $`\xi`$.
-
-A stage ends when a path first reaches $`2n_*`$ steps or changes its $`r`$ coordinate by at least $`s_*`$. Here $`n_*,s_*>0`$ are fixed length and width scales. A stage ending at one of these thresholds is full; the final shorter piece is a remainder.
-
-The counted subpaths either exceed one of the two supporting linear bounds by $`\eta s_*`$, or cross a specified strip of length $`n_*`$ and half-width $`8s_*`$ with weight greater than $`n_*g(\xi)-Ks_*`$. Here $`\eta,K>0`$ are fixed constants. Disjointness concerns collected vertices, so a terminal vertex may be shared.
-
-**✓ Certified**
-
-The whole-path estimate, the eventual bound on weights above the cutoff and the resulting positive loss are certified. The claim that this is the proof's only use of a positive moment above order four has not been audited.
-
-[Total defect with excess](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Model/Paths/StageDefectTotal.lean#L166) · [Eventual excess bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/StageExcessItinerary.lean#L182) · [Positive linear defect](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Analysis/CornerDefectExcess.lean#L36)
-
-*Source location* Remark 6.9.
-
-### Remark B.10
-
-**Why this proof requires a positive moment above four**
-
-Discusses the positive moment of order greater than four and a conditional improvement under a better crossing-length estimate. That improvement is not asserted as a proved result.
-
-**? Not assessed**
-
-The proposed conditional improvement and the necessary tail condition discussed in this remark have not been matched to certificates. The release proves the theorem with a positive moment of order greater than four.
-
-[Current cubic-scale excess bound](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/ExcessAnimalBound.lean#L51) · [Current heavy-vertex estimates](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/HeavyVertexEvents.lean#L65)
-
-*Source location* Remark B.10.
-
-### Theorem 2.1
-
-**The shape is differentiable**
-
-For independent, identically distributed, nonconstant weights, $`g`$ is differentiable throughout $`\mathbb R_{>0}^2`$ if the negative part has a finite moment of some order greater than one and the positive part has a finite moment of some order greater than four. Atoms and signed weights are allowed.
-
-**✓ Certified**
-
-The full differentiability theorem is certified. The certificate also includes existence and uniqueness of the directional shape, together with the regularity and uniform convergence proved earlier in the paper.
-
-[Theorem 2.1](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Statements.lean#L110) · [Assembled proof](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Full/Differentiability.lean#L53)
-
-*Source location* Theorem 2.1.
-
-### Appendix C.1
-
-**A law with no finite uniform shape limit**
-
-For every $`0<p<1`$, the example gives a weight law with finite negative moment of order $`p`$ but no finite uniform shape limit. Along infinitely many interior endpoints, the last-passage time divided by endpoint distance becomes arbitrarily negative.
-
-The endpoints lie in a fixed cone bounded away from the coordinate axes. The uniform limit concerns all sufficiently distant lattice endpoints in that cone at once.
-
-**✓ Certified**
-
-For every moment order strictly between zero and one, the law's construction, its moment properties and the almost-sure failure of a finite uniform shape limit along the specified interior endpoints are certified.
-
-[Construction of the lower-tail law](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LowerTailExampleLaw.lean#L42) · [Lower-tail counterexample](https://github.com/cjanjigi/LPP/blob/5a3c7a612144b68468559ea1800bf7f39a5d3ef1/Differentiability/Probability/LowerTailExample.lean#L383)
-
-*Source location* Appendix C.1.
+*Source location* Lemma B.10.
 
 
 <details>
@@ -984,73 +1345,101 @@ For every moment order strictly between zero and one, the law's construction, it
 
 | Use | Source location |
 | --- | --- |
-| Limiting shape for directed percolation models → Lemma 2.3 | Proof of Lemma 2.3 |
-| Limiting shape for directed percolation models → Lemma 3.1 | Proof of Lemma 3.1 |
-| Geodesics and the competition interface for the corner growth model → Theorem 2.2 | Proof of Theorem 2.2 |
-| Lemma 3.1 → Lemma 3.2 | Proof of Lemma 3.2 |
-| Lemma B.1 → Lemma B.3 | Proof of Lemma B.3 |
-| Lemma B.3 → Lemma B.2 | Proof of Lemma B.2 |
-| Lemma 3.1 → Lemma B.2 | Proof of Lemma B.2 |
-| Lemma 2.3 → Proposition 3.4 | Proof of Proposition 3.4 |
-| Lemma 3.2 → Proposition 3.4 | Proof of Proposition 3.4 |
-| Lemma A.1 → Proposition 3.4 | Proof of Proposition 3.4 |
-| Limiting shape for directed percolation models → Proposition 3.4 | Proof of Proposition 3.4 |
-| Lemma 4.1 → Lemma 4.2 | Proof of Lemma 4.2 |
-| Proposition 3.4 → Lemma 4.2 | Proof of Lemma 4.2 |
-| Lemma 3.1 → Proposition 4.3 | Proof of Proposition 4.3 |
-| Lemma 4.2 → Proposition 4.3 | Proof of Proposition 4.3 |
-| Proposition 4.3 → Lemma 4.4 | Proof of Lemma 4.4 |
-| Proposition 4.3 → Lemma 5.7 | Proof of Lemma 5.7 |
-| Lemma 4.4 → Lemma 5.7 | Proof of Lemma 5.7 |
-| Lemma A.1 → Lemma B.5 | Proof of Lemma B.5 |
-| Lemma B.1 → Lemma B.6 | Proof of Lemma B.6 |
-| Proposition 4.3 → Lemma B.7 | Proof of Lemma B.7 |
-| Lemma 4.4 → Lemma B.7 | Proof of Lemma B.7 |
-| Lemma B.5 → Lemma 5.7 | Proof of Lemma 5.7 |
-| Lemma B.6 → Lemma 5.7 | Proof of Lemma 5.7 |
-| Lemma B.7 → Lemma 5.7 | Proof of Lemma 5.7 |
-| Lemma 5.7 → Proposition 5.9 | Proof of Proposition 5.9 |
-| Proposition 3.4 → Proposition 5.9 | Proof of Proposition 5.9 |
-| Lemma B.5 → Proposition 5.9 | Proof of Proposition 5.9 |
-| Lemma B.7 → Proposition 5.9 | Proof of Proposition 5.9 |
-| Inequalities with applications to percolation and reliability → Lemma 6.1 | Proof of Lemma 6.1 |
-| Lemma 6.1 → Proposition 6.7 | Proof of Proposition 6.7 |
-| Proposition 5.9 → Proposition 6.7 | Proof of Proposition 6.7 |
-| Proposition 4.3 → Proposition 6.7 | Proof of Proposition 6.7 |
-| Lemma 6.3 → Lemma 6.8 | Proof of Lemma 6.8 |
-| Lemma 6.5 → Lemma 6.8 | Proof of Lemma 6.8 |
-| Lemma 6.3 → Lemma B.8 | Proof of Lemma B.8 |
-| Proposition 4.3 → Lemma B.9 | Proof of Lemma B.9 |
-| On the subspaces of Lp (p > 2) spanned by sequences of independent random variables → Lemma B.9 | Proof of Lemma B.9 |
-| Linear growth for greedy lattice animals → Lemma B.9 | Proof of Lemma B.9 |
-| Theorem 2.2 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Limiting shape for directed percolation models → Theorem 2.1 | Proof of Theorem 2.1 |
-| Proposition 6.7 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Lemma 6.8 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Proposition 6.7 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Lemma B.8 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Lemma B.9 → Theorem 2.1 | Proof of Theorem 2.1 |
-| Lemma 4.4 → Proposition 6.7 | Proof of Proposition 6.7 |
-| Limiting shape for directed percolation models → Lemma 4.2 | Proof of Lemma 4.2 |
-| Proposition 3.4 → Remark 3.5 | Proof of Remark 3.5 |
-| Remark 3.5 → Proposition 5.9 | Proof of Proposition 5.9 |
-| Lemma B.6 → Remark 5.3 | Proof of Remark 5.3 |
-| Remark 5.3 → Remark 5.4 | Proof of Remark 5.4 |
-| Lemma B.7 → Remark 5.5 | Proof of Remark 5.5 |
-| Remark 5.5 → Remark 5.6 | Proof of Remark 5.6 |
-| Lemma B.5 → Remark 5.6 | Proof of Remark 5.6 |
-| Lemma B.6 → Remark 5.6 | Proof of Remark 5.6 |
-| Remark 5.4 → Remark 5.8 | Proof of Remark 5.8 |
-| Remark 5.6 → Remark 5.8 | Proof of Remark 5.8 |
-| Lemma B.5 → Remark 5.8 | Proof of Remark 5.8 |
-| Lemma B.7 → Remark 5.8 | Proof of Remark 5.8 |
-| Remark 5.8 → Remark 5.10 | Proof of Remark 5.10 |
-| Lemma B.5 → Remark 5.10 | Proof of Remark 5.10 |
-| Lemma B.7 → Remark 5.10 | Proof of Remark 5.10 |
-| Lemma 6.3 → Remark 6.4 | Proof of Remark 6.4 |
-| Remark 6.4 → Lemma 6.8 | Proof of Lemma 6.8 |
-| Lemma B.8 → Remark 6.6 | Proof of Remark 6.6 |
-| Lemma B.8 → Remark 6.9 | Proof of Remark 6.9 |
-| Lemma B.9 → Remark 6.9 | Proof of Remark 6.9 |
+| Limiting shape for directed percolation models → Lemma 2.3 | Lemma 2.3, proof or stated justification |
+| Limiting shape for directed percolation models → Lemma 4.1 | Lemma 4.1, proof or stated justification |
+| Geodesics and the competition interface for the corner growth model → Theorem 2.2 | Theorem 2.2, proof or stated justification |
+| Lemma 4.1 → Lemma 4.2 | Lemma 4.2, proof or stated justification |
+| Lemma B.1 → Lemma B.4 | Lemma B.4, proof or stated justification |
+| Lemma B.4 → Lemma B.3 | Lemma B.3, proof or stated justification |
+| Lemma 4.1 → Lemma B.3 | Lemma B.3, proof or stated justification |
+| Lemma 2.3 → Proposition 4.4 | Proposition 4.4, proof or stated justification |
+| Lemma 4.2 → Proposition 4.4 | Proposition 4.4, proof or stated justification |
+| Lemma A.2 → Proposition 4.4 | Proposition 4.4, proof or stated justification |
+| Limiting shape for directed percolation models → Proposition 4.4 | Proposition 4.4, proof or stated justification |
+| Lemma 5.1 → Lemma 5.2 | Lemma 5.2, proof or stated justification |
+| Proposition 4.4 → Lemma 5.2 | Lemma 5.2, proof or stated justification |
+| Lemma 4.1 → Proposition 5.3 | Proposition 5.3, proof or stated justification |
+| Lemma 5.2 → Proposition 5.3 | Proposition 5.3, proof or stated justification |
+| Proposition 5.3 → Lemma 5.4 | Lemma 5.4, proof or stated justification |
+| Proposition 5.3 → Lemma 6.8 | Lemma 6.8, proof or stated justification |
+| Lemma 5.4 → Lemma 6.8 | Lemma 6.8, proof or stated justification |
+| Lemma B.1 → Lemma B.7 | Lemma B.7, proof or stated justification |
+| Proposition 5.3 → Lemma B.8 | Lemma B.8, proof or stated justification |
+| Lemma 5.4 → Lemma B.8 | Lemma B.8, proof or stated justification |
+| Lemma 6.8 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Proposition 4.4 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Lemma B.6 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Lemma B.8 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Inequalities with applications to percolation and reliability → Lemma A.3 | Lemma A.3, proof or stated justification |
+| Lemma A.3 → Proposition 7.6 | Proposition 7.6, proof or stated justification |
+| Proposition 6.11 → Proposition 7.6 | Proposition 7.6, proof or stated justification |
+| Proposition 5.3 → Proposition 7.6 | Proposition 7.6, proof or stated justification |
+| Lemma 7.2 → Lemma 7.7 | Lemma 7.7, proof or stated justification |
+| Lemma 7.4 → Lemma 7.7 | Lemma 7.7, proof or stated justification |
+| Lemma 7.2 → Lemma B.9 | Lemma B.9, proof or stated justification |
+| Proposition 5.3 → Lemma B.10 | Lemma B.10, proof or stated justification |
+| On the subspaces of Lp (p > 2) spanned by sequences of independent random variables → Lemma B.10 | Lemma B.10, proof or stated justification |
+| Linear growth for greedy lattice animals → Lemma B.10 | Lemma B.10, proof or stated justification |
+| Theorem 2.2 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Limiting shape for directed percolation models → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Proposition 7.6 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Lemma 7.7 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Proposition 7.6 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Lemma B.9 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Lemma B.10 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Lemma 5.4 → Proposition 7.6 | Proposition 7.6, proof or stated justification |
+| Limiting shape for directed percolation models → Lemma 5.2 | Lemma 5.2, proof or stated justification |
+| Remark 4.6 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Digraphs: Theory, Algorithms and Applications → Lemma A.1 | Lemma A.1, proof or stated justification |
+| Concentration Inequalities: A Nonasymptotic Theory of Independence → Lemma B.1 | Lemma B.1, proof or stated justification |
+| Lemma A.1 → Lemma A.2 | Lemma A.2, proof or stated justification |
+| Lemma A.1 → Lemma B.6 | Lemma B.6, proof or stated justification |
+| Shape theorem (§2.2) → S1 | Section 2.2, consequence S1, proof or stated justification |
+| Shape theorem (§2.2) → S2 | Section 2.2, consequence S2, proof or stated justification |
+| Shape theorem (§2.2) → S3 | Section 2.2, consequence S3, proof or stated justification |
+| Shape theorem (§2.2) → S4 | Section 2.2, consequence S4, proof or stated justification |
+| S2 → Lemma 4.1 | Lemma 4.1, proof or stated justification |
+| S4 → Lemma 4.1 | Lemma 4.1, proof or stated justification |
+| S3 → Lemma 4.2 | Lemma 4.2, proof or stated justification |
+| S4 → Sublinear geodesic loss (§2.6) | Path weights and supporting functionals; equation eq:geodesic-defect, proof or stated justification |
+| Shape theorem (§2.2) → Sublinear geodesic loss (§2.6) | Path weights and supporting functionals; equation eq:geodesic-defect, proof or stated justification |
+| Sublinear geodesic loss (§2.6) → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Sublinear geodesic loss (§2.6) → Theorem 2.1 | Theorem 2.1, proof or stated justification |
+| Probability inequalities for sums of bounded random variables → Lemma 4.2 | Lemma 4.2, proof or stated justification |
+| Probability inequalities for sums of bounded random variables → Lemma 6.8 | Lemma 6.8, proof or stated justification |
+| Proposition 4.4 → Remark 4.6 | Remark 4.6, proof or stated justification |
+| Proposition 4.4 → Remark 4.7 | Remark 4.7, proof or stated justification |
+| Lemma 2.3 → Remark 4.7 | Remark 4.7, proof or stated justification |
+| Lemma B.7 → Remark 6.3 | Remark 6.3, proof or stated justification |
+| Remark 6.3 → Remark 6.4 | Remark 6.4, proof or stated justification |
+| Lemma B.8 → Remark 6.5 | Remark 6.5, proof or stated justification |
+| Remark 6.3 → Remark 6.6 | Remark 6.6, proof or stated justification |
+| Remark 6.5 → Remark 6.6 | Remark 6.6, proof or stated justification |
+| Remark 6.3 → Remark 6.7 | Remark 6.7, proof or stated justification |
+| Remark 6.5 → Remark 6.7 | Remark 6.7, proof or stated justification |
+| Remark 6.4 → Remark 6.9 | Remark 6.9, proof or stated justification |
+| Remark 6.6 → Remark 6.9 | Remark 6.9, proof or stated justification |
+| Lemma B.6 → Remark 6.10 | Remark 6.10, proof or stated justification |
+| Lemma B.8 → Remark 6.10 | Remark 6.10, proof or stated justification |
+| Remark 6.7 → Remark 6.10 | Remark 6.10, proof or stated justification |
+| Lemma B.7 → Remark 6.10 | Remark 6.10, proof or stated justification |
+| Remark 6.9 → Remark 6.12 | Remark 6.12, proof or stated justification |
+| Proposition 6.11 → Remark 7.1 | Remark 7.1, proof or stated justification |
+| Lemma 7.2 → Remark 7.3 | Remark 7.3, proof or stated justification |
+| Lemma 2.3 → Remark 7.3 | Remark 7.3, proof or stated justification |
+| Lemma B.9 → Remark 7.5 | Remark 7.5, proof or stated justification |
+| Lemma B.10 → Remark 7.8 | Remark 7.8, proof or stated justification |
+| Lemma B.9 → Remark 7.8 | Remark 7.8, proof or stated justification |
+| Lemma B.1 → Remark B.2 | Remark B.2, proof or stated justification |
+| Lemma B.4 → Remark B.5 | Remark B.5, proof or stated justification |
+| Proposition 6.11 → Necessary upper tail (§8.3) | Upper tail moment assumption; necessary tail condition, proof or stated justification |
+| Linear growth for greedy lattice animals → Clipped shapes (§8.3) | Upper tail moment assumption; clipped-shape comparison, proof or stated justification |
+| Theorem 2.1 → Differentiability after capping (§8.3) | Upper tail moment assumption; differentiability at each cutoff, proof or stated justification |
+| Clipped shapes (§8.3) → Common modulus (§8.3) | Upper tail moment assumption; conditional common-modulus argument, proof or stated justification |
+| Differentiability after capping (§8.3) → Common modulus (§8.3) | Upper tail moment assumption; conditional common-modulus argument, proof or stated justification |
+| Lemma B.6 → Remark 6.6 | Remark 6.6, proof or stated justification |
+| Remark 6.9 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Remark 6.10 → Proposition 6.11 | Proposition 6.11, proof or stated justification |
+| Remark 7.8 → Theorem 2.1 | Theorem 2.1, proof or stated justification |
 
 </details>

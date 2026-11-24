@@ -1,0 +1,2944 @@
+{
+  "version": 2,
+  "source": {
+    "filename": "differentiability_final_draft.tex",
+    "sha256": "6d9253d4c96cc82686afa9944c0e3299bac6ef65d9c9c682a4137edec81db3b6"
+  },
+  "results": [
+    {
+      "label": "thm:main",
+      "kind": "theorem",
+      "lean": [
+        {
+          "path": "Differentiability/Frozen/Main/Differentiability.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_differentiable_full"
+        },
+        {
+          "path": "Differentiability/Paper/MainProof.lean",
+          "export": "LPPDifferentiability.Paper.shape_differentiable_on_unit_segment"
+        },
+        {
+          "path": "Differentiability/Statements.lean",
+          "export": "LPPStatements.Differentiability.shape_differentiable_on_unit_segment"
+        },
+        {
+          "path": "Differentiability/Paper/Setting.lean",
+          "export": "LPPDifferentiability.Paper.differentiable_on_unit_segment_iff_open_quadrant"
+        },
+        {
+          "path": "Differentiability/Statements.lean",
+          "export": "LPPStatements.Differentiability.shape_exists_unique_and_differentiable"
+        },
+        {
+          "path": "Differentiability/Full/Differentiability.lean",
+          "export": "LPPDifferentiability.Full.exists_unique_shape_differentiable"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_off_flat_general"
+        }
+      ],
+      "status": "sealed_main_statement",
+      "notes": "The historical frozen main theorem and the paper-facing unit-segment and joint shape exports prove the conclusion under A1–A3. General off-flat exclusion uses the actual shape, characteristic scales and endpoint and excess bounds. The main assembly still consumes the approved top-count flat-direction differentiability branch. The separately sealed current flat-top theorem proves the full classification. The approved direct homogeneous-profile calculus supplies the equivalence of the ambient and directional differentiability formulations.",
+      "proof_route": "reviewed_composition_with_approved_routes",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "b9055ff9491f1fec81edcc16014fedf7f9a062cd0ba235ae8af35fcdb9d1a2cd",
+        "end_sha256": "3fbabb27d796b2f0c449961b3747df7ad1413bfc4efa621da57cc9ca76f95d84",
+        "span_sha256": "b96cadaa1962d2c4a063cbae96d5dbb4c713eadb5d0a5353d3497bf265132434"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "4649095cd41f4008b58ead23f74d6867c255100548dde4af9f53bd7d3c71d000",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "ce9324e5f264f039dd9a66d4c1acbedf2b688150a459a3537509a0039548e2a8"
+        },
+        {
+          "start_sha256": "e3a38e564c305c456839b77e55dfc56e797a56ea54858db708af7115e7a42bff",
+          "end_sha256": "ed0b5e00e2576004517f175115d6e6480a4878734218779b154852329cb277ed",
+          "span_sha256": "b8a8327284983962ace7e9b241a9838c353659b26176e4bab5016c37496120cb"
+        }
+      ]
+    },
+    {
+      "label": "thm:flat-top",
+      "kind": "theorem",
+      "lean": [
+        {
+          "path": "Differentiability/Frozen/FinalDraft/FlatTop.lean",
+          "export": "LPPDifferentiability.FinalDraft.flat_top"
+        },
+        {
+          "path": "Differentiability/FinalDraft/FlatTop/Theorem.lean",
+          "export": "LPPDifferentiability.FinalDraft.FlatTop.flat_top"
+        }
+      ],
+      "status": "sealed_current_statement",
+      "notes": "The exact frozen export equates the two flat sets, proves the strict complement and proves all three critical-density cases. The supercritical clause uses the actual origin-cluster survival event and its common edge-speed limit. The provider normalizes the original weights and classifies both that law and the indicator law, as written. The approved finite-rate flat and endpoint components are used at their previous scope.",
+      "proof_route": "source_double_classification_with_approved_finite_rate_components",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "d280372ad3d55026c1e614cd6b726279e1e1041a11867f1640f3e4e2670772d3",
+        "end_sha256": "3fbabb27d796b2f0c449961b3747df7ad1413bfc4efa621da57cc9ca76f95d84",
+        "span_sha256": "eb93301879182ad056420d21113bd97b904a464db607a9d3343639c346b55c85"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "22204f98592edbc3439db268614cf1bc83a45b4919dc76d2240572d0e4c52fd2"
+        }
+      ]
+    },
+    {
+      "label": "lem:contact",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean",
+          "export": "LPPDifferentiability.quadrant_supporting_functionals_and_contact"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "Both supporting bounds, equality at the direction and the signed first-order remainders agree, including the closed quadrant boundary and origin. The source now has the same sign as the formal remainder.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "8bd07206261816890cab5505e9366829a62403061a9c555f9be2f1f99aebe901",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "ea542b91d5231b45bec467b93bb6a7d66f913301dc4afafcb50f572767d10309"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "2b05026fed55163edb91f3193bbdcc2e99f0e852ffa4502c7039380f9138bbfa"
+        }
+      ]
+    },
+    {
+      "label": "lem:travel",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/Travel.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_travel"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The matching unique-shape theorem gives one scale cutoff and one success probability for all deterministic endpoint pairs, with both path clauses on one path. Its proof uses the uniform shape law on short pieces and the interior Lipschitz estimate for floor errors before concatenation.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "9bab9945b8e61be6acad3e2a0ec98330ea6f557a515f33301e5ad1faf4646f15",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "eb1f0bba251e15eef1f382ffda8456bea817a196aa354492a50ae5af0fb7538f"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "1a7b97071b88eca8d16c10b6c74b8cdedfb98da1b8843338e7819e5834be7fef"
+        }
+      ]
+    },
+    {
+      "label": "lem:intervals",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/BoundedIntervals.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_bounded_intervals"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralIntervals.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_general_intervals"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The bounded and general exports each give one event for all endpoint pairs in two closed level intervals. The bounded proof constructs deterministic attachments and uses their Hoeffding estimate. The general proof constructs its own mask-dependent attachments and consumes the same travel estimate.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "87b4ea1c8a0b86a12dc54be0d423a13a483d3a7975b74817ccd72ac875b58fc7",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "091f092475f23b6cca8b29e248a12217775324fb0cd1e5638ede0faa8bbb0b6b"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "ebb807eb053ebfe79d7ce1bdf64ffffa07c103e9fc84c57565283a3f83b353e8",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "bad2eac38402f4eb0ed6316f6ae786e67741c91b26ad1814a7108f7a11dc1c54"
+        },
+        {
+          "start_sha256": "8f2499fe275927a83af687a182b3e6e8c4e213d538b2505efd7e0c5397a7105f",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "d1539bdbe7df4656be69062f97e6c129f572cc3a8da34ad0cfce786844621d76"
+        }
+      ]
+    },
+    {
+      "label": "prop:rarefast",
+      "kind": "proposition",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/RareFastCrossings.lean",
+          "export": "LPPDifferentiability.rarefast_uniform"
+        },
+        {
+          "path": "Differentiability/Probability/RarefastTranslation.lean",
+          "export": "LPPDifferentiability.measureReal_strip_crossing_translate"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The zero-centered estimate matches the all-lengths supremum form. The proof constructs heavy coarse crossings and connectors, obtains separated-site independence, and uses common-origin finite prefixes on the good-path event to contradict the shape theorem. The real-center and shape-centered remarks are tracked separately.",
+      "proof_route": "source_coarse_construction_and_current_oriented_contour",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "efe0ff6f56f967459ed0b2fd542e739e29cf75f44c9b63d3fa60922393e34741",
+        "end_sha256": "4264cda86e857f7690cd83dd0e7ad1741aed0140904d6c0114784b541ed74228",
+        "span_sha256": "fe322194fd1f9175fff1bab10600c3a783101bd4816f1c1da2e74121ef9dc5d1"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "9167c54187dd6f3144d36c5c60fc43a6967ab7526e6913a4a871d0790417f0f6",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "fcdee5573a946931a5e64d85245e8ea3eda2f5e5a48d7a45434cfc1247605ae3"
+        }
+      ]
+    },
+    {
+      "label": "lem:kernel",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/MaximumModifiedFieldLaw.lean",
+          "export": "LPPDifferentiability.maximum_modification_ge_original"
+        },
+        {
+          "path": "Differentiability/Probability/MaximumModifiedFieldLaw.lean",
+          "export": "LPPDifferentiability.maximum_modification_map_eq_density_product"
+        },
+        {
+          "path": "Differentiability/Probability/MaximumKernelRN.lean",
+          "export": "LPPDifferentiability.integral_sq_toReal_rnDeriv_maximum_kernel_map_le"
+        },
+        {
+          "path": "Differentiability/Probability/MaximumKernelGoodSet.lean",
+          "export": "LPPDifferentiability.maximum_kernel_good_set"
+        },
+        {
+          "path": "ProbabilityBasics/Probability/MaximumQuantileGap.lean",
+          "export": "LPPDifferentiability.maximum_quantile_gap_pos"
+        },
+        {
+          "path": "Differentiability/Probability/MaximumKernelRN.lean",
+          "export": "LPPDifferentiability.maximum_kernel_map_event_bound"
+        },
+        {
+          "path": "Differentiability/Probability/MaximumModifiedFieldLaw.lean",
+          "export": "LPPDifferentiability.maximum_modification_map_eq_mixture_product"
+        }
+      ],
+      "status": "reviewed_composition",
+      "notes": "The split providers use the same max-resampling law and supply monotonicity, finite product density and the exact squared RN bound with constant three. The quantile gap and boost set share the source witnesses for the fixed-environment probability and independence conclusions.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "4d7b2fec92606eae98bd4bcd708278080b894ed693891d58182fa0df21ab1ef6",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "b426edd0a76b9ff888c3297bdc7838d222b6e959f27cefbf71b1d5c24b9c3507"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "80f93207521cdbbabe6ee2460e8434b4cb8cd1f5d1f3de24cb646ec03dbab906"
+        }
+      ]
+    },
+    {
+      "label": "lem:tilt",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/TiltLimit.lean",
+          "export": "LPPDifferentiability.tilt_crossing_tendsto_zero"
+        },
+        {
+          "path": "Differentiability/Probability/TiltStripTopSites.lean",
+          "export": "LPPDifferentiability.exists_source_top_indicator_shape_with_strip_rarity"
+        }
+      ],
+      "status": "reviewed_composition",
+      "notes": "The exported real-scale cubic-strip limit uses the same free start, width and strict weight threshold. The top-indicator shape producer supplies the normalized mean premise at the fixed direction. The pointwise witness boost is integrated through the measurable event that no fast crossing occurs in the modified field.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "d4170b6d1f4c641740e2684620a0f038a438e43738eefb83c5f24ed96ca6e322",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "6c47fea4f8f17aea7941f617ba804c0e351dea42c6b4c07945ab15f2d58963ce"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "0505a2ffa908276d209cf962d3c000696a361c0d42fd8808f304abc86065e20d"
+        }
+      ]
+    },
+    {
+      "label": "prop:charlength",
+      "kind": "proposition",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/ShortCrossingAbundance.lean",
+          "export": "LPPDifferentiability.short_crossing_abundance"
+        },
+        {
+          "path": "Differentiability/Probability/CharacteristicLengths.lean",
+          "export": "LPPDifferentiability.characteristic_length_records"
+        }
+      ],
+      "status": "reviewed_composition",
+      "notes": "The two providers give uniform short-length abundance and the least dyadic length with the stated minimum test. The normalized top-count mean is supplied from the actual top-indicator shape. The same characteristic lengths give the divergence, cubic upper bound and lower probability below half the length.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "34aee696c4e35d38e35ea72fb421601c7158705437022fbd60d75f9cf1302481",
+        "end_sha256": "4264cda86e857f7690cd83dd0e7ad1741aed0140904d6c0114784b541ed74228",
+        "span_sha256": "10d71dc8302dd2d2e9bd08dfa44b5d9b599d66b5a19ca43510c214bb4a1b37e6"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "c36e42c3a1ef7a6b9f24cc2fe25e08ef821f11c30113c06193f070eaeac6d7f2",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "6d1a938134eac2d15cdb4dc2d21fb6ed96991c3c73360d0df457aa556c403249"
+        }
+      ]
+    },
+    {
+      "label": "lem:records",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/CharacteristicLengths.lean",
+          "export": "LPPDifferentiability.characteristic_length_records"
+        },
+        {
+          "path": "Differentiability/Analysis/RecordScales.lean",
+          "export": "LPPDifferentiability.exists_infinite_record_scales"
+        }
+      ],
+      "status": "reviewed_composition",
+      "notes": "The deterministic record comparison and its application to the actual characteristic exponent family agree, including the j=0 case, the full earlier-scale range and the cutoff of that same family.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "8596426c35cab24592435f38e4481e1088070f0f517570f5611c0c5bd0cb7529",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "74ca908dd036a0a0ddf916662281dcb0287a1429163dee97485c84a24e54a7ae"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "a057e018d0799caa5ce2606ed26578745df9a310c307601f953e427375ccb026"
+        }
+      ]
+    },
+    {
+      "label": "lem:grid",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/GridSimultaneous.lean",
+          "export": "LPPDifferentiability.bounded_grid_good_event"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_connections_on_records"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.mem_generalGridGoodEvent_iff"
+        },
+        {
+          "path": "Differentiability/Probability/GridSimultaneousGeneral.lean",
+          "export": "LPPDifferentiability.grid_connections_simultaneous_general"
+        }
+      ],
+      "status": "reviewed_statement_and_proof",
+      "notes": "The bounded theorem controls the specified finite intersection and proves the connection and its probability on that event. The reviewed general-weight event obtains the square-root tail from A3, retains the full first-dyadic and minimizing-length characterization, and proves both eligible staircase-side connections on the same measurable four-part event with one convergent beta. The general grid and probability remarks are `rk:grid-general` and `rk:gridprob-general`. The compatibility wrapper preserves the older downstream header.",
+      "proof_route": "exact_event_and_path_clauses",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "3884333653fd04502971618ed0bb4e957cf565ac5704280fd9ac7d3f5f087f4a",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "d83c9d87c37bb76099b9396d9260d136950aac82547b12a52063342f8ee691d0"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "07f6f7903da66d3e87e27362c6805fa931a2db0b373154c97270c9e75c9d35df",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "24d09b605c1a26803e0c601b2de2eadef7e9ee33c664767d25c42e27235f8141"
+        },
+        {
+          "start_sha256": "e6bb6877a7b5675eb096b08d0f2657c3632f9d3235049f662e75cf3ea8db294f",
+          "end_sha256": "4f22427cd9b1c25d4b174b9bd20f1dd5318a0177c9223c31166d45dfd21829a1",
+          "span_sha256": "65c4d7df79404af911e98faf219c2054ecab1c2d79707201e1cbee5c3834fd73"
+        }
+      ]
+    },
+    {
+      "label": "prop:endpoints",
+      "kind": "proposition",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/ArbitraryEndpoints.lean",
+          "export": "LPPDifferentiability.arbitrary_endpoints_defect_le"
+        },
+        {
+          "path": "Differentiability/Probability/ArbitraryEndpointsGeneral.lean",
+          "export": "LPPDifferentiability.arbitrary_endpoints_defect_le_general"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_off_flat_general"
+        },
+        {
+          "path": "Differentiability/Model/Paths/EndpointReductionGeneral.lean",
+          "export": "LPPDifferentiability.endpoint_pair_of_mem_general"
+        }
+      ],
+      "status": "reviewed_composition",
+      "notes": "The bounded and general exact endpoint limits follow from the respective grid path clauses, rare strip crossings and the source cost margin. The general proof trims endpoints and uses only the eligible forward or backward staircase side. The actual off-flat consumer supplies the provider conditions on its same record-scale witnesses.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a87d9bfbd4476208eac17dcbb0b16a4c283dab1fe9196a9de5125ab18d82c643",
+        "end_sha256": "4264cda86e857f7690cd83dd0e7ad1741aed0140904d6c0114784b541ed74228",
+        "span_sha256": "4f30f52174b832ac71c200253b78958a16e8d4567d48376b4c43028574a6519d"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "c3e8863c9deeca2917a0c7d81c0f6a9bde7f1cf5f118a021db0a3978c95189d5"
+        },
+        {
+          "start_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995",
+          "end_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995",
+          "span_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995"
+        }
+      ]
+    },
+    {
+      "label": "lem:chunk-witness",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/WitnessFreeStage.lean",
+          "export": "LPPDifferentiability.Path.witness_free_stage_defect"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The no-witness hypothesis excludes both actual block-witness types. The full stage whose transverse displacement is below the cutoff spans the internal crossing and gives the stronger longitudinal weight loss.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "fd681355373c675b01cf1012beee5a09ae4eaa9f10da1956bab55d847fda6a2a",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "25ab05c8848daa5ac9ecc8c1f9263fb1aa12291c0b26587c114492aa26cf5b6a"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "bc7bc0085b92579478121666e0a640e6b4bb8c32dbb5946366aeb89df2ae8f98"
+        }
+      ]
+    },
+    {
+      "label": "lem:multiplicity",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.stageWitnessMultiplicity"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Maximum.lean",
+          "export": "LPPDifferentiability.Path.has_stage_witness_family_multiplicity"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.stage_weight_le"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The largest size of a disjoint witness family is attained on the same tested stage. First-witness cuts provide a family and the maximum bounds that family in the printed inequality.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "0240125009bc5e6ec4ef43de306c8700d8aa6b6e30d82c3c3b855c16535dfa77",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "bc6ca7654aa4cb3a7dcfa2d3564f1de12cdaac6c13d5b6699a94d5e7190762e0"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "11bf6c1eed8c5671dc60e80c955601bfb62075e03ddd97a2123b63dd8052e3d9"
+        }
+      ]
+    },
+    {
+      "label": "prop:longpaths",
+      "kind": "proposition",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean",
+          "export": "LPPDifferentiability.Path.exists_total_witness_family"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean",
+          "export": "LPPDifferentiability.totalWitnessMultiplicity_lt_eventually_ae"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "For the actual first-hit stage decomposition, maximizing families combine over all stages including the remainder. The count and BK proof gives the printed strict integer bound for every sufficiently long stage count on one full-measure event.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c0a4d66339f0e1fc0ea91d284e9efe07e1c41b3378a2da3fe303005de5bdf2af",
+        "end_sha256": "4264cda86e857f7690cd83dd0e7ad1741aed0140904d6c0114784b541ed74228",
+        "span_sha256": "d72a317b72e5735f4555d4fe3cde9d1ddd3e3794ccf87e59c04f95219d1501d4"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "55cccc0dd1764ec14eef73366dd0919b1dcc2dd3f38a11816ff7303789c811db",
+          "span_sha256": "283e3c845b053d43ba0d2862c341d1dfd79440f4268b43069d02bf436571ac63"
+        }
+      ]
+    },
+    {
+      "label": "lem:fulldefect",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.full_stage_weight_le"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean",
+          "export": "LPPDifferentiability.Path.total_weight_le"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The full-stage and whole-path inequalities use the source stage maxima and first cuts, the longitudinal or transverse loss, and the final remainder.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "437d4de3cb91e33e2ac23c9fc567caa26a01fae33cb10ae2bf1fa7395b5e9e50",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "036bfccc77ee74683fc6350175e2023c7f5b0989dd1bea27795e0fe412572ccd"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "0a01227071d1cba877ce9e57a2711a7ce8262af38ddf21d88f7dcf0933b0616e"
+        }
+      ]
+    },
+    {
+      "label": "lem:contour",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Contour/Existence.lean",
+          "export": "LPPDifferentiability.exists_square_contour"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Contour/Labels.lean",
+          "export": "LPPDifferentiability.square_circuit_forward_cells"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Contour/Labels.lean",
+          "export": "LPPDifferentiability.square_circuit_backward_cells"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Contour/Count.lean",
+          "export": "LPPDifferentiability.exists_finset_square_circuits_hitting_ray"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The arbitrary signed finite connected set and marked site are retained. A positive signed ray index selects a boundary circuit. The construction proves both kinds of quarter-perimeter boundary labels, the area and ray bounds, and the printed m·3^(m−1) circuit count for the rooted candidates.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c0cf2fe4e1103357f1744a15799c1e23fec2f2882f99ddbe32b192476a9895a2",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "0fd7dec2abfe8316ae6d39d911a486cd410944c4c3ad391afd323afb572d0b48"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "09081f295e4270d47e2c25e623a9c6aff4de7e585e1576e0e4cbdf7f3763b265"
+        }
+      ]
+    },
+    {
+      "label": "lem:oriented",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/HighDensityOrientedPaths.lean",
+          "export": "LPPDifferentiability.exists_high_density_oriented_path_cutoff"
+        },
+        {
+          "path": "Differentiability/FinalDraft/OrientedPaths/ContourCover.lean",
+          "export": "LPPDifferentiability.exists_square_contour_bad_site_cover"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Contour/Existence.lean",
+          "export": "LPPDifferentiability.exists_square_contour"
+        }
+      ],
+      "status": "reviewed_statement_and_proof",
+      "notes": "The unchanged positive-survival interface now consumes the current square-contour lemma on the actual finite endpoint set. It uses the quarter-perimeter forward labels, the sharp rooted circuit count and the printed separated-label power. The independently checked proof terms carry the new route into rare crossings, positive survival below one and reopening.",
+      "proof_route": "source_current_square_contour_for_actual_endpoint_family",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "8e9c246101f5d6e5b02d40f54cc498e3278a14260485842ab85cd9e158951d7e",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "62e978e92ef792c08d3013719f2b4b4514c448bc4abf90f198db18511677f4fb"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "55063262205ea180fa934f5f35f463496dbc3533fc61b9ef5a835afb615d85d0",
+          "span_sha256": "635ce9e79ecfd93894b70d4476c600c4598994f23faf474ab56ea6ec0aaa0ec8"
+        }
+      ]
+    },
+    {
+      "label": "lem:bk",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/PathEventBK.lean",
+          "export": "LPPDifferentiability.path_event_bk"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The finite path-family inequality uses strict collected-site weights and pairwise disjoint collected sets. The approved countable-product real-weight proof uses rounding up and a finite-chain encoding. The draft explains a lower quantile-bit approximation.",
+      "proof_route": "author_approved_real_product_route",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "0118c1721b50db82fdb8c104eb0a2ececccf62e9879a7be084fdd2d1f30de364",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "9bbc960e80fec62b86a12615e3385fa11a682a86102f30bd94b080d01826de07"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "5f3fde346d0e43e001d2c55c62e53ee2e78ab4a2af791f82fa974aa44842ae52"
+        }
+      ]
+    },
+    {
+      "label": "lem:weights",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Paper/PathFamilyWeights.lean",
+          "export": "LPPDifferentiability.Paper.path_family_weight_failure_le"
+        },
+        {
+          "path": "Differentiability/Probability/GlobalMaskFamilyWeights.lean",
+          "export": "LPPDifferentiability.global_mask_path_weight_failure_le"
+        },
+        {
+          "path": "Differentiability/Probability/ConditionalFinitePathWeights.lean",
+          "export": "LPPDifferentiability.conditional_finite_weight_failure_le"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "Measurable families selected by the entire very-bad mask have the stated finite count and length. On a finite region, conditioning and product factorization give the count-tail and Bernstein terms. A monotone union over regions keeps the same probability bound.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "8b8b46b59e7ce940a38ffff1bfd94aa3b7dac43701abd9d866ad1dd62a712202",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "a0e7d7929ed197d34e40a002c92fd250f5aced68060453bd3334768450e8e246"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "d63835169ddd73d3c48d4eaab51d199fee59bdd80fcdd56702f9591c5dd06783",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "a4b16db9916293f58d35719358e9eda4bfaad12424e0c24c5bf7fb2b4ea3bf6f"
+        }
+      ]
+    },
+    {
+      "label": "lem:intervals-general",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/GeneralIntervals.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_general_intervals"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The general provider assumes the negative power moment and integrated square-root positive tail of the appendix. It constructs its own nets and joins general attachments to traveling paths on the common event. The broader supplied-net lemma is tracked separately.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "20324104a0e84fc8328b1640690187241ca6b9241fd17b79e55711192ea5f131",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "eddda38afabe8bf68d5985acc7820fe7faef039cb5735a19c7d8c632604200d8"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "8f2499fe275927a83af687a182b3e6e8c4e213d538b2505efd7e0c5397a7105f",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "d1539bdbe7df4656be69062f97e6c129f572cc3a8da34ad0cfce786844621d76"
+        }
+      ]
+    },
+    {
+      "label": "lem:attach-general",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Attachments/PrescribedProbability.lean",
+          "export": "LPPDifferentiability.prescribed_attachment_probability"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Attachments/UniformEstimate.lean",
+          "export": "LPPDifferentiability.exists_uniform_prescribed_attachment_events"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Attachments/ForwardEvent.lean",
+          "export": "LPPDifferentiability.exists_forward_prescribed_attachment_event"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Attachments/BackwardEvent.lean",
+          "export": "LPPDifferentiability.exists_backward_prescribed_attachment_event"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The theorem accepts every prescribed finite level net satisfying the printed spacing, cardinality and uniquely chosen endpoints. One positive lower bound tending to one works uniformly at all admissible placements for the forward and reflected backward attachment events.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "d291bb7fc860fa9ac6c0f0ade8e2e2483b452487ad14151e81868d919cb3e9de",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "ba5cc0aeab30fe4f39c223e548a205dc1e9879f1528171e159534fea99ce456c"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "0b62e1dccccb83fb9e100f5f49ee724dd6f527bac01008e522927c686679318e"
+        }
+      ]
+    },
+    {
+      "label": "lem:stair-geometry",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/StairGeometryEvent.lean",
+          "export": "LPPDifferentiability.stair_geometry_event_tendsto_final"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Event.lean",
+          "export": "LPPDifferentiability.StairGeometry.mem_goodEvent_iff"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/ContourTail.lean",
+          "export": "LPPDifferentiability.StairGeometry.finite_reach_tail"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.trapped_components_le"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.forward_greedy_bound"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.backward_greedy_bound"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.paths_merge"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.path_trim"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Arrival.lean",
+          "export": "LPPDifferentiability.StairGeometry.arrival_path"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The exact working region and its two collars define the event. The new square contour controls both finite reach tails with the K₃ exponent at K₃p′>4. The same event gives all five deterministic clauses with the original integer-distance interpretation of real radii.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "598081712854711d3c2ad7e7fe34dd27286bd81d86145a09de8329295e14e5dd",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "32eb14010b6325fe1b81252b5ebe4737b0131121ea77731b10cca9c34eb7cb29"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "6da13d12cba75fc9f522d25778d5286c2d9934e34d9a6cb085d5e739fa412b24"
+        }
+      ]
+    },
+    {
+      "label": "lem:stair-general",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/Paper/StaircaseWeights.lean",
+          "export": "LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero"
+        },
+        {
+          "path": "Differentiability/Probability/StaircaseGeneral.lean",
+          "export": "LPPDifferentiability.staircase_general_family_tendsto"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The paper provider enumerates each actual finite mask-measurable family under its cardinality bound. It applies the conditional lower-tail estimate with the original constants and identifies the strict failure event including empty and zero-length cases.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "4fc31a7518c093df4b58f0322f879b94e7af5d7a66418b51f141e16083464cca",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "2a472de82642a7b457042f875108403685854e2e62bad20dc6d82e4132c2d6b2"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "617b100073676ffa5c0e87d2547d1a04cc601717a85659181d22ec11fa7837bc"
+        }
+      ]
+    },
+    {
+      "label": "lem:heavy",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/HeavyTrials.lean",
+          "export": "LPPDifferentiability.heavy_grid_trials"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/HeavyTrials.lean",
+          "export": "LPPDifferentiability.gridCappedTrial_eq_inter_gridTrialCap"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean",
+          "export": "LPPDifferentiability.grid_working_cap_failure_tendsto"
+        },
+        {
+          "path": "Differentiability/Probability/HeavyVertexEvents.lean",
+          "export": "LPPDifferentiability.heavy_coarse_block_events_eventually"
+        },
+        {
+          "path": "Differentiability/Probability/HeavyCrossingTrials.lean",
+          "export": "LPPDifferentiability.heavy_crossing_trials_indep"
+        },
+        {
+          "path": "Differentiability/Probability/GridCoarseGoodProbability.lean",
+          "export": "LPPDifferentiability.fixed_coarse_good_event_prob_le"
+        }
+      ],
+      "status": "reviewed_statement_and_proof",
+      "notes": "The exact joint theorem derives the upper-tail input from A3 and obtains the record scales of the supplied direction and shape. It gives the global cap, uniform coarse cap, and lower probability and mutual independence of the same actual capped trials at the fixed rounded centres. Both endpoint levels are included in each cap.",
+      "proof_route": "source_cap_and_independence_at_fixed_centres",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "dfa5d065e7508eaa00ab9ab3401681c52fd57be8ca056c2d6452eeaedf7eedb8",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "aa3872bbe0eed51b26ba0371f505839aae5ec8f1bbc614353600e8bc3f4ed69c"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "e469fba91241471375bab114b18d5f5ac5452d0e0bae509ad8db99509345bfee"
+        }
+      ]
+    },
+    {
+      "label": "lem:multiplicity-general",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.stage_weight_le_with_excess"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.full_stage_weight_le_with_excess"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean",
+          "export": "LPPDifferentiability.Path.total_weight_le_with_block_excess"
+        },
+        {
+          "path": "Differentiability/Probability/StageExcessItinerary.lean",
+          "export": "LPPDifferentiability.Path.exists_first_stage_index_image_excess_le"
+        }
+      ],
+      "status": "reviewed_statement",
+      "notes": "The actual stage maxima occur in the excess-corrected local and whole-path bounds with the printed plus sign. The path estimate sums the original excess over the same finite set of distinct visited blocks.",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "22ea28e74b5606859793f21f194ee395aff0d8f7927a8753ea7820b9f2336c03",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "9c35c30f1e859293fcc85d7b5dda59845b303e7462fb8b32ba10f0081fbf09fa"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "326e4e69fcec058cdf33f53e1f10008fb42cc03a5c817f900a8a3fe024286103"
+        }
+      ]
+    },
+    {
+      "label": "lem:excess",
+      "kind": "lemma",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Maximum.lean",
+          "export": "LPPDifferentiability.exists_excess_animal_maximum_bound"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Maximum.lean",
+          "export": "LPPDifferentiability.rootedRadiusTwoAnimalMaximum_attained"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Maximum.lean",
+          "export": "LPPDifferentiability.iSup_radiusTwoAnimal_eq_maximum"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Maximum.lean",
+          "export": "LPPDifferentiability.rootedRadiusTwoAnimals_finite"
+        },
+        {
+          "path": "Differentiability/Probability/ExcessAnimalBound.lean",
+          "export": "LPPDifferentiability.exists_excess_animal_bound"
+        },
+        {
+          "path": "Differentiability/Model/Animals/RadiusTwoFamily.lean",
+          "export": "LPPDifferentiability.limsup_iSup_radiusTwoAnimal_le_iff"
+        },
+        {
+          "path": "Differentiability/Model/Paths/StageIndexSets.lean",
+          "export": "LPPDifferentiability.Path.exists_first_stage_index_image"
+        },
+        {
+          "path": "Differentiability/Probability/StageExcessItinerary.lean",
+          "export": "LPPDifferentiability.Path.exists_first_stage_index_image_excess_le"
+        }
+      ],
+      "status": "reviewed_statement_and_proof",
+      "notes": "The cubic fourth-moment estimate and common almost-sure bound use the exact rooted radius-two family. Its members lie in a signed box of radius 2N and the singleton gives nonemptiness. The same original translated weight sum attains its real maximum and equals the existing normalized EReal supremum after division. The source real limsup has the same C₀, box, law, weights and exponent. The exact first-cut itinerary is an admissible animal.",
+      "proof_route": "source_cubic_fourth_moment_and_attained_real_maximum",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c5786bcf04b5772ffae52f9bff261b0c3a051dc27a7be3592d5e575783940e9d",
+        "end_sha256": "0a25ecaf35d05a2a3af49931debd1c0e45307bbfce713a21430d49767d3db05d",
+        "span_sha256": "c08cef2f533074ce280078a0770d37bff9ea572dbf5030b35a26745ff05fa595"
+      },
+      "proof_anchors": [
+        {
+          "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+          "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+          "span_sha256": "0cbba8918598ec270c1d9b610035b53ff3d673337964466fc26aa6f22fad188f"
+        }
+      ]
+    }
+  ],
+  "proof_steps": [
+    {
+      "label": "A1–A3",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Statements/ShapeDefinitions.lean",
+          "export": "LPPStatements.NotAPointMass"
+        },
+        {
+          "path": "LPP_Foundations/Statements/ShapeDefinitions.lean",
+          "export": "LPPStatements.HasNegativePartMomentAbove"
+        },
+        {
+          "path": "LPP_Foundations/Statements/ShapeDefinitions.lean",
+          "export": "LPPStatements.HasPositivePartMomentAbove"
+        }
+      ],
+      "notes": "The public assumptions use the common product marginal, nondegeneracy and the strict existential negative and positive moment orders.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "1d2c90e85b9556e9d01a7ed3bf5328ae3a91dcc02ea264504ce651dcfb8ad867",
+        "end_sha256": "baef0b3c4f485da078b2270690ac3798790b4a4084253ea95846bfcadaecfe29",
+        "span_sha256": "864560c335505bd4e11ee29b09b3292a65a47369c32bda9cfdc57707bcd7d3fe"
+      }
+    },
+    {
+      "label": "eq:weight",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Frozen/Model/Path.lean",
+          "export": "LPPDifferentiability.Path"
+        },
+        {
+          "path": "LPP_Foundations/Frozen/Model/PathWeight.lean",
+          "export": "LPPDifferentiability.pathWeight"
+        },
+        {
+          "path": "LPP_Foundations/Frozen/Model/LastPassage.lean",
+          "export": "LPPDifferentiability.lastPassage"
+        }
+      ],
+      "notes": "The signed lattice start and natural up-right displacement describe the paper path. The collected weight omits the terminal vertex and the passage value maximizes the actual path family.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "4adb8b0f2e82b41dbba8e074d9d9de050368154d0d30d982d0a85e146880e5f1",
+        "end_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "span_sha256": "1c98201e6cd54f4a7ed3878ab611a66cb2436df7bc18771ba7f89a6f8072715e"
+      }
+    },
+    {
+      "label": "eq:shape",
+      "status": "reviewed_source_composition",
+      "proof_route": "martin_weak_negative_extension",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/UniformShapeProbability.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail"
+        },
+        {
+          "path": "Martin2004/Probability/WeakNegativeShape.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_of_negative_moment_and_positive_tail"
+        },
+        {
+          "path": "ProbabilityBasics/Probability/PositiveMomentTail.lean",
+          "export": "LPPDifferentiability.positive_integrated_sqrt_tail_lt_top_of_moment"
+        }
+      ],
+      "notes": "A3 supplies the integrated square-root positive tail. The weak-negative Martin theorem supplies the same deterministic finite continuous homogeneous concave shape and almost-sure uniform approximation.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "13d573c2ee2a2ea78aa497f2584f4aa6f624ba4b0fda80be6ab70b0ef6e068e3",
+        "end_sha256": "4f22427cd9b1c25d4b174b9bd20f1dd5318a0177c9223c31166d45dfd21829a1",
+        "span_sha256": "1c75638162b5ff0f4707a1e3a27ab4966f6e59df44135fb0295123aaf3fe9607"
+      }
+    },
+    {
+      "label": "S1",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Model/LastPassage/UniformShapeAllStarts.lean",
+          "export": "LPP.ae_uniform_passage_shape_all_starts_of_origin"
+        },
+        {
+          "path": "Differentiability/Probability/TranslatedShape.lean",
+          "export": "LPPDifferentiability.exists_unique_translated_shape_of_negative_moment_and_positive_tail"
+        }
+      ],
+      "notes": "Translate the event from the origin and take the countable intersection over every signed start. The exact reviewed real-cutoff normalized supremum follows on this common event.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "b82039172d3bedceeac6a6d63b474922dd5b777e595b631b9ef23294374c9b37",
+        "end_sha256": "b82039172d3bedceeac6a6d63b474922dd5b777e595b631b9ef23294374c9b37",
+        "span_sha256": "b82039172d3bedceeac6a6d63b474922dd5b777e595b631b9ef23294374c9b37"
+      }
+    },
+    {
+      "label": "S2",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/UniformShapeProbability.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail"
+        }
+      ],
+      "notes": "The reviewed exact client derives the real supremum of the strict-error probabilities for the supplied shape from the single uniform origin event and translations.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "604a1924d21ed26543836d76e5b8036537e0b29b381d045db83e9cba8feeb43b",
+        "end_sha256": "9557a744bfb40208d2092bf55d3d2cc8265a905a347b9c846430569590c15c9b",
+        "span_sha256": "15f5671ef1c37919685383845277906e4a7536100fcc3a3df5620cc4afe21776"
+      }
+    },
+    {
+      "label": "S3",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Martin2004/Probability/ShapeAboveMean.lean",
+          "export": "LPPDifferentiability.level_mul_integral_le_shape_of_negative_moment_and_positive_tail"
+        },
+        {
+          "path": "Martin2004/Probability/ShapeAboveMean.lean",
+          "export": "LPPDifferentiability.integral_le_shape_of_negative_moment_and_positive_tail"
+        }
+      ],
+      "notes": "The shape estimate keeps the theorem headers and follows the printed fixed deterministic path strong law, lattice directions, homogeneity and continuity on the closed quadrant.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "087ac85449ab68ec31911564b1c24dafc066791b5cd96cb8a23e504a4bcc3f5b",
+        "end_sha256": "087ac85449ab68ec31911564b1c24dafc066791b5cd96cb8a23e504a4bcc3f5b",
+        "span_sha256": "087ac85449ab68ec31911564b1c24dafc066791b5cd96cb8a23e504a4bcc3f5b"
+      }
+    },
+    {
+      "label": "S4",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean",
+          "export": "LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_adapted_cone"
+        },
+        {
+          "path": "LPP_Foundations/Analysis/HomogeneousShapeLipschitz.lean",
+          "export": "LPPDifferentiability.quadrant_homogeneous_shape_lipschitz_on_fraction_cone"
+        }
+      ],
+      "notes": "The adapted positive-level cone with the stated transverse width and the compact-interior consequence use the actual homogeneous concave shape and ℓ¹ metric. The footnote on a boundary asymptotic is recorded separately as cited background.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "074c0c9818d022aced54314a5d57c1caf36aeb2ce54df71ac720166e59c58491",
+        "end_sha256": "23c29550e96d7cc3b4c0eb3390733e7bf14790286a15154e509a3cabe5b5d00d",
+        "span_sha256": "e3f7b859fa1074566adcbe707a5fdc815b0dea522dd99aa4e04ae44078a4dfca"
+      }
+    },
+    {
+      "label": "normalization:open-quadrant",
+      "status": "reviewed_source_composition",
+      "proof_route": "approved_direct_homogeneous_rescaling",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Analysis/HomogeneousRescaling.lean",
+          "export": "LPPDifferentiability.differentiableAt_quadrantExtension_iff_normalized"
+        },
+        {
+          "path": "Differentiability/Paper/Setting.lean",
+          "export": "LPPDifferentiability.Paper.differentiable_on_unit_segment_iff_open_quadrant"
+        }
+      ],
+      "notes": "Positive homogeneity identifies differentiability at a positive quadrant point and at its level-one normalization.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "e92ecf1b7dc49550bf3cadc77eea464539e7dd32cceb22dec992c69f96f50386",
+        "end_sha256": "e92ecf1b7dc49550bf3cadc77eea464539e7dd32cceb22dec992c69f96f50386",
+        "span_sha256": "e92ecf1b7dc49550bf3cadc77eea464539e7dd32cceb22dec992c69f96f50386"
+      }
+    },
+    {
+      "label": "definition:top-indicator-flat-segment",
+      "status": "reviewed_source_composition",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/TopIndicatorShape.lean",
+          "export": "LPPDifferentiability.exists_source_top_indicator_shape"
+        },
+        {
+          "path": "Differentiability/Probability/TopIndicatorLaw.lean",
+          "export": "LPPDifferentiability.source_top_indicator_environmentLaw_map"
+        },
+        {
+          "path": "Differentiability/Probability/TopIndicatorLaw.lean",
+          "export": "LPPDifferentiability.source_top_indicator_environment_field_eq_zero_of_endpoint_top"
+        },
+        {
+          "path": "Differentiability/Frozen/FinalDraft/FlatTop.lean",
+          "export": "LPPDifferentiability.FinalDraft.flat_top"
+        }
+      ],
+      "notes": "The literal top indicator field has its Bernoulli product law. At infinite top it is identically zero almost surely. At finite top the reviewed theorem gives the empty, critical diagonal, and symmetric supercritical interval cases, with the actual right-edge speed.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "41c3c7433dd6f50b97ac795b8607e8e413caa25a1fdb44020274ea182f6154df",
+        "end_sha256": "c0321cb3917121227fbc46a38317cfa2695392ab6ee37917c763faf1d9309bfd",
+        "span_sha256": "ede1b997ca82cb55884693535c98bba10198b62e8e74ba3d7d0ed57c14421a64"
+      }
+    },
+    {
+      "label": "definition:coordinates-and-staircases",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_deterministic_coordinate_representation",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/TransverseStaircase.lean",
+          "export": "LPPDifferentiability.transverse_coordinate_on_level"
+        },
+        {
+          "path": "Differentiability/Model/Paths/TransverseStaircase.lean",
+          "export": "LPPDifferentiability.transverse_interval_iff_floor"
+        },
+        {
+          "path": "Differentiability/Model/Paths/TransverseStaircase.lean",
+          "export": "LPPDifferentiability.exists_transverse_staircase"
+        }
+      ],
+      "notes": "The level and transverse coordinates identify the integer sites on a level. Flooring gives the actual adjacent-step staircase and its half-open interval and displacement facts.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c51bbdfd8552f94bab6e2252265c458f8fe37f5ba5c669d4c7fcc320260c00ae",
+        "end_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "span_sha256": "f5bb3e7ecc2e943427cd8a783ea2cb9e0991ef03e3c075c70e75422d6e291956"
+      }
+    },
+    {
+      "label": "definition:support-defect",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_deterministic_support_and_contact",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/DefectAlgebra.lean",
+          "export": "LPPDifferentiability.Path.source_fminus_add"
+        },
+        {
+          "path": "Differentiability/Model/Paths/DefectAlgebra.lean",
+          "export": "LPPDifferentiability.Path.source_fplus_add"
+        },
+        {
+          "path": "Differentiability/Model/Paths/DefectAlgebra.lean",
+          "export": "LPPDifferentiability.Path.canonical_path_defect_min"
+        },
+        {
+          "path": "Differentiability/Model/Paths/DefectAlgebra.lean",
+          "export": "LPPDifferentiability.Path.canonical_path_defect_lower_bounds"
+        }
+      ],
+      "notes": "The signed linear functionals use the two one-sided slopes. The minimum defect identity has the direction-dependent half-gap times the transverse displacement magnitude.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "65de000c54c172d636ae879d6cbfea3a9f08b204f3f8962df82b33b7f9173f57",
+        "end_sha256": "a956875352aa75eda8baab276aa154e1d962ea6b7545a05c5a8460c011e37107",
+        "span_sha256": "69efc118d0b3c872816c3ab679193e794d079c1046fd36d3ca4fef5445cad8b5"
+      }
+    },
+    {
+      "label": "eq:geodesic-defect",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/GeodesicDefect.lean",
+          "export": "LPPDifferentiability.floor_direction_geodesic_defect_tendsto"
+        },
+        {
+          "path": "Differentiability/Probability/GeodesicDefect.lean",
+          "export": "LPPDifferentiability.exists_maximizing_floor_direction_path"
+        }
+      ],
+      "notes": "Round along the actual direction at each level, choose a maximizing admissible path and use the shape theorem and support calculation to get sublinear average defect.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "82b03be204c54ade85b054484e87eafd8dcfe0611d77e12b4dba1518699b0306",
+        "end_sha256": "a956875352aa75eda8baab276aa154e1d962ea6b7545a05c5a8460c011e37107",
+        "span_sha256": "dae4413fdc6662dc09b54358d8c73e4d6343ad36be512cb0c25ead182a51a837"
+      }
+    },
+    {
+      "label": "remark:bounded-unbounded-intervals",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/RarefastConnectors.lean",
+          "export": "LPPDifferentiability.exists_rarefast_connector_scale"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralIntervals.lean",
+          "export": "LPPDifferentiability.exists_unique_shape_with_general_intervals"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Attachments/PrescribedProbability.lean",
+          "export": "LPPDifferentiability.prescribed_attachment_probability"
+        }
+      ],
+      "notes": "In the localized crossing proof, the general-weight interval theorem supplies simultaneous connectors on the same endpoint intervals. Attachment avoidance and mean-loss estimates use A2.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "dae0db80073cf3d7aa4f0ab2d2b7c44a9d209dd359f5af8b0ba2c306e740167d",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "1eff5269af39d562d2924c7b7ec92148baf6fc6fed730b5f7970ea1462a52d02"
+      }
+    },
+    {
+      "label": "remark:fixed-length-crossings",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "direct_monotone_tail_and_finite_site_union_bound",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/FixedLength.lean",
+          "export": "LPPDifferentiability.FinalDraft.tendsto_sq_mul_upper_tail_zero"
+        },
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/FixedLength.lean",
+          "export": "LPPDifferentiability.FinalDraft.fixed_length_fast_crossing_tendsto_zero"
+        },
+        {
+          "path": "Differentiability/Probability/RareFastCrossings.lean",
+          "export": "LPPDifferentiability.rarefast_uniform"
+        }
+      ],
+      "notes": "The square-root tail condition gives t²P(W>t)→0 by the printed interval comparison. A direct union bound counts the fixed-length block and excludes a vertex above εs/(2n) for n>0. A fixed support bound supplies the remaining margin. The provider handles zero length by its empty collected sum.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "7ce908fffa3d6c25d2c167ef64a7669f2602378fae70b7deba621fa838640a5c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "68012d562f18a5440ce53e3ba5117059765207ed6d8955c379ef8c43daab7ae1"
+      }
+    },
+    {
+      "label": "rk:translate",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/CrossingRemarks/Translation.lean",
+          "export": "LPPDifferentiability.FinalDraft.exists_lattice_center_stripCrossing_subset"
+        },
+        {
+          "path": "Differentiability/FinalDraft/CrossingRemarks/Translation.lean",
+          "export": "LPPDifferentiability.FinalDraft.rarefast_real_center_uniform"
+        }
+      ],
+      "notes": "Round any real transverse centre at its fixed level, enlarge from Rs to (R+1)s and preserve the same path threshold. The comparison is uniform over signed levels and real centres.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "fca98cb16c096a29fc1e0bb8c11b0268ac22bb789e465bb8ee8cdc14a6f41163",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "cf18bba6436cf5cf37c2a7c1312457cae65233ba369edd62573c1cc4e2858b6a"
+      }
+    },
+    {
+      "label": "rk:gversion",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean",
+          "export": "LPPDifferentiability.FinalDraft.strip_crossing_support_subset_shape"
+        },
+        {
+          "path": "Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean",
+          "export": "LPPDifferentiability.FinalDraft.strip_crossing_shape_subset_support_union"
+        },
+        {
+          "path": "Differentiability/FinalDraft/CrossingRemarks/ShapeThreshold.lean",
+          "export": "LPPDifferentiability.FinalDraft.rarefast_shape_crossing_tendsto_zero"
+        }
+      ],
+      "notes": "The actual path families and sign thresholds are compared both ways with the shape threshold along s→∞ and n/s→∞. The prose about the level-only threshold provides a mechanism, without supplying a quantified counterexample.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "02bc72798c2f54f65308530c68b7a222bc0510dec432469b8ba6968a402b3141",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "b6317af1d5ce09de7dd8ddcf4503e66992aa39854a9f92492d0e2e9e09866871"
+      }
+    },
+    {
+      "label": "proof:rarefast",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/RarefastConnectors.lean",
+          "export": "LPPDifferentiability.exists_rarefast_connector_scale"
+        },
+        {
+          "path": "Differentiability/Probability/RarefastSiteEvents.lean",
+          "export": "LPPDifferentiability.exists_rarefast_coarse_site_events"
+        },
+        {
+          "path": "Differentiability/Probability/RarefastGoodPathContradiction.lean",
+          "export": "LPPDifferentiability.measureReal_rarefast_good_oriented_path_eq_zero"
+        }
+      ],
+      "notes": "Heavy crossings and connections determine good coarse sites. High-density survival would produce a fast long path, contradicting shape control.",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_coarse_construction_and_current_oriented_contour",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "9167c54187dd6f3144d36c5c60fc43a6967ab7526e6913a4a871d0790417f0f6",
+        "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+        "span_sha256": "fcdee5573a946931a5e64d85245e8ea3eda2f5e5a48d7a45434cfc1247605ae3"
+      }
+    },
+    {
+      "label": "proof:tilt",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/TiltStripTopSites.lean",
+          "export": "LPPDifferentiability.exists_source_top_indicator_shape_with_strip_rarity"
+        },
+        {
+          "path": "Differentiability/Probability/TiltWitnessBoost.lean",
+          "export": "LPPDifferentiability.tilt_fixed_witness_boost_failure_le"
+        },
+        {
+          "path": "Differentiability/Probability/TiltChangeOfMeasure.lean",
+          "export": "LPPDifferentiability.tilt_change_of_measure_le"
+        }
+      ],
+      "notes": "Use good-site abundance, boost a selected crossing and transport its probability.",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_route_or_filled_omissions",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "876233b8a03f24d0857a26d052957e71a7978dbe28514f9de6cd46217ef0121b",
+        "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+        "span_sha256": "0505a2ffa908276d209cf962d3c000696a361c0d42fd8808f304abc86065e20d"
+      }
+    },
+    {
+      "label": "remark:general-grid-overview",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        },
+        {
+          "path": "Differentiability/Probability/ArbitraryEndpointsGeneral.lean",
+          "export": "LPPDifferentiability.arbitrary_endpoints_defect_le_general"
+        }
+      ],
+      "notes": "The proof keeps the endpoint proposition and supplies its bounded and general forms from the respective grid events. The general route uses random stairs and trimmed endpoints.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c30f0dd3ff7e22f4f3588b26167721863ae23610c0670f93f6461ffe70e72e2c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3232d2ea29c571678dd037b69c1b11dab8c19b970b8461261dfa1417754a5455"
+      }
+    },
+    {
+      "label": "proof:grid-scale-pieces",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.grid_vertex_clause_of_generalGridGoodEvent"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Coarse/Connection.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.CoarseBlock.coarse_gridConnection"
+        },
+        {
+          "path": "Differentiability/Probability/GridCoarseGoodProbability.lean",
+          "export": "LPPDifferentiability.fixed_coarse_good_event_prob_le"
+        }
+      ],
+      "notes": "The fine and coarse path bounds are on the path families used in the corresponding exact events. The two signed defect inequalities and transverse spread refer to the same connection.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "85c1cc11e3ce467ea456c7cf801037726291e475b63c5f0e575668eafeb4ba08",
+        "end_sha256": "1ac45a62ca1c6cbcbbd32428b0dcd1fce4e454a0517b08c2c8b03f8124c0f92a",
+        "span_sha256": "46c71a5fe0389128f942fe3e491177460a40133cf5a2391913a1ad9faff16693"
+      }
+    },
+    {
+      "label": "rk:length",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_scalar_bound_and_length_refinement",
+      "lean": [
+        {
+          "path": "Differentiability/Analysis/RecordScales.lean",
+          "export": "LPPDifferentiability.sq_mul_two_pow_le"
+        },
+        {
+          "path": "Differentiability/Analysis/GridScaleCounts.lean",
+          "export": "LPPDifferentiability.grid_sq_mul_width_le"
+        },
+        {
+          "path": "Differentiability/Probability/GridFineStaircaseFamily.lean",
+          "export": "LPPDifferentiability.isCoarseAttachmentStaircase_length"
+        },
+        {
+          "path": "Differentiability/Analysis/StaircaseWeightDecay.lean",
+          "export": "LPPDifferentiability.staircase_weight_stretched_exponential_decay"
+        }
+      ],
+      "notes": "The real and natural forms of j²w ≤ 2s_k, applied to the printed 8C_*j²w upper bound, give 16C_*s_k. The probability proof uses the coarser length bound and its k⁴ correction as written.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c08602b0c3ec13577a330713e1b0eadfff16f7ecb6e46e2171cdde09924f201b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "4af2ca4952dfab5ce4ed3ea1cfc6f3b733c153ee366c11cdb4a5f5aa0cb5c6e6"
+      }
+    },
+    {
+      "label": "rk:stair-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.forward_greedy_bound"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.backward_greedy_bound"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Family.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.fineChoice"
+        },
+        {
+          "path": "Differentiability/Paper/StaircaseWeights.lean",
+          "export": "LPPDifferentiability.Paper.staircase_path_family_weight_failure_tendsto_zero"
+        }
+      ],
+      "notes": "The generic random staircase is built from the actual bad-site mask. Forward and backward existence tests are kept on their respective partial windows.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "31605206c93f5421aa7097174a2c116405a663eeeeebfdaa152712589f61bc41",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "76d1bc79dcc8f3b59d1f58c21fbb699c5e867342fe5b584ec99e39f46cef103a"
+      }
+    },
+    {
+      "label": "rk:fine-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.grid_vertex_clause_of_generalGridGoodEvent"
+        }
+      ],
+      "notes": "Fine pieces in the eligible connection use the chosen greedy segment and the selected-family weight bound.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a6e3ac5d44e2607a2247adb1a2a19b584dd203cb380d02e48692f2fe61b0152c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "47d0356a3d0f8dcdc19e84efd810d10d6229ed79d18d904eb443de277a20a04f"
+      }
+    },
+    {
+      "label": "rk:heavy-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralEvents.lean",
+          "export": "LPPDifferentiability.gridCappedTrial"
+        },
+        {
+          "path": "Differentiability/Probability/GridCoarseGoodProbability.lean",
+          "export": "LPPDifferentiability.fixed_coarse_good_event_prob_le"
+        }
+      ],
+      "notes": "The modified crossing and full-block cap use the same fixed trial centre. The source independent-trial exponent is used in the probability of all trials failing.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "dffd9aa551cf351b692eca0d4a6ec38546e241bd72ca4cca09b186d8e1fe23eb",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3e40aa2ff0a56d1ea68578a49e916144d91ed6dab65af15977c90bdeef8d25dd"
+      }
+    },
+    {
+      "label": "rk:coarse-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Coarse/Connection.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.CoarseBlock.coarse_gridConnection"
+        }
+      ],
+      "notes": "The successful capped crossing is trimmed and concatenated with the source selected arrival and merge pieces. The statement uses the corresponding eligible staircase endpoint.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "f4b12707d5570e217591c346094ff112e774cc99422b873948a5c3a0d7215f67",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "84a84a6aed2003fd5618a9e29ec7bc7814992f69651507ddfa21282568cac9dd"
+      }
+    },
+    {
+      "label": "rk:good-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralEvents.lean",
+          "export": "LPPDifferentiability.generalGridCellGood"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralGlobalEvents.lean",
+          "export": "LPPDifferentiability.generalGridGoodEventForPaths"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.mem_generalGridGoodEvent_iff"
+        }
+      ],
+      "notes": "Fine cells contribute the whole space. Coarse cells union fixed capped trials, then the intersection adds geometry, the exact mask-selected path weights and the working-region upper cap.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "fa634377177e5b4dd51f990e76e370141851fa0b2efe3c17608762a39838de81",
+        "end_sha256": "1ac45a62ca1c6cbcbbd32428b0dcd1fce4e454a0517b08c2c8b03f8124c0f92a",
+        "span_sha256": "ad0c50692929ac9f1e77524dab820257352bf63d4962c557cd99588d14583e94"
+      }
+    },
+    {
+      "label": "proof:grid-event",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/GridSimultaneous.lean",
+          "export": "LPPDifferentiability.bounded_grid_good_event"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        }
+      ],
+      "notes": "The bounded statement and the general forms in remarks `rk:grid-general` and `rk:gridprob-general` use the actual joint event, with the same event supporting both path clauses and the convergent failure bound.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "1cf6268029fe6a4caa7d3a15cfff8aaee9e4dfe0df6fd0b9f6df3084b62000ea",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "f282e9449f662d9ff3eb1f268c3500a318c51172eb242bce76f9ea639f608657"
+      }
+    },
+    {
+      "label": "rk:grid-general",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_general_event_and_both_path_windows",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        }
+      ],
+      "notes": "On the four-way event, both eligible staircase-side windows use one connection with the stated signed cost and transverse spread.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "9102b012d4034556c09088b944a3150fafc692551a7ff2ea15af4814aff900e6",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "8118d2f3fac412b47a6663e71047949963018b7eb7e854082e2a4d65fd325ef3"
+      }
+    },
+    {
+      "label": "rk:gridprob-general",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_general_event_probability",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralGlobalProbability.lean",
+          "export": "LPPDifferentiability.general_grid_good_event_failure_eventually_le"
+        }
+      ],
+      "notes": "The literal four-way intersection has failure bound 2β_J on the same record witnesses, with the three vanishing errors controlled separately.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c5e589cdc2e03d4d2a60fe1b9301b2e99a8f3ad1c07ae76db036cce56363e28e",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3552c0dae3c5f0df70216ccdd1cddead29ce5be947204f95a6ea2d8b82f54d9d"
+      }
+    },
+    {
+      "label": "rk:endpoints-general",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/EndpointReductionGeneral.lean",
+          "export": "LPPDifferentiability.endpoint_pair_of_mem_general"
+        },
+        {
+          "path": "Differentiability/Probability/ArbitraryEndpointsGeneral.lean",
+          "export": "LPPDifferentiability.arbitrary_endpoints_defect_le_general"
+        }
+      ],
+      "notes": "Use the backward staircase at the trimmed left endpoint and the forward staircase at the trimmed right endpoint within the respective admissible windows.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a785608bc2bd603bdc3ddd68247cc861dccfb2c1540f29b99bb1760d283f0023",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "a461486928f0be3b7f7b2aa6a202fd1626dbbe3cbc9f2d5917f0de450b45d632"
+      }
+    },
+    {
+      "label": "definition:path-block-events",
+      "status": "reviewed_source_composition",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/PathEventBK.lean",
+          "export": "LPPDifferentiability.path_event_bk"
+        },
+        {
+          "path": "Differentiability/Probability/StageWitnessPathEvents.lean",
+          "export": "LPPDifferentiability.exists_stage_witness_path_event"
+        }
+      ],
+      "notes": "A path event is witnessed by a strict collected-weight inequality. Disjoint occurrence requires pairwise disjoint collected sites for the actual witnesses.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "c0f9788a027b12f4f781e4410cc3b9d4bedc675b19522bfdbcfe68bd80642787",
+        "end_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "span_sha256": "2be2bc459f9b77d31bce7c5f24b99bfaa3445335065b22e736ab498a8ba1d224"
+      }
+    },
+    {
+      "label": "eq:rare-prob",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/StageWitnessPathEvents.lean",
+          "export": "LPPDifferentiability.exists_stage_witness_path_event"
+        },
+        {
+          "path": "Differentiability/Probability/BlockDefectRarity.lean",
+          "export": "LPPDifferentiability.block_rare_events_le"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_off_flat_general"
+        }
+      ],
+      "notes": "The source fixed-scale choice uses the actual short low-probability crossing and the heavy-path probability from the endpoint proposition, uniformly over signed block indices.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "39cf6d77e829d179e5f3c99c0a5294e86588301f6bb8599ff2bd05ccf0329dbc",
+        "end_sha256": "55d298002abbd19b5847ecb345eaf12697c1290a52ebf1e8645b725d8c33b452",
+        "span_sha256": "3389da9da8b8875c9f353fb776be7b7462ce3f93a582b13d898a3016019bc406"
+      }
+    },
+    {
+      "label": "definition:rare-block-witnesses",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.stageBlockOrigin"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.is_stage_block_witness"
+        },
+        {
+          "path": "Differentiability/Probability/StageWitnessPathEvents.lean",
+          "export": "LPPDifferentiability.exists_stage_witness_path_event"
+        }
+      ],
+      "notes": "The heavy path uses the closed block; the crossing uses the wider internal strip and may leave that block. Each carrier and strict weight test is retained.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "063fcb355e1382bdab622a7e84caa473b4fc661efab7119132cad2825e135737",
+        "end_sha256": "16a8f57630f92802d8eb9ef01261d3112f814edf84f1f598ffe4738b737604d4",
+        "span_sha256": "92b015b53bc78b39d24075b19bc4e754c6372c37ff43f91b4213cb20631b1a43"
+      }
+    },
+    {
+      "label": "remark:unbounded-long-paths",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/StageWitnessPathEvents.lean",
+          "export": "LPPDifferentiability.exists_stage_witness_path_event"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_off_flat_general"
+        }
+      ],
+      "notes": "The rare block setup uses the same endpoint and crossing events in the unbounded proof. The bounded one-step weight rule is replaced later by the excess estimate.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "820dd3eb8b4ad116cd7ed6758639a03c69535078080a8d52bdd5c05167625ad6"
+      }
+    },
+    {
+      "label": "definition:first-stages",
+      "status": "reviewed_source_composition",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.is_first_stage_decomposition"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Cuts.lean",
+          "export": "LPPDifferentiability.Path.exists_first_stage_decomposition"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Cuts.lean",
+          "export": "LPPDifferentiability.Path.first_stage_decomposition_unique"
+        }
+      ],
+      "notes": "The exact first-cut condition, terminal time and possible empty remainder describe the actual path decomposition.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a38d0698e9a737d671129c36c1aa4aa0d5dd17500055164aa9a673f479533a57",
+        "end_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "span_sha256": "ab4abb7eb75218f015203899ef773d5a5eb1043324706d57aef9db1d99211fbb"
+      }
+    },
+    {
+      "label": "remark:transverse-defect",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_deterministic_contact_and_positive_corner_loss",
+      "lean": [
+        {
+          "path": "LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean",
+          "export": "LPPDifferentiability.quadrant_supporting_functionals_and_contact"
+        },
+        {
+          "path": "Differentiability/Model/Paths/DefectAlgebra.lean",
+          "export": "LPPDifferentiability.Path.canonical_path_defect_min"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.full_stage_weight_le"
+        }
+      ],
+      "notes": "Coincident slopes give the stated contact remainder. A positive half-gap gives the printed transverse loss at the fixed stage tolerance. The illustrative geodesic at an unspecified finite scale is explanatory.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "06ceec6240b6bac3bd581050fb00af4c1745025abb5d6d72297646449b21e35a"
+      }
+    },
+    {
+      "label": "definition:stage-multiplicity",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "literal_definition_and_consumer",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.stageWitnessMultiplicity"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Definitions.lean",
+          "export": "LPPDifferentiability.Path.totalWitnessMultiplicity"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/Maximum.lean",
+          "export": "LPPDifferentiability.Path.has_stage_witness_family_multiplicity"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/LongPaths.lean",
+          "export": "LPPDifferentiability.Path.exists_total_witness_family"
+        }
+      ],
+      "notes": "The largest disjoint family in a stage is attained. Maximal families on the actual stages combine over their disjoint collected site sets.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "533b8850eb65ba7a68fc029c49dca4b9b2a4d1fca7adf75ba716c0f68dd46493",
+        "end_sha256": "533b8850eb65ba7a68fc029c49dca4b9b2a4d1fca7adf75ba716c0f68dd46493",
+        "span_sha256": "533b8850eb65ba7a68fc029c49dca4b9b2a4d1fca7adf75ba716c0f68dd46493"
+      }
+    },
+    {
+      "label": "remark:one-step-and-stage-excess",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/StageBounds.lean",
+          "export": "LPPDifferentiability.Path.stage_weight_le_with_excess"
+        }
+      ],
+      "notes": "The one-step estimate acquires the excess of its collected vertex. The stage weight bound acquires the total excess of the same collected vertices, with the original witness maximum.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "6a8c9c53b584fade65c00ecd0206b13345cdcdebe86cd3996cc716dab2e56d27"
+      }
+    },
+    {
+      "label": "remark:unbounded-full-defect",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean",
+          "export": "LPPDifferentiability.Path.total_weight_le_with_block_excess"
+        },
+        {
+          "path": "Differentiability/Probability/StageExcessItinerary.lean",
+          "export": "LPPDifferentiability.exists_stage_excess_total_bound"
+        }
+      ],
+      "notes": "The excess on the actual collected vertices is bounded by the excess along the itinerary, and a sufficiently large record scale absorbs it in the linear defect.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "0ef3ed0e8eb1ae7c3f3e2cb0c3c6ba7e282982976c188f8f121e50a33c007f56"
+      }
+    },
+    {
+      "label": "proof:bounded-main",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_corner_exclusion_and_approved_flat_branch",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/StageDefectTotal.lean",
+          "export": "LPPDifferentiability.Path.total_defect_disjoint_witnesses"
+        },
+        {
+          "path": "Differentiability/Probability/BoundedOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_bounded_off_flat"
+        }
+      ],
+      "notes": "Count actual full stages using their length cap. The witness bound forces a linear defect contrary to the almost-sure sublinear geodesic defect.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "4649095cd41f4008b58ead23f74d6867c255100548dde4af9f53bd7d3c71d000",
+        "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+        "span_sha256": "ce9324e5f264f039dd9a66d4c1acbedf2b688150a459a3537509a0039548e2a8"
+      }
+    },
+    {
+      "label": "remark:relaxing-bounded-weights",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Attachments/PrescribedProbability.lean",
+          "export": "LPPDifferentiability.prescribed_attachment_probability"
+        },
+        {
+          "path": "Differentiability/Probability/StairGeometryEvent.lean",
+          "export": "LPPDifferentiability.stair_geometry_event_tendsto_final"
+        },
+        {
+          "path": "Differentiability/FinalDraft/WitnessMultiplicity/TotalBounds.lean",
+          "export": "LPPDifferentiability.Path.total_weight_le_with_block_excess"
+        },
+        {
+          "path": "Differentiability/Probability/ExcessAnimalBound.lean",
+          "export": "LPPDifferentiability.exists_excess_animal_bound"
+        }
+      ],
+      "notes": "The paper replaces bounded-family weights by avoidance of very negative sites and replaces the one-step upper bound by a sum of positive excess. The proved cubic scale supplies a fourth-power block size.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "14ef2e285fc445099560bb44e063e1b18706299b021d60b383e06807a075888f",
+        "end_sha256": "cc425058f7e6b5738aa47f56d72c90c8a3e266b0192a1068627fdeb6a09376f6",
+        "span_sha256": "5b3ba24e5420cb325007eef7b19d25b783d654106c1363188f3cbceee6eec5b5"
+      }
+    },
+    {
+      "label": "remark:negative-first-moment-necessity",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "fixed_axis_truncated_negative_strong_law",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean",
+          "export": "LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_horizontal_rate"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SourceConsequences/NegativeMean.lean",
+          "export": "LPPDifferentiability.FinalDraft.negative_mean_finite_of_upper_bound_and_shape"
+        }
+      ],
+      "notes": "For upper-bounded i.i.d. weights, a finite horizontal passage rate forces an integrable negative part. Apply the strong law to each truncation of the negative part along the actual unique horizontal row path and send the truncation to infinity. The finite sample shape supplies the finite rate. Both forms passed independent literal clients.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "327afbc719657658c20b0d6dfd2e0cf4b2ca00a27910a42331845bc7f171ed3f",
+        "end_sha256": "551fe00c146f19b2c17bf000fcf1e5ec739a2bc75cec5d4653d593c9242fb196",
+        "span_sha256": "03ffe023b37c75613f355b2a263900bb3634c1dc4a5f8e0da42a416b140e99de"
+      }
+    },
+    {
+      "label": "example:lower-tail-integrability",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_predecessor_borel_cantelli_with_subfamily_count",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/LowerTailExampleLaw.lean",
+          "export": "LPPDifferentiability.exists_lowerTail_law"
+        },
+        {
+          "path": "Differentiability/Probability/LowerTailExampleLaw.lean",
+          "export": "LPPDifferentiability.lowerTail_ae_nonpos"
+        },
+        {
+          "path": "Differentiability/Probability/LowerTailExampleLaw.lean",
+          "export": "LPPDifferentiability.lowerTail_lintegral_negPart_rpow_lt_top"
+        },
+        {
+          "path": "Differentiability/Probability/LowerTailExampleLaw.lean",
+          "export": "LPPDifferentiability.lowerTail_lintegral_negPart_eq_top"
+        },
+        {
+          "path": "Differentiability/Probability/LowerTailExample.lean",
+          "export": "LPPDifferentiability.lowerTailExample"
+        },
+        {
+          "path": "Differentiability/Probability/LowerTailExample.lean",
+          "export": "LPPDifferentiability.lowerTail_liminf_eq_bot"
+        }
+      ],
+      "notes": "The same nonpositive law has the literal strict Pareto tail, finite pth negative moment, infinite first negative moment and almost-sure liminf minus infinity along the full source sparse set. A triangular subfamily supplies the divergent sum, and a reviewed client checks full-shell cardinality.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "532fa61416a074d119be1cff47e099aeebe831b8d0091cf08d7712b23d7ed46e",
+        "end_sha256": "dcc6e6495f0be6056a856e63d1acec01ad2634206bda52c32dde5e473fc70e99",
+        "span_sha256": "0c5db6d82ea48b2ee42addc92ff513fe946fd0508954c7a3e6ee09d70608ecb0"
+      }
+    },
+    {
+      "label": "remark:endpoint-tail-necessity",
+      "status": "reviewed_conditional_statement_and_proof",
+      "proof_route": "one_step_witness_and_independent_block_extremes",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean",
+          "export": "LPPDifferentiability.FinalDraft.endpoint_upper_tail_tendsto_zero"
+        },
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/EndpointNecessity.lean",
+          "export": "LPPDifferentiability.FinalDraft.endpointFastEvent_eq_defect"
+        },
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/FiniteSites.lean",
+          "export": "LPPDifferentiability.FinalDraft.measureReal_exists_site_above_eq"
+        },
+        {
+          "path": "Differentiability/Probability/FiniteHeavyVertices.lean",
+          "export": "LPPDifferentiability.measureReal_exists_upper_heavy_site_le_and_safe_ge"
+        }
+      ],
+      "notes": "The source endpoint probability limit entails sℓ times the strict upper tail tending to zero. An interior finite site family counts at least a constant times sℓ points with an admissible outgoing east step inside the region. Its large-weight probability has the exact independent product form. A strict one-step witness uses the source collected-start convention and the fixed support score. The independent client supplies the endpoint probability premise from the actual endpoint theorem.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "2ceee354c42de551f0f755605d33828033ce44269a7f44704ab1dbdc63eb7f70",
+        "end_sha256": "1520362d6a00edd0bed078522934a9673f45705942162a313c641e7c8eed77fb",
+        "span_sha256": "43a744cb6519888409bd306dd63ee195f5c8a300218599f4014785d0cff9d4f0"
+      }
+    },
+    {
+      "label": "remark:general-aspect-heavy-tail",
+      "status": "reviewed_conditional_statement_and_proof",
+      "proof_route": "global_markov_union_bound_and_earlier_record_scale_coarse_cap",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean",
+          "export": "LPPDifferentiability.FinalDraft.working_region_upper_cap_failure_tendsto_of_length_power_at_source_cutoff"
+        },
+        {
+          "path": "Differentiability/FinalDraft/TailConsequences/GlobalHeavySites.lean",
+          "export": "LPPDifferentiability.FinalDraft.tendsto_global_heavy_scale_zero"
+        },
+        {
+          "path": "Differentiability/Probability/HeavyVertexEvents.lean",
+          "export": "LPPDifferentiability.heavy_working_region_event_tendsto"
+        },
+        {
+          "path": "Differentiability/Probability/HeavyVertexEvents.lean",
+          "export": "LPPDifferentiability.heavy_coarse_block_events_eventually"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean",
+          "export": "LPPDifferentiability.gridHeavyTailOfLengthPower"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean",
+          "export": "LPPDifferentiability.grid_trialCap_finite_bound_of_mesh_le_half_width_power"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/CoarseHeavyScaling.lean",
+          "export": "LPPDifferentiability.heavy_grid_trials_of_characteristic_length_power"
+        }
+      ],
+      "notes": "The global cap uses the printed cutoff and retains the k^p correction. The conditional off-flat coarse result constructs the same actual first dyadic characteristic exponents, minimizers and record set. An eventual power bound for all indices applies at k−j, including when that predecessor is not a record. The coarse mesh is at most w^γ/2. A closed block has at most 17 w^(1+γ) sites, so at threshold w the cap failure probability is at most 17 E[(W⁺)^p] w^(1+γ−p) for p>2 and p>1+γ. This tends to zero uniformly in the eligible coarse parameters, and the same fixed capped trials have probability at least q₀/2 and are jointly independent. The improved scale bound remains a premise. The named heavy lemma retains the cubic regime.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "2ceee354c42de551f0f755605d33828033ce44269a7f44704ab1dbdc63eb7f70",
+        "end_sha256": "1520362d6a00edd0bed078522934a9673f45705942162a313c641e7c8eed77fb",
+        "span_sha256": "43a744cb6519888409bd306dd63ee195f5c8a300218599f4014785d0cff9d4f0"
+      }
+    },
+    {
+      "label": "remark:general-aspect-excess",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_real_power_moment_then_same_animal_reduction",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/AnimalBound.lean",
+          "export": "LPPDifferentiability.exists_excess_animal_bound_of_aspect_ratio"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/BlockTail.lean",
+          "export": "LPPDifferentiability.exists_excess_sum_integrated_sqrt_tail_bound_of_aspect_ratio"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Threshold.lean",
+          "export": "LPPDifferentiability.excess_bound_ratio_tendsto_zero_iff"
+        },
+        {
+          "path": "Differentiability/FinalDraft/ExcessScaling/Threshold.lean",
+          "export": "LPPDifferentiability.excess_bound_isLittleO_iff"
+        }
+      ],
+      "notes": "The excess estimate proves the actual two-power upper bound with one positive constant at real exponent p>2. The precise little-o threshold characterizes the displayed envelope. The source aspect ratio ensures feasible eventual exponents are greater than one. The final gamma is one plus the parameter specified in the source.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "1520362d6a00edd0bed078522934a9673f45705942162a313c641e7c8eed77fb",
+        "end_sha256": "1520362d6a00edd0bed078522934a9673f45705942162a313c641e7c8eed77fb",
+        "span_sha256": "1520362d6a00edd0bed078522934a9673f45705942162a313c641e7c8eed77fb"
+      }
+    },
+    {
+      "label": "remark:clipped-shape-comparison",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Laws.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.measurePreserving_upperClippedField"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Shape.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Shape.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison_of_paper_moments"
+        }
+      ],
+      "notes": "The actual clipped marginal and its shape satisfy the stated quantitative one-sided comparison on the closed unit segment. The integrated-tail bound tends to zero uniformly there.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "end_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "span_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2"
+      }
+    },
+    {
+      "label": "remark:clipped-law-differentiability",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_main_theorem_and_linear_point_mass_case",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Differentiability.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.exists_unique_upperClipped_shape_differentiable"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Differentiability.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.upperClipped_shape_differentiable"
+        }
+      ],
+      "notes": "The clipping result establishes differentiability of the actual shape at every real cutoff. It supplies the preserved negative moment and bounded positive moment, uses the main theorem for nondegenerate laws, and handles degenerate clipped laws by their exact linear shape.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "end_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "span_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2"
+      }
+    },
+    {
+      "label": "remark:uniform-differentiability-modulus",
+      "status": "reviewed_conditional_statement_and_proof",
+      "proof_route": "first_order_remainder_under_common_radius",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Truncation/UniformModulus.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.differentiableAt_shape_of_uniform_upperClipped_remainder"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Truncation/UniformModulus.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.shape_differentiable_of_uniform_upperClipped_remainder"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Truncation/Shape.lean",
+          "export": "LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison"
+        }
+      ],
+      "notes": "Assume an error-dependent radius shared by the actual clipped shape profiles at all natural cutoffs. Uniform convergence of the shapes on the closed unit segment gives a common derivative limit and passes the first-order remainder to the original profile. The local statement and its open-quadrant consequence are conditional. Availability of the premise remains unestablished.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "end_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "span_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2"
+      }
+    },
+    {
+      "label": "remark:all-top-crossing",
+      "status": "source_elementary_implication",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Frozen/FinalDraft/FlatTop.lean",
+          "export": "LPPDifferentiability.FinalDraft.flat_top"
+        },
+        {
+          "path": "Differentiability/Probability/TiltWitnessSelection.lean",
+          "export": "LPPDifferentiability.Path.level_zero_closed_strip_levels"
+        }
+      ],
+      "notes": "On the top flat segment the crossing weight M n equals the shape level term. The positive crossing allowance gives the strict near-optimal inequality whenever the same path satisfies the strip test. The cited exports identify the flat-set and level conventions.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "cf5f5574778ef146213f31967c7fe810546e8212c0a31ca7176fc1a0836a050e",
+        "end_sha256": "361ef0d7cb23951fcfe2977a42a85b55bfc2dcefbe5b14f7585d9923ad39956a",
+        "span_sha256": "ef8d08d26f00f405cb2537945acb272f62f6b5d9cfac3ac55da178dc3b801420"
+      }
+    },
+    {
+      "label": "remark:fixed-width-top-extinction",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "independent_closed_levels_and_borel_cantelli",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/SourceConsequences/FixedWidthStrip.lean",
+          "export": "LPPDifferentiability.FinalDraft.ae_eventually_pathWeight_lt_top_in_fixed_strip"
+        }
+      ],
+      "notes": "For a fixed finite-width signed strip, almost surely at each fixed signed start level all sufficiently long confined up-right paths have weight strictly below M times their length. Independent levels each have uniformly positive chance of having no top vertex. The usable level is strictly before the terminal level of any sufficiently long path, so it supplies a collected strictly subtop site.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "909deff6bee0af2ace102d8b22f60452f74ab91d9ddc4f223b15cd3f08f1798e",
+        "end_sha256": "909deff6bee0af2ace102d8b22f60452f74ab91d9ddc4f223b15cd3f08f1798e",
+        "span_sha256": "909deff6bee0af2ace102d8b22f60452f74ab91d9ddc4f223b15cd3f08f1798e"
+      }
+    },
+    {
+      "label": "remark:conditional-weight-terms",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_explicit_parameter_specializations",
+      "lean": [
+        {
+          "path": "Differentiability/Paper/PathFamilyWeights.lean",
+          "export": "LPPDifferentiability.Paper.path_family_weight_failure_le"
+        },
+        {
+          "path": "Differentiability/Analysis/StaircaseWeightDecay.lean",
+          "export": "LPPDifferentiability.staircase_weight_polynomial_decay"
+        },
+        {
+          "path": "Differentiability/Analysis/StaircaseWeightDecay.lean",
+          "export": "LPPDifferentiability.staircase_weight_stretched_exponential_decay"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Attachments/PrescribedProbability.lean",
+          "export": "LPPDifferentiability.prescribed_attachment_probability"
+        }
+      ],
+      "notes": "The applications substitute the exact moment powers and thresholds. The explicit staircase exponent includes the log-scale correction described by the draft in the later calculation.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "bdec59a91ef7732cdba3994871d52161b644fb399a2906e31cdd45c9a984530a"
+      }
+    },
+    {
+      "label": "proof:weights",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Paper/PathFamilyWeights.lean",
+          "export": "LPPDifferentiability.Paper.path_family_weight_failure_le"
+        },
+        {
+          "path": "Differentiability/Probability/GlobalMaskFamilyWeights.lean",
+          "export": "LPPDifferentiability.global_mask_family_weight_failure_le"
+        }
+      ],
+      "notes": "The full-mask product conditioning and finite-region exhaustion preserve the actual families, strict thresholds and probability bound.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "d63835169ddd73d3c48d4eaab51d199fee59bdd80fcdd56702f9591c5dd06783",
+        "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+        "span_sha256": "a4b16db9916293f58d35719358e9eda4bfaad12424e0c24c5bf7fb2b4ea3bf6f"
+      }
+    },
+    {
+      "label": "remark:attachment-moment-threshold",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_union_bound_with_strict_negative_moment",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/Attachments/PrescribedProbability.lean",
+          "export": "LPPDifferentiability.prescribed_attachment_probability"
+        }
+      ],
+      "notes": "The union-bound term with fixed K₀ has the required o(1/s) decay under the negative moment above one. With integrable W⁻, the elementary first-moment tail test gives t P(W⁻>t)→0 by bounding it with E[W⁻ 1{W⁻>t}], so m P(W⁻>T)→0 when m=O(T). The proof explains its own polynomial decay requirement. The possible logarithmic-moment improvement remains conjectural.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "21b6bac1debd364871a043bcb528b40912cc266b60f3ad701d8b9f4e3af2c0b1"
+      }
+    },
+    {
+      "label": "proof:stair-geometry-probability",
+      "status": "reviewed_statement_and_proof",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/StairGeometryEvent.lean",
+          "export": "LPPDifferentiability.stair_geometry_event_tendsto_final"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/ContourTail.lean",
+          "export": "LPPDifferentiability.StairGeometry.finite_reach_tail"
+        },
+        {
+          "path": "Differentiability/FinalDraft/StairGeometry/Deterministic.lean",
+          "export": "LPPDifferentiability.StairGeometry.path_trim"
+        }
+      ],
+      "notes": "The working region and collars are the same in the probability estimate and all deterministic clauses. The full square contour supplies the stated power for finite forward and backward reach.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "b0806ae2d56c8bca3e349537487322b5ccfe9bf42afd6e33318fb11c6c17bf95",
+        "end_sha256": "923e6f2ceee70dab30fb38391d0660b7e80b6c7e8d2669b45bbc7fd4cb93aaa4",
+        "span_sha256": "4dffb289c03af73437b9d126959389d96a1128395bd016aea42838c0d487458e"
+      }
+    },
+    {
+      "label": "proof:staircase-substitutions",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Family.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.pathFamily"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Bounds.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.pathFamily_bounds_eventually"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Measurable.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.measurableSet_pathFamily_fibre"
+        },
+        {
+          "path": "Differentiability/FinalDraft/SelectedGridPaths/Coarse/Connection.lean",
+          "export": "LPPDifferentiability.SelectedGridPaths.CoarseBlock.coarse_gridConnection"
+        },
+        {
+          "path": "Differentiability/FinalDraft/Grid/GeneralTheorem.lean",
+          "export": "LPPDifferentiability.general_grid_theorem"
+        }
+      ],
+      "notes": "The exact random path family is mask-measurable, has the source count, length, region and avoidance bounds, and supplies the selected fine, arrival and merge pieces. The capped middle crossing uses the original field.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "e6bb6877a7b5675eb096b08d0f2657c3632f9d3235049f662e75cf3ea8db294f",
+        "end_sha256": "4f22427cd9b1c25d4b174b9bd20f1dd5318a0177c9223c31166d45dfd21829a1",
+        "span_sha256": "65c4d7df79404af911e98faf219c2054ecab1c2d79707201e1cbee5c3834fd73"
+      }
+    },
+    {
+      "label": "ch:endpoints",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_or_filled_omissions",
+      "lean": [
+        {
+          "path": "Differentiability/Model/Paths/EndpointReductionGeneral.lean",
+          "export": "LPPDifferentiability.endpoint_pair_of_mem_general"
+        },
+        {
+          "path": "Differentiability/Probability/ArbitraryEndpointsGeneral.lean",
+          "export": "LPPDifferentiability.arbitrary_endpoints_defect_le_general"
+        }
+      ],
+      "notes": "Trim endpoints to the eligible staircase sides, control the deletion with the same upper cap and concatenate to get the rare crossing.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995",
+        "end_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995",
+        "span_sha256": "7cd6a5ef57ae783d4016da976133ad84dd624278410ae72e97f22bf66f164995"
+      }
+    },
+    {
+      "label": "proof:general-main",
+      "status": "reviewed_source_composition",
+      "proof_route": "source_general_corner_exclusion_and_approved_flat_branch",
+      "lean": [
+        {
+          "path": "Differentiability/Probability/StageExcessItinerary.lean",
+          "export": "LPPDifferentiability.exists_stage_excess_total_bound"
+        },
+        {
+          "path": "Differentiability/Analysis/CornerDefectExcess.lean",
+          "export": "LPPDifferentiability.linear_defect_of_few_witnesses_excess"
+        },
+        {
+          "path": "Differentiability/Analysis/CornerDefectExcess.lean",
+          "export": "LPPDifferentiability.rare_excess_scale_eventually"
+        },
+        {
+          "path": "Differentiability/Probability/GeneralOffFlatDifferentiability.lean",
+          "export": "LPPDifferentiability.differentiableAt_of_off_flat_general"
+        }
+      ],
+      "notes": "Choose one record scale with small rare block probability and excess coefficient. The normalized excess and witness count leave positive per-stage loss, yielding the same geodesic contradiction.",
+      "review_evidence": [
+        "docs/reviews/differentiability-final.md"
+      ],
+      "source_anchor": {
+        "start_sha256": "e3a38e564c305c456839b77e55dfc56e797a56ea54858db708af7115e7a42bff",
+        "end_sha256": "ed0b5e00e2576004517f175115d6e6480a4878734218779b154852329cb277ed",
+        "span_sha256": "b8a8327284983962ace7e9b241a9838c353659b26176e4bab5016c37496120cb"
+      }
+    }
+  ],
+  "status_note": "This source map records the Lean declarations and independently reviewed proof routes. Conditional statements retain their premises. Scope annotations identify heuristic, cited and explanatory material. Exact integration and public-tree checks are separate from source correspondence.",
+  "explanatory_scope": [
+    {
+      "status": "cited_background",
+      "notes": "Finite-variance axis-boundary asymptotic attributed to Martin. The interior Lipschitz result is covered separately.",
+      "source_anchor": {
+        "start_sha256": "074c0c9818d022aced54314a5d57c1caf36aeb2ce54df71ac720166e59c58491",
+        "end_sha256": "23c29550e96d7cc3b4c0eb3390733e7bf14790286a15154e509a3cabe5b5d00d",
+        "span_sha256": "e3f7b859fa1074566adcbe707a5fdc815b0dea522dd99aa4e04ae44078a4dfca"
+      }
+    },
+    {
+      "status": "explanatory_mechanism",
+      "notes": "The level-only ng(ξ) warning states why a transverse score of order s can affect the crossing threshold. It gives no quantified counterexample family.",
+      "source_anchor": {
+        "start_sha256": "0329352e3f033b884a4549ec2faa8d4ac49f6d05a691975a9d22bbf5fd8e7cfd",
+        "end_sha256": "c3f64285b528d15791a65935a7e1515f8d430a8d63a8eddf92faa86a4ee764c5",
+        "span_sha256": "fc47d733435248a93bdeae71e8770fd63d802615eed810b7162d49f205b8b559"
+      }
+    },
+    {
+      "status": "explanatory_hypothetical",
+      "notes": "The finite-scale geodesic illustration motivates the cost estimate. The one-sided contact and positive corner loss are covered separately.",
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "06ceec6240b6bac3bd581050fb00af4c1745025abb5d6d72297646449b21e35a"
+      }
+    },
+    {
+      "status": "heuristics_and_cited_background",
+      "notes": "KPZ and Flory fluctuation exponents and characteristic-length consequences are heuristic; their algebra is conditional. The finite-second-moment divergence result is cited background.",
+      "source_anchor": {
+        "start_sha256": "f0211c3c9d7d7ace310ac312e80166b4425a610d80b60b3be55360214c1e5f8b",
+        "end_sha256": "9fc58acafb5c62037f7d05ea4926d24c310c1734916dc45cf9ff552ef48f6dd7",
+        "span_sha256": "5d51474466f0c058dfa26ff7c83bbbcb1efc89dcb9ca811cc7c681777d59e2fc"
+      }
+    },
+    {
+      "status": "unestablished_premise",
+      "notes": "Existence of a uniform-in-cutoff differentiability modulus is unestablished. The clipped shape comparison and fixed-cutoff differentiability are separate proved statements.",
+      "source_anchor": {
+        "start_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "end_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2",
+        "span_sha256": "a399418b7c4e12f797fb107a19cfd46c818d92b53eb4a02af92a877783beb9e2"
+      }
+    },
+    {
+      "status": "conjecture_and_cited_background",
+      "notes": "Exponential characteristic length and tilted-strip lifetime are conjectural. Symmetric-strip and contact-process results are cited background. The rigorous all-top implication and fixed-width extinction have separate entries.",
+      "source_anchor": {
+        "start_sha256": "27e8267e4c6a6c1421c01a551fe483f41a4e04b21eebcef58d5e3357cfd4ade8",
+        "end_sha256": "0e9a4171c68ef62f6753c057c6313565fd8b2f5b3611e918a51c039979d9811d",
+        "span_sha256": "18eb2a569dceb84d56fe859ccf0d4c1f904d6d8cb0123d126820393101f7586d"
+      }
+    },
+    {
+      "status": "glossary",
+      "notes": "Symbol glossary. Definitions enter with the actual model, shape, events and source-facing results.",
+      "source_anchor": {
+        "start_sha256": "68fa57cbad4fd64972d34ea9c79cac9eb9fb034c59fcd801d65ce448b81debc5",
+        "end_sha256": "2dc670e7ffe1f12aa0326631b39a0b6d72da153425c7f5f9aed627a71c1487d6",
+        "span_sha256": "39bd6c785ca2b322a13c8f4ca0731a11833a4c0e1479626a77d134c417c56468"
+      }
+    },
+    {
+      "status": "speculative_weakening",
+      "notes": "The possible logarithmic negative-moment condition is explicitly left unpursued.",
+      "source_anchor": {
+        "start_sha256": "77eceefde4d0054a183b17081911a045fb92733f0cfe435e21d3098c884e888e",
+        "end_sha256": "77eceefde4d0054a183b17081911a045fb92733f0cfe435e21d3098c884e888e",
+        "span_sha256": "77eceefde4d0054a183b17081911a045fb92733f0cfe435e21d3098c884e888e"
+      }
+    },
+    {
+      "status": "excluded_inactive_comments",
+      "notes": "TeX-commented variants, author exchanges and deleted draft passages are outside the active claim inventory.",
+      "source_anchor": {
+        "start_sha256": "4a2ec00e7d102db9f7dd4205009a613b4cc68302c692f5221ae7ce9a908ee2b2",
+        "end_sha256": "2dc670e7ffe1f12aa0326631b39a0b6d72da153425c7f5f9aed627a71c1487d6",
+        "span_sha256": "6d9253d4c96cc82686afa9944c0e3299bac6ef65d9c9c682a4137edec81db3b6"
+      }
+    }
+  ],
+  "active_environments": [
+    {
+      "kind": "remark",
+      "tex_label": "rk:bounded1",
+      "proof_steps": [
+        "remark:bounded-unbounded-intervals"
+      ],
+      "source_anchor": {
+        "start_sha256": "dae0db80073cf3d7aa4f0ab2d2b7c44a9d209dd359f5af8b0ba2c306e740167d",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "1eff5269af39d562d2924c7b7ec92148baf6fc6fed730b5f7970ea1462a52d02"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:fixed-length-crossings"
+      ],
+      "source_anchor": {
+        "start_sha256": "7ce908fffa3d6c25d2c167ef64a7669f2602378fae70b7deba621fa838640a5c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "68012d562f18a5440ce53e3ba5117059765207ed6d8955c379ef8c43daab7ae1"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:translate",
+      "proof_steps": [
+        "rk:translate"
+      ],
+      "source_anchor": {
+        "start_sha256": "fca98cb16c096a29fc1e0bb8c11b0268ac22bb789e465bb8ee8cdc14a6f41163",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "cf18bba6436cf5cf37c2a7c1312457cae65233ba369edd62573c1cc4e2858b6a"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:gversion",
+      "proof_steps": [
+        "rk:gversion"
+      ],
+      "source_anchor": {
+        "start_sha256": "02bc72798c2f54f65308530c68b7a222bc0510dec432469b8ba6968a402b3141",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "b6317af1d5ce09de7dd8ddcf4503e66992aa39854a9f92492d0e2e9e09866871"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:overview-general",
+      "proof_steps": [
+        "remark:general-grid-overview"
+      ],
+      "source_anchor": {
+        "start_sha256": "c30f0dd3ff7e22f4f3588b26167721863ae23610c0670f93f6461ffe70e72e2c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3232d2ea29c571678dd037b69c1b11dab8c19b970b8461261dfa1417754a5455"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:length",
+      "proof_steps": [
+        "rk:length"
+      ],
+      "source_anchor": {
+        "start_sha256": "c08602b0c3ec13577a330713e1b0eadfff16f7ecb6e46e2171cdde09924f201b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "4af2ca4952dfab5ce4ed3ea1cfc6f3b733c153ee366c11cdb4a5f5aa0cb5c6e6"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:stair-general",
+      "proof_steps": [
+        "rk:stair-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "31605206c93f5421aa7097174a2c116405a663eeeeebfdaa152712589f61bc41",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "76d1bc79dcc8f3b59d1f58c21fbb699c5e867342fe5b584ec99e39f46cef103a"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:fine-general",
+      "proof_steps": [
+        "rk:fine-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "a6e3ac5d44e2607a2247adb1a2a19b584dd203cb380d02e48692f2fe61b0152c",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "47d0356a3d0f8dcdc19e84efd810d10d6229ed79d18d904eb443de277a20a04f"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:heavy-general",
+      "proof_steps": [
+        "rk:heavy-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "dffd9aa551cf351b692eca0d4a6ec38546e241bd72ca4cca09b186d8e1fe23eb",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3e40aa2ff0a56d1ea68578a49e916144d91ed6dab65af15977c90bdeef8d25dd"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:coarse-general",
+      "proof_steps": [
+        "rk:coarse-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "f4b12707d5570e217591c346094ff112e774cc99422b873948a5c3a0d7215f67",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "84a84a6aed2003fd5618a9e29ec7bc7814992f69651507ddfa21282568cac9dd"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:good-general",
+      "proof_steps": [
+        "rk:good-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "fa634377177e5b4dd51f990e76e370141851fa0b2efe3c17608762a39838de81",
+        "end_sha256": "1ac45a62ca1c6cbcbbd32428b0dcd1fce4e454a0517b08c2c8b03f8124c0f92a",
+        "span_sha256": "ad0c50692929ac9f1e77524dab820257352bf63d4962c557cd99588d14583e94"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:grid-general",
+      "proof_steps": [
+        "rk:grid-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "9102b012d4034556c09088b944a3150fafc692551a7ff2ea15af4814aff900e6",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "8118d2f3fac412b47a6663e71047949963018b7eb7e854082e2a4d65fd325ef3"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:gridprob-general",
+      "proof_steps": [
+        "rk:gridprob-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "c5e589cdc2e03d4d2a60fe1b9301b2e99a8f3ad1c07ae76db036cce56363e28e",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "3552c0dae3c5f0df70216ccdd1cddead29ce5be947204f95a6ea2d8b82f54d9d"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": "rk:endpoints-general",
+      "proof_steps": [
+        "rk:endpoints-general"
+      ],
+      "source_anchor": {
+        "start_sha256": "a785608bc2bd603bdc3ddd68247cc861dccfb2c1540f29b99bb1760d283f0023",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "a461486928f0be3b7f7b2aa6a202fd1626dbbe3cbc9f2d5917f0de450b45d632"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:unbounded-long-paths"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "820dd3eb8b4ad116cd7ed6758639a03c69535078080a8d52bdd5c05167625ad6"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:transverse-defect"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "06ceec6240b6bac3bd581050fb00af4c1745025abb5d6d72297646449b21e35a"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:one-step-and-stage-excess"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "6a8c9c53b584fade65c00ecd0206b13345cdcdebe86cd3996cc716dab2e56d27"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:unbounded-full-defect"
+      ],
+      "source_anchor": {
+        "start_sha256": "70f343280c5d61334481200fe01d6ff61c43aa36ad67b15113a2601408b3464b",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "0ef3ed0e8eb1ae7c3f3e2cb0c3c6ba7e282982976c188f8f121e50a33c007f56"
+      }
+    },
+    {
+      "kind": "example",
+      "tex_label": null,
+      "proof_steps": [
+        "example:lower-tail-integrability"
+      ],
+      "source_anchor": {
+        "start_sha256": "532fa61416a074d119be1cff47e099aeebe831b8d0091cf08d7712b23d7ed46e",
+        "end_sha256": "dcc6e6495f0be6056a856e63d1acec01ad2634206bda52c32dde5e473fc70e99",
+        "span_sha256": "0c5db6d82ea48b2ee42addc92ff513fe946fd0508954c7a3e6ee09d70608ecb0"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:conditional-weight-terms"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "bdec59a91ef7732cdba3994871d52161b644fb399a2906e31cdd45c9a984530a"
+      }
+    },
+    {
+      "kind": "remark",
+      "tex_label": null,
+      "proof_steps": [
+        "remark:attachment-moment-threshold"
+      ],
+      "source_anchor": {
+        "start_sha256": "3d8fcd7c52686ba97fda2e00a38daee1327bc63c34056cc9f503876b25c27cb1",
+        "end_sha256": "3f283608774fb3e201f07eb6ca7ca2a96e4b7d5dd0174358fddb06db01593030",
+        "span_sha256": "21b6bac1debd364871a043bcb528b40912cc266b60f3ad701d8b9f4e3af2c0b1"
+      }
+    }
+  ],
+  "public_guide": "docs/guides/differentiability.md",
+  "source_record": "sources/current-differentiability.json",
+  "review": "docs/reviews/differentiability-final.md"
+}
