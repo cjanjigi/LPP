@@ -113,6 +113,8 @@ The [paper guides](docs/README.md) state the certified results and record covera
 
 Christopher Janjigian directed the formalization with coding assistants. Human decisions determined the intended mathematical statements and changes of proof; separate reviews compared statements and proof structure with their sources. The Lean kernel checks the resulting proof terms. Those roles give different kinds of evidence and should be assessed separately.
 
+The formalization workflow uses skills from Scott Armstrong's [LeanAutoformalizationSkills](https://github.com/scottnarmstrong/LeanAutoformalizationSkills).
+
 ## Acknowledgments
 
 This work was supported in part by a grant of access to OpenAI models through the ChatGPT for Academic Researchers program and by Anthropic through the Claude for Scientists program.
