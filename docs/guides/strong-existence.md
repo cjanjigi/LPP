@@ -85,7 +85,7 @@ Lemma 3.17 gives uniqueness of the locally rightmost geodesic following a cocycl
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-[Dependency graph and coverage notes](../graphs/paper-results/strong-existence.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=strong-existence) · [Static graph and coverage notes](../graphs/paper-results/strong-existence.md)
 
 The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 

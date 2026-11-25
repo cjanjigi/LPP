@@ -177,7 +177,7 @@ scope of cited background and research discussion. [Proof choices and source rev
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-[Dependency graph and coverage notes](../graphs/paper-results/differentiability.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=differentiability) · [Static graph and coverage notes](../graphs/paper-results/differentiability.md)
 
 The map follows the finalized paper and includes every named result, with certificate links and coverage notes for its remarks and examples.
 

@@ -2,7 +2,7 @@
 
 **Thomas M. Liggett**
 
-[Formalization guide](../../guides/liggett-1985.md) · [Paper catalogue](../../../README.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=liggett-1985) · [Formalization guide](../../guides/liggett-1985.md) · [Paper catalogue](../../../README.md)
 
 **✓ Certified** · **◐ Restricted** · **○ Not in this release** · **? Not assessed**
 

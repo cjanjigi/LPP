@@ -71,7 +71,7 @@ Here $`L^1`$ convergence means $`\mathbb E|X_{0,n}/n-X_\infty|\to0`$. If the lef
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-[Dependency graph and coverage notes](../graphs/paper-results/liggett-1985.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=liggett-1985) · [Static graph and coverage notes](../graphs/paper-results/liggett-1985.md)
 
 The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 

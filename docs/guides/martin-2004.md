@@ -138,7 +138,7 @@ The shape exists without the positive lower bound; the growth-set conclusion is 
 <!-- PAPER_MAP_START -->
 ## Progress and dependencies
 
-[Dependency graph and coverage notes](../graphs/paper-results/martin-2004.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=martin-2004) · [Static graph and coverage notes](../graphs/paper-results/martin-2004.md)
 
 The graph and progress list cover every named result. Follow a result link to read its coverage and open its certificates.
 

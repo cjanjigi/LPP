@@ -2,7 +2,7 @@
 
 **James B. Martin**
 
-[Formalization guide](../../guides/martin-2004.md) · [Paper catalogue](../../../README.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=martin-2004) · [Formalization guide](../../guides/martin-2004.md) · [Paper catalogue](../../../README.md)
 
 **✓ Certified** · **◐ Restricted** · **○ Not in this release** · **? Not assessed**
 

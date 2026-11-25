@@ -2,7 +2,7 @@
 
 **Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen**
 
-[Formalization guide](../../guides/differentiability.md) · [Paper catalogue](../../../README.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=differentiability) · [Formalization guide](../../guides/differentiability.md) · [Paper catalogue](../../../README.md)
 
 **✓ Certified** · **◐ Restricted** · **○ Not in this release** · **? Not assessed**
 

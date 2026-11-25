@@ -40,7 +40,7 @@ Certificate links in each guide identify the checked Lean revision. The guides d
 
 </details>
 
-The guides, dependency graphs and coverage notes are readable directly on GitHub. The interactive viewer remains a local preview while hosting is deferred. See the [graph instructions](docs/README.md#interactive-graphs).
+The guides, dependency graphs and coverage notes are readable directly on GitHub. Each paper's graph link opens the [interactive dependency viewer](https://cjanjigi.github.io/LPP/); a separate link opens its GitHub-readable static map and coverage notes. See the [graph instructions](docs/README.md#interactive-graphs) for local preview instructions.
 
 ## Guarantees and limits
 

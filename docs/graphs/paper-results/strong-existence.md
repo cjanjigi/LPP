@@ -2,7 +2,7 @@
 
 **Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen**
 
-[Formalization guide](../../guides/strong-existence.md) · [Paper catalogue](../../../README.md)
+[Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=strong-existence) · [Formalization guide](../../guides/strong-existence.md) · [Paper catalogue](../../../README.md)
 
 **✓ Certified** · **◐ Restricted** · **○ Not in this release** · **? Not assessed**
 
