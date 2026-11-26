@@ -3,6 +3,8 @@
 **Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen**<br>
 [*Electronic Journal of Probability* **31** (2026), 1–35](https://doi.org/10.1214/26-EJP1634). Result numbers and source locations in this guide follow the accepted manuscript of 31 October 2026.
 
+[**Interactive dependency graph**](https://cjanjigi.github.io/LPP/?paper=strong-existence) · [Static graph and coverage notes](../graphs/paper-results/strong-existence.md)
+
 [All papers](../../README.md) · [Common LPP notation](../notation.md) · [Lean proof of Theorem 3.11](https://github.com/cjanjigi/LPP/blob/a1a2ed304ad2459ea0a0482b1eed72971cc6ddeb/Busemann/Full/StrongExistence.lean)
 
 ## Setting and past results

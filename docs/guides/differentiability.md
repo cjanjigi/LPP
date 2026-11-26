@@ -1,7 +1,9 @@
 # Differentiability of the shape function in the planar corner growth model
 
 **Christopher Janjigian, Firas Rassoul-Agha and Timo Seppäläinen**<br>
-Preprint. This guide follows the author draft of 23 November 2026.
+[arXiv:2611.33433](https://arxiv.org/abs/2611.33433) (2026). This guide follows the author draft of 23 November 2026.
+
+[**Interactive dependency graph**](https://cjanjigi.github.io/LPP/?paper=differentiability) · [Static graph and coverage notes](../graphs/paper-results/differentiability.md)
 
 [All papers](../../README.md) · [Common LPP notation](../notation.md) · [Source record](../../sources/current-differentiability.json) · [Paper map](../differentiability-paper-map.json) · [Source review](../reviews/differentiability-final.md)
 

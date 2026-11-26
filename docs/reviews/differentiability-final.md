@@ -4,7 +4,8 @@
 
 The selected draft has SHA-256
 `6d9253d4c96cc82686afa9944c0e3299bac6ef65d9c9c682a4137edec81db3b6`.
-The authors supply the TeX separately. The independent source and
+The paper is available as [arXiv:2611.33433](https://arxiv.org/abs/2611.33433).
+This review used the author-supplied TeX draft identified above. The independent source and
 quality reviews passed for the 27 named results and the rigorous
 supporting claims. The map gives the statement ranges, 58 unnumbered
 proof entries, and the 21 active remark and example environments.

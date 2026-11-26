@@ -22,6 +22,8 @@ Christopher Janjigian and Firas Rassoul-Agha.
 
 Christopher Janjigian, Firas Rassoul-Agha, Timo Seppäläinen.
 
+[arXiv:2611.33433](https://arxiv.org/abs/2611.33433) (2026).
+
 [Formalization guide](guides/differentiability.md) · [Interactive dependency graph](https://cjanjigi.github.io/LPP/?paper=differentiability) · [Static graph and coverage notes](graphs/paper-results/differentiability.md)
 
 ## Limiting shape for directed percolation models

@@ -3,6 +3,8 @@
 **Christopher Janjigian and Firas Rassoul-Agha**<br>
 *The Annals of Probability* **48** (2020), 778–816. [Journal article](https://doi.org/10.1214/19-AOP1375) · [Extended arXiv version](https://arxiv.org/abs/1810.03580v3)
 
+[**Busemann existence in the related dependency graph**](https://cjanjigi.github.io/LPP/?paper=strong-existence&result=theorem-2.7)
+
 [Paper catalogue](../../README.md) · [Common LPP notation](../notation.md)
 
 ## Theorem 4.7 · Busemann process at zero temperature

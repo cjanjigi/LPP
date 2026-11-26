@@ -246,7 +246,7 @@ flowchart TD
   class R65 not_assessed
 ```
 
-The map follows the final draft selected on 23 November 2026. Certificate coverage refers to the reviewed formalization of 24 November 2026.
+The paper is available as [arXiv:2611.33433](https://arxiv.org/abs/2611.33433). The map follows the final draft selected on 23 November 2026. Certificate coverage refers to the reviewed formalization of 24 November 2026.
 
 Sections 4, 6 and 7 present bounded-weight arguments; Appendix B supplies the general-weight forms used for the full theorem. Conditional claims retain their stated premises. Heuristics and conjectures are identified separately.
 

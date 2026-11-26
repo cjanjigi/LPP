@@ -2,7 +2,11 @@
 
 **James B. Martin**<br>
 *The Annals of Probability* **32** (4), 2908–2937 (2004).<br>
-[Published paper](https://doi.org/10.1214/009117904000000838) · [Author's preprint](https://arxiv.org/abs/math/0301055) · [Paper catalogue](../../README.md) · [Common notation](../notation.md)
+[Published paper](https://doi.org/10.1214/009117904000000838) · [Author's preprint](https://arxiv.org/abs/math/0301055)
+
+[**Interactive dependency graph**](https://cjanjigi.github.io/LPP/?paper=martin-2004) · [Static graph and coverage notes](../graphs/paper-results/martin-2004.md)
+
+[Paper catalogue](../../README.md) · [Common notation](../notation.md)
 
 This paper develops limit-shape theory for directed percolation. Its results give directional passage-time limits, continuity up to the axes, a universal square-root expansion near an axis, and convergence of associated growth sets. It also supplies concentration and truncation tools used in later LPP arguments.
 

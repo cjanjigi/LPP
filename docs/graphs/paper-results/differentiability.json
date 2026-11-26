@@ -9,14 +9,16 @@
   ],
   "source": {
     "title": "Differentiability of the shape function in the planar corner growth model",
-    "version": "Author final draft selected 23 November 2026",
+    "version": "arXiv:2611.33433 (2026)",
+    "url": "https://arxiv.org/abs/2611.33433",
+    "dependency_source": "Author final draft selected 23 November 2026",
     "filename": "differentiability_final_draft.tex",
     "sha256": "6d9253d4c96cc82686afa9944c0e3299bac6ef65d9c9c682a4137edec81db3b6",
     "line_count": 3229
   },
   "guide": "https://github.com/cjanjigi/LPP/blob/main/docs/guides/differentiability.md",
   "notes": [
-    "The map follows the final draft selected on 23 November 2026. Certificate coverage refers to the reviewed formalization of 24 November 2026.",
+    "The paper is available as [arXiv:2611.33433](https://arxiv.org/abs/2611.33433). The map follows the final draft selected on 23 November 2026. Certificate coverage refers to the reviewed formalization of 24 November 2026.",
     "Sections 4, 6 and 7 present bounded-weight arguments; Appendix B supplies the general-weight forms used for the full theorem. Conditional claims retain their stated premises. Heuristics and conjectures are identified separately."
   ],
   "clusters": [

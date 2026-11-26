@@ -2,7 +2,11 @@
 
 **Thomas M. Liggett**<br>
 *The Annals of Probability* **13** (4), 1279–1285 (1985).<br>
-[Published paper](https://doi.org/10.1214/aop/1176992811) · [Paper catalogue](../../README.md) · [Common notation](../notation.md)
+[Published paper](https://doi.org/10.1214/aop/1176992811)
+
+[**Interactive dependency graph**](https://cjanjigi.github.io/LPP/?paper=liggett-1985) · [Static graph and coverage notes](../graphs/paper-results/liggett-1985.md)
+
+[Paper catalogue](../../README.md) · [Common notation](../notation.md)
 
 ## What this paper contributes
 
