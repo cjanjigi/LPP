@@ -11,7 +11,7 @@ A status applies to the scope stated below. Arrows point from a result to a resu
 ```mermaid
 flowchart TD
   subgraph S0["Shapes and supporting lines"]
-    R1["✓ Theorem 2.2<br/>Where the shape equals the largest weight"]
+    R1["✓ Theorem 2.2<br/>The percolation cone"]
     R2["✓ Lemma 2.3<br/>Two linear bounds for the shape"]
     R48["✓ Shape theorem (§2.2)<br/>The directional shape and uniform approximation"]
     R49["✓ S1<br/>Uniform approximation at translated starting points"]
@@ -77,7 +77,7 @@ flowchart TD
     R62["✓ Common modulus (§8.3)<br/>A shared modulus would pass differentiability to the limit"]
     R63["✓ Confined top paths (§8.4)<br/>A confined all-top path is a near-optimal crossing"]
     R64["✓ Fixed strip extinction (§8.4)<br/>All-top paths eventually die in a fixed strip"]
-    R65["? Exponential lifetime conjecture (§8.4)<br/>Conjectured exponential length in flat directions"]
+    R65["? Exponential lifetime conjecture (§8.4)<br/>Conjectured exponential length in percolation-cone directions"]
   end
   subgraph S7["Oriented percolation and BK"]
     R16["✓ Lemma A.1<br/>A boundary circuit around a finite lattice set"]
@@ -254,7 +254,7 @@ Sections 4, 6 and 7 present bounded-weight arguments; Appendix B supplies the ge
 
 | Paper result | Formalization |
 | --- | --- |
-| **[Theorem 2.2](#theorem-22)**<br/>Where the shape equals the largest weight | **✓ Certified**<br/>[Coverage note](#theorem-22)<br/>[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.FinalDraft.FlatTop.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/FlatTop/Theorem.lean) |
+| **[Theorem 2.2](#theorem-22)**<br/>The percolation cone | **✓ Certified**<br/>[Coverage note](#theorem-22)<br/>[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.FinalDraft.FlatTop.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/FlatTop/Theorem.lean) |
 | **[Lemma 2.3](#lemma-23)**<br/>Two linear bounds for the shape | **✓ Certified**<br/>[Coverage note](#lemma-23)<br/>[LPPDifferentiability.quadrant_supporting_functionals_and_contact](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Analysis/ShapeSupportingFunctionals.lean) |
 | **[Shape theorem (§2.2)](#shape-theorem-22)**<br/>The directional shape and uniform approximation | **✓ Certified**<br/>[Coverage note](#shape-theorem-22)<br/>[LPPDifferentiability.exists_unique_shape_with_uniform_probability_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/UniformShapeProbability.lean) · [LPPDifferentiability.exists_unique_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Martin2004/Probability/WeakNegativeShape.lean) · [LPPDifferentiability.positive_integrated_sqrt_tail_lt_top_of_moment](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/ProbabilityBasics/Probability/PositiveMomentTail.lean) |
 | **[S1](#s1)**<br/>Uniform approximation at translated starting points | **✓ Certified**<br/>[Coverage note](#s1)<br/>[LPP.ae_uniform_passage_shape_all_starts_of_origin](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/LPP_Foundations/Model/LastPassage/UniformShapeAllStarts.lean) · [LPPDifferentiability.exists_unique_translated_shape_of_negative_moment_and_positive_tail](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TranslatedShape.lean) |
@@ -308,7 +308,7 @@ Sections 4, 6 and 7 present bounded-weight arguments; Appendix B supplies the ge
 | **[Common modulus (§8.3)](#common-modulus-83)**<br/>A shared modulus would pass differentiability to the limit | **✓ Certified**<br/>[Coverage note](#common-modulus-83)<br/>[LPPDifferentiability.FinalDraft.Truncation.differentiableAt_shape_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.shape_differentiable_of_uniform_upperClipped_remainder](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/UniformModulus.lean) · [LPPDifferentiability.FinalDraft.Truncation.exists_upperClipped_shape_comparison](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Truncation/Shape.lean) |
 | **[Confined top paths (§8.4)](#confined-top-paths-84)**<br/>A confined all-top path is a near-optimal crossing | **✓ Certified**<br/>[Coverage note](#confined-top-paths-84)<br/>[LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.Path.level_zero_closed_strip_levels](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltWitnessSelection.lean) |
 | **[Fixed strip extinction (§8.4)](#fixed-strip-extinction-84)**<br/>All-top paths eventually die in a fixed strip | **✓ Certified**<br/>[Coverage note](#fixed-strip-extinction-84)<br/>[LPPDifferentiability.FinalDraft.ae_eventually_pathWeight_lt_top_in_fixed_strip](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/SourceConsequences/FixedWidthStrip.lean) |
-| **[Exponential lifetime conjecture (§8.4)](#exponential-lifetime-conjecture-84)**<br/>Conjectured exponential length in flat directions | **? Not assessed**<br/>[Coverage note](#exponential-lifetime-conjecture-84) |
+| **[Exponential lifetime conjecture (§8.4)](#exponential-lifetime-conjecture-84)**<br/>Conjectured exponential length in percolation-cone directions | **? Not assessed**<br/>[Coverage note](#exponential-lifetime-conjecture-84) |
 | **[Lemma A.1](#lemma-a1)**<br/>A boundary circuit around a finite lattice set | **✓ Certified**<br/>[Coverage note](#lemma-a1)<br/>[LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean) · [LPPDifferentiability.square_circuit_forward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.square_circuit_backward_cells](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Labels.lean) · [LPPDifferentiability.exists_finset_square_circuits_hitting_ray](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Count.lean) |
 | **[Lemma A.2](#lemma-a2)**<br/>An infinite up-right path through likely events | **✓ Certified**<br/>[Coverage note](#lemma-a2)<br/>[LPPDifferentiability.exists_high_density_oriented_path_cutoff](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/HighDensityOrientedPaths.lean) · [LPPDifferentiability.exists_square_contour_bad_site_cover](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/OrientedPaths/ContourCover.lean) · [LPPDifferentiability.exists_square_contour](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/FinalDraft/Contour/Existence.lean) |
 | **[Lemma A.3](#lemma-a3)**<br/>Probability bound for disjoint path events | **✓ Certified**<br/>[Coverage note](#lemma-a3)<br/>[LPPDifferentiability.path_event_bk](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/PathEventBK.lean) |
@@ -327,13 +327,15 @@ These short descriptions locate the results and explain certificate coverage. Co
 
 ### Theorem 2.2
 
-**Where the shape equals the largest weight**
+**The percolation cone**
 
-For a finite largest possible weight $`M`$, the weighted and top-indicator shapes have exactly the same flat directions. The theorem classifies this set below, at and above the oriented site-percolation threshold, and proves differentiability at its critical point or endpoints.
+For a nondegenerate law with finite upper support bound $`M_{+}`$ and the negative moment assumed in the guide, $`g(\xi)=M_{+}`$ exactly at the unit directions of the percolation cone. The theorem classifies these directions by $`p_1`$ relative to $`\vec p_c`$, and proves differentiability at the critical direction and at the supercritical boundary directions.
 
-Here $`M`$ is the smallest real number with $`\mathbb P\{\omega_0\le M\}=1`$, $`p=\mu(\{M\})`$, and $`g_{\rm top}`$ is the directional shape for weights $`\mathbf1\{\omega_z=M\}`$. A direction is $`\xi=(t,1-t)`$ with $`0\le t\le1`$.
+Write $`M_{+}=\sup(\textup{supp}\,\mu)`$ and $`p_1=\mu(\{M_{+}\})`$. The mass $`p_1`$ may be zero. Let $`g^{\mathrm{top}}`$ be the directional shape for indicator weights $`\mathbf1\{\omega_z=M_{+}\}`$.
 
-In the top-site model a site is open when $`\omega_z=M`$. The critical probability $`p_c`$ is the infimum of the independent open-site probabilities for which an infinite up-right open path from the origin has positive probability.
+The unit directions are $`\mathcal U=\{(t,1-t):0\le t\le1\}`$. Their subset $`\mathcal U_{\mathrm{perc}}=\{\xi\in\mathcal U:g^{\mathrm{top}}(\xi)=1\}`$ is the unit-direction slice of the percolation cone, called the flat segment in the paper. The cone consists of the rays through this slice, together with the origin; $`g(z)=M_{+}\ell(z)`$ on it.
+
+The threshold $`\vec p_c`$ is the infimum of Bernoulli open-site probabilities for which an infinite up-right open path from the origin has positive probability. Sites with $`\omega_z=M_{+}`$ are open in the indicator model.
 
 **✓ Certified**
 
@@ -571,13 +573,13 @@ The same maximum-resampling law supplies monotonicity, the product density, the 
 
 **Crossings of length ⌈s³⌉ become unlikely**
 
-Outside the directions supported entirely by sites of largest weight, a strip of width proportional to $`s`$ and length $`\lceil s^3\rceil`$ becomes unlikely to contain a crossing whose weight is within a fixed multiple of $`s`$ of the shape prediction.
+For unit directions outside $`\mathcal U_{\mathrm{perc}}`$, a strip of width proportional to $`s`$ and length $`\lceil s^3\rceil`$ becomes unlikely to contain a crossing whose weight is within a fixed multiple of $`s`$ of the shape prediction.
 
 The scale $`s`$ tends to infinity. A crossing joins the two end levels of the strip and stays inside it; its starting point may vary within the first level.
 
 **✓ Certified**
 
-The full cubic-length crossing estimate is certified outside the top-indicator flat segment, including the free starting point and strict weight threshold.
+The full cubic-length crossing estimate is certified for directions outside the percolation cone, including the free starting point and strict weight threshold.
 
 [LPPDifferentiability.tilt_crossing_tendsto_zero](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltLimit.lean) · [LPPDifferentiability.exists_source_top_indicator_shape_with_strip_rarity](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltStripTopSites.lean)
 
@@ -1131,11 +1133,11 @@ The implication is certified with a modulus shared over all cutoffs as an explic
 
 **A confined all-top path is a near-optimal crossing**
 
-In a flat direction, an all-top path has exactly the shape-predicted weight. If it also satisfies the strip constraint, the positive weight allowance makes it a crossing of the event used to define characteristic length.
+For a direction in the percolation cone, an all-top path has exactly the shape-predicted weight. If it also satisfies the strip constraint, the positive weight allowance makes it a crossing of the event used to define characteristic length.
 
 **✓ Certified**
 
-This elementary implication uses the actual flat-set equality and the strip crossing definition.
+This elementary implication uses the shape equality on the percolation cone and the strip crossing definition.
 
 [LPPDifferentiability.FinalDraft.flat_top](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Frozen/FinalDraft/FlatTop.lean) · [LPPDifferentiability.Path.level_zero_closed_strip_levels](https://github.com/cjanjigi/LPP/blob/62c9eec040d7258ac9707cc06e9791da79ce425d/Differentiability/Probability/TiltWitnessSelection.lean)
 
@@ -1157,9 +1159,9 @@ The almost-sure fixed-strip extinction claim is certified at every fixed signed 
 
 ### Exponential lifetime conjecture (§8.4)
 
-**Conjectured exponential length in flat directions**
+**Conjectured exponential length in percolation-cone directions**
 
-The paper expects near-optimal crossing probabilities in interior flat directions to remain large up to lengths exponential in the width. This is conjectural; the cited symmetric-strip and contact-process results do not establish the claim for every tilted strip.
+The paper expects near-optimal crossing probabilities in directions in the interior of the percolation cone to remain large up to lengths exponential in the width. This is conjectural; the cited symmetric-strip and contact-process results do not establish the claim for every tilted strip.
 
 **? Not assessed**
 

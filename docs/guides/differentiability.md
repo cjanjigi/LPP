@@ -10,12 +10,13 @@
 The limit shape gives the leading-order passage time over long distances.
 The main theorem rules out corners of the shape at every interior
 direction under separate moment assumptions on the positive and negative
-parts of the weights. The flat-top theorem classifies the directions at
-which the shape reaches the largest possible weight.
+parts of the weights. The percolation cone theorem classifies the
+directions in which the shape reaches the upper bound set by the weight support.
 
 ## Main theorem
 
-**Differentiability of the shape** (`thm:main`).
+**Theorem 2.1 · Differentiability of the shape.**
+<!-- Source result: `thm:main` -->
 Let the real site weights be i.i.d. with law $`\mu`$.
 
 - **A1.** The law is nondegenerate, so $`\mu(\{c\})\lt 1`$ for every real $`c`$.
@@ -51,27 +52,37 @@ Several definitions name the recurring objects used in the proofs. [`Path.reache
 
 The public event definitions make the proof interfaces easy to locate. [`travelPathEvent`](../../Differentiability/Probability/Travel.lean) asks for a near-optimal path close to one segment. [`levelIntervalConnectionEvent`](../../Differentiability/Probability/GeneralIntervals.lean) asks for such a connection for every eligible endpoint pair. [`boundedGridConnectionEvent`](../../Differentiability/Probability/GridSimultaneous.lean) supplies one path for every eligible pair in the bounded grid, satisfying both support bounds and the confinement bound.
 
-## Where the shape reaches the top weight
+## Percolation cone
 
-**Flat-top theorem** (`thm:flat-top`).
-Assume a nondegenerate law with a finite support top $`M`$ and the
-negative moment in A2. On the same environment take the indicator
-weights $`\mathbf1\{\omega_x=M\}`$, with shape $`g_{\mathrm{top}}`$.
-Let $`p_1=\mu(\{M\})`$ and let $`p_c`$ be the critical density of
-oriented site percolation. Define
-$`\mathcal U_{\mathrm{perc}}=\{\xi\in\mathcal U:g_{\mathrm{top}}(\xi)=1\}`$.
-Then $`\mathcal U_{\mathrm{perc}}=\{\xi\in\mathcal U:g(\xi)=M\}`$,
-and $`g(\xi)\lt M`$ at every other unit direction.
+<!-- Source result: `thm:flat-top` -->
+**Theorem 2.2.** Assume a nondegenerate law with finite
+$`M_+=\sup(\textup{supp}\,\mu)`$ and the negative moment in A2.
+Let $`p_1=\mu(\{M_+\})`$, which may be zero, and let $`g^{\mathrm{top}}`$
+be the directional shape for the indicator weights $`\mathbf1\{\omega_x=M_+\}`$.
+The unit directions of the **percolation cone** are
 
-| Density | Flat set and differentiability |
+```math
+\mathcal U_{\mathrm{perc}}
+=\{\xi\in\mathcal U:g^{\mathrm{top}}(\xi)=1\}
+=\{\xi\in\mathcal U:g(\xi)=M_+\}.
+```
+
+The paper calls $`\mathcal U_{\mathrm{perc}}`$ the flat segment. The
+percolation cone consists of the rays through this segment, together
+with the origin. On the cone, $`g(x)=M_+\ell(x)`$; at every other
+unit direction, $`g(\xi)\lt M_+`$.
+
+Let $`\vec p_c`$ be the critical density of oriented site percolation.
+
+| Density | Percolation-cone directions and differentiability |
 | --- | --- |
-| $`p_1\lt p_c`$ | $`\mathcal U_{\mathrm{perc}}=\varnothing`$. |
-| $`p_1=p_c`$ | $`\mathcal U_{\mathrm{perc}}=\{(1/2,1/2)\}`$ and $`g`$ is differentiable there. |
-| $`p_1\gt p_c`$ | The actual origin cluster survives with positive probability. On survival, the first coordinate of its rightmost site at level $`n`$ divided by $`n`$ tends almost surely to $`\beta\in(1/2,1)`$. The flat set is $`\{(t,1-t):1-\beta\leq t\leq\beta\}`$ and $`g`$ is differentiable at both endpoints. |
+| $`p_1\lt\vec p_c`$ | $`\mathcal U_{\mathrm{perc}}=\varnothing`$. |
+| $`p_1=\vec p_c`$ | $`\mathcal U_{\mathrm{perc}}=\{(1/2,1/2)\}`$ and $`g`$ is differentiable there. |
+| $`p_1\gt\vec p_c`$ | The origin cluster of sites with $`\omega_x=M_+`$ survives with positive probability. On survival, the first coordinate of its rightmost site at level $`n`$ divided by $`n`$ tends almost surely to $`\beta_{p_1}\in(1/2,1)`$. Then $`\mathcal U_{\mathrm{perc}}=\{(t,1-t):1-\beta_{p_1}\leq t\leq\beta_{p_1}\}`$, and $`g`$ is differentiable at both endpoints. |
 
 The sealed statement `LPPDifferentiability.FinalDraft.flat_top` uses the
 actual origin-cluster speed and the expected passage rates of the
-indicator weights. [Flat-top statement](../../Differentiability/Frozen/FinalDraft/FlatTop.lean) · [Oriented site percolation](../../Differentiability/Frozen/FinalDraft/CriticalDensity.lean)
+indicator weights. [Percolation cone theorem](../../Differentiability/Frozen/FinalDraft/FlatTop.lean) · [Oriented site percolation](../../Differentiability/Frozen/FinalDraft/CriticalDensity.lean)
 
 ## Shape facts and supporting lines
 
@@ -99,7 +110,7 @@ strict loss at transverse exits. [Supporting lines](../../LPP_Foundations/Analys
 | `lem:intervals` | A common event supplies a connection for every pair of endpoints in the two intervals. [Bounded weights](../../Differentiability/Probability/BoundedIntervals.lean) · [General weights](../../Differentiability/Probability/GeneralIntervals.lean) |
 | `prop:rarefast` | A rare-crossing bound uniform over lengths for paths whose weights exceed the prescribed linear support by the stated width-scaled amount. [Crossing bound](../../Differentiability/Probability/RareFastCrossings.lean) |
 | `lem:kernel` | The maximum-resampling law gives domination, the finite product density, the squared density bound, and a positive boost on the stated set of weights. [Resampling](../../Differentiability/Probability/MaximumModifiedFieldLaw.lean) · [Density bound](../../Differentiability/Probability/MaximumKernelRN.lean) |
-| `lem:tilt` | Off the flat set, the cubic-length crossing probability tends to zero at the prescribed threshold. [Tilt estimate](../../Differentiability/Probability/TiltLimit.lean) |
+| `lem:tilt` | Outside the percolation cone, the cubic-length crossing probability tends to zero at the prescribed threshold. [Tilt estimate](../../Differentiability/Probability/TiltLimit.lean) |
 | `prop:charlength` | The first dyadic length meeting the crossing probability test has the stated lower growth and cubic upper bound. [Characteristic lengths](../../Differentiability/Probability/CharacteristicLengths.lean) |
 | `lem:records` | Infinitely many record scales give the required comparison with earlier characteristic lengths. [Record scales](../../Differentiability/Analysis/RecordScales.lean) |
 
@@ -121,8 +132,9 @@ by width diverges. [Fixed length](../../Differentiability/FinalDraft/TailConsequ
 The general grid remarks identify the selected finite staircase family,
 its two path windows, capped crossing trials on the fixed centers and the
 endpoint reduction on that same event. The main argument combines the
-off-flat crossing bounds and the finite-rate top-count differentiability
-result. [Selected paths](../../Differentiability/FinalDraft/SelectedGridPaths/Family.lean) · [Capped trials](../../Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [Off-flat proof](../../Differentiability/Probability/GeneralOffFlatDifferentiability.lean)
+crossing bounds outside the percolation cone and the known differentiability
+on $`\mathcal U_{\mathrm{perc}}\cap\textup{ri}\,\mathcal U`$.
+[Selected paths](../../Differentiability/FinalDraft/SelectedGridPaths/Family.lean) · [Capped trials](../../Differentiability/FinalDraft/Grid/HeavyTrials.lean) · [Proof outside the cone](../../Differentiability/Probability/GeneralOffFlatDifferentiability.lean)
 
 ## Tail assumptions and conditional estimates
 

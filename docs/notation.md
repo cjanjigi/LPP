@@ -99,6 +99,31 @@ Directions are represented on the unit simplex
 
 For a positively homogeneous shape, differentiability on the open quadrant can be checked through its profile on $`\textup{ri}\,\mathcal U`$.
 
+## Percolation cone
+
+When the weight law has finite upper support bound $`M_+=\sup(\textup{supp}\,\mu)`$,
+write $`p_1=\mu(\{M_+\})`$ and let $`g^{\mathrm{top}}`$ be the directional
+shape for the indicator weights $`\mathbf1\{\omega_x=M_+\}`$. Define
+
+```math
+\mathcal U_{\mathrm{perc}}
+=\{\xi\in\mathcal U:g^{\mathrm{top}}(\xi)=1\}.
+```
+
+The **percolation cone** consists of the rays through
+$`\mathcal U_{\mathrm{perc}}`$, together with the origin. Thus
+$`\mathcal U_{\mathrm{perc}}`$ is its unit-direction slice, called the
+flat segment in the paper. Under the hypotheses of the
+[percolation cone theorem](guides/differentiability.md#percolation-cone),
+it also equals $`\{\xi\in\mathcal U:g(\xi)=M_+\}`$, and
+$`g(x)=M_+\ell(x)`$ on the cone.
+
+If the support is unbounded above, set $`\mathcal U_{\mathrm{perc}}=\varnothing`$.
+
+Write $`\vec p_c`$ for the critical density of oriented site percolation
+and $`\beta_{p_1}`$ for the right-edge speed of the origin cluster when
+$`p_1>\vec p_c`$. The speed limit is taken on the survival event.
+
 ## Reading the certificates
 
 <details>

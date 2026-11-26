@@ -255,12 +255,13 @@
     {
       "id": "thm:flat-top",
       "label": "Theorem 2.2",
-      "title": "Where the shape equals the largest weight",
+      "title": "The percolation cone",
       "kind": "Theorem",
-      "summary": "For a finite largest possible weight $M$, the weighted and top-indicator shapes have exactly the same flat directions. The theorem classifies this set below, at and above the oriented site-percolation threshold, and proves differentiability at its critical point or endpoints.",
+      "summary": "For a nondegenerate law with finite upper support bound $M_{+}$ and the negative moment assumed in the guide, $g(\\xi)=M_{+}$ exactly at the unit directions of the percolation cone. The theorem classifies these directions by $p_1$ relative to $\\vec p_c$, and proves differentiability at the critical direction and at the supercritical boundary directions.",
       "definitions": [
-        "Here $M$ is the smallest real number with $\\mathbb P\\{\\omega_0\\le M\\}=1$, $p=\\mu(\\{M\\})$, and $g_{\\rm top}$ is the directional shape for weights $\\mathbf1\\{\\omega_z=M\\}$. A direction is $\\xi=(t,1-t)$ with $0\\le t\\le1$.",
-        "In the top-site model a site is open when $\\omega_z=M$. The critical probability $p_c$ is the infimum of the independent open-site probabilities for which an infinite up-right open path from the origin has positive probability."
+        "Write $M_{+}=\\sup(\\textup{supp}\\,\\mu)$ and $p_1=\\mu(\\{M_{+}\\})$. The mass $p_1$ may be zero. Let $g^{\\mathrm{top}}$ be the directional shape for indicator weights $\\mathbf1\\{\\omega_z=M_{+}\\}$.",
+        "The unit directions are $\\mathcal U=\\{(t,1-t):0\\le t\\le1\\}$. Their subset $\\mathcal U_{\\mathrm{perc}}=\\{\\xi\\in\\mathcal U:g^{\\mathrm{top}}(\\xi)=1\\}$ is the unit-direction slice of the percolation cone, called the flat segment in the paper. The cone consists of the rays through this slice, together with the origin; $g(z)=M_{+}\\ell(z)$ on it.",
+        "The threshold $\\vec p_c$ is the infimum of Bernoulli open-site probabilities for which an infinite up-right open path from the origin has positive probability. Sites with $\\omega_z=M_{+}$ are open in the indicator model."
       ],
       "cluster": "setting",
       "classification": "result",
@@ -475,7 +476,7 @@
       "label": "Lemma 5.2",
       "title": "Crossings of length ⌈s³⌉ become unlikely",
       "kind": "Lemma",
-      "summary": "Outside the directions supported entirely by sites of largest weight, a strip of width proportional to $s$ and length $\\lceil s^3\\rceil$ becomes unlikely to contain a crossing whose weight is within a fixed multiple of $s$ of the shape prediction.",
+      "summary": "For unit directions outside $\\mathcal U_{\\mathrm{perc}}$, a strip of width proportional to $s$ and length $\\lceil s^3\\rceil$ becomes unlikely to contain a crossing whose weight is within a fixed multiple of $s$ of the shape prediction.",
       "definitions": [
         "The scale $s$ tends to infinity. A crossing joins the two end levels of the strip and stays inside it; its starting point may vary within the first level."
       ],
@@ -489,7 +490,7 @@
       },
       "coverage": {
         "status": "certified",
-        "scope": "The full cubic-length crossing estimate is certified outside the top-indicator flat segment, including the free starting point and strict weight threshold.",
+        "scope": "The full cubic-length crossing estimate is certified for directions outside the percolation cone, including the free starting point and strict weight threshold.",
         "links": [
           {
             "label": "LPPDifferentiability.tilt_crossing_tendsto_zero",
@@ -2625,7 +2626,7 @@
       "label": "Confined top paths (§8.4)",
       "title": "A confined all-top path is a near-optimal crossing",
       "kind": "Claim",
-      "summary": "In a flat direction, an all-top path has exactly the shape-predicted weight. If it also satisfies the strip constraint, the positive weight allowance makes it a crossing of the event used to define characteristic length.",
+      "summary": "For a direction in the percolation cone, an all-top path has exactly the shape-predicted weight. If it also satisfies the strip constraint, the positive weight allowance makes it a crossing of the event used to define characteristic length.",
       "definitions": [],
       "cluster": "discussion",
       "classification": "result",
@@ -2637,7 +2638,7 @@
       },
       "coverage": {
         "status": "certified",
-        "scope": "This elementary implication uses the actual flat-set equality and the strip crossing definition.",
+        "scope": "This elementary implication uses the shape equality on the percolation cone and the strip crossing definition.",
         "links": [
           {
             "label": "LPPDifferentiability.FinalDraft.flat_top",
@@ -2682,9 +2683,9 @@
     {
       "id": "discussion:flat-exponential-length",
       "label": "Exponential lifetime conjecture (§8.4)",
-      "title": "Conjectured exponential length in flat directions",
+      "title": "Conjectured exponential length in percolation-cone directions",
       "kind": "Discussion",
-      "summary": "The paper expects near-optimal crossing probabilities in interior flat directions to remain large up to lengths exponential in the width. This is conjectural; the cited symmetric-strip and contact-process results do not establish the claim for every tilted strip.",
+      "summary": "The paper expects near-optimal crossing probabilities in directions in the interior of the percolation cone to remain large up to lengths exponential in the width. This is conjectural; the cited symmetric-strip and contact-process results do not establish the claim for every tilted strip.",
       "definitions": [],
       "cluster": "discussion",
       "classification": "conjecture",
@@ -3090,7 +3091,7 @@
     {
       "from": "thm:flat-top",
       "to": "thm:main",
-      "reason": "Covers interior directions in the flat segment.",
+      "reason": "Covers interior unit directions in the percolation cone.",
       "reader_reason": "Theorem 2.1 uses Theorem 2.2.",
       "route": "all",
       "evidence": {

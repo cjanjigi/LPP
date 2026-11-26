@@ -21,23 +21,23 @@ claims at their stated scopes.
 | Stage and path bounds | The finite stage maximum represents the source's pairwise disjoint witness count, including the final remainder. The real maximum in the animal bound attains the same block sum on the specified finite rooted family. [Witness maxima](../../Differentiability/FinalDraft/WitnessMultiplicity/Maximum.lean) · [Animal maximum](../../Differentiability/FinalDraft/ExcessScaling/Maximum.lean) |
 | Appendices | The high-density survival proof uses the current square contour on the actual endpoint cluster. The attachment theorem accepts prescribed nets. The staircase and capped-trial results use the exact geometry, selected paths and event families. [Oriented survival](../../Differentiability/Probability/HighDensityOrientedPaths.lean) · [Prescribed attachments](../../Differentiability/FinalDraft/Attachments/PrescribedProbability.lean) · [Capped trials](../../Differentiability/FinalDraft/Grid/HeavyTrials.lean) |
 
-## Flat-top classification
+## Percolation cone
 
-The frozen flat-top proof applies the classification to the normalized
+The percolation cone proof applies the classification to the normalized
 original law and the top-indicator law. Its supercritical conclusion uses
 the survival probability and speed of the actual origin cluster.
-It proves the strict complement of the flat set and differentiability
+It proves the strict shape bound outside the cone and differentiability
 at the endpoints in the stated scope. The four current-draft frozen
 anchors are sealed.
 
 - [Oriented site survival](../../Differentiability/Frozen/FinalDraft/SiteSurvival.lean)
 - [Critical density](../../Differentiability/Frozen/FinalDraft/CriticalDensity.lean)
 - [Origin-cluster right-edge speed](../../Differentiability/Frozen/FinalDraft/OriginRightEdgeSpeed.lean)
-- [Flat-top theorem](../../Differentiability/Frozen/FinalDraft/FlatTop.lean)
+- [Percolation cone theorem](../../Differentiability/Frozen/FinalDraft/FlatTop.lean)
 
 The previously released frozen main theorem retains its statement.
 Its proof uses the approved finite-rate top-count differentiability
-result in the flat branch. The separate flat-top theorem gives the
+result on the percolation cone. The separate percolation cone theorem gives the
 current classification. [Main theorem](../../Differentiability/Frozen/Main/Differentiability.lean)
 
 ## Proof choices
