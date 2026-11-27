@@ -58,12 +58,11 @@ The theorems supply existence and determine when these functions are finite. Fix
 
 ## Uniform shape approximation
 
-For a finite function $`g:\mathbb{R}_{\geq 0}^2\to\mathbb R`$, the **uniform shape approximation** means that on one event of probability one, for every $`\varepsilon>0`$ there is $`N\in\mathbb N`$ such that
+For a finite function $`g:\mathbb{R}_{\geq 0}^2\to\mathbb{R}`$, the **uniform shape approximation (U)** means that on one event of probability one, for every $`\varepsilon>0`$ there is $`N\in\mathbb{N}`$ such that
 
 ```math
 |L_{0,z}-g(z)|\le\varepsilon|z|_1
-\qquad(z\in\mathbb Z^2_{\ge0},\ |z|_1\ge N).
-\tag{U}
+\qquad(z\in\mathbb{Z}_{\ge0}^2,\ |z|_1\ge N).
 ```
 
 Equivalently, almost surely,
